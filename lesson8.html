@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الوحدة 8: الجيولوجيا وتكتونية الصفائح - الموسوعة الشاملة</title>
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --card-bg: rgba(21, 30, 49, 0.85);
+            --accent-blue: #38bdf8;
+            --accent-purple: #a855f7;
+            --accent-orange: #f97316;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --border-glow: rgba(249, 115, 22, 0.35);
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        body { 
+            font-family: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background-color: var(--bg-dark); 
+            line-height: 2.1; 
+            padding: 20px; 
+            color: var(--text-main);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(15px);
+            opacity: 0.3;
+            animation: floatParticle 18s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) { width: 180px; height: 180px; background: var(--accent-orange); top: 10%; left: 10%; animation-duration: 20s; }
+        .particle:nth-child(2) { width: 250px; height: 250px; background: var(--accent-purple); top: 60%; right: 5%; animation-duration: 25s; animation-delay: -5s; }
+        .particle:nth-child(3) { width: 140px; height: 140px; background: var(--accent-blue); top: 40%; left: 70%; animation-duration: 16s; animation-delay: -2s; }
+        .particle:nth-child(4) { width: 200px; height: 200px; background: var(--accent-orange); bottom: 5%; left: 20%; animation-duration: 22s; animation-delay: -8s; }
+
+        @keyframes floatParticle {
+            0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+            33% { transform: translateY(-50px) translateX(30px) scale(1.1); }
+            66% { transform: translateY(30px) translateX(-40px) scale(0.9); }
+        }
+
+        .container { 
+            max-width: 950px; 
+            margin: auto; 
+            background: var(--card-bg); 
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 30px; 
+            border-radius: 24px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
+            border: 1px solid var(--accent-orange);
+            position: relative;
+            z-index: 1;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(168, 85, 247, 0.15));
+            color: var(--accent-orange);
+            text-decoration: none;
+            border-radius: 12px;
+            border: 1px solid var(--accent-orange);
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            background: var(--accent-orange);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.4);
+        }
+
+        .header-image-container {
+           width: 100%;        /* ملء عرض الإطار بالكامل */
+           height: 100%;       /* ملء ارتفاع الإطار بالكامل */
+    
+           object-fit: cover;  /* يجعل الصورة تغطي المساحة بالكامل ويقص الزائد */
+           object-position: center; /* يجبر القص أن يكون من منتصف الصورة بالضبط */
+
+   
+           border-radius: 12px;
+        }
+        
+        .unit-hero-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 12px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        h1 { 
+            text-align: center; 
+            background: linear-gradient(135deg, var(--accent-orange), #fcd34d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: calc(1.6em + 0.8vw); 
+            padding-bottom: 15px; 
+            margin-bottom: 30px; 
+            border-bottom: 2px dashed var(--accent-orange);
+            font-weight: 800;
+        }
+
+        .main-card {
+            margin-bottom: 35px;
+        }
+
+        .card-header h2 { 
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(90deg, rgba(249, 115, 22, 0.12) 0%, rgba(15, 23, 42, 0.2) 100%); 
+            color: #ffffff; 
+            padding: 12px 18px; 
+            border-radius: 14px; 
+            margin-top: 45px; 
+            margin-bottom: 20px;
+            font-size: calc(1.1em + 0.4vw); 
+            box-shadow: inset 0 0 10px rgba(249, 115, 22, 0.05);
+            border: 1px solid rgba(249, 115, 22, 0.3);
+        }
+
+        /* تنسيق لون الأرقام المميزة */
+        .card-header h2 .chapter-num {
+            color: var(--accent-orange);
+            font-weight: 800;
+        }
+
+        .activity-block h3 { 
+            color: #fb923c; 
+            margin-bottom: 8px; 
+            margin-top: 20px; 
+            font-size: 1.1rem; 
+        }
+
+        .text-box { 
+            background: rgba(15, 23, 42, 0.75); 
+            border: 1px solid rgba(249, 115, 22, 0.3); 
+            border-radius: 12px; 
+            padding: 22px; 
+            margin-bottom: 20px; 
+            line-height: 1.8; 
+            color: #cbd5e1;
+            text-align: justify;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .tag-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: rgba(249, 115, 22, 0.1);
+            color: #fb923c;
+            border: 1px solid rgba(249, 115, 22, 0.3);
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .ad-space {
+            border: 2px dashed var(--accent-orange);
+            border-radius: 12px;
+            text-align: center;
+            padding: 20px;
+            margin: 25px 0;
+            background: rgba(249, 115, 22, 0.05);
+            color: var(--accent-orange);
+            font-weight: bold;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px dashed var(--accent-orange);
+        }
+
+        @media (max-width: 600px) { 
+            body { padding: 8px 5px; }
+            .container { padding: 16px; border-radius: 16px; } 
+            h1 { font-size: 1.35em; } 
+            .card-header h2 { font-size: 1.05em; padding: 10px 12px; gap: 10px; }
+            .unit-hero-img { height: 180px; border-radius: 12px; }
+            .bottom-nav { flex-direction: column; }
+            .nav-btn { justify-content: center; width: 100%; }
+        }
+
+        .placeholder-frame {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 180px;
+            color: #e2e8f0;
+            text-align: center;
+        }
+
+
+        .header-image-container {
+           width: 100%;
+           max-width: 900px;
+           margin: 25px auto;
+           padding: 12px;
+           background: rgba(15, 23, 42, 0.75); /* خلفية داكنة متناسقة */
+           border: 2px solid #f97316; /* 🟧 لون الإطار برتقالي */
+           border-radius: 16px;
+           box-sizing: border-box;
+           overflow: hidden;
+           text-align: center;
+    
+           /* 🌟 تأثير التوهج والإضاءة البرتقالية 🌟 */
+           box-shadow: 0 0 15px rgba(249, 115, 22, 0.5), 
+                   0 0 30px rgba(249, 115, 22, 0.25);
+    
+           transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* زيادة التوهج البرتقالي عند سحب الماوس فوق الصورة */
+        .header-image-container:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 0 20px rgba(249, 115, 22, 0.75), 
+                   0 0 40px rgba(249, 115, 22, 0.45);
+        }
+
+
+    </style>
+
+<link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+
+<div class="bg-animation">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+</div>
+
+<div class="container">
+
+    <div class="top-nav">
+        <a href="index.html" class="nav-btn">القائمة الرئيسية</a>
+        <a href="lesson7.html" class="nav-btn">⬅️ الوحدة السابقة</a>
+    </div>
+
+    <div class="header-image-container">
+        <!-- ⚠️ قم بتغيير 'image8/unit8-placeholder.jpg' إلى المسار الحقيقي لصورتك ⚠️ -->
+        <img src="images8/unit8-banner.jpg" alt="مخطط آليات تحويل الطاقة الخلوية - الوحدة 8" class="unit-hero-img">
+    </div>
+
+    <!-- المساحة الإعلانية العلوية -->
+    <div class="ad-space">
+        <span>[ مساحة إعلانية علوية ]</span>
+    </div>
+
+    <h1>الوحدة الثامنة والأخيرة: الجيولوجيا وتكتونية الصفائح</h1>
+
+    <section class="main-card">
+        <div class="card-header"><h2><span class="chapter-num">1.</span> الفصل الأول: البنية الداخلية للأرض</h2></div>
+        <div class="activity-block">
+            <h3>الموجات الزلزالية والنمذجة</h3>
+            <div class="text-box">
+                تعتمد دراسة باطن الأرض على تحليل سلوك الموجات الزلزالية (P و S) التي تعمل كأشعة سينية طبيعية تكشف عن كثافة الطبقات وحالتها الفيزيائية. الموجات P تنتشر في جميع الأوساط، بينما تتوقف الموجات S عند الوسط السائل، مما أثبت بشكل قطعي سيولة النواة الخارجية وسمح بتحديد انقطاع غوتنبرغ بدقة. هذا التحليل الجيوفيزيائي هو حجر الزاوية في بناء "النمذجة السيسمولوجية" التي تقسم الأرض إلى طبقات كيميائية والحركية متكاملة.
+            </div>
+            <div class="tag-row"><span class="tag">الموجات P/S</span><span class="tag">انقطاع غوتنبرغ</span></div>
+        </div>
+        <div class="activity-block">
+            <h3>الليتوسفير والأسينوسفير</h3>
+            <div class="text-box">
+                يتم تقسيم غلاف الأرض حركياً بناءً على خصائص المادة تحت تأثير الضغوط والحرارة؛ حيث يمثل الليتوسفير الغلاف الصلب الذي يتكون من القشرة والجزء العلوي من البرنس. وتحت هذا الغلاف يقع الأسينوسفير اللدن الذي يتميز بحالة فيزيائية قريبة من الانصهار، مما يجعله وسطاً مرناً يسمح بانزلاق الصفائح التكتونية الصلبة فوقه. هذا التباين الحركي هو السر وراء زحزحة القارات وتشكل السلاسل الجبلية واتساع قيعان المحيطات عبر الزمن.
+            </div>
+        </div>
+    </section>
+
+    <section class="main-card">
+        <div class="card-header"><h2><span class="chapter-num">2.</span> الفصل الثاني: ديناميكية الظهرات (التباعد)</h2></div>
+        <div class="activity-block">
+            <h3>المغناطيسية القديمة وتوسع القاع</h3>
+            <div class="text-box">
+                تمثل المغناطيسية القديمة "الصندوق الأسود" الذي سجل تاريخ توسع المحيطات، حيث تترتب بلورات المغنيتيت في البازلت وفق الحقل المغناطيسي الأرضي لحظة تبردها. وجود أشرطة مغناطيسية متناظرة حول محور الظهرة أثبت أن قاع المحيط ينمو باستمرار ويدفع القارات القديمة بعيداً، وهي الظاهرة التي تسمى "توسع قاع المحيط". هذا الدليل الحسي هو الذي حول فرضية فيجنر إلى نظرية علمية رصينة تفسر كيف تغيرت ملامح كوكبنا منذ ملايين السنين.
+            </div>
+        </div>
+        <div class="activity-block">
+            <h3>ميكانيكية الانصهار الجزئي في الريفت</h3>
+            <div class="text-box">
+                في خندق الظهرة (الريفت)، يصعد البيريدوتيت من البرنس نحو السطح، وبسبب انخفاض الضغط المسلط عليه مع بقاء حرارته مرتفعة، يحدث له انصهار جزئي يولد ماغما بازلتية سائلة. هذه الماغما تصعد عبر الفوالق لتبرد وتشكل لوحاً محيطياً جديداً، وهو ما يضمن التجديد المستمر للقشرة المحيطية وتوسع الحوض المحيطي. تعتبر هذه العملية محركاً أساسياً لدورة المادة في كوكب الأرض، حيث يتم بناء قشرة جديدة تعوض ما يُفقد في مناطق الغوص.
+            </div>
+            <div class="tag-row"><span class="tag">الانصهار الجزئي</span><span class="tag">ريفت الظهرة</span></div>
+        </div>
+    </section>
+
+    <section class="main-card">
+        <div class="card-header"><h2><span class="chapter-num">3.</span> الفصل الثالث: التقارب (الغوص والاصطدام)</h2></div>
+        <div class="activity-block">
+            <h3>ظاهرة الغوص ومستوى بنيوف</h3>
+            <div class="text-box">
+                يحدث الغوص عندما تنزلق صفيحة محيطية باردة وكثيفة تحت صفيحة قارية أخف، مما يولد احتكاكاً هائلاً ينتج عنه زلازل عنيفة تتبع مستوى مائلاً يسمى مستوى بنيوف. هذه العملية تؤدي لتحرر الماء من الصخور الغائصة، مما يحفز الانصهار الجزئي للبرنس الذي يعلوها ويؤدي لظهور براكين أنديزيتية انفجارية مدمرة. تمثل مناطق الغوص آلية الأرض للتخلص من القشرة القديمة وإعادتها لداخل البرنس، محققة بذلك توازناً جيولوجياً مذهلاً لحجم الكوكب.
+            </div>
+        </div>
+        <div class="activity-block">
+            <h3>اصطدام القارات والسلاسل الجبلية</h3>
+            <div class="text-box">
+                عندما يختفي المحيط الفاصل بين قارتين تماماً، تصطدم الكتل القارية ببعضها البعض في ملحمة جيولوجية تؤدي لرفع القشرة وتشكل سلاسل جبلية شاهقة كالهيمالايا. وبما أن القشرة القارية منخفضة الكثافة فإنها لا تغوص، بل تتعرض لعمليات طي وتكسر (فوالق عكسية) تؤدي لزيادة سمكها القشري. إن وجود الأوفيوليت (بقايا قشرة محيطية) فوق قمم الجبال العالية هو أكبر دليل تاريخي على وجود محيطات قديمة اندثرت تحت وطأة هذه الضغوط الهائلة.
+            </div>
+            <div class="tag-row"><span class="tag">الهيمالايا</span><span class="tag">الأوفيوليت</span><span class="tag">الطي</span></div>
+        </div>
+    </section>
+
+    <section class="main-card">
+        <div class="card-header"><h2><span class="chapter-num">4.</span> الفصل الرابع: الحالات الإقليمية والمحرك الحراري</h2></div>
+        <div class="activity-block">
+            <h3>تكتونية الجزائر وحوض المتوسط</h3>
+            <div class="text-box">
+                تقع الجزائر في قلب منطقة تصادم نشطة بين الصفيحة الإفريقية والأوراسية، وهو ما يفسر تعقد التضاريس والنشاط الزلزالي في الجزء الشمالي من البلاد. زحزحة إفريقيا نحو الشمال تسبب ضغوطاً انضغاطية مستمرة تؤدي لظهور فوالق نشطة في سلسلة الأطلس التلي، وهي المسؤولة عن الهزات الأرضية المتكررة. دراسة هذه الحالة الإقليمية تربط الطالب بالواقع الميداني وتفسر له لماذا تعتبر منطقته الجغرافية نشطة تكتونياً ومحل اهتمام جيولوجي عالمي.
+            </div>
+        </div>
+        <div class="activity-block">
+            <h3>تيارات الحمل والنقاط الساخنة</h3>
+            <div class="text-box">
+                تعتبر تيارات الحمل الحراري المحرك الخفي الذي ينقل الحرارة من باطن الأرض نحو السطح، مما يدفع الصفائح للتباعد أو التقارب في دورة طاقة أبدية. كما تظهر النقاط الساخنة كأعمدة حرارية ثابتة تخترق الصفائح بعيداً عن حدودها، مما يخلق سلاسل بركانية كجزر هاواي التي تسمح بقياس السرعة المطلقة للحركة. بدون هذا النظام الحراري المتكامل، سيتوقف النشاط الجيولوجي للأرض تماماً، مما يبرز أهمية الطاقة الداخلية في الحفاظ على حيوية وتجدد كوكبنا.
+            </div>
+            <div class="tag-row"><span class="tag">تيارات الحمل</span><span class="tag">هاواي</span><span class="tag">النشاط الإشعاعي</span></div>
+        </div>
+    </section>
+
+    <!-- المساحة الإعلانية السفلية -->
+    <div class="ad-space">
+        <span>[ مساحة إعلانية سفلية ]</span>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-btn">🏠 القائمة الرئيسية</a>
+        <a href="lesson7.html" class="nav-btn">⬅️ العودة للوحدة السابعة</a>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
