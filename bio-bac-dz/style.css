@@ -1,0 +1,19 @@
+/* كود حماية التحديد */
+body {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+    font-family: Arial, sans-serif;
+}
+
+.box {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+}
+
+.keyword {
+    color: red;
+    font-weight: bold;
+}

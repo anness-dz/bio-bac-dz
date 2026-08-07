@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الوحدة 5: دور البروتينات في الاتصال العصبي</title>
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --card-bg: rgba(21, 30, 49, 0.85);
+            --accent-blue: #38bdf8;
+            --accent-purple: #a855f7;
+            --accent-orange: #f97316;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --border-glow: rgba(56, 189, 248, 0.25);
+            --tip-yellow: #f59e0b;
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        body { 
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background-color: var(--bg-dark); 
+            line-height: 2.1; 
+            padding: 15px 10px; 
+            color: var(--text-main);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(15px);
+            opacity: 0.3;
+            animation: floatParticle 18s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) { width: 180px; height: 180px; background: var(--accent-blue); top: 10%; left: 10%; animation-duration: 20s; }
+        .particle:nth-child(2) { width: 250px; height: 250px; background: var(--accent-purple); top: 60%; right: 5%; animation-duration: 25s; animation-delay: -5s; }
+        .particle:nth-child(3) { width: 140px; height: 140px; background: var(--accent-orange); top: 40%; left: 70%; animation-duration: 16s; animation-delay: -2s; }
+        .particle:nth-child(4) { width: 200px; height: 200px; background: #10b981; bottom: 5%; left: 20%; animation-duration: 22s; animation-delay: -8s; }
+
+        @keyframes floatParticle {
+            0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+            33% { transform: translateY(-50px) translateX(30px) scale(1.1); }
+            66% { transform: translateY(30px) translateX(-40px) scale(0.9); }
+        }
+
+        .mega-container { 
+            max-width: 950px; 
+            margin: auto; 
+            background: var(--card-bg); 
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 25px; 
+            border-radius: 24px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
+            border: 1px solid var(--border-glow);
+            position: relative;
+            z-index: 1;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(168, 85, 247, 0.15));
+            color: var(--accent-blue);
+            text-decoration: none;
+            border-radius: 12px;
+            border: 1px solid var(--border-glow);
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            background: var(--accent-blue);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+        }
+
+        .unit-hero-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-glow);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+
+        .mechanism-box { 
+            background: rgba(30, 41, 59, 0.6); 
+            border-right: 5px solid var(--accent-blue); 
+            padding: 22px; 
+            margin: 20px 0; 
+            border-radius: 14px; 
+            text-align: justify; 
+            font-size: 1.05em; 
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .step-card { 
+            border: 1px solid rgba(255,255,255,0.08); 
+            padding: 22px; 
+            margin-bottom: 20px; 
+            border-radius: 16px; 
+            background: rgba(15, 23, 42, 0.6); 
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-glow);
+        }
+
+        .img-frame {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            margin: 25px auto;
+            border: 2px solid var(--accent-blue);
+            border-radius: 16px;
+            padding: 12px;
+            background: rgba(15, 23, 42, 0.7);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+            overflow: hidden;
+        }
+
+        .img-title {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--accent-blue);
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .img-frame img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+        }
+
+        .ad-space {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px dashed var(--accent-blue);
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+            color: var(--text-sub);
+            margin: 30px 0;
+            font-size: 0.85rem;
+        }
+
+        .tip-box { 
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05)); 
+            border-right: 6px solid var(--tip-yellow); 
+            padding: 20px; 
+            border-radius: 14px; 
+            margin: 30px 0; 
+            color: #fef3c7;
+            border-top: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .tip-title {
+            color: var(--tip-yellow);
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .latin-tech { 
+            direction: ltr; 
+            display: inline-block; 
+            font-family: 'Consolas', monospace; 
+            color: #f43f5e; 
+            font-weight: bold; 
+            background: rgba(255,255,255,0.08); 
+            padding: 2px 8px; 
+            border-radius: 6px; 
+            border: 1px solid rgba(244, 63, 94, 0.2);
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px dashed var(--border-glow);
+        }
+
+        @media (max-width: 600px) { 
+            body { padding: 8px 5px; }
+            .mega-container { padding: 16px; border-radius: 16px; } 
+            .bottom-nav { flex-direction: column; }
+            .nav-btn { justify-content: center; width: 100%; }
+        }
+    </style>
+
+<link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+
+<div class="bg-animation">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+</div>
+
+<div class="mega-container">
+
+    <div class="top-nav">
+        <a href="lesson6.html" class="nav-btn">الوحدة التالية ➔</a>
+        <a href="index.html" class="nav-btn">القائمة الرئيسية</a>
+        <a href="lesson4.html" class="nav-btn">⬅️ الوحدة السابقة</a>
+    </div>
+
+    <img src="image5/unit5-banner.jpg" alt="غلاف وحدة الاتصال العصبي" class="unit-hero-img">
+
+    <h1 style="text-align: center; margin-bottom: 25px; color: var(--accent-blue);">الوحدة 5: دور البروتينات في الاتصال العصبي</h1>
+
+    <div class="ad-space">
+        <span>[ مساحة إعلانية علوية ]</span>
+    </div>
+
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">1. مفهوم كمون الراحة والاستقطاب</h2>
+        <div class="mechanism-box">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. القياس الكهربائي والقطبية الغشائية:</h4>
+            يُقاس كمون الراحة بوضع مجهرين؛ أحدهما على السطح والآخر في المقطع، حيث يسجل جهاز الأوسيلوسكوب فرق جهد ثابتاً يقدر بـ <span class="latin-tech">-70 mV</span>. يعكس هذا الرقم حالة الاستقطاب، حيث يكون السطح الخارجي موجباً والداخلي سالباً، وهي الحالة الأساسية لليفة العصبية الحية في غياب أي تنبيه خارجي فعال.
+            <h4 style="color: var(--accent-purple); margin: 15px 0 8px 0;">ب. التوزع غير المتساوي للشوارد:</h4>
+            يعود كمون الراحة إلى اختلاف تركيز الشوارد بين الوسطين؛ حيث يتركز الصوديوم Na⁺ والكلور Cl⁻ في الخارج، بينما يتركز البوتاسيوم K⁺ والبروتينات السالبة في الداخل. هذا التباين هو الذي يخلق تدرج التركيز (المنحدر الشاردي) الذي يسعى دائماً لتحريك الشوارد عبر الغشاء.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">2. القنوات المفتوحة باستمرار (قنوات الميز)</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. النفاذية الانتقائية لشوارد البوتاسيوم:</h4>
+            يحتوي الغشاء على بروتينات تسمى قنوات الميز تسمح بمرور الشوارد حسب تدرج التركيز. تمتاز هذه القنوات بنفاذية عالية جداً لـ <span class="latin-tech">K⁺</span> مقارنة بـ <span class="latin-tech">Na⁺</span>، مما يؤدي لخروج مستمر للشحنات الموجبة نحو الخارج، وهو السبب المباشر في جعل الوسط الداخلي سالباً (ظهور الاستقطاب).
+            <h4 style="color: var(--accent-purple); margin: 15px 0 8px 0;">ب. الحفاظ على التوازن الكيميائي الكهربائي:</h4>
+            رغم خروج <span class="latin-tech">K⁺</span> المستمر، لا يتفرغ العصبون من شحناته بفضل قوى التجاذب الكهربائي التي تمنع خروج المزيد من الموجب نحو الخارج المشبع أصلاً بالشحنات الموجبة. هذا التوازن الدقيق بين تدرج التركيز والتدرج الكهربائي هو ما يثبت قيمة كمون الراحة عند القيمة المعلومة.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">3. دور مضخة صوديوم-بوتاسيوم (ATPase)</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. النقل النشط واستهلاك الطاقة:</h4>
+            للحفاظ على تدرج التراكيز ومنع تلاشيه، تتدخل المضخة كبروتين غشائي ينقل الشوارد <span style="color: var(--accent-orange); font-weight: bold;">عكس تدرج التركيز</span>. تستهلك هذه العملية طاقة <span class="latin-tech">ATP</span> لطرد 3 شوارد صوديوم للخارج وإدخال شاردتين بوتاسيوم للداخل، مما يضمن بقاء الخلية في حالة استقطاب دائمة وجاهزية قصوى.
+            <h4 style="color: var(--accent-purple); margin: 15px 0 8px 0;">ب. الطبيعة الكهروموجبة للمضخة:</h4>
+            بما أن المضخة تخرج 3 شحنات موجبة وتدخل 2 فقط، فهي تساهم بشكل مباشر في جعل الخارج أكثر إيجابية من الداخل. هذا الفرق العددي في الشوارد المنقولة يعزز من قيمة سالبية الداخل، مما يجعل المضخة ركيزة أساسية لا غنى عنها في استقرار النشاط الكهربائي للعصبون.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">4. كمون العمل: زوال الاستقطاب</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. انفتاح القنوات الفولطية للصوديوم:</h4>
+            عند حدوث تنبيه يصل للعتبة، تفتح القنوات المرتبطة بالكهرباء الخاصة بـ <span class="latin-tech">Na⁺</span>، فيتدفق الصوديوم بقوة نحو الداخل حسب تدرج التركيز والجذب الكهربائي. هذا الدخول المفاجئ للشحنات الموجبة يقلب القطبية، فيصبح الداخل موجباً والخارج سالباً، وهو ما نسجله كقمة في منحنى كمون العمل.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">5. كمون العمل: عودة الاستقطاب وفرطه</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. خروج البوتاسيوم المتأخر:</h4>
+            بعد جزء من الثانية، تنغلق قنوات الصوديوم وتفتح <span style="color: var(--accent-orange); font-weight: bold;">القنوات الفولطية للبوتاسيوم</span>، فيخرج <span class="latin-tech">K⁺</span> بسرعة نحو الخارج لاستعادة التوازن الموجب في الخارج. هذا الخروج يؤدي لعودة منحنى الأوسيلوسكوب نحو القيمة السالبة الأصلية (عودة الاستقطاب).
+            <h4 style="color: var(--accent-purple); margin: 15px 0 8px 0;">ب. ظاهرة فرط الاستقطاب:</h4>
+            بسبب تأخر انغلاق قنوات <span class="latin-tech">K⁺</span> الفولطية، تستمر الشوارد في الخروج لفترة أطول مما يجب، مما يجعل الجهد ينزل تحت <span class="latin-tech">-70 mV</span>. تسمى هذه الحالة فرط الاستقطاب، والتي تنتهي بمجرد انغلاق القنوات وتدخل المضخة لإعادة ضبط التراكيز الشاردية إلى حالتها الأصلية قبل التنبيه.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">6. انتشار السيالة العصبية في الألياف</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. التيارات المحلية والانتقال الوثبي:</h4>
+            في الألياف غير النخاعينية، تنتقل السيالة عبر تيارات محلية زاحفة، بينما في الألياف <span style="color: var(--accent-orange); font-weight: bold;">النخاعينية</span>، تقفز السيالة بين اختناقات رانفييه. هذا الانتقال الوثبي يزيد من سرعة الرسالة بشكل مذهل، مما يسمح للعضوية بالاستجابة السريعة جداً للمؤثرات البيئية.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">7. التشفير الكهربائي لشدة التنبيه</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. ثبات السعة وتغير التواتر:</h4>
+            لا تتغير سعة كمون العمل (الارتفاع) مهما زادت شدة التنبيه، بل يترجم العصبون شدة التنبيه بزيادة <span style="color: var(--accent-orange); font-weight: bold;">تواتر كمونات العمل</span> (عددها في الثانية). التنبيه القوي ينتج "قطاراً" من الكمونات المتقاربة، بينما التنبيه الضعيف ينتج كمونات متباعدة زمنياً.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">8. بنية المشبك وآلية النقل</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. الحويصلات والمبلغ الكيميائي:</h4>
+            يتميز الغشاء قبل مشبكي بوجود حويصلات تحتوي على وسائط كيميائية (مثل الأستيل كولين). عند وصول موجة زوال الاستقطاب، تتحرر هذه الوسائط في الشق المشبكي، محولة الرسالة من طبيعة كهربائية إلى طبيعة كيميائية قادرة على عبور الفراغ الفاصل بين العصبونات.
+        </div>
+
+        <div class="img-frame">
+            <div class="img-title">بنية المشبك العصبي</div>
+            <img src="image2/synapse-structure.jpg" alt="بنية المشبك العصبي" onerror="this.src='https://via.placeholder.com/800x400/0b0f19/38bdf8?text=%D8%A8%D9%86%D9%8A%D8%A9+%D8%A7%D9%84%D9%85%D8%B4%D8%A8%D9%83+%D8%A7%D9%84%D8%B9%D8%B5%D8%A8%D9%8A'">
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">9. القنوات الفولطية للكالسيوم ($Ca^{2+}$)</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. مفتاح تحرير المبلغات:</h4>
+            تعتبر القنوات الفولطية للكالسيوم الموجودة في النهاية العصبية هي المسؤول الأول عن التحرير. دخول <span class="latin-tech">Ca²⁺</span> يحفز بروتينات التقلص التي تجذب الحويصلات نحو الغشاء للاندماج معه؛ فكلما زاد دخول الكالسيوم، زادت كمية المبلغ المطروح، وزادت قوة الرسالة المشبكية.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">10. القنوات الكيميائية ومستقبلات الأستيل كولين</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. الارتباط وتوليد الـ PPSE:</h4>
+            يحتوي الغشاء بعد مشبكي على مستقبلات قنوية (مبوبة كيميائياً). عند تثبيت الأستيل كولين عليها، تنفتح وتسمح بدخول <span class="latin-tech">Na⁺</span>، مما يسبب زوال استقطاب موضعي يسمى <span style="color: var(--accent-orange); font-weight: bold;">كمون بعد مشبكي تنبيهي (PPSE)</span>. إذا وصل هذا الكمون للعتبة، انتشرت الرسالة في العصبون الموالي.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">11. المشابك التثبيطية والـ GABA</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. فرط الاستقطاب وتوليد الـ PPSI:</h4>
+            تفرز بعض العصبونات مبلغ الـ GABA الذي يرتبط بمستقبلات تفتح قنوات الكلور <span class="latin-tech">Cl⁻</span>. دخول هذه الشحنات السالبة يسبب انخفاض الجهد (فرط استقطاب) يسمى <span style="color: var(--accent-orange); font-weight: bold;">كمون بعد مشبكي تثبيطي (PPSI)</span>، مما يجعل العصبون أقل استجابة وأصعب في التنبيه.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">12. مصير المبلغ الكيميائي والإنزيمات</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. إماهة الأستيل كولين إستراز:</h4>
+            لمنع استمرار التنبيه، يقوم إنزيم <span class="latin-tech">AChE</span> بتفكيك الأستيل كولين بسرعة في الشق المشبكي. تتحول النواتج (كولين) ليعاد امتصاصها وبناؤها من جديد. أي خلل في هذا الإنزيم يؤدي لتشنجات قاتلة بسبب بقاء المشبك في حالة تنبيه دائم.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">13. الإدماج العصبي: التجميع الزمني</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. دمج التنبيهات المتتالية:</h4>
+            عندما يتلقى عصبون واحد عدة تنبيهات متلاحقة من نفس المصدر قبل أن يعود لحالة الراحة، يقوم بجمع قيمها الجبرية. هذا التجميع الزمني يسمح للتنبيهات الضعيفة المتكررة بأن تصبح قوية بما يكفي لتوليد استجابة في العصبون المحرك.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">14. الإدماج العصبي: التجميع الفضائي</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. المحصلة الجبرية للرسائل:</h4>
+            العصبون المحرك يستقبل آلاف المشابك (تنبيهية وتثبيطية) في نفس اللحظة. يقوم العصبون بجمع <span class="latin-tech">PPSE</span> و <span class="latin-tech">PPSI</span> في منطقة القطعة الابتدائية (S.I)؛ فإذا كانت المحصلة الجبرية <span class="latin-tech">(&sum;)</span> تفوق العتبة، يرسل كمون عمل، وإذا كانت دون ذلك، يظل العصبون صامتاً.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">15. تأثير المخدرات ومحاكيات المبلغات</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. المنافسة على المستقبلات الغشائية:</h4>
+            تمتاز بعض المخدرات ببنية تشبه المبلغات الطبيعية، فترتبط بالمستقبلات وتنشطها لفترات طويلة (مثل النيكوتين). هذا التنشيط غير الطبيعي يسبب خللاً في توازن العصبونات ويؤدي للإدمان نتيجة تعود المستقبلات على وجود المادة الخارجية.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">16. آلية عمل المورفين والمسكنات</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. تثبيط رسائل الألم:</h4>
+            يرتبط المورفين بمستقبلات "الأنكفالين" في النخاع الشوكي، وهي مستقبلات قبل مشبكية تمنع تحرير مبلغ الألم (المادة P). هذا التدخل الكيميائي يقطع مسار السيالة العصبية المتجهة للمخ، مما يسبب غياب الشعور بالألم رغم وجود المسبب.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">17. سموم العقارب والخلل الشاردي</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. شلل القنوات الفولطية:</h4>
+            تحتوي سموم بعض الكائنات على جزيئات تسد القنوات الفولطية للصوديوم أو البوتاسيوم. هذا الانسداد يمنع توليد كمونات العمل، مما يسبب شللاً عضلياً وتنفسياً سريعاً، حيث تتوقف العضلات عن تلقي الأوامر من الجهاز العصبي المركزي.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">18. مرخيات العضلات (الكورار)</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. سد اللوحة المحركة:</h4>
+            يعمل الكورار ككابح لمستقبلات الأستيل كولين في المشابك العضلية. يرتبط بالمستقبل دون فتحه، مانعاً الأستيل كولين الطبيعي من العمل. النتيجة هي استرخاء عضلي كامل، وهو ما يُستخدم طبياً في العمليات الجراحية المعقدة لتسهيل عمل الجراح.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">19. تقنية التثبيت الغشائي (Patch-Clamp)</h2>
+        <div class="step-card">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. دراسة سلوك القناة الواحدة:</h4>
+            تسمح هذه التقنية المخبرية بعزل قناة غشائية واحدة ودراسة التيارات الشاردية المارة عبرها تحت ظروف تجريبية محددة. بفضلها تم فهم الفرق بين القنوات الفولطية والكيميائية، وكيف تتأثر بالأدوية والسموم على المستوى الجزيئي الدقيق.
+        </div>
+    </section>
+
+    <section>
+        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">20. الخلاصة: الوحدة الوظيفية للجهاز العصبي</h2>
+        <div class="mechanism-box">
+            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. الترجمة من الكهرباء إلى الكيمياء وبالعكس:</h4>
+            الاتصال العصبي هو لغة مزدوجة؛ تبدأ كهربائية في الليف، تتحول لكيميائية في المشبك، ثم تعود كهربائية في العصبون الموالي بعد عملية الإدماج. هذا النظام المعقد يضمن معالجة أدق المعلومات الحسية والحركية، مما يمنح الإنسان القدرة على التفاعل الذكي والسريع مع محيطه.
+        </div>
+    </section>
+
+    <div class="tip-box">
+        <span class="tip-title">💡 نصيحة تفوق:</span>
+        فهم الآليات الجزيئية للقنوات المبوبة (الفولطية والكيميائية) ومضخات الشوارد يسهل عليك جداً تحليل التمارين المعقدة الخاصة بتأثيرات السموم والمواد السامة على مستوى المشابك العصبية.
+    </div>
+
+    <div class="ad-space">
+        <span>[ مساحة إعلانية سفلية ]</span>
+    </div>
+    
+    <div class="bottom-nav">
+        <a href="lesson6.html" class="nav-btn">الانتقال للوحدة التالية ➔</a>
+        <a href="index.html" class="nav-btn">🏠 القائمة الرئيسية</a>
+        <a href="lesson4.html" class="nav-btn">⬅️ العودة للوحدة السابقة</a>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الوحدة 2: العلاقة بين بنية ووظيفة البروتين</title>
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --card-bg: rgba(21, 30, 49, 0.85);
+            --accent-blue: #38bdf8;
+            --accent-purple: #a855f7;
+            --accent-orange: #f97316;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --border-glow: rgba(56, 189, 248, 0.25);
+            --tip-yellow: #f59e0b;
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        body { 
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background-color: var(--bg-dark); 
+            line-height: 2.1; 
+            padding: 15px 10px; 
+            color: var(--text-main);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(15px);
+            opacity: 0.3;
+            animation: floatParticle 18s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) { width: 180px; height: 180px; background: var(--accent-blue); top: 10%; left: 10%; animation-duration: 20s; }
+        .particle:nth-child(2) { width: 250px; height: 250px; background: var(--accent-purple); top: 60%; right: 5%; animation-duration: 25s; animation-delay: -5s; }
+        .particle:nth-child(3) { width: 140px; height: 140px; background: var(--accent-orange); top: 40%; left: 70%; animation-duration: 16s; animation-delay: -2s; }
+        .particle:nth-child(4) { width: 200px; height: 200px; background: #10b981; bottom: 5%; left: 20%; animation-duration: 22s; animation-delay: -8s; }
+
+        @keyframes floatParticle {
+            0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+            33% { transform: translateY(-50px) translateX(30px) scale(1.1); }
+            66% { transform: translateY(30px) translateX(-40px) scale(0.9); }
+        }
+
+        .mega-container { 
+            max-width: 950px; 
+            margin: auto; 
+            background: var(--card-bg); 
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 25px; 
+            border-radius: 24px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
+            border: 1px solid var(--border-glow);
+            position: relative;
+            z-index: 1;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(168, 85, 247, 0.15));
+            color: var(--accent-blue);
+            text-decoration: none;
+            border-radius: 12px;
+            border: 1px solid var(--border-glow);
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            background: var(--accent-blue);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+        }
+
+        .unit-hero-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-glow);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+
+        h1 { 
+            text-align: center; 
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: calc(1.6em + 0.8vw); 
+            padding-bottom: 15px; 
+            margin-bottom: 30px; 
+            border-bottom: 2px dashed var(--border-glow);
+            font-weight: 800;
+        }
+
+        h2 { 
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(90deg, rgba(56, 189, 248, 0.12) 0%, rgba(15, 23, 42, 0.2) 100%); 
+            color: #ffffff; 
+            padding: 12px 18px; 
+            border-radius: 14px; 
+            margin-top: 45px; 
+            margin-bottom: 20px;
+            font-size: calc(1.1em + 0.4vw); 
+            box-shadow: inset 0 0 10px rgba(56, 189, 248, 0.05);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .num-badge {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: var(--bg-dark);
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 800;
+            flex-shrink: 0;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+        }
+
+        h3 { 
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent-orange); 
+            border-right: 4px solid var(--accent-orange);
+            padding-right: 12px;
+            margin-top: 25px; 
+            margin-bottom: 12px;
+            font-size: 1.1em; 
+            font-weight: 700;
+            background: rgba(249, 115, 22, 0.05);
+            padding-top: 6px;
+            padding-bottom: 6px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .mechanism-box { 
+            background: rgba(30, 41, 59, 0.6); 
+            border-right: 5px solid var(--accent-blue); 
+            padding: 22px; 
+            margin: 20px 0; 
+            border-radius: 14px; 
+            text-align: justify; 
+            font-size: 1.05em; 
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .step-card { 
+            border: 1px solid rgba(255,255,255,0.08); 
+            padding: 22px; 
+            margin-bottom: 20px; 
+            border-radius: 16px; 
+            background: rgba(15, 23, 42, 0.6); 
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-glow);
+        }
+
+        .img-frame {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            margin: 25px auto;
+            border: 2px solid var(--accent-blue);
+            border-radius: 16px;
+            padding: 12px;
+            background: rgba(15, 23, 42, 0.7);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+            overflow: hidden;
+        }
+
+        .img-title {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--accent-blue);
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .img-frame img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+        }
+
+        .ad-space {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px dashed var(--accent-blue);
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+            color: var(--text-sub);
+            margin: 30px 0;
+            font-size: 0.85rem;
+        }
+
+        .tip-box { 
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05)); 
+            border-right: 6px solid var(--tip-yellow); 
+            padding: 20px; 
+            border-radius: 14px; 
+            margin: 30px 0; 
+            color: #fef3c7;
+            border-top: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .tip-title {
+            color: var(--tip-yellow);
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .latin-tech { 
+            direction: ltr; 
+            display: inline-block; 
+            font-family: 'Consolas', monospace; 
+            color: #f43f5e; 
+            font-weight: bold; 
+            background: rgba(255,255,255,0.08); 
+            padding: 2px 8px; 
+            border-radius: 6px; 
+            border: 1px solid rgba(244, 63, 94, 0.2);
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px dashed var(--border-glow);
+        }
+
+        @media (max-width: 600px) { 
+            body { padding: 8px 5px; }
+            .mega-container { padding: 16px; border-radius: 16px; } 
+            h1 { font-size: 1.35em; } 
+            h2 { font-size: 1.05em; padding: 10px 12px; gap: 10px; }
+            .num-badge { width: 26px; height: 26px; font-size: 0.8em; }
+            h3 { font-size: 0.98em; }
+            .unit-hero-img { height: 180px; border-radius: 12px; }
+            .bottom-nav { flex-direction: column; }
+            .nav-btn { justify-content: center; width: 100%; }
+        }
+    </style>
+
+<link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+
+<div class="bg-animation">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+</div>
+
+<div class="mega-container">
+
+    <div class="top-nav">
+        <a href="lesson3.html" class="nav-btn">الوحدة التالية ➔</a>
+        <a href="index.html" class="nav-btn">القائمة الرئيسية</a>
+        <a href="lesson1.html" class="nav-btn">⬅️ الوحدة السابقة</a>
+    </div>
+
+    <img src="image2/unit2-banner.jpg" alt="غلاف الوحدة الثانية" class="unit-hero-img">
+
+    <h1>الوحدة 2: العلاقة بين بنية ووظيفة البروتين</h1>
+
+    <div class="ad-space">
+        <span>[ مساحة إعلانية علوية ]</span>
+    </div>
+
+    <section>
+        <h2><span class="num-badge">01</span> الوحدة البنائية: الأحماض الأمينية (Amino Acids)</h2>
+        <div class="mechanism-box">
+            تمثل الأحماض الأمينية الوحدات البنائية الأساسية للبروتين، وهي مركبات عضوية تتميز بوجود وظيفة أمينية قاعدية (<span class="latin-tech">-NH2</span>) ووظيفة كربوكسيلية حمضية (<span class="latin-tech">-COOH</span>) محمولتين على نفس ذرة الكربون المركزية (ألفا &alpha;). يدخل في تركيب البروتينات 20 نوعاً أساسياً من الأحماض الأمينية، ويتحدد التخصص الوظيفي للبروتين باختلاف عدد، نوع، وترتيب هذه الأحماض في السلسلة الببتيدية.
+        </div>
+    </section>
+
+    <section>
+        <h2><span class="num-badge">02</span> البنية الكيميائية العامة وتفصيل الجذر المتغير</h2>
+        <div class="step-card">
+            تشترك الأحماض الأمينية الـ 20 في بنية عامة واحدة تتكون من كربون مركزي (ألفا &alpha;) مرتبط بمجموعة كربوكسيل حرة، ومجموعة أمين حرة، وذرة هيدروجين، بالإضافة إلى **سلسلة جانبية متغيرة (جذر كيميائي R)**. يعتبر هذا الجذر هو المسؤول عن الخصائص الفيزيوكيميائية الفريدة لكل حمض (سواء كان قطبياً محباً للماء أو غير قطبي كاره للماء)، وهو المحرك الأساسي لعملية انطواء وتشكيل البنية الفراغية للبروتين.
+        </div>
+
+        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
+    
+            <!-- عنوان الصورة أعلى الإطار -->
+            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
+             الصيغة الكيميائية العامة للحمض الأميني 
+            </div>
+
+            <!-- كود الصورة متكيف بالكامل مرتبط بمجلد image2 -->
+            <img src="image2/0.1.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
+        </div>
+    </section>
+
+    <section>
+        <h2><span class="num-badge">03</span> تصنيف الأحماض الأمينية حسب السلوك الكهربائي</h2>
+        <div class="step-card">
+            تصنف الأحماض الأمينية بناءً على طبيعة وعدد المجموعات الوظيفية القابلة للتأين الموجودة في جذورها الجانبية (<span class="latin-tech">R</span>) إلى ثلاثة أصناف رئيسية:
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin: 20px 0;">
+            <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--accent-blue); border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                <h3 style="color: var(--accent-blue); border-right: none; padding: 0; margin-top: 0; background: none; font-size: 1.05em;">
+                    1. أحماض حامضية (Acidic)
+                </h3>
+                <p style="font-size: 0.95em; color: var(--text-main); margin-top: 8px;">
+                    يحتوي جذرها <span class="latin-tech">R</span> على وظيفة كربوكسيلية إضافية (<span class="latin-tech">-COOH</span>).<br>
+                    <strong>أمثلة:</strong> Glu, Asp
+                </p>
+            </div>
+
+            <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--accent-purple); border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                <h3 style="color: var(--accent-purple); border-right: none; padding: 0; margin-top: 0; background: none; font-size: 1.05em;">
+                    2. أحماض قاعدية (Basic)
+                </h3>
+                <p style="font-size: 0.95em; color: var(--text-main); margin-top: 8px;">
+                    يحتوي جذرها <span class="latin-tech">R</span> على وظيفة أمينية إضافية (<span class="latin-tech">-NH2</span>).<br>
+                    <strong>أمثلة:</strong> Lys, Arg, His
+                </p>
+            </div>
+
+            <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--accent-orange); border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                <h3 style="color: var(--accent-orange); border-right: none; padding: 0; margin-top: 0; background: none; font-size: 1.05em;">
+                    3. أحماض متعادلة (Neutral)
+                </h3>
+                <p style="font-size: 0.95em; color: var(--text-main); margin-top: 8px;">
+                    جذرها <span class="latin-tech">R</span> خالٍ من الوظائف الحمضية والقاعدية الإضافية.<br>
+                    <strong>أمثلة:</strong> Ala, Val, Ser
+                </p>
+            </div>
+        </div>
+
+        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
+    
+            <!-- عنوان الصورة أعلى الإطار -->
+            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
+        جميع انواع الاحماض الامينية
+            </div>
+
+            <!-- كود الصورة متكيف بالكامل مرتبط بمجلد image2 -->
+            <img src="image2/0.5.jpg" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
+        </div>
+        
+
+    </section>
+
+    <section>
+        <h2><span class="num-badge">04</span> السلوك الأمفوتيري (الحمقلي) للأحماض الأمينية</h2>
+        <div class="mechanism-box">
+            تتميز الأحماض الأمينية بـ **الخاصية الأمفوتيرية (الحمقلية)**، وهي سلوك الحمض كـ **قاعدة** في الوسط الحمضي (باكتساب بروتون H<sup>+</sup> وتأين المجموعات الأمينية لتصبح بشحنة موجبة)، وسلوكه كـ **حمض** في الوسط القاعدي (بفقدان بروتون H<sup>+</sup> وتأين المجموعات الكربوكسيلية لتصبح بشحنة سالبة)، وتتحدد الشحنة الكهربائية للحمض بناءً على درجة <span class="latin-tech">pH</span> الوسط مقارنة بنقطة تعادله الكهربائي <span class="latin-tech">pHi</span>.
+        </div>
+    </section>
+
+    <section>
+        <h2><span class="num-badge">05</span> نقطة التعادل الكهربائي (pHi) وأهميتها</h2>
+        <div class="step-card">
+            لكل حمض أميني درجة <span class="latin-tech">pH</span> خاصة تسمى **نقطة التعادل الكهربائي (<span class="latin-tech">pHi</span>)**. عندما يكون درجة الحموضة مساوية لنقطة التعادل (pH = pHi)، يوجد الحمض الأميني على شكل **أيون ثنائي القطب (Zwitterion)** حيث تتأين المجموعتان الكربوكسيلية والأمينية معاً، وتكون الشحنة الإجمالية للحمض معدومة (0). في هذه الحالة، لا يهاجر الحمض الأميني نحو أي من القطبين في جهاز الهجرة الكهربائية (Electrophoresis)، وهي الخاصية المعتمدة لفصل الأحماض الأمينية ونسبها.
+        </div>
+    </section>
+
+    <section>
+        <h2><span class="num-badge">06</span> آلية تشكل الرابطة الببتيدية (Peptide Bond)</h2>
+        <div class="step-card">
+            تنشأ الرابطة الببتيدية نتيجة تفاعل تكاثف بين المجموعة الكربوكسيلية للحمض الأميني الأول والمجموعة الأمينية للحمض الأميني المجاور، مع تحرير جزيء ماء (<span class="latin-tech">H2O</span>). تعتبر هذه الرابطة تساهمية صلبة وقوية (ذات مميزات رابطة مضاعفة جزئياً)، وتشكّل الهيكل الفحمائي الأساسي الذي يربط الأحماض الأمينية ببعضها لتكوين السلسلة الببتيدية.
+        </div>
+
+        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
+    
+            <!-- عنوان الصورة أعلى الإطار -->
+            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
+         آلية تشكل الرابطة الببتيدية
+            </div>
+
+            <!-- كود الصورة متكيف بالكامل مرتبط بمجلد image2 -->
+            <img src="image2/0.2.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
+        </div>
+
+    </section>
+
+    <section>
+        <h2><span class="num-badge">07</span> مستويات التنظيم الفراغي للبروتين</h2>
+        
+        <h3>أ. البنية الأولية (Primary Structure)</h3>
+        <div class="step-card">
+            تمثل البنية الأولية **أبسط تتابع خطي** غير وظيفي للأحماض الأمينية المرتبطة ببعضها حصرياً بوساطة **روابط ببتيدية تساهمية**. تُعتبر البنية الأولية المخطط الوراثي المباشر للبروتين، حيث أن عدد، نوع، وترتيب الأحماض فيها هو الذي يحدد بدقة أماكن نشوء الروابط الكيميائية الأخرى المسؤولة عن الانطواء الفراغي الموالي.
+        </div>
+
+        <h3>ب. البنية الثانوية (Secondary Structure)</h3>
+        <div class="step-card">
+            تنتج البنية الثانوية عن انطواء والتفاف السلسلة الببتيدية الأولية في مناطق محددة لتأخذ شكل **حلزون ألفا (&alpha;)** أو **ورقة مطوية بيتا (&beta;)**. يستقر هذا المستوى التنظيمي بنشوء **روابط هيدروجينية** بين مجموعات <span class="latin-tech">C=O</span> ومجموعات <span class="latin-tech">N-H</span> التابعة للهيكل الفحمائي للسلسلة الببتيدية، دون تدخل جذور الأحماض الأمينية (<span class="latin-tech">R</span>).
+        </div>
+
+        <h3>ج. البنية الثالثية (Tertiary Structure)</h3>
+        <div class="step-card">
+            تنتج البنية الثالثية عن انطواء السلسلة الببتيدية التي تحتوي على بنيات ثانوية (ألفا &alpha; وبيتا &beta;) في الفراغ، بفضل وجود **مناطق انعطاف**. تسمح هذه المناطق بتراكب البنيات الثانوية وتقارب الجذور لتتشكل الروابط الكيميائية، ليتخذ البروتين شكلاً كروياً أو ليفياً مستقراً، وتعتبر البنية الثالثية المستوى الأدنى لاكتساب التخصص الوظيفي (مثل الإنزيمات والمستقبلات).
+        </div>
+
+        <h3>د. البنية الرابعة (Quaternary Structure)</h3>
+        <div class="step-card">
+            تتكون البنية الرابعة من اتحاد سلاسل ببتيدية متعددة (تسمى كل منها تحت وحدة Subunit)، وكل تحت وحدة تمتلك بنية ثالثية قائمة بذاتها. ترتبط هذه تحت الوحدات ببعضها بوساطة **روابط ضعيفة غير تساهمية** (هيدروجينية، شاردية، وتآثرات كارهة للماء)، ومثال ذلك جزيء الهيموغلوبين الذي يتكون من 4 تحت وحدات.
+        </div>
+
+        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
+    
+            <!-- عنوان الصورة أعلى الإطار -->
+            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
+               مستويات البنية الفراغية
+            </div>
+
+            <!-- كود الصورة متكيف بالكامل مرتبط بمجلد image2 -->
+           <img src="image2/0.4.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
+        </div>
+
+    </section>
+
+    <section>
+        <h2><span class="num-badge">08</span> الروابط الكيميائية الضامنة لاستقرار البنية الثالثية</h2>
+        <div class="step-card">
+            يعتمد استقرار البنية الثالثية على أربعة أنواع من الروابط الكيميائية تنشأ تحديداً **بين جذور الأحماض الأمينية (<span class="latin-tech">R</span>)** المتباعدة خطياً والمتقاربة فراغياً:
+            <ul style="margin-right: 20px; margin-top: 10px;">
+                <li><strong>الجسور ثنائية الكبريت :</strong> روابط تساهمية قوية تنشأ بين جذور حمض السيستئين (Cys).</li>
+                <li><strong>الروابط الشاردية :</strong> تجاذب كهربائي بين الجذور الحامضية القطبية السالبة والقاعدية الموجبة.</li>
+                <li><strong>الروابط الهيدروجينية :</strong> تنشأ بين الجذور القطبية غير الشاردية.</li>
+                <li><strong> تجاذب الجذور الكارهة للماء:</strong> تتجمع الجذور الكارهة للماء نحو الداخل مبتعدة عن الوسط المائي.</li>
+            </ul>
+        </div>
+        
+        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
+
+            <!-- عنوان الصورة أعلى الإطار -->
+            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
+                الروابط المساهمة في استقرار البنية الثالثية
+            </div>
+
+            <!-- كود الصورة متكيف بالكامل مرتبط بمجلد image2 -->
+            <img src="image2/0.3.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
+        </div>
+
+    </section>
+
+    <section>
+        <h2><span class="num-badge">09</span> تجربة أنفينسن (Anfinsen) والدليل القاطع</h2>
+        <div class="step-card">
+            أجرى العالم أنفينسن تجارب تاريخية على إنزيم **الريبونوكلياز (RNase)** باستخدام مادتين: **اليوريا (Urea)** لكسر الروابط الضعيفة، و**ميركابتويثانول** لاختزال الجسور ثنائية الكبريت. أثبتت التجربة أنه عند إزالة هذين العاملين يستعيد الإنزيم بنيته الفراغية ونشاطه الإنزيمي تلقائياً بنسبة 100%، مما أثبت علمياً أن **المعلومة الوراثية المحددة لتتابع الأحماض الأمينية هي المسؤولة عن تحديد البنية الفراغية وبالتالي الوظيفة**.
+        </div>
+    </section>
+
+    <section>
+        <h2><span class="num-badge">10</span> العلاقة بين الطفرات المورثية وفقدان الوظيفة</h2>
+        <div class="step-card">
+            أي طفرة وراثية تؤدي إلى تغيير في تتابع النكليوتيدات على مستوى المورثة (ADN) سينتج عنها تغيير في نوع أو موقع حمض أميني واحد أو أكثر في السلسلة الببتيدية. هذا التغيير قد يمنع تشكل رابطة كيميائية ضرورية لاستقرار البنية الفراغية، مما يسبب تشوهاً في البنية وفقداناً للتخصص الوظيفي، كاستبدال حمض الغلوتاميك بالفالين (Valine) في السلسلة بيتا (&beta;) للهيموغلوبين مسبباً مرض فقر الدم المنجلي (Sickle Cell Anemia).
+        </div>
+    </section>
+
+    <section>
+        <h2><span class="num-badge">11</span> عوامل المسخ (Denaturation) وتأثير الوسط</h2>
+        <div class="mechanism-box">
+            تؤدي العوامل الفيزيائية والكيميائية القاسية إلى **مسخ (تخريب) البروتين**:
+            <ul style="margin-right: 20px; margin-top: 10px;">
+                <li><strong>درجة الحرارة العالية:</strong> تفكك الروابط الضعيفة (الهيدروجينية والتآثرات الكارهة للماء) مما يفقده بنيته الفراغية دون المساس بالروابط الببتيدية.</li>
+                <li><strong>تغيرات درجة الحموضة (pH) المتطرفة:</strong> تغير الحالة الكهربائية للمجموعات المتأينة في الجذور، مما يلغي الروابط الشاردية والهيدروجينية.</li>
+            </ul>
+        </div>
+
+        <div class="img-frame">
+            <div class="img-title">آلية مسخ البروتين وفقدان البنية الفراغية بالحرارة والـ pH</div>
+            <img src="image2/protein-denaturation.jpg" alt="مسخ البروتين">
+        </div>
+    </section>
+
+    <section>
+        <h2><span class="num-badge">12</span> النمذجة الحاسوبية ودراسة البروتين ببرنامج Rastop</h2>
+        <div class="step-card">
+            تُستغل البرمجيات ثلاثية الأبعاد مثل <span class="latin-tech">Rastop</span> في دراسة وملاحظة البنيات الفراغية للبروتينات بمختلف نماذجها (النموذج المكدس، الشريط، السلكي...). يتيح البرنامج تحديد مواقع الأحماض الأمينية المتدخلة في تشكيل الموقع النشط للإنزيمات، ودراسة نوع الروابط القائمة بينها، ومحاكاة تأثر البروتين بالطفرات بدقة عالية.
+        </div>
+    </section>
+
+    <div class="tip-box">
+        <span class="tip-title">ملاحظة المراجعة النهائية:</span>
+        ركز دائماً في البكالوريا على ربط نوع الرابطة الكيميائية بالحمض الأميني المتدخل (مثل الجسور ثنائية الكبريت مع السيستئين) والربط الدقيق بين البنية الفراغية والنشاط الوظيفي.
+    </div>
+
+    <div class="ad-space">
+        <span>[ مساحة إعلانية سفلية ]</span>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="lesson3.html" class="nav-btn">الانتقال للوحدة الثالثة ➔</a>
+        <a href="index.html" class="nav-btn">🏠 القائمة الرئيسية</a>
+        <a href="lesson1.html" class="nav-btn">⬅️ العودة للوحدة الأولى</a>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
