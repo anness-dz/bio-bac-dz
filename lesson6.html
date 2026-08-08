@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الوحدة 6: آليات تحويل الطاقة الضوئية إلى طاقة كيميائية كامنة (التركيب الضوئي) </title>
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الموسوعة الجزيئية المعمقة للتركيب الضوئي - الإصدار المطور</title>
+    
     <style>
+        /* --- 1. المتغيرات الرئيسية --- */
         :root {
             --bg-dark: #0b0f19;
             --card-bg: rgba(21, 30, 49, 0.85);
@@ -19,6 +28,7 @@
             --keyword-red: #f43f5e;
         }
 
+        /* --- 2. إعدادات العامة وتنظيف النصوص المنسوخة --- */
         * { 
             box-sizing: border-box; 
             margin: 0; 
@@ -36,11 +46,234 @@
             overflow-x: hidden;
         }
 
+        /* إجبار جميع عناصر الصناديق على إزالة الخلفيات البيضاء المنسوخة */
+        .box p, .box h1, .box h2, .box h3, .box h4, .box h5, .box h6, .box span, .box strong, .box a {
+            background: transparent !important;
+            font-size: 1.05rem !important;
+            line-height: 1.8 !important;
+        }
+
+        .box .keyword {
+            font-size: inherit !important;
+            font-weight: bold;
+            color: var(--keyword-red);
+        }
+
         .keyword {
             color: var(--keyword-red);
             font-weight: bold;
         }
 
+        /* --- 3. الصناديق والبطاقات --- */
+        .box { 
+            background: rgba(15, 23, 42, 0.85) !important; 
+            border: 1px solid rgba(56, 189, 248, 0.25) !important;
+            border-right: 5px solid var(--accent-green) !important;
+            border-radius: 16px !important; 
+            padding: 20px !important; 
+            margin-bottom: 25px !important; 
+            word-wrap: break-word;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            text-align: justify;
+        }
+
+        .box h4 {
+            margin-top: 15px;
+        }
+        .box h4:first-child {
+            margin-top: 0;
+        }
+
+        .container { 
+            max-width: 950px; 
+            margin: auto; 
+            background: var(--card-bg); 
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 25px; 
+            border-radius: 24px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
+            border: 1px solid var(--border-glow);
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+    text-align: center;
+    font-size: 2rem !important;
+    font-weight: 800 !important;
+    color: #f8fafc !important;
+    margin: 20px 0 30px 0 !important;
+    padding-bottom: 15px;
+    position: relative;
+    letter-spacing: -0.5px;
+}
+
+/* خط ديكوري أنيق ومتناسق أسفل H1 */
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #10b981, #38bdf8);
+    border-radius: 3px;
+}
+
+/* 2. عناوين الأقسام الرئيسية */
+h2 {
+    color: #38bdf8 !important; /* أزرق سماوي واضح */
+    font-size: 1.35rem !important;
+    font-weight: 700 !important;
+    margin: 35px 0 18px 0 !important;
+    padding: 8px 15px !important;
+    background: rgba(56, 189, 248, 0.06) !important; /* خلفية ناعمة جداً تحدد القسم */
+    border-right: 4px solid #10b981 !important; /* شريط أخضر أنيق على اليمين */
+    border-radius: 0 8px 8px 0 !important;
+    display: flex;
+    align-items: center;
+}
+
+/* 3. العناوين الفرعية داخل الصناديق (تم حل المشكلة) */
+.box h4, h4 {
+    color: #c084fc !important; /* لون بنفسجي دافئ يبرز عن باقي النص */
+    font-size: 1.12rem !important;
+    font-weight: 700 !important;
+    margin: 22px 0 12px 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+/* إضافة أيقونة مؤشر صغيرة قبل العنوان الفرعي لإعطائه شكلاً منظمًا */
+.box h4::before, h4::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #c084fc;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(192, 132, 252, 0.6);
+}
+
+.box h4:first-child {
+    margin-top: 0 !important;
+}
+
+        .header-image-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 25px auto;
+            padding: 12px;
+            background: rgba(15, 23, 42, 0.75);
+            border: 2px solid #22c55e;
+            border-radius: 16px;
+            box-sizing: border-box;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.4), 0 0 40px rgba(34, 197, 94, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .header-image-container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.75), 0 0 50px rgba(34, 197, 94, 0.45);
+        }
+
+        .header-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 12px;
+        }
+
+        /* --- 5. المكونات المساعدة --- */
+        .equation {
+            background: rgba(11, 15, 25, 0.9);
+            border: 1px dashed var(--accent-green);
+            padding: 12px;
+            margin: 15px 0;
+            text-align: center;
+            font-family: 'Consolas', monospace;
+            color: var(--accent-orange);
+            font-size: 1.1rem;
+            border-radius: 10px;
+            direction: ltr;
+        }
+
+        .tip-box { 
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05)); 
+            border-right: 6px solid var(--tip-yellow); 
+            padding: 20px; 
+            border-radius: 14px; 
+            margin: 30px 0; 
+            color: #fef3c7;
+            border-top: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .tip-title {
+            color: var(--tip-yellow);
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .ad-space {
+            border: 2px dashed #10b981;
+            border-radius: 12px;
+            text-align: center;
+            padding: 20px;
+            margin: 15px 0;
+            background: rgba(16, 185, 129, 0.05);
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        /* --- 6. أزرار التنقل --- */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px dashed var(--border-glow);
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(56, 189, 248, 0.15));
+            color: var(--accent-green);
+            text-decoration: none;
+            border-radius: 12px;
+            border: 1px solid var(--border-glow);
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            background: var(--accent-green);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+        }
+
+        /* --- 7. الخلفية المتحركة --- */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -71,238 +304,46 @@
             66% { transform: translateY(30px) translateX(-40px) scale(0.9); }
         }
 
-        .container { 
-            max-width: 950px; 
-            margin: auto; 
-            background: var(--card-bg); 
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 25px; 
-            border-radius: 24px; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
-            border: 1px solid var(--border-glow);
-            position: relative;
-            z-index: 1;
-        }
-
-        /* تنسيق مكان الصورة العلوية */
-        .header-image-container {
-            width: 100%;
-            height: 260px;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(56, 189, 248, 0.1));
-            border: 2px dashed rgba(16, 185, 129, 0.4);
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 25px;
-            color: var(--text-sub);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .header-image-container:hover {
-            border-color: var(--accent-green);
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(56, 189, 248, 0.15));
-        }
-
-        .header-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0.85;
-            border-radius: 14px;
-        }
-
-        .image-placeholder-text {
-            z-index: 2;
-            background: rgba(11, 15, 25, 0.75);
-            padding: 10px 20px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .image-placeholder-text span {
-            color: var(--accent-green);
-            font-weight: bold;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .nav-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 18px;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(56, 189, 248, 0.15));
-            color: var(--accent-green);
-            text-decoration: none;
-            border-radius: 12px;
-            border: 1px solid var(--border-glow);
-            font-weight: bold;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
-
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            background: var(--accent-green);
-            color: var(--bg-dark);
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: var(--accent-green);
-            font-size: 1.8rem;
-        }
-
-        h2 {
-            color: var(--accent-green);
-            margin-top: 30px;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-            border-bottom: 1px solid rgba(16, 185, 129, 0.2);
-            padding-bottom: 8px;
-        }
-
-        h4 {
-            color: var(--accent-purple);
-            margin-bottom: 8px;
-            font-size: 1.05rem;
-        }
-
-        .box { 
-            background: rgba(30, 41, 59, 0.6); 
-            border-right: 5px solid var(--accent-green); 
-            padding: 22px; 
-            margin: 20px 0; 
-            border-radius: 14px; 
-            text-align: justify; 
-            font-size: 1.05em; 
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .box h4 {
-            margin-top: 15px;
-        }
-        .box h4:first-child {
-            margin-top: 0;
-        }
-
-        .equation {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px dashed var(--accent-green);
-            padding: 12px;
-            margin: 15px 0;
-            text-align: center;
-            font-family: 'Consolas', monospace;
-            color: var(--accent-orange);
-            font-size: 1.1rem;
-            border-radius: 10px;
-            direction: ltr;
-        }
-
-        .tip-box { 
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05)); 
-            border-right: 6px solid var(--tip-yellow); 
-            padding: 20px; 
-            border-radius: 14px; 
-            margin: 30px 0; 
-            color: #fef3c7;
-            border-top: 1px solid rgba(245, 158, 11, 0.2);
-        }
-
-        .tip-title {
-            color: var(--tip-yellow);
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-        }
-
-        .bottom-nav {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px dashed var(--border-glow);
-        }
-
-        @media (max-width: 600px) { 
+        /* --- 8. التجاوب مع الهواتف الذكية --- */
+        @media (max-width: 768px) {
             body { padding: 8px 5px; }
-            .container { padding: 16px; border-radius: 16px; } 
-            .bottom-nav { flex-direction: column; }
-            .nav-btn { justify-content: center; width: 100%; }
+
+            .container {
+                width: 95% !important;
+                padding: 15px !important;
+            }
+
+            .box {
+                padding: 15px !important;
+                margin-bottom: 15px !important;
+            }
+
+            .top-nav, .bottom-nav {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+
+            .nav-btn {
+                width: 100% !important;
+                text-align: center !important;
+                justify-content: center !important;
+                box-sizing: border-box !important;
+            }
+
+            h1 { font-size: 1.5rem !important; }
+            h2 { font-size: 1.25rem !important; }
+            .box, .box p, .box span { font-size: 0.95rem !important; line-height: 1.7 !important; }
+
+            .bg-animation {
+                display: none !important;
+            }
         }
-
-
-        /* ✅ ضع هذا الكود الجديد المضيء بدلاً منه */
-        .header-image-container {
-           width: 100%;
-           max-width: 900px;
-           margin: 25px auto;
-           padding: 12px;
-           background: rgba(15, 23, 42, 0.75); /* خلفية داكنة تناسب الموقع */
-           border: 2px solid #22c55e; /* تغيير لون الحدود إلى الأخضر */
-           border-radius: 16px;
-           box-sizing: border-box;
-           overflow: hidden;
-           text-align: center;
-    
-           /* 🌟 تأثير الإضاءة للتوهج 🌟 */
-           box-shadow: 0 0 20px rgba(34, 197, 94, 0.75), 0 0 40px rgba(34, 197, 94, 0.45);
-           transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        /* زيادة الإضاءة عند تحريك الماوس فوق الإطار */
-        .header-image-container:hover {
-            transform: translateY(-2px);
-            /* ✅ هذا هو السطر الذي تم تصحيحه ✅ */
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.75), 
-                        0 0 40px rgba(34, 197, 94, 0.45);
-        }
-
-        /* الحفاظ على أبعاد ومقاسات الصور الأصلية داخل الإطار */
-        .header-image-container img {
-   
-           width: 100%;        /* ملء عرض الإطار بالكامل */
-           height: 100%;       /* ملء ارتفاع الإطار بالكامل */
-    
-           object-fit: cover;  /* يجعل الصورة تغطي المساحة بالكامل ويقص الزائد */
-           object-position: center; /* يجبر القص أن يكون من منتصف الصورة بالضبط */
-
-           border-radius: 12px;
-        }
-
-        .ad-space {
-           border: 2px dashed #10b981; /* خط متقطع أخضر اللون وبسمك 2 بكسل */
-           border-radius: 12px;        /* حواف دائرية للإطار */
-           text-align: center;         /* توسط النص داخل المساحة */
-           padding: 20px;              /* مسافة داخلية */
-           margin: 15px 0;             /* مسافة خارجية أعلى وأسفل العنصر */
-           background: rgba(16, 185, 129, 0.05); /* خلفية خضراء شفافة خفيفة متناسقة مع الثيم */
-           color: #10b981;             /* لون النص الأخضر */
-           font-weight: bold;
-        }
-
-
     </style>
+</head>
+
+
+
 
 <link rel="stylesheet" href="style.css">
     
@@ -329,7 +370,7 @@
         <img src="image6/photo.jpg" alt="مخطط التركيب الضوئي">
     </div>
 
-    <h1>الموسوعة الجزيئية المعمقة للتركيب الضوئي (1-20)</h1>
+    <h1>الوحدة 6: آليات تحويل الطاقة الضوئية إلى طاقة كيميائية كامنة (التركيب الضوئي) </h1>
 
      <div class="ad-space">
       <span>[ مساحة إعلانية علوية ]</span>
@@ -469,7 +510,7 @@
            6 CO₂ + 18 ATP + 12 (NADPH + H⁺) —[Rubisco / Stroma]—→ C₆H₁₂O₆ + 18 ADP + 18 Pi + 12 NADP⁺ + 6 H₂O
        </div>
 
-        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
+       <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 16px; padding: 12px; background: rgba(11, 15, 25, 0.8); box-shadow: 0 0 15px rgba(56, 189, 248, 0.15); overflow: hidden;">
     
             <!-- عنوان الصورة أعلى الإطار -->
             <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
@@ -491,12 +532,13 @@
         ظهر الإشعاع أولاً في <span class="keyword">APG</span> بعد ثانيتين، ثم في <span class="keyword">PGAL</span> بعد 5 ثوانٍ، وأخيراً في السكريات السداسية والنشاء بعد 30 ثانية، مثبتة أن البناء يتم تدريجياً عبر دورة كالفن.
     </div>
 
-    <h2>13. التكامل الوظيفي والتبعية بين التيلاكويد والحشوة</h2>
+    <h2>13. التكامل الوظيفي والتبعية المتبادلة بين التيلاكويد والحشوة</h2>
     <div class="box">
-        <h4>أ. علاقة "المصدر" و "المستهلك":</h4> 
-        التيلاكويد مصدر يوفر الطاقة الكيميائية والقوة الاختزالية، والحشوة مستهلك يبني المادة العضوية، مما يضمن كفاءة عالية عبر تقسيم العمل.
-        <h4>ب. تدوير النواقل (ADP و NADP+):</h4> 
-        الفضلات الناتجة في الحشوة تعود للتيلاكويد ليتم شحنها مجدداً بالضوء والماء، مما يجعل الصانعة نظاماً مغلقاً وكفؤاً للغاية.
+        <h4>أ. نواتج المرحلة الكيموضوئية شرط للمرحلة الكيموحيوية:</h4> 
+        يوفر التيلاكويد المركبات الوسيطية المتمثلة في <span class="keyword">ATP</span> و <span class="keyword">NADPH,H⁺</span>، والتي تُستهلك في الحشوة لإرجاع <span class="keyword">CO₂</span> وبناء المواد العضوية (الجلوكوز).
+
+        <h4>ب. تجديد المركبات الوسيطية (دورة النواقل):</h4> 
+        ينتج عن استهلاك المركبات الوسيطية في الحشوة تشكل <span class="keyword">NADP⁺</span> و <span class="keyword">ADP + Pi</span>، والتي تعود إلى التيلاكويد لإعادة إرجاعها وفسفرتها في وجود الضوء والماء، مما يضمن استمرار عملية التركيب الضوئي.
     </div>
 
     <h2>14. تجربة إيمرسون وتعاون الأنظمة الضوئية (PS)</h2>
@@ -515,27 +557,42 @@
         باعتباره مادة خام منخفضة التركيز جوياً، فإن زيادته تسرع عمل الروبيسكو، بينما تتأثر المرحلة الكيموحيوية حرارياً نظراً لاعتمادها على الإنزيمات.
     </div>
 
-    <h2>16. قياس تركيز APG و RuDP في الظلام وغياب CO2</h2>
-    <div class="box">
-        <h4>أ. حالة الظلام (تراكم الـ APG):</h4> 
-        انتقال مفاجئ للظلام يسبب ارتفاع APG وانخفاض RuDP؛ لانقطاع ATP ومنع الاختزال فتراكم APG، بينما استهلك RuDP في الثواني الأولى لتثبيت ما تبقى من CO2 دون تجديد.
-        <h4>ب. غياب CO2 (تراكم الـ RuDP):</h4> 
-        قطع CO2 مع بقاء الضوء يرفع RuDP ويخفض APG؛ لتوقف التثبيت وتراكم RuDP لعدم وجود ما يرتبط به، واستمرار تحويل APG الموجود مسبقاً لسكريات حتى نفاد المخزون.
-    </div>
+<h2>16. قياس تركيز APG و RuDP في الظلام وغياب CO₂</h2>
+<div class="box">
+    <h4 style="color: #c084fc !important;">أ. عند الانتقال إلى الظلام (تراكم APG ونفاد RuDP):</h4>
+    يؤدي انقطاع الضوء إلى توقف المرحلة الكيموضوئية وبالتالي <span class="keyword">توقف تشكّل ATP و NADPH,H⁺</span>، مما يسبب:
+    <br>• <b style="color: #f43f5e;">تراكم وارتفاع تركيز APG:</b> لاستمرار تشكّله من <span class="keyword">تثبيت CO₂</span> مع توقف <span class="keyword">إرجاعه واستهلاكه</span> لغياب المركبات الوسيطية.
+    <br>• <b style="color: #38bdf8;">انخفاض ونفاد تركيز RuDP:</b> لاستمرار <span class="keyword">استهلاكه في تثبيت CO₂</span> دون <span class="keyword">إعادة تجديده</span> لغياب ATP.
+
+    <h4 style="color: #c084fc !important;">ب. عند الانتقال إلى وسط خالٍ من CO₂ (تراكم RuDP ونفاد APG):</h4>
+    يؤدي غياب CO₂ إلى <span class="keyword">توقف تثبيته</span> في الحشوة، مع استمرارية المرحلة الكيموضوئية وتوفر الضوء، مما يسبب:
+    <br>• <b style="color: #38bdf8;">تراكم وارتفاع تركيز RuDP:</b> لاستمرار <span class="keyword">تجديده وتشكّله</span> بوجود المركبات الوسيطية (ATP) مع توقف <span class="keyword">استهلاكه لعدم وجود CO₂</span>.
+    <br>• <b style="color: #f43f5e;">انخفاض ونفاد تركيز APG:</b> لاستمرار <span class="keyword">إرجاعه واستهلاكه</span> بوجود الضوء دون <span class="keyword">تركيب جزيئات جديدة</span> منه.
+</div>
 
     <h2>17. المخطط التحصيلي النهائي لتحويل الطاقة الحيوية</h2>
     <div class="box">
-        <h4>أ. تحويل الطاقة من ضوئية إلى كيميائية:</h4> 
-        <span class="keyword">الصانعة الخضراء</span> محول طاقوي مذهل يحول الفوتونات الضوئية إلى روابط كيميائية كامنة بالغلوكوز والنشاء لتنتقل عبر السلاسل الغذائية للإنسان والحيوان.
-        <h4>ب. الوحدة البنائية والوظيفية للحياة:</h4> 
-        التركيب الضوئي يبني الحياة من الماء والهواء والضوء، وفهم هذه الجزيئات يتيح تقدير التصميم الحيوي والبحث عن طرق لمحاكاتها مستقبلاً لحل أزمات الطاقة.
+        <h4>أ. التحول الطاقوي في الصانعة الخضراء:</h4>
+        تُعتبر <span class="keyword">الصانعة الخضراء</span> العضية المسؤولة عن تحويل الطاقة الضوئية إلى طاقة كيميائية كامنة مُخزنة في الروابط الكيميائية للمواد العضوية (مثل الجلوكوز والنشاء)، وذلك عبر مرحلتين متكاملتين:
+    
+        <br>• <b style="color: #38bdf8;">المرحلة الكيموضوئية (على مستوى التيلاكويد):</b> تحويل الطاقة الضوئية إلى طاقة كيميائية مخزنة في مركب <span class="keyword">ATP</span> ومركب <span class="keyword">NADPH,H⁺</span> مع انطلاق <span class="keyword">O₂</span> ناتج عن أكسدة الماء.
+    
+        <br>• <b style="color: #f97316;">المرحلة الكيموحيوية (على مستوى الحشوة):</b> استعمال الطاقة المخزنة في <span class="keyword">ATP</span> و <span class="keyword">NADPH,H⁺</span> لإرجاع <span class="keyword">CO₂</span> وبناء المادة العضوية.
+
+        <h4>ب. المعادلة الإجمالية لظاهرة التركيب الضوئي:</h4>
+        تتحدد آليتا التركيب الضوئي بالمعادلة الإجمالية الموزونة التالية:
+        <div class="equation">
+            6CO₂ + 12H₂O  — (ضوء / يخضور) ➔  C₆H₁₂O₆ + 6O₂ + 6H₂O
+        </div>
     </div>
 
     <div class="tip-box">
-        <span class="tip-title">💡 نصيحة تفوق:</span>
-        اربط دائماً بين تجارب غياب الضوء أو غياب CO2 ومنحنيات التركيز، وتذكر أن تكامل العمل بين غشاء التيلاكويد (مصدر الطاقة) والحشوة (مستهلك الطاقة) هو مفتاح حل أي تمرين استدلال علمي في وحدة التركيب الضوئي.
+        <span class="tip-title">💡 نصيحة تفوق منهجية:</span>
+        عند تحليل منحنيات شروط التركيب الضوئي، تذكر دائماً القاعدة الذهبية:<br>
+        • <b>غياب الضوء:</b> يتراكم <span class="keyword">APG</span> وينفد <span class="keyword">RudP</span> (لتوقف تشكل المركبات الوسيطة <span class="keyword">ATP</span> و <span class="keyword">NADPH,H⁺</span>).<br>
+        • <b>غياب CO₂:</b> يتراكم <span class="keyword">RudP</span> وينفد <span class="keyword">APG</span> (لعدم وجود الجزيئة المستقبِلة لتثبيته).<br>
+        ربطك لتوقف إحدى المرحلتين بتوقف الأخرى هو أساس الحصول على العلامة الكاملة في التفسير!
     </div>
-
     <div class="ad-space">
         <span>[ مساحة إعلانية سفلية ]</span>
     </div>
