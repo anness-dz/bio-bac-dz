@@ -48,242 +48,827 @@
     </script>
 
     <style>
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-        }
-        
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #080d1a;
-            color: #ffffff;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-            padding: 12px;
-        }
-
-        /* كانفاس تحريك العضيات */
-        #cellCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .main-wrapper {
-            position: relative;
-            z-index: 2;
-            max-width: 1000px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        /* غلاف الصفحة */
-        .hero-header {
-            position: relative;
-            width: 100%;
-            height: 180px;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(56, 189, 248, 0.4);
-            margin-bottom: 15px;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
-            transition: box-shadow 0.3s ease, border-color 0.3s ease;
-        }
-
-        .hero-header:hover {
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.5);
-            border-color: #38bdf8;
-        }
-
-        .hero-header img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* الإعلانات */
-        .ad-banner {
-            background: rgba(30, 41, 59, 0.85);
-            border: 1px dashed #38bdf8;
-            border-radius: 12px;
-            padding: 12px;
-            margin: 15px 0;
-            text-align: center;
-            color: #94a3b8;
-            font-size: 0.85rem;
-            min-height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(8px);
-            width: 100%;
-            box-shadow: inset 0 0 10px rgba(56, 189, 248, 0.1);
-        }
-
-        /* شبكة الأزرار */
-        .buttons-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin: 15px 0;
-        }
-
-        .card-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            border-radius: 14px;
-            padding: 12px;
-            text-decoration: none;
-            color: white;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 100%;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-        }
-
-        .card-btn:hover, .card-btn:active {
-            transform: translateY(-5px) scale(1.02);
-            border-color: #38bdf8;
-            background: rgba(30, 41, 59, 0.9);
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4), inset 0 0 10px rgba(56, 189, 248, 0.2);
-        }
-
-        /* تم تكبير مساحة الصور هنا */
-        .card-btn img {
-            width: 100%;
-            height: 180px; /* تم تكبير الارتفاع ليكون بارزاً ومناسباً */
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .card-btn span {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #ffffff;
-            text-align: center;
-            line-height: 1.3;
-            text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
-        }
-
-        .card-btn:hover span {
-            color: #38bdf8;
-            text-shadow: 0 0 12px rgba(56, 189, 248, 0.9), 0 0 20px rgba(56, 189, 248, 0.4);
-        }
-
-        @media (max-width: 900px) {
-            .buttons-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .card-btn img { height: 160px; }
-        }
-
-        @media (max-width: 500px) {
-            body { padding: 8px; }
-            .hero-header { height: 140px; border-radius: 12px; }
-            .card-btn img { height: 130px; } /* حجم مريح للشاشات الصغيرة */
-            .card-btn span { font-size: 0.9rem; }
-            .ad-banner { min-height: 70px; padding: 8px; font-size: 0.8rem; }
-        }
 
 
 
-        .contact-links-container {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            align-items: stretch;
-            margin-bottom: 30px;
-            width: 100%;
-        }
 
-        /* التنسيق الأساسي الموحد للزرين */
-        .action-btn {
-            flex: 1;
-            max-width: 420px;
-            padding: 12px 20px;
-            border-radius: 12px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-sizing: border-box;
-        }
 
-        .action-btn svg {
-            flex-shrink: 0;
-        }
+/* =========================================================
+   1. نظام المتغيرات الشامل (Variables System)
+   ========================================================= */
+:root {
+    /* ألوان الوضع الداكن (الافتراضي) */
+    --bg-main: #080d1a;
+    --text-primary: #ffffff;
+    --text-secondary: #94a3b8;
+    --text-small: #e2e8f0;
+    
+    /* الحاويات والبطاقات */
+    --card-bg: rgba(15, 23, 42, 0.75);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    
+    /* الإعلانات وغلاف الهيدر */
+    --ad-bg: rgba(30, 41, 59, 0.85);
+    --hero-border: rgba(56, 189, 248, 0.4);
+    --hero-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+    
+    /* أداة العد التنازلي الزجاجية */
+    --counter-bg: rgba(15, 23, 42, 0.75);
+    --counter-border: rgba(255, 255, 255, 0.12);
+    --counter-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    --circle-bg-stroke: rgba(255, 255, 255, 0.07);
+    --tooltip-bg: rgba(0, 0, 0, 0.35);
+    --popover-bg: rgba(15, 23, 42, 0.95);
+    --popover-border: rgba(255, 255, 255, 0.15);
 
-        .btn-text {
-            display: flex;
-            flex-direction: column;
-            text-align: right;
-            line-height: 1.3;
-        }
+    /* زر Bacorbit */
+    --bacorbit-btn-text: #0b0f19;
+}
 
-        .brand-name {
-            font-size: 1.15rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-        }
+body.light-theme {
+    --bg-main: #f1f5f9;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-small: #334155;
+    
+    /* الحاويات والبطاقات */
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --card-border: rgba(0, 0, 0, 0.08);
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    
+    /* الإعلانات وغلاف الهيدر */
+    --ad-bg: rgba(255, 255, 255, 0.95);
+    --hero-border: rgba(14, 165, 233, 0.4);
+    --hero-shadow: 0 0 20px rgba(14, 165, 233, 0.15);
+    
+    /* أداة العد التنازلي الزجاجية */
+    --counter-bg: rgba(255, 255, 255, 0.9);
+    --counter-border: rgba(14, 165, 233, 0.2);
+    --counter-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    --circle-bg-stroke: rgba(0, 0, 0, 0.08);
+    --tooltip-bg: rgba(14, 165, 233, 0.1);
+    --popover-bg: rgba(255, 255, 255, 0.98);
+    --popover-border: rgba(0, 0, 0, 0.15);
 
-        .btn-subtext {
-            font-size: 0.78rem;
-            font-weight: normal;
-            opacity: 0.9;
-        }
+    /* زر Bacorbit */
+    --bacorbit-btn-text: #ffffff;
+}
 
-        /* تخصيص زر BacOrbit الأخضر المضيء */
-        .bacorbit-btn {
-            background-color: #10b981;
-            color: #0b0f19;
-            box-shadow: 0 0 18px rgba(16, 185, 129, 0.35);
-            border: 1px solid rgba(16, 185, 129, 0.5);
-        }
+/* =========================================================
+   2. التنسيقات العامة للصفحة
+   ========================================================= */
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
 
-        .bacorbit-btn:hover {
-            transform: translateY(-3px);
-            background-color: #059669;
-            color: #ffffff;
-            box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
-        }
+html, body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    min-height: 100vh;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
 
-        /* تخصيص زر الفيسبوك الأزرق */
-        .fb-btn {
-            background-color: #1877f2;
-            color: #ffffff;
-            box-shadow: 0 0 18px rgba(24, 119, 242, 0.35);
-            border: 1px solid rgba(24, 119, 242, 0.5);
-        }
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+    position: relative;
+    padding: 12px;
+}
 
-        .fb-btn:hover {
-            transform: translateY(-3px);
-            background-color: #166fe5;
-            box-shadow: 0 0 25px rgba(24, 119, 242, 0.6);
-        }
+/* زر التبديل */
+.theme-toggle-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-        /* تجاوب الزرين مع الشاشات الصغيرة (الهواتف) */
-        @media (max-width: 650px) {
-            .contact-links-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            .action-btn {
-                width: 100%;
-                max-width: 100%;
-            }
-        }
+.theme-toggle-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    box-shadow: var(--card-shadow);
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.05);
+}
+
+/* كانفاس تحريك العضيات */
+#cellCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.main-wrapper {
+    position: relative;
+    z-index: 2;
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* غلاف الصفحة */
+.hero-header {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--hero-border);
+    margin-bottom: 15px;
+    box-shadow: var(--hero-shadow);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.hero-header:hover {
+    box-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
+    border-color: #38bdf8;
+}
+
+.hero-header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* الإعلانات */
+.ad-banner {
+    background: var(--ad-bg);
+    border: 1px dashed #38bdf8;
+    border-radius: 12px;
+    padding: 12px;
+    margin: 15px 0;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    width: 100%;
+    box-shadow: inset 0 0 10px rgba(56, 189, 248, 0.1);
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* =========================================================
+   3. شبكة الأزرار والبطاقات التفاعلية (مع الألوان المخصصة)
+   ========================================================= */
+.buttons-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.card-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 12px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    box-shadow: var(--card-shadow);
+}
+
+.card-btn img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    border: 1px solid var(--card-border);
+    transition: border-color 0.3s ease;
+}
+
+.card-btn span {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+    line-height: 1.3;
+    transition: color 0.3s ease;
+}
+
+/* --- تخصيص ألوان الـ Hover الملونة لكل موضوع --- */
+
+/* 1. تركيب البروتين (أزرق مشع) */
+.card-protein:hover, .card-protein:active {
+    transform: translateY(-6px) scale(1.02);
+    border-color: #38bdf8;
+    box-shadow: 0 0 22px rgba(56, 189, 248, 0.5);
+}
+.card-protein:hover span { color: #38bdf8; }
+
+/* 2. المناعة (بنفسجي مشع) */
+.card-immunity:hover, .card-immunity:active {
+    transform: translateY(-6px) scale(1.02);
+    border-color: #a855f7;
+    box-shadow: 0 0 22px rgba(168, 85, 247, 0.5);
+}
+.card-immunity:hover span { color: #a855f7; }
+
+/* 3. التركيب الضوئي (أخضر مشع) */
+.card-photosynthesis:hover, .card-photosynthesis:active {
+    transform: translateY(-6px) scale(1.02);
+    border-color: #22c55e;
+    box-shadow: 0 0 22px rgba(34, 197, 94, 0.5);
+}
+.card-photosynthesis:hover span { color: #22c55e; }
+
+/* 4. التنفس والتخمر / الطاقة (أحمر / برتقالي مشع) */
+.card-respiration:hover, .card-respiration:active {
+    transform: translateY(-6px) scale(1.02);
+    border-color: #ef4444;
+    box-shadow: 0 0 22px rgba(239, 68, 68, 0.5);
+}
+.card-respiration:hover span { color: #ef4444; }
+
+/* 5. الاتصال العصبي (أصفر / ذهبي مشع) */
+.card-nerve:hover, .card-nerve:active {
+    transform: translateY(-6px) scale(1.02);
+    border-color: #eab308;
+    box-shadow: 0 0 22px rgba(234, 179, 8, 0.5);
+}
+.card-nerve:hover span { color: #eab308; }
+
+/* 6. الجيولوجيا / التكتونية (وردية / أرجوانية مشعة) */
+.card-geology:hover, .card-geology:active {
+    transform: translateY(-6px) scale(1.02);
+    border-color: #ec4899;
+    box-shadow: 0 0 22px rgba(236, 72, 153, 0.5);
+}
+.card-geology:hover span { color: #ec4899; }
+
+
+/* =========================================================
+   4. زر التواصل و الباك أوربيت
+   ========================================================= */
+.contact-links-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: stretch;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.action-btn {
+    flex: 1;
+    max-width: 420px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.action-btn svg { flex-shrink: 0; }
+
+.btn-text {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    line-height: 1.3;
+}
+
+.brand-name {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.btn-subtext {
+    font-size: 0.78rem;
+    font-weight: normal;
+    opacity: 0.9;
+}
+
+.bacorbit-btn {
+    background-color: #10b981;
+    color: var(--bacorbit-btn-text);
+    box-shadow: 0 0 18px rgba(16, 185, 129, 0.35);
+    border: 1px solid rgba(16, 185, 129, 0.5);
+}
+
+.bacorbit-btn:hover {
+    transform: translateY(-3px);
+    background-color: #059669;
+    color: #ffffff;
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
+}
+
+.fb-btn {
+    background-color: #1877f2;
+    color: #ffffff;
+    box-shadow: 0 0 18px rgba(24, 119, 242, 0.35);
+    border: 1px solid rgba(24, 119, 242, 0.5);
+}
+
+.fb-btn:hover {
+    transform: translateY(-3px);
+    background-color: #166fe5;
+    box-shadow: 0 0 25px rgba(24, 119, 242, 0.6);
+}
+
+/* =========================================================
+   5. أداة العد التنازلي التفاعلية (Bio Organic Counter)
+   ========================================================= */
+.bio-organic-counter {
+    background: var(--counter-bg);
+    border: 1px solid var(--counter-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 35px 25px;
+    border-radius: 28px;
+    text-align: center;
+    max-width: 800px;
+    margin: 30px auto;
+    font-family: 'Tajawal', sans-serif;
+    box-shadow: var(--counter-shadow);
+    overflow: visible;
+    transition: all 0.4s ease;
+}
+
+.countdown-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.countdown-header h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #00f2fe 0%, #00ff88 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
+
+.pulse-icon { font-size: 1.6rem; }
+
+.bio-nodes-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    overflow: visible;
+}
+
+.bio-node {
+    position: relative;
+    width: 125px;
+    height: 125px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    overflow: visible;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.bio-node:hover { transform: scale(1.06); }
+
+.bio-circle-svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+    overflow: visible;
+}
+
+.bio-circle-bg {
+    fill: none;
+    stroke: var(--circle-bg-stroke);
+    stroke-width: 6;
+    transition: stroke 0.4s ease;
+}
+
+.bio-circle-progress {
+    fill: none;
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-dasharray: 264;
+    stroke-dashoffset: 264;
+    transition: stroke-dashoffset 1s linear, stroke 0.5s ease, filter 0.5s ease;
+}
+
+.bio-number span {
+    display: block;
+    font-size: 2.1rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--text-primary);
+    transition: color 0.4s ease;
+}
+
+.bio-number small {
+    font-size: 0.85rem;
+    color: var(--text-small);
+    font-weight: 600;
+    margin-top: 4px;
+    display: block;
+    transition: color 0.4s ease;
+}
+
+.bio-tooltip {
+    background: var(--tooltip-bg);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    color: #00f2fe;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    display: inline-block;
+    margin-bottom: 12px;
+    transition: background 0.4s ease;
+}
+
+.bio-quote {
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    margin: 10px 0 20px;
+    line-height: 1.6;
+    transition: color 0.4s ease;
+}
+
+.share-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.main-share-btn {
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+    border: none;
+    color: #0f172a;
+    padding: 10px 24px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.35);
+    transition: all 0.3s ease;
+    font-family: 'Tajawal', sans-serif;
+}
+
+.main-share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 242, 254, 0.55);
+}
+
+.share-popover {
+    display: none;
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--popover-bg);
+    border: 1px solid var(--popover-border);
+    backdrop-filter: blur(12px);
+    padding: 10px;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    flex-direction: row;
+    gap: 8px;
+    z-index: 100;
+    white-space: nowrap;
+}
+
+.share-popover.active {
+    display: flex;
+    animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    0% { opacity: 0; transform: translate(-50%, 10px) scale(0.9); }
+    100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+.pop-btn {
+    border: none;
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: transform 0.2s ease;
+    font-family: 'Tajawal', sans-serif;
+}
+
+.pop-btn:hover { transform: scale(1.05); }
+.pop-btn.fb { background: #1877f2; }
+.pop-btn.ms { background: #0084ff; }
+.pop-btn.wa { background: #25d366; }
+.pop-btn.tg { background: #24a1de; }
+.pop-btn.cp { background: var(--card-border); color: var(--text-primary); }
+
+.toast-msg {
+    display: block;
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: #00ff88;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.toast-msg.show { opacity: 1; }
+
+/* =========================================================
+   6. تنسيقات الفوتر الذكية (Footer Responsive Styles)
+   ========================================================= */
+.site-footer {
+    background-color: var(--card-bg);
+    border-top: 2px solid #22c55e;
+    padding: 35px 20px;
+    text-align: center;
+    color: var(--text-secondary);
+    margin-top: 50px;
+    border-radius: 16px 16px 0 0;
+    backdrop-filter: blur(8px);
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.legal-box {
+    max-width: 850px;
+    margin: 0 auto 20px auto;
+    font-size: 0.85rem;
+    line-height: 1.8;
+    background: var(--ad-bg);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+    text-align: right;
+    color: var(--text-primary);
+    transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+.legal-box p { margin: 8px 0; }
+
+.legal-box .site-name {
+    color: var(--text-primary);
+    font-weight: bold;
+}
+
+.highlight-green { color: #22c55e; }
+.highlight-red { color: #ef4444; }
+.highlight-orange { color: #f97316; }
+.highlight-blue { color: #38bdf8; }
+
+.copyright-text {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* =========================================================
+   7. التجاوب مع الشاشات (Media Queries)
+   ========================================================= */
+@media (max-width: 900px) {
+    .buttons-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .card-btn img { height: 160px; }
+}
+
+@media (max-width: 650px) {
+    .contact-links-container { flex-direction: column; align-items: center; }
+    .action-btn { width: 100%; max-width: 100%; }
+}
+
+@media (max-width: 600px) {
+    .bio-organic-counter { padding: 25px 12px; }
+    .bio-nodes-container { gap: 6px; }
+    .bio-node { width: 78px; height: 78px; }
+    .bio-number span { font-size: 1.35rem; }
+    .bio-number small { font-size: 0.65rem; }
+    .countdown-header h2 { font-size: 1.25rem; }
+    .share-popover { flex-direction: column; width: 160px; }
+}
+
+@media (max-width: 500px) {
+    body { padding: 8px; }
+    .hero-header { height: 140px; border-radius: 12px; }
+    .card-btn img { height: 130px; }
+    .card-btn span { font-size: 0.9rem; }
+    .ad-banner { min-height: 70px; padding: 8px; font-size: 0.8rem; }
+}
+
+
+
+
+
+
+
+
+
+/* --- الألوان الجديدة المخصصة للبطاقات --- */
+
+/* الوحدة 1: أزرق داكن */
+.card-unit1 {
+    --card-glow: #1e40af;
+    border-bottom: 3px solid #1e40af;
+}
+
+/* الوحدة 2: أزرق فاتح */
+.card-unit2 {
+    --card-glow: #14b8a6;
+    border-bottom: 3px solid #14b8a6;
+}
+
+/* الوحدة 3: أخضر زمردي / تيل (اختياري) */
+.card-unit3 {
+    --card-glow: #38bdf8;
+    border-bottom: 3px solid #38bdf8;
+}
+
+/* الوحدة 4: بنفسجي */
+.card-unit4 {
+    --card-glow: #a855f7;
+    border-bottom: 3px solid #a855f7;
+}
+
+/* الوحدة 5: أصفر */
+.card-unit5 {
+    --card-glow: #eab308;
+    border-bottom: 3px solid #eab308;
+}
+
+/* الوحدة 6: أخضر */
+.card-unit6 {
+    --card-glow: #22c55e;
+    border-bottom: 3px solid #22c55e;
+}
+
+/* الوحدة 7: برتقالي */
+.card-unit7 {
+    --card-glow: #f97316;
+    border-bottom: 3px solid #f97316;
+}
+
+/* الوحدة 8: أحمر */
+.card-unit8 {
+    --card-glow: #ef4444;
+    border-bottom: 3px solid #ef4444;
+}
+
+/* تأثير التوهج والتكبير عند التمرير بالماوس */
+.card-btn:hover {
+    box-shadow: 0 10px 25px -5px var(--card-glow);
+    border-color: var(--card-glow);
+    transform: translateY(-4px);
+}
+
+
+
+
+
+
+
+
+
+
+.top-navbar {
+    width: 100%;
+    position: relative !important;
+    background-color: var(--card-bg, rgba(15, 23, 42, 0.85));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border); /* تم التعديل لاستخدام --card-border */
+    padding: 10px 20px;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    border-radius: 20px !important;
+}
+
+/* حاوية العناصر للضبط في سطر واحد */
+.top-nav-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100%;
+}
+
+/* الشعار والاسم - تأثيرات التكبير والحركة */
+.top-brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+}
+
+/* التكبير عند تمرير الفأرة (Hover) */
+.top-brand-logo:hover {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
+}
+
+/* الانضغاط عند الضغط (Active) */
+.top-brand-logo:active {
+    transform: scale(0.96);
+}
+
+/* أيقونة الفافيكون */
+.top-logo-img {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.top-brand-logo:hover .top-logo-img {
+    transform: rotate(6deg) scale(1.05);
+}
+
+/* اسم الموقع المتدرج والكبير */
+.top-brand-name {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+}
+
+/* إلغاء هوامش زر الأوضاع داخل الشريط فقط */
+.top-navbar .theme-toggle-btn {
+    margin: 0 !important;
+    white-space: nowrap;
+}
+
+
+
+
+@media (max-width: 600px) {
+    .top-navbar {
+        padding: 8px 15px; /* تقليل الهوامش الداخلية يناسب عرض الهاتف */
+        border-radius: 12px !important; /* تقليل الانحناء قليلاً ليتناسق مع حواف الشاشة */
+    }
+
+    .top-brand-logo {
+        gap: 8px; /* تقليل المسافة بين الأيقونة والاسم */
+    }
+
+    .top-logo-img {
+        width: 30px;
+        height: 30px; /* ضبط حجم الأيقونة للهاتف */
+    }
+
+    .top-brand-name {
+        font-size: 1.3rem; /* تصغير اسم الموقع ليظهر كاملاً بوضوح */
+    }
+
+    .top-navbar .theme-toggle-btn {
+        padding: 6px 10px;
+        font-size: 0.85rem; /* تصغير الزر ليأخذ مساحة مريحة */
+    }
+}
 
 
 
@@ -298,111 +883,259 @@
 </head>
 <body>
 
+    <!-- كانفاس خلفية العضيات -->
     <canvas id="cellCanvas"></canvas>
 
     <div class="main-wrapper">
+        
+
+
+
+
+
+
+<header class="top-navbar">
+    <div class="top-nav-container">
+        <!-- الشعار والاسم (على اليمين) -->
+        <a href="index.html" class="top-brand-logo">
+            <img src="favicon.png" alt="شعار" class="top-logo-img" onerror="this.onerror=null; this.src='favicon.ico';">
+            <span class="top-brand-name">bio-bac-dz</span>
+        </a>
+
+        <!-- زر التبديل (في نفس السطر على اليسار) -->
+        <button class="theme-toggle-btn" onclick="toggleTheme()">
+            <span id="theme-icon">🌙</span>
+            <span id="theme-text">الوضع الليلي</span>
+        </button>
+    </div>
+</header>
+
+
+
+
+
+
+
+
+        <!-- غلاف الصفحة (Hero Header) -->
         <header class="hero-header">
             <img src="header-bg.png" alt="صورة الغلاف" onerror="this.src='https://via.placeholder.com/1000x300/1e293b/38bdf8?text=ضع+صورة+الغلاف+هنا'">
         </header>
 
+        <!-- مساحة إعلانية علوية -->
         <div class="ad-banner">
             <span>[ مساحة إعلانية علوية ]</span>
         </div>
 
+<!-- شبكة البطاقات 1 (الوحدات 1 إلى 4) -->
         <main class="buttons-grid">
-            <a href="lesson1.html" class="card-btn">
-                <img src="img1.jpg" alt="درس 1" onerror="this.src='https://via.placeholder.com/300x200/0f172a/38bdf8?text=صورة+1'">
-                <span>الوحدة 1: تركيب البروتين </span>
+            <!-- الوحدة 1: أزرق داكن -->
+            <a href="lesson1.html" class="card-btn card-unit1">
+                <img src="img1.jpg" alt="درس 1" onerror="this.src='https://via.placeholder.com/300x200/0f172a/1e40af?text=صورة+1'">
+                <span>الوحدة 1: تركيب البروتين</span>
             </a>
-            <a href="lesson2.html" class="card-btn">
+
+            <!-- الوحدة 2: أزرق فاتح -->
+            <a href="lesson2.html" class="card-btn card-unit2">
                 <img src="img2.jpg" alt="درس 2" onerror="this.src='https://via.placeholder.com/300x200/0f172a/38bdf8?text=صورة+2'">
-                <span>الوحدة 2: العلاقة بين بنية ووظيفة البروتين </span>
+                <span>الوحدة 2: العلاقة بين بنية ووظيفة البروتين</span>
             </a>
-            <a href="lesson3.html" class="card-btn">
-                <img src="img3.jpg" alt="درس 3" onerror="this.src='https://via.placeholder.com/300x200/0f172a/38bdf8?text=صورة+3'">
-                <span>الوحدة 3: النشاط الإنزيمي للبروتينات </span>
+
+            <!-- الوحدة 3: أخضر زمردي -->
+            <a href="lesson3.html" class="card-btn card-unit3">
+                <img src="img3.jpg" alt="درس 3" onerror="this.src='https://via.placeholder.com/300x200/0f172a/14b8a6?text=صورة+3'">
+                <span>الوحدة 3: النشاط الإنزيمي للبروتينات</span>
             </a>
-            <a href="lesson4.html" class="card-btn">
-                <img src="img4.jpg" alt="درس 4" onerror="this.src='https://via.placeholder.com/300x200/0f172a/38bdf8?text=صورة+4'">
-                <span>الوحدة 4: دور البروتينات في الدفاع عن الذات (المناعة) </span>
+
+            <!-- الوحدة 4: بنفسجي -->
+            <a href="lesson4.html" class="card-btn card-unit4">
+                <img src="img4.jpg" alt="درس 4" onerror="this.src='https://via.placeholder.com/300x200/0f172a/a855f7?text=صورة+4'">
+                <span>الوحدة 4: دور البروتينات في الدفاع عن الذات (المناعة)</span>
             </a>
         </main>
 
+        <!-- مساحة إعلانية وسطى -->
         <div class="ad-banner">
             <span>[ مساحة إعلانية وسطى ]</span>
         </div>
 
+        <!-- شبكة البطاقات 2 (الوحدات 5 إلى 8) -->
         <main class="buttons-grid">
-            <a href="lesson5.html" class="card-btn">
-                <img src="img5.jpg" alt="درس 5" onerror="this.src='https://via.placeholder.com/300x200/0f172a/38bdf8?text=صورة+5'">
-                <span>الوحدة 5: دور البروتينات في الاتصال العصبي </span>
+            <!-- الوحدة 5: أصفر -->
+            <a href="lesson5.html" class="card-btn card-unit5">
+                <img src="img5.jpg" alt="درس 5" onerror="this.src='https://via.placeholder.com/300x200/0f172a/eab308?text=صورة+5'">
+                <span>الوحدة 5: دور البروتينات في الاتصال العصبي</span>
             </a>
-            <a href="lesson6.html" class="card-btn">
-                <img src="img6.png" alt="درس 6" onerror="this.src='https://via.placeholder.com/300x200/0f172a/38bdf8?text=صورة+6'">
-                <span>الوحدة 6: آليات تحويل الطاقة الضوئية إلى طاقة كيميائية كامنة (التركيب الضوئي) </span>
+
+            <!-- الوحدة 6: أخضر -->
+            <a href="lesson6.html" class="card-btn card-unit6">
+                <img src="img6.png" alt="درس 6" onerror="this.src='https://via.placeholder.com/300x200/0f172a/22c55e?text=صورة+6'">
+                <span>الوحدة 6: آليات تحويل الطاقة الضوئية إلى طاقة كيميائية كامنة (التركيب الضوئي)</span>
             </a>
-            <a href="lesson7.html" class="card-btn">
-                <img src="img7.jpg" alt="درس 7" onerror="this.src='https://via.placeholder.com/300x200/0f172a/38bdf8?text=صورة+7'">
-                <span>الوحدة 7: آليات تحويل الطاقة الكيميائية الكامنة في الجزيئات العضوية إلى طاقة قابلة للاستعمال (التنفس والتخمر) 
-            </span>
+
+            <!-- الوحدة 7: برتقالي -->
+            <a href="lesson7.html" class="card-btn card-unit7">
+                <img src="img7.jpg" alt="درس 7" onerror="this.src='https://via.placeholder.com/300x200/0f172a/f97316?text=صورة+7'">
+                <span>الوحدة 7: آليات تحويل الطاقة الكيميائية الكامنة إلى طاقة قابلة للاستعمال (التنفس والتخمر)</span>
             </a>
-            <a href="lesson8.html" class="card-btn">
-                <img src="img8.png" alt="درس 8" onerror="this.src='https://via.placeholder.com/300x200/0f172a/38bdf8?text=صورة+8'">
-                <span>الوحدة 8: التكتونية العامة </span>
+
+            <!-- الوحدة 8: أحمر -->
+            <a href="lesson8.html" class="card-btn card-unit8">
+                <img src="img8.png" alt="درس 8" onerror="this.src='https://via.placeholder.com/300x200/0f172a/ef4444?text=صورة+8'">
+                <span>الوحدة 8: التكتونية العامة</span>
             </a>
         </main>
 
+        <!-- مساحة إعلانية سفلية -->
         <div class="ad-banner">
             <span>[ مساحة إعلانية سفلية ]</span>
         </div>
+
+
+
+
+<div class="bio-organic-counter">
+    <div class="bio-scene">
+        
+        <div class="countdown-header">
+            <span class="pulse-icon">⏳</span>
+            <h2>العد التنازلي لشهادة البكالوريا 🍃</h2>
+        </div>
+        
+        <div class="bio-nodes-container">
+            <!-- الأيام -->
+            <div class="bio-node" onclick="showInfo('days')">
+                <svg class="bio-circle-svg" viewBox="0 0 100 100">
+                    <circle class="bio-circle-bg" cx="50" cy="50" r="42"></circle>
+                    <circle class="bio-circle-progress days-progress" id="days-circle" cx="50" cy="50" r="42"></circle>
+                </svg>
+                <div class="bio-number">
+                    <span id="days">00</span>
+                    <small>يوم</small>
+                </div>
+            </div>
+            
+            <!-- الساعات -->
+            <div class="bio-node" onclick="showInfo('hours')">
+                <svg class="bio-circle-svg" viewBox="0 0 100 100">
+                    <circle class="bio-circle-bg" cx="50" cy="50" r="42"></circle>
+                    <circle class="bio-circle-progress hours-progress" id="hours-circle" cx="50" cy="50" r="42"></circle>
+                </svg>
+                <div class="bio-number">
+                    <span id="hours">00</span>
+                    <small>ساعة</small>
+                </div>
+            </div>
+            
+            <!-- الدقائق -->
+            <div class="bio-node" onclick="showInfo('minutes')">
+                <svg class="bio-circle-svg" viewBox="0 0 100 100">
+                    <circle class="bio-circle-bg" cx="50" cy="50" r="42"></circle>
+                    <circle class="bio-circle-progress minutes-progress" id="minutes-circle" cx="50" cy="50" r="42"></circle>
+                </svg>
+                <div class="bio-number">
+                    <span id="minutes">00</span>
+                    <small>دقيقة</small>
+                </div>
+            </div>
+            
+            <!-- الثواني -->
+            <div class="bio-node" onclick="showInfo('seconds')">
+                <svg class="bio-circle-svg" viewBox="0 0 100 100">
+                    <circle class="bio-circle-bg" cx="50" cy="50" r="42"></circle>
+                    <circle class="bio-circle-progress seconds-progress" id="seconds-circle" cx="50" cy="50" r="42"></circle>
+                </svg>
+                <div class="bio-number">
+                    <span id="seconds">00</span>
+                    <small>ثانية</small>
+                </div>
+            </div>
+        </div>
+
+        <div id="bio-tooltip" class="bio-tooltip">اضغط على أي دائرة لرؤية التفاصيل ✨</div>
+
+        <p id="bio-quote" class="bio-quote">جاري جلب العبارة التحفيزية...</p>
+
+        <!-- زر المشاركة المنبثق -->
+        <div class="share-wrapper">
+            <button class="main-share-btn" onclick="toggleShareMenu()">
+                <span>✨ مشاركة العبارة</span>
+            </button>
+
+            <div id="share-menu" class="share-popover">
+                <button class="pop-btn fb" onclick="shareTo('facebook')"><i>📘</i> فيسبوك</button>
+                <button class="pop-btn ms" onclick="shareTo('messenger')"><i>⚡</i> ماسينجر</button>
+                <button class="pop-btn wa" onclick="shareTo('whatsapp')"><i>🟢</i> واتساب</button>
+                <button class="pop-btn tg" onclick="shareTo('telegram')"><i>✈️</i> تلغرام</button>
+                <button class="pop-btn cp" onclick="shareTo('copy')"><i>📋</i> نسخ النص</button>
+            </div>
+        </div>
+
+        <span id="toast-msg" class="toast-msg">تم نسخ العبارة والرابط بنجاح! 📋</span>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 🌟 شريط قانوني وإخلاء مسؤولية شامل لموقع bio-bac-dz 🌟 -->
+<footer class="site-footer">
+
+    <!-- 🔵 زر التواصل والإبلاغ عبر فيسبوك -->
+    <div class="contact-links-container">
+        <!-- 1. زر التواصل عبر فيسبوك (الأول) -->
+        <a href="https://web.facebook.com/profile.php?id=61577447349356" target="_blank" rel="noopener noreferrer" class="action-btn fb-btn">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            <div class="btn-text">
+                <span class="brand-name">فيسبوك</span>
+                <span class="btn-subtext">تواصل معنا أو أبلغ عن أي خلل</span>
+            </div>
+        </a>
+
+        <!-- 2. زر موقع BacOrbit (الثاني) -->
+        <a href="https://bacorbit.github.io/BacOrbit/" target="_blank" class="action-btn bacorbit-btn">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            <div class="btn-text">
+                <span class="brand-name">BacOrbit</span>
+                <span class="btn-subtext">منصتكم الشاملة للملخصات وحوليات البكالوريا</span>
+            </div>
+        </a>
     </div>
 
-
-    <!-- 🌟 شريط قانوني وإخلاء مسؤولية شامل لموقع bio-bac-dz 🌟 -->
- <footer style="background-color: #0f172a; border-top: 2px solid #22c55e; padding: 35px 20px; text-align: center; color: #94a3b8; margin-top: 50px; border-radius: 16px 16px 0 0;">
-
-     <!-- 🔵 زر التواصل والإبلاغ عبر فيسبوك -->
-     <div class="contact-links-container">
-         <!-- 1. زر التواصل عبر فيسبوك (الأول) -->
-         <a href="https://web.facebook.com/profile.php?id=61577447349356" target="_blank" rel="noopener noreferrer" class="action-btn fb-btn">
-             <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-             </svg>
-             <div class="btn-text">
-                 <span class="brand-name">فيسبوك</span>
-                 <span class="btn-subtext">تواصل معنا أو أبلغ عن أي خلل</span>
-             </div>
-         </a>
-
-         <!-- 2. زر موقع BacOrbit (الثاني) -->
-         <a href="https://bacorbit.github.io/BacOrbit/" target="_blank" class="action-btn bacorbit-btn">
-             <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-             </svg>
-             <div class="btn-text">
-                 <span class="brand-name">BacOrbit</span>
-                 <span class="btn-subtext">منصتكم الشاملة للملخصات وحوليات البكالوريا</span>
-             </div>
-         </a>
-     </div>
-
-     <!-- 📜 النص القانوني الكامل للحماية -->
-     <div style="max-width: 850px; margin: 0 auto 20px auto; font-size: 0.85rem; line-height: 1.8; background: rgba(15, 23, 42, 0.75); padding: 20px; border-radius: 10px; border: 1px solid #1e293b; text-align: right;">
+    <!-- 📜 النص القانوني الكامل للحماية -->
+    <div class="legal-box">
+        <p><strong class="highlight-green">🔒 سياسة الخصوصية والاستخدام:</strong> موقع <span class="site-name">bio-bac-dz</span> مخصص للتصفح والمطالعة العلمية فقط، ولا نطلب أو نجمع أي بيانات شخصية من الزوار. جميع المحتويات مجانية تماماً ويُمنع إعادة بيعها أو استغلالها تجارياً.</p>
         
-         <p style="margin: 6px 0;"><strong style="color: #22c55e;">🔒 سياسة الخصوصية والاستخدام:</strong> موقع <span style="color: #fff;">bio-bac-dz</span> مخصص للتصفح والمطالعة العلمية فقط، ولا نطلب أو نجمع أي بيانات شخصية من الزوار. جميع المحتويات مجانية تماماً ويُمنع إعادة بيعها أو استغلالها تجارياً.</p>
-        
-         <p style="margin: 8px 0;"><strong style="color: #ef4444;">⚠️ تنبيه هام (المصادر الرسمية):</strong> 
-         المحتوى والمخططات المقدمة في هذا الموقع مخصصة للمراجعة والتعليم الذاتي فقط، **ولا تعوض بأي حال من الأحوال الكتاب المدرسي والمناهج أو التوجيهات الرسمية** الصادرة عن وزارة التربية الوطنية.</p>
+        <p><strong class="highlight-red">⚠️ تنبيه هام (المصادر الرسمية):</strong> المحتوى والمخططات المقدمة في هذا الموقع مخصصة للمراجع والتأهيل الذاتي فقط، <strong>ولا تعوض بأي حال من الأحوال الكتاب المدرسي والمناهج أو التوجيهات الرسمية</strong> الصادرة عن وزارة التربية الوطنية.</p>
 
-         <p style="margin: 8px 0;"><strong style="color: #f97316;">🎨 إخلاء مسؤولية الصور والوسائط:</strong> 
-         تم دعم بعض المواضيع برسومات ومخططات معدلة رقمياً أو توليدها بواسطة الذكاء الاصطناعي (AI) لأغراض توضيحية وبصرية فقط دون المساس بالمحتوى العلمي، ولا نهدف بها للتعدي على أي حقوق ملكية فكرية.</p>
+        <p><strong class="highlight-orange">🎨 إخلاء مسؤولية الصور والوسائط:</strong> تم دعم بعض المواضيع برسومات ومخططات معدلة رقمياً أو توليدها بواسطة الذكاء الاصطناعي (AI) لأغراض توضيحية وبصرية فقط دون المساس بالمحتوى العلمي، ولا نهدف بها للتعدي على أي حقوق ملكية فكرية.</p>
 
-         <p style="margin: 6px 0;"><strong style="color: #38bdf8;">📢 الإبلاغ عن المحتوى:</strong> في حال وجود خطأ علمي، أو رابط لا يعمل، أو اعتراض على حقوق أي صورة، يرجى مراسلتنا فوراً عبر فيسبوك لتعديل المحتوى أو إزالته.</p>
-     </div>
+        <p><strong class="highlight-blue">📢 الإبلاغ عن المحتوى:</strong> في حال وجود خطأ علمي، أو رابط لا يعمل، أو اعتراض على حقوق أي صورة، يرجى مراسلتنا فوراً عبر فيسبوك لتعديل المحتوى أو إزالته.</p>
+    </div>
 
-     <!-- ⚖️ حقوق الملكية -->
-     <p style="font-size: 0.85rem; color: #64748b; margin: 0;">© 2026 جميع الحقوق محفوظة - bio-bac-dz</p>
- </footer>
+    <!-- ⚖️ حقوق الملكية -->
+    <p class="copyright-text">© 2026 جميع الحقوق محفوظة - bio-bac-dz</p>
+</footer>
+
+
+
+
 
 
     <script>
@@ -491,6 +1224,252 @@
         }
 
         animate();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const bacDate = new Date(2027, 5, 14, 8, 0, 0).getTime();
+let currentDaysLeft = 0;
+let prevSec = -1;
+
+function updateSingleNode(circleClass, numId, exactValue, maxVal, displayNum) {
+    const circle = document.querySelector(circleClass);
+    const numSpan = document.getElementById(numId);
+    if (!circle) return;
+
+    const percent = Math.max(0, Math.min(100, (exactValue / maxVal) * 100));
+
+    let color, glow;
+
+    if (percent >= 80) {
+        color = "#00f2fe";
+        glow = "rgba(0, 242, 254, 0.75)";
+    } else if (percent >= 50) {
+        color = "#00ff88";
+        glow = "rgba(0, 255, 136, 0.75)";
+    } else if (percent >= 20) {
+        color = "#ffdd00";
+        glow = "rgba(255, 221, 0, 0.75)";
+    } else {
+        color = "#ff5252";
+        glow = "rgba(255, 82, 82, 0.85)";
+    }
+
+    const radius = circle.r.baseVal.value;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (percent / 100 * circumference);
+
+    // سحب الشريط باستمرار مع كل ثانية
+    circle.style.strokeDashoffset = offset;
+
+    if (numSpan) {
+        numSpan.innerText = displayNum < 10 ? '0' + displayNum : displayNum;
+        numSpan.style.color = color;
+    }
+
+    circle.style.stroke = color;
+    circle.style.filter = `drop-shadow(0 0 10px ${glow})`;
+}
+
+// شرارة خاطفة جداً (180ms)
+function triggerCyberFlash(circleId) {
+    const el = document.getElementById(circleId);
+    if (!el) return;
+    el.classList.add('cyber-pulse-effect');
+    setTimeout(() => el.classList.remove('cyber-pulse-effect'), 180);
+}
+
+function updateQuote(daysLeft) {
+    const quoteElement = document.getElementById('bio-quote');
+    if (!quoteElement) return;
+
+    if (daysLeft > 180) {
+        quoteElement.innerText = "🌿 البدايات القوية تصنع النهايات المذهلة.. نظّم وقتك واثبت!";
+    } else if (daysLeft > 90) {
+        quoteElement.innerText = "📚 استمراريتك اليوم هي التي ستجعلك تبتسم يوم النتائج!";
+    } else if (daysLeft > 30) {
+        quoteElement.innerText = "🌾 اقترب الموعد! ضاعف تركيزك ولا تدع الدقائق تضيع سدى.";
+    } else if (daysLeft > 0) {
+        quoteElement.innerText = "🍂 الشوط الأخير! ضع كل طاقتك هنا، المجد ينتظرك يا بطل!";
+    } else {
+        quoteElement.innerText = "🎓 حان وقت حصاد التعب! توكلوا على الله وبالتوفيق لكم جميعاً.";
+    }
+}
+
+function showInfo(type) {
+    const tooltip = document.getElementById('bio-tooltip');
+    if (type === 'days') {
+        const weeks = Math.floor(currentDaysLeft / 7);
+        tooltip.innerHTML = `📅 متبقي حوالي <b>${weeks} أسبوعاً</b> على الامتحان!`;
+    } else if (type === 'hours') {
+        tooltip.innerHTML = `⏳ استغل ساعتك الحالية في ملخص أو حل تمرين!`;
+    } else if (type === 'minutes') {
+        tooltip.innerHTML = `⚡ كل دقيقة هي استثمار في معدلك النهائي.`;
+    } else {
+        tooltip.innerHTML = `🔥 الثواني تمضي.. اصنع أثرك الآن!`;
+    }
+}
+
+function toggleShareMenu() {
+    const menu = document.getElementById('share-menu');
+    menu.classList.toggle('active');
+}
+
+document.addEventListener('click', function(e) {
+    const wrapper = document.querySelector('.share-wrapper');
+    if (wrapper && !wrapper.contains(e.target)) {
+        document.getElementById('share-menu').classList.remove('active');
+    }
+});
+
+function shareTo(platform) {
+    const quoteText = document.getElementById('bio-quote').innerText;
+    const siteUrl = window.location.href;
+    const fullMessage = `${quoteText}\n\nتابع العد التنازلي للبكالوريا عبر bio-bac-dz:\n${siteUrl}`;
+
+    const encodedText = encodeURIComponent(fullMessage);
+    const encodedUrl = encodeURIComponent(siteUrl);
+
+    if (platform === 'facebook') {
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`, '_blank');
+    } else if (platform === 'messenger') {
+        window.open(`fb-messenger://share/?link=${encodedUrl}`, '_blank') || 
+        window.open(`https://www.facebook.com/dialog/send?link=${encodedUrl}&app_id=291494419055276&redirect_uri=${encodedUrl}`, '_blank');
+    } else if (platform === 'whatsapp') {
+        window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
+    } else if (platform === 'telegram') {
+        window.open(`https://t.me/share/url?url=${encodedUrl}&text=${encodeURIComponent(quoteText)}`, '_blank');
+    } else if (platform === 'copy') {
+        navigator.clipboard.writeText(fullMessage).then(() => {
+            showToast("تم نسخ العبارة ورابط الموقع بنجاح! 📋");
+        });
+    }
+    
+    document.getElementById('share-menu').classList.remove('active');
+}
+
+function showToast(msg) {
+    const toast = document.getElementById('toast-msg');
+    toast.innerText = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const difference = bacDate - now;
+
+    if (difference > 0) {
+        const totalSeconds = difference / 1000;
+        const totalMinutes = totalSeconds / 60;
+        const totalHours = totalMinutes / 60;
+        const totalDays = totalHours / 24;
+
+        const exactSeconds = totalSeconds % 60;
+        const exactMinutes = totalMinutes % 60;
+        const exactHours = totalHours % 24;
+        const exactDays = totalDays % 365;
+
+        const displaySeconds = Math.floor(exactSeconds);
+        const displayMinutes = Math.floor(exactMinutes);
+        const displayHours = Math.floor(exactHours);
+        const displayDays = Math.floor(totalDays);
+
+        currentDaysLeft = displayDays;
+
+        // تزامن دقيق: إطلاق التأثير فوراً عند الانتهاء وتجدد الدورة (من 0 إلى 59)
+        if (prevSec !== -1 && prevSec !== displaySeconds) {
+            // إذا انتقلنا من الثواني الأخيرة إلى الصفر/البداية
+            if (displaySeconds === 59 || displaySeconds === 0) {
+                triggerCyberFlash('seconds-circle');
+            }
+        }
+        prevSec = displaySeconds;
+
+        // تحديث الدوائر مع التزامن المباشر
+        updateSingleNode('.seconds-progress', 'seconds', exactSeconds, 60, displaySeconds);
+        updateSingleNode('.minutes-progress', 'minutes', exactMinutes, 60, displayMinutes);
+        updateSingleNode('.hours-progress', 'hours', exactHours, 24, displayHours);
+        updateSingleNode('.days-progress', 'days', exactDays, 365, displayDays);
+
+        updateQuote(displayDays);
+    }
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function updateThemeUI(isLight) {
+    const themeIcon = document.getElementById('theme-icon');
+    const themeText = document.getElementById('theme-text');
+    
+    if (isLight) {
+      document.body.classList.add('light-theme');
+      if (themeIcon) themeIcon.textContent = '☀️';
+      if (themeText) themeText.textContent = 'الوضع النهاري';
+    } else {
+      document.body.classList.remove('light-theme');
+      if (themeIcon) themeIcon.textContent = '🌙';
+      if (themeText) themeText.textContent = 'الوضع الليلي';
+    }
+  }
+
+  function toggleTheme() {
+    // 1. هل الصفحة حالياً في الوضع الفاتح؟
+    const isCurrentlyLight = document.body.classList.contains('light-theme');
+    
+    // 2. اعكس الوضع
+    const newStatus = !isCurrentlyLight;
+    
+    // 3. حفظ الخيار في ذاكرة المتصفح
+    localStorage.setItem('theme', newStatus ? 'light' : 'dark');
+    
+    // 4. تحديث الواجهة والزر
+    updateThemeUI(newStatus);
+  }
+
+  // عند فتح الصفحة الرئيسية مباشرة
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    updateThemeUI(savedTheme === 'light');
+  });
+
+
+
+
+
+
+
+
     </script>
 
     <script src="script.js"></script>

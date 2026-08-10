@@ -5,290 +5,1432 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الوحدة 1: تركيب البروتين</title>
     <style>
-        :root {
-            --bg-dark: #0b0f19;
-            --card-bg: rgba(21, 30, 49, 0.85);
-            --accent-blue: #38bdf8;
-            --accent-purple: #a855f7;
-            --accent-orange: #f97316;
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
-            --border-glow: rgba(56, 189, 248, 0.25);
-            --tip-yellow: #f59e0b;
-        }
 
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-        }
 
-        body { 
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background-color: var(--bg-dark); 
-            line-height: 2.1; 
-            padding: 15px 10px; 
-            color: var(--text-main);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
 
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
-        }
 
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(15px);
-            opacity: 0.3;
-            animation: floatParticle 18s infinite ease-in-out;
-        }
+    :root {
+        --bg-dark: #0b0f19;
+        --card-bg: rgba(21, 30, 49, 0.85);
+        --box-bg: rgba(15, 23, 42, 0.6);
+        --mechanism-bg: rgba(30, 41, 59, 0.6);
+        --img-bg: rgba(255, 255, 255, 0.03);
+        --h2-bg-end: rgba(15, 23, 42, 0.2);
+        --ad-bg: rgba(30, 41, 59, 0.5);
+        
+        --accent-blue: #38bdf8;
+        --accent-purple: #a855f7;
+        --accent-orange: #f97316;
+        --text-main: #f8fafc;
+        --text-sub: #94a3b8;
+        --border-glow: rgba(56, 189, 248, 0.25);
+        --tip-yellow: #f59e0b;
+        --tip-bg: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));
+        --tip-text: #fef3c7;
+        --latin-bg: rgba(255, 255, 255, 0.08);
+        --latin-color: #f43f5e;
+        --h2-text-color: #ffffff;
+        --h3-bg: rgba(56, 189, 248, 0.1);
+    }
 
-        .particle:nth-child(1) { width: 180px; height: 180px; background: var(--accent-blue); top: 10%; left: 10%; animation-duration: 20s; }
-        .particle:nth-child(2) { width: 250px; height: 250px; background: var(--accent-purple); top: 60%; right: 5%; animation-duration: 25s; animation-delay: -5s; }
-        .particle:nth-child(3) { width: 140px; height: 140px; background: var(--accent-orange); top: 40%; left: 70%; animation-duration: 16s; animation-delay: -2s; }
-        .particle:nth-child(4) { width: 200px; height: 200px; background: #10b981; bottom: 5%; left: 20%; animation-duration: 22s; animation-delay: -8s; }
+    /* 2. الألوان للوضع الفاتح (عند إضافة light-theme من الرئيسية) */
+    body.light-theme, body.light {
+        --bg-dark: #f1f5f9;
+        --card-bg: rgba(255, 255, 255, 0.95);
+        --box-bg: #f8fafc;
+        --mechanism-bg: #ffffff;
+        --img-bg: #ffffff;
+        --h2-bg-end: rgba(226, 232, 240, 0.5);
+        --ad-bg: rgba(241, 245, 249, 0.8);
+        
+        --accent-blue: #0284c7;
+        --accent-purple: #9333ea;
+        --accent-orange: #ea580c;
+        --text-main: #0f172a;
+        --text-sub: #475569;
+        --border-glow: rgba(56, 189, 248, 0.35);
+        --tip-yellow: #d97706;
+        --tip-bg: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(245, 158, 11, 0.03));
+        --tip-text: #78350f;
+        --latin-bg: rgba(244, 63, 94, 0.1);
+        --latin-color: #e11d48;
+        --h2-text-color: #0f172a;
+        --h3-bg: rgba(2, 132, 199, 0.08);
+    }
 
-        @keyframes floatParticle {
-            0%, 100% { transform: translateY(0) translateX(0) scale(1); }
-            33% { transform: translateY(-50px) translateX(30px) scale(1.1); }
-            66% { transform: translateY(30px) translateX(-40px) scale(0.9); }
-        }
+    * { 
+        box-sizing: border-box; 
+        margin: 0; 
+        padding: 0; 
+    }
 
-        .mega-container { 
-            max-width: 950px; 
-            margin: auto; 
-            background: var(--card-bg); 
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 25px; 
-            border-radius: 24px; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
-            border: 1px solid var(--border-glow);
-            position: relative;
-            z-index: 1;
-        }
+    body { 
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+        background-color: var(--bg-dark); 
+        line-height: 2.1; 
+        padding: 15px 10px; 
+        color: var(--text-main);
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+        transition: background-color 0.4s ease, color 0.4s ease;
+    }
 
-        .top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+    .bg-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+        overflow: hidden;
+    }
 
-        .nav-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 18px;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(168, 85, 247, 0.15));
-            color: var(--accent-blue);
-            text-decoration: none;
-            border-radius: 12px;
-            border: 1px solid var(--border-glow);
-            font-weight: bold;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
+    .particle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(15px);
+    opacity: 0.35;
+    animation: floatParticle 18s infinite ease-in-out;
+    transition: opacity 0.4s ease, filter 0.4s ease, background-color 0.4s ease;
+}
 
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            background: var(--accent-blue);
-            color: var(--bg-dark);
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
-        }
+/* تعديل الجسيمات في الوضع الفاتح لتصبح مرئية وواضحة جداً */
+body.light-theme .particle, body.light .particle {
+    opacity: 0.65; /* زيادة الشفافية لتظهر فوق الأبيض */
+    filter: blur(12px) contrast(1.4); /* تقليل التمويه قليلاً لتتضح أشكال الكرات */
+}
 
-        .unit-hero-img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            border-radius: 18px;
-            margin-bottom: 25px;
-            border: 1px solid var(--border-glow);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-        }
+    .particle:nth-child(1) { width: 180px; height: 180px; background: var(--accent-blue); top: 10%; left: 10%; animation-duration: 20s; }
+    .particle:nth-child(2) { width: 250px; height: 250px; background: var(--accent-purple); top: 60%; right: 5%; animation-duration: 25s; animation-delay: -5s; }
+    .particle:nth-child(3) { width: 140px; height: 140px; background: var(--accent-orange); top: 40%; left: 70%; animation-duration: 16s; animation-delay: -2s; }
+    .particle:nth-child(4) { width: 200px; height: 200px; background: #10b981; bottom: 5%; left: 20%; animation-duration: 22s; animation-delay: -8s; }
 
-        h1 { 
-            text-align: center; 
-            background: linear-gradient(135deg, #38bdf8, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: calc(1.6em + 0.8vw); 
-            padding-bottom: 15px; 
-            margin-bottom: 30px; 
-            border-bottom: 2px dashed var(--border-glow);
-            font-weight: 800;
-        }
+    @keyframes floatParticle {
+        0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+        33% { transform: translateY(-50px) translateX(30px) scale(1.1); }
+        66% { transform: translateY(30px) translateX(-40px) scale(0.9); }
+    }
 
-        h2 { 
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: linear-gradient(90deg, rgba(56, 189, 248, 0.12) 0%, rgba(15, 23, 42, 0.2) 100%); 
-            color: #ffffff; 
-            padding: 12px 18px; 
-            border-radius: 14px; 
-            margin-top: 45px; 
-            margin-bottom: 20px;
-            font-size: calc(1.1em + 0.4vw); 
-            box-shadow: inset 0 0 10px rgba(56, 189, 248, 0.05);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-        }
+    .mega-container { 
+        max-width: 950px; 
+        margin: auto; 
+        background: var(--card-bg); 
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        padding: 25px; 
+        border-radius: 24px; 
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08); 
+        border: 1px solid var(--border-glow);
+        position: relative;
+        z-index: 1;
+        transition: background 0.4s ease, border-color 0.4s ease;
+    }
 
-        .num-badge {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            color: var(--bg-dark);
-            border-radius: 8px;
-            font-size: 0.9em;
-            font-weight: 800;
-            flex-shrink: 0;
-            box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
-        }
+    .top-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
 
-        h3 { 
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--accent-orange); 
-            border-right: 4px solid var(--accent-orange);
-            padding-right: 12px;
-            margin-top: 25px; 
-            margin-bottom: 12px;
-            font-size: 1.1em; 
-            font-weight: 700;
-            background: rgba(249, 115, 22, 0.05);
-            padding-top: 6px;
-            padding-bottom: 6px;
-            border-radius: 0 8px 8px 0;
-        }
+    .nav-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(168, 85, 247, 0.15));
+        color: var(--accent-blue);
+        text-decoration: none;
+        border-radius: 12px;
+        border: 1px solid var(--border-glow);
+        font-weight: bold;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
 
-        .mechanism-box { 
-            background: rgba(30, 41, 59, 0.6); 
-            border-right: 5px solid var(--accent-blue); 
-            padding: 22px; 
-            margin: 20px 0; 
-            border-radius: 14px; 
-            text-align: justify; 
-            font-size: 1.05em; 
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
+    .nav-btn:hover {
+        transform: translateY(-2px);
+        background: var(--accent-blue);
+        color: var(--bg-dark);
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    }
 
-        .step-card { 
-            border: 1px solid rgba(255,255,255,0.08); 
-            padding: 22px; 
-            margin-bottom: 20px; 
-            border-radius: 16px; 
-            background: rgba(15, 23, 42, 0.6); 
-            transition: transform 0.2s ease, border-color 0.2s ease;
-        }
+    .unit-hero-img {
+        display: block;
+        width: fit-content;
+        max-width: 100%;
+        height: auto;
+        margin: 25px auto;
+        padding: 0;
+        border: 2px solid var(--accent-blue);
+        border-radius: 16px;
+        box-sizing: border-box;
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
 
-        .step-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--border-glow);
-        }
+    .unit-hero-img:hover {
+        box-shadow: 0 0 28px rgba(56, 189, 248, 0.5);
+    }
 
-        .educational-img {
-            width: 100%;
-            max-height: 420px;
-            object-fit: contain;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 14px;
-            margin: 18px 0 8px 0;
-            border: 1px solid var(--border-glow);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            display: block;
-        }
+    h1 { 
+        text-align: center; 
+        background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: calc(1.6em + 0.8vw); 
+        padding-bottom: 15px; 
+        margin-bottom: 30px; 
+        border-bottom: 2px dashed var(--border-glow);
+        font-weight: 800;
+    }
 
-        .img-caption {
-            text-align: center;
-            font-size: 0.88rem;
-            color: var(--text-sub);
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
+    h2 { 
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: linear-gradient(90deg, rgba(56, 189, 248, 0.12) 0%, var(--h2-bg-end) 100%); 
+        color: var(--h2-text-color); 
+        padding: 12px 18px; 
+        border-radius: 14px; 
+        margin-top: 45px; 
+        margin-bottom: 20px;
+        font-size: calc(1.1em + 0.4vw); 
+        box-shadow: inset 0 0 10px rgba(56, 189, 248, 0.05);
+        border: 1px solid var(--border-glow);
+        transition: background 0.4s ease, color 0.4s ease;
+    }
 
-        .ad-space {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px dashed var(--accent-blue);
-            border-radius: 12px;
-            padding: 14px;
-            text-align: center;
-            color: var(--text-sub);
-            margin: 30px 0;
-            font-size: 0.85rem;
-        }
+    .num-badge {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+        color: #0f172a;
+        border-radius: 8px;
+        font-size: 0.9em;
+        font-weight: 800;
+        flex-shrink: 0;
+        box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+    }
 
-        .tip-box { 
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05)); 
-            border-right: 6px solid var(--tip-yellow); 
-            padding: 20px; 
-            border-radius: 14px; 
-            margin: 30px 0; 
-            color: #fef3c7;
-            border-top: 1px solid rgba(245, 158, 11, 0.2);
-        }
+    /* تم تصحيح ألوان h3 لتستجيب للأوضاع */
+    h3 { 
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #1e40af; 
+    border-right: 4px solid #1e40af;
+    padding-right: 12px;
+    margin-top: 25px; 
+    margin-bottom: 12px;
+    font-size: 1.1em; 
+    font-weight: 700;
+    background: var(--h3-bg);
+    padding-top: 6px;
+    padding-bottom: 6px;
+    border-radius: 0 8px 8px 0;
+    transition: color 0.3s ease, border-color 0.3s ease, background 0.4s ease;
+}
 
-        .tip-title {
-            color: var(--tip-yellow);
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-        }
+    .mechanism-box { 
+        background: var(--mechanism-bg); 
+        border-right: 5px solid var(--accent-blue); 
+        padding: 22px; 
+        margin: 20px 0; 
+        border-radius: 14px; 
+        text-align: justify; 
+        font-size: 1.05em; 
+        border: 1px solid var(--border-glow);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        transition: background 0.4s ease;
+    }
 
-        .latin-tech { 
-            direction: ltr; 
-            display: inline-block; 
-            font-family: 'Consolas', monospace; 
-            color: #f43f5e; 
-            font-weight: bold; 
-            background: rgba(255,255,255,0.08); 
-            padding: 2px 8px; 
-            border-radius: 6px; 
-            border: 1px solid rgba(244, 63, 94, 0.2);
-        }
+    .step-card { 
+        border: 1px solid var(--border-glow); 
+        padding: 22px; 
+        margin-bottom: 20px; 
+        border-radius: 16px; 
+        background: var(--box-bg); 
+        transition: transform 0.2s ease, border-color 0.2s ease, background 0.4s ease;
+    }
 
-        .bottom-nav {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px dashed var(--border-glow);
-        }
+    .step-card:hover {
+        transform: translateY(-2px);
+        border-color: var(--accent-blue);
+    }
 
-        @media (max-width: 600px) { 
-            body { padding: 8px 5px; }
-            .mega-container { padding: 16px; border-radius: 16px; } 
-            h1 { font-size: 1.35em; } 
-            h2 { font-size: 1.05em; padding: 10px 12px; gap: 10px; }
-            .num-badge { width: 26px; height: 26px; font-size: 0.8em; }
-            h3 { font-size: 0.98em; }
-            .unit-hero-img { height: 180px; border-radius: 12px; }
-            .educational-img { max-height: 260px; }
-            .bottom-nav { flex-direction: column; }
-            .nav-btn { justify-content: center; width: 100%; }
-        }
+    .educational-img {
+        width: 100%;
+        max-height: 420px;
+        object-fit: contain;
+        background: var(--img-bg);
+        border-radius: 14px;
+        margin: 18px 0 8px 0;
+        border: 1px solid var(--border-glow);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        display: block;
+        transition: background 0.4s ease;
+    }
+
+    .img-caption {
+        text-align: center;
+        font-size: 0.88rem;
+        color: var(--text-sub);
+        margin-bottom: 20px;
+        font-weight: 500;
+    }
+
+    .ad-space {
+        background: var(--ad-bg);
+        border: 1px dashed var(--accent-blue);
+        border-radius: 12px;
+        padding: 14px;
+        text-align: center;
+        color: var(--text-sub);
+        margin: 30px 0;
+        font-size: 0.85rem;
+        transition: background 0.4s ease;
+    }
+
+    .tip-box { 
+        background: var(--tip-bg); 
+        border-right: 6px solid var(--tip-yellow); 
+        padding: 20px; 
+        border-radius: 14px; 
+        margin: 30px 0; 
+        color: var(--tip-text);
+        border-top: 1px solid rgba(245, 158, 11, 0.2);
+        transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    .tip-title {
+        color: var(--tip-yellow);
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .latin-tech { 
+        direction: ltr; 
+        display: inline-block; 
+        font-family: 'Consolas', monospace; 
+        color: var(--latin-color); 
+        font-weight: bold; 
+        background: var(--latin-bg); 
+        padding: 2px 8px; 
+        border-radius: 6px; 
+        border: 1px solid rgba(244, 63, 94, 0.2);
+        transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    .img-container-box {
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+        margin: 25px auto;
+        border: 2px solid var(--accent-blue);
+        border-radius: 16px;
+        padding: 12px;
+        background: var(--box-bg);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        transition: background 0.4s ease, border-color 0.4s ease;
+    }
+
+    .img-container-title {
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: var(--accent-blue);
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border-glow);
+    }
+
+    .img-container-box img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        display: block;
+        background: var(--img-bg);
+    }
+
+    .grid-cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+    }
+
+    .feature-card {
+        background: var(--box-bg);
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: background 0.4s ease, border-color 0.4s ease;
+    }
+
+    .feature-card.blue-border { border: 1px solid var(--accent-blue); }
+    .feature-card.purple-border { border: 1px solid var(--accent-purple); }
+    .feature-card.orange-border { border: 1px solid var(--accent-orange); }
+
+    .feature-card-title {
+        border-right: none;
+        padding: 0;
+        margin-top: 0;
+        background: none;
+        font-size: 1.05em;
+    }
+
+    .feature-card-text {
+        font-size: 0.95em;
+        color: var(--text-main);
+        margin-top: 8px;
+    }
+
+    .bottom-nav {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 2px dashed var(--border-glow);
+    }
+
+    @media (max-width: 600px) { 
+        body { padding: 8px 5px; }
+        .mega-container { padding: 16px; border-radius: 16px; } 
+        h1 { font-size: 1.35em; } 
+        h2 { font-size: 1.05em; padding: 10px 12px; gap: 10px; }
+        .num-badge { width: 26px; height: 26px; font-size: 0.8em; }
+        h3 { font-size: 0.98em; }
+        .unit-hero-img { height: auto; border-radius: 12px; }
+        .educational-img { max-height: 260px; }
+        .bottom-nav { flex-direction: column; }
+        .nav-btn { justify-content: center; width: 100%; }
+    }
+
+
+
+
+
+/* =========================================================
+   1. نظام المتغيرات الشامل (Variables System)
+   ========================================================= */
+:root {
+    /* ألوان الوضع الداكن (الافتراضي) */
+    --bg-main: #080d1a;
+    --text-primary: #ffffff;
+    --text-secondary: #94a3b8;
+    --text-small: #e2e8f0;
+    
+    /* الحاويات والبطاقات */
+    --card-bg: rgba(15, 23, 42, 0.75);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    
+    /* الإعلانات وغلاف الهيدر */
+    --ad-bg: rgba(30, 41, 59, 0.85);
+    --hero-border: rgba(56, 189, 248, 0.4);
+    --hero-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+    
+    /* أداة العد التنازلي الزجاجية */
+    --counter-bg: rgba(15, 23, 42, 0.75);
+    --counter-border: rgba(255, 255, 255, 0.12);
+    --counter-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    --circle-bg-stroke: rgba(255, 255, 255, 0.07);
+    --tooltip-bg: rgba(0, 0, 0, 0.35);
+    --popover-bg: rgba(15, 23, 42, 0.95);
+    --popover-border: rgba(255, 255, 255, 0.15);
+
+    /* زر Bacorbit */
+    --bacorbit-btn-text: #0b0f19;
+}
+
+body.light-theme {
+    --bg-main: #f1f5f9;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-small: #334155;
+    
+    /* الحاويات والبطاقات */
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --card-border: rgba(0, 0, 0, 0.08);
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    
+    /* الإعلانات وغلاف الهيدر */
+    --ad-bg: rgba(255, 255, 255, 0.95);
+    --hero-border: rgba(14, 165, 233, 0.4);
+    --hero-shadow: 0 0 20px rgba(14, 165, 233, 0.15);
+    
+    /* أداة العد التنازلي الزجاجية */
+    --counter-bg: rgba(255, 255, 255, 0.9);
+    --counter-border: rgba(14, 165, 233, 0.2);
+    --counter-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    --circle-bg-stroke: rgba(0, 0, 0, 0.08);
+    --tooltip-bg: rgba(14, 165, 233, 0.1);
+    --popover-bg: rgba(255, 255, 255, 0.98);
+    --popover-border: rgba(0, 0, 0, 0.15);
+
+    /* زر Bacorbit */
+    --bacorbit-btn-text: #ffffff;
+}
+
+/* =========================================================
+   2. التنسيقات العامة للصفحة
+   ========================================================= */
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
+
+html, body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    min-height: 100vh;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+    position: relative;
+    padding: 12px;
+}
+
+/* زر التبديل */
+.theme-toggle-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.theme-toggle-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    box-shadow: var(--card-shadow);
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.05);
+}
+
+/* كانفاس تحريك العضيات */
+#cellCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.main-wrapper {
+    position: relative;
+    z-index: 2;
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* غلاف الصفحة */
+.hero-header {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--hero-border);
+    margin-bottom: 15px;
+    box-shadow: var(--hero-shadow);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.hero-header:hover {
+    box-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
+    border-color: #38bdf8;
+}
+
+.hero-header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* الإعلانات */
+.ad-banner {
+    background: var(--ad-bg);
+    border: 1px dashed #38bdf8;
+    border-radius: 12px;
+    padding: 12px;
+    margin: 15px 0;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    width: 100%;
+    box-shadow: inset 0 0 10px rgba(56, 189, 248, 0.1);
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* =========================================================
+   3. شبكة الأزرار والبطاقات التفاعلية (مع الألوان المخصصة)
+   ========================================================= */
+.buttons-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.card-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 12px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    box-shadow: var(--card-shadow);
+}
+
+.card-btn img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    border: 1px solid var(--card-border);
+    transition: border-color 0.3s ease;
+}
+
+.card-btn span {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+    line-height: 1.3;
+    transition: color 0.3s ease;
+}
+
+/* --- تخصيص ألوان الـ Hover الملونة لكل موضوع --- */
+
+/* 1. تركيب البروتين (أزرق مشع) */
+.card-protein:hover, .card-protein:active {
+    transform: translateY(-6px) scale(1.02);
+    border-color: #38bdf8;
+    box-shadow: 0 0 22px rgba(56, 189, 248, 0.5);
+}
+.card-protein:hover span { color: #38bdf8; }
+
+/* 2. المناعة (بنفسجي مشع) */
+.card-immunity:hover, .card-immunity:active {
+    transform: translateY(-6px) scale(1.02);
+    border-color: #a855f7;
+    box-shadow: 0 0 22px rgba(168, 85, 247, 0.5);
+}
+.card-immunity:hover span { color: #a855f7; }
+
+/* 3. التركيب الضوئي (أخضر مشع) */
+.card-photosynthesis:hover, .card-photosynthesis:active {
+    transform: translateY(-6px) scale(1.02);
+    border-color: #22c55e;
+    box-shadow: 0 0 22px rgba(34, 197, 94, 0.5);
+}
+.card-photosynthesis:hover span { color: #22c55e; }
+
+/* 4. التنفس والتخمر / الطاقة (أحمر / برتقالي مشع) */
+.card-respiration:hover, .card-respiration:active {
+    transform: translateY(-6px) scale(1.02);
+    border-color: #ef4444;
+    box-shadow: 0 0 22px rgba(239, 68, 68, 0.5);
+}
+.card-respiration:hover span { color: #ef4444; }
+
+/* 5. الاتصال العصبي (أصفر / ذهبي مشع) */
+.card-nerve:hover, .card-nerve:active {
+    transform: translateY(-6px) scale(1.02);
+    border-color: #eab308;
+    box-shadow: 0 0 22px rgba(234, 179, 8, 0.5);
+}
+.card-nerve:hover span { color: #eab308; }
+
+/* 6. الجيولوجيا / التكتونية (وردية / أرجوانية مشعة) */
+.card-geology:hover, .card-geology:active {
+    transform: translateY(-6px) scale(1.02);
+    border-color: #ec4899;
+    box-shadow: 0 0 22px rgba(236, 72, 153, 0.5);
+}
+.card-geology:hover span { color: #ec4899; }
+
+
+/* =========================================================
+   4. زر التواصل و الباك أوربيت
+   ========================================================= */
+.contact-links-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: stretch;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.action-btn {
+    flex: 1;
+    max-width: 420px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.action-btn svg { flex-shrink: 0; }
+
+.btn-text {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    line-height: 1.3;
+}
+
+.brand-name {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.btn-subtext {
+    font-size: 0.78rem;
+    font-weight: normal;
+    opacity: 0.9;
+}
+
+.bacorbit-btn {
+    background-color: #10b981;
+    color: var(--bacorbit-btn-text);
+    box-shadow: 0 0 18px rgba(16, 185, 129, 0.35);
+    border: 1px solid rgba(16, 185, 129, 0.5);
+}
+
+.bacorbit-btn:hover {
+    transform: translateY(-3px);
+    background-color: #059669;
+    color: #ffffff;
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
+}
+
+.fb-btn {
+    background-color: #1877f2;
+    color: #ffffff;
+    box-shadow: 0 0 18px rgba(24, 119, 242, 0.35);
+    border: 1px solid rgba(24, 119, 242, 0.5);
+}
+
+.fb-btn:hover {
+    transform: translateY(-3px);
+    background-color: #166fe5;
+    box-shadow: 0 0 25px rgba(24, 119, 242, 0.6);
+}
+
+/* =========================================================
+   5. أداة العد التنازلي التفاعلية (Bio Organic Counter)
+   ========================================================= */
+.bio-organic-counter {
+    background: var(--counter-bg);
+    border: 1px solid var(--counter-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 35px 25px;
+    border-radius: 28px;
+    text-align: center;
+    max-width: 800px;
+    margin: 30px auto;
+    font-family: 'Tajawal', sans-serif;
+    box-shadow: var(--counter-shadow);
+    overflow: visible;
+    transition: all 0.4s ease;
+}
+
+.countdown-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.countdown-header h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #00f2fe 0%, #00ff88 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
+
+.pulse-icon { font-size: 1.6rem; }
+
+.bio-nodes-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    overflow: visible;
+}
+
+.bio-node {
+    position: relative;
+    width: 125px;
+    height: 125px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    overflow: visible;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.bio-node:hover { transform: scale(1.06); }
+
+.bio-circle-svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+    overflow: visible;
+}
+
+.bio-circle-bg {
+    fill: none;
+    stroke: var(--circle-bg-stroke);
+    stroke-width: 6;
+    transition: stroke 0.4s ease;
+}
+
+.bio-circle-progress {
+    fill: none;
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-dasharray: 264;
+    stroke-dashoffset: 264;
+    transition: stroke-dashoffset 1s linear, stroke 0.5s ease, filter 0.5s ease;
+}
+
+.bio-number span {
+    display: block;
+    font-size: 2.1rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--text-primary);
+    transition: color 0.4s ease;
+}
+
+.bio-number small {
+    font-size: 0.85rem;
+    color: var(--text-small);
+    font-weight: 600;
+    margin-top: 4px;
+    display: block;
+    transition: color 0.4s ease;
+}
+
+.bio-tooltip {
+    background: var(--tooltip-bg);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    color: #00f2fe;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    display: inline-block;
+    margin-bottom: 12px;
+    transition: background 0.4s ease;
+}
+
+.bio-quote {
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    margin: 10px 0 20px;
+    line-height: 1.6;
+    transition: color 0.4s ease;
+}
+
+.share-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.main-share-btn {
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+    border: none;
+    color: #0f172a;
+    padding: 10px 24px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.35);
+    transition: all 0.3s ease;
+    font-family: 'Tajawal', sans-serif;
+}
+
+.main-share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 242, 254, 0.55);
+}
+
+.share-popover {
+    display: none;
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--popover-bg);
+    border: 1px solid var(--popover-border);
+    backdrop-filter: blur(12px);
+    padding: 10px;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    flex-direction: row;
+    gap: 8px;
+    z-index: 100;
+    white-space: nowrap;
+}
+
+.share-popover.active {
+    display: flex;
+    animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    0% { opacity: 0; transform: translate(-50%, 10px) scale(0.9); }
+    100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+.pop-btn {
+    border: none;
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: transform 0.2s ease;
+    font-family: 'Tajawal', sans-serif;
+}
+
+.pop-btn:hover { transform: scale(1.05); }
+.pop-btn.fb { background: #1877f2; }
+.pop-btn.ms { background: #0084ff; }
+.pop-btn.wa { background: #25d366; }
+.pop-btn.tg { background: #24a1de; }
+.pop-btn.cp { background: var(--card-border); color: var(--text-primary); }
+
+.toast-msg {
+    display: block;
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: #00ff88;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.toast-msg.show { opacity: 1; }
+
+/* =========================================================
+   6. تنسيقات الفوتر الذكية (Footer Responsive Styles)
+   ========================================================= */
+.site-footer {
+    background-color: var(--card-bg);
+    border-top: 2px solid #22c55e;
+    padding: 35px 20px;
+    text-align: center;
+    color: var(--text-secondary);
+    margin-top: 50px;
+    border-radius: 16px 16px 0 0;
+    backdrop-filter: blur(8px);
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.legal-box {
+    max-width: 850px;
+    margin: 0 auto 20px auto;
+    font-size: 0.85rem;
+    line-height: 1.8;
+    background: var(--ad-bg);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+    text-align: right;
+    color: var(--text-primary);
+    transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+.legal-box p { margin: 8px 0; }
+
+.legal-box .site-name {
+    color: var(--text-primary);
+    font-weight: bold;
+}
+
+.highlight-green { color: #22c55e; }
+.highlight-red { color: #ef4444; }
+.highlight-orange { color: #f97316; }
+.highlight-blue { color: #38bdf8; }
+
+.copyright-text {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* =========================================================
+   7. التجاوب مع الشاشات (Media Queries)
+   ========================================================= */
+@media (max-width: 900px) {
+    .buttons-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .card-btn img { height: 160px; }
+}
+
+@media (max-width: 650px) {
+    .contact-links-container { flex-direction: column; align-items: center; }
+    .action-btn { width: 100%; max-width: 100%; }
+}
+
+@media (max-width: 600px) {
+    .bio-organic-counter { padding: 25px 12px; }
+    .bio-nodes-container { gap: 6px; }
+    .bio-node { width: 78px; height: 78px; }
+    .bio-number span { font-size: 1.35rem; }
+    .bio-number small { font-size: 0.65rem; }
+    .countdown-header h2 { font-size: 1.25rem; }
+    .share-popover { flex-direction: column; width: 160px; }
+}
+
+@media (max-width: 500px) {
+    body { padding: 8px; }
+    .hero-header { height: 140px; border-radius: 12px; }
+    .card-btn img { height: 130px; }
+    .card-btn span { font-size: 0.9rem; }
+    .ad-banner { min-height: 70px; padding: 8px; font-size: 0.8rem; }
+}
+
+
+
+
+
+
+
+
+
+/* --- الألوان الجديدة المخصصة للبطاقات --- */
+
+/* الوحدة 1: أزرق داكن */
+.card-unit1 {
+    --card-glow: #1e40af;
+    border-bottom: 3px solid #1e40af;
+}
+
+/* الوحدة 2: أزرق فاتح */
+.card-unit2 {
+    --card-glow: #14b8a6;
+    border-bottom: 3px solid #14b8a6;
+}
+
+/* الوحدة 3: أخضر زمردي / تيل (اختياري) */
+.card-unit3 {
+    --card-glow: #38bdf8;
+    border-bottom: 3px solid #38bdf8;
+}
+
+/* الوحدة 4: بنفسجي */
+.card-unit4 {
+    --card-glow: #a855f7;
+    border-bottom: 3px solid #a855f7;
+}
+
+/* الوحدة 5: أصفر */
+.card-unit5 {
+    --card-glow: #eab308;
+    border-bottom: 3px solid #eab308;
+}
+
+/* الوحدة 6: أخضر */
+.card-unit6 {
+    --card-glow: #22c55e;
+    border-bottom: 3px solid #22c55e;
+}
+
+/* الوحدة 7: برتقالي */
+.card-unit7 {
+    --card-glow: #f97316;
+    border-bottom: 3px solid #f97316;
+}
+
+/* الوحدة 8: أحمر */
+.card-unit8 {
+    --card-glow: #ef4444;
+    border-bottom: 3px solid #ef4444;
+}
+
+/* تأثير التوهج والتكبير عند التمرير بالماوس */
+.card-btn:hover {
+    box-shadow: 0 10px 25px -5px var(--card-glow);
+    border-color: var(--card-glow);
+    transform: translateY(-4px);
+}
+
+
+
+
+
+
+
+
+
+
+.top-navbar {
+    max-width: 950px; /* أو نفس عرض حاوية البطاقات لديك */
+    margin: 0 auto 20px auto !important; /* ليتوسط الصفحة تماماً */
+    box-sizing: border-box;
+}
+
+/* ضبط الحاوية الداخلية للشريط لتستغل كامل مساحته */
+.top-nav-container {
+    width: 100%;
+    max-width: 100%; /* إلغاء الـ 1100px القديمة */
+    margin: 0;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+/* الشعار والاسم - تأثيرات التكبير والحركة */
+.top-brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+}
+
+/* التكبير عند تمرير الفأرة (Hover) */
+.top-brand-logo:hover {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
+}
+
+/* الانضغاط عند الضغط (Active) */
+.top-brand-logo:active {
+    transform: scale(0.96);
+}
+
+/* أيقونة الفافيكون */
+.top-logo-img {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.top-brand-logo:hover .top-logo-img {
+    transform: rotate(6deg) scale(1.05);
+}
+
+/* اسم الموقع المتدرج والكبير */
+.top-brand-name {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+}
+
+/* إلغاء هوامش زر الأوضاع داخل الشريط فقط */
+.top-navbar .theme-toggle-btn {
+    margin: 0 !important;
+    white-space: nowrap;
+}
+
+
+
+
+@media (max-width: 600px) {
+    .top-navbar {
+        padding: 8px 15px; /* تقليل الهوامش الداخلية يناسب عرض الهاتف */
+        border-radius: 12px !important; /* تقليل الانحناء قليلاً ليتناسق مع حواف الشاشة */
+    }
+
+    .top-brand-logo {
+        gap: 8px; /* تقليل المسافة بين الأيقونة والاسم */
+    }
+
+    .top-logo-img {
+        width: 30px;
+        height: 30px; /* ضبط حجم الأيقونة للهاتف */
+    }
+
+    .top-brand-name {
+        font-size: 1.3rem; /* تصغير اسم الموقع ليظهر كاملاً بوضوح */
+    }
+
+    .top-navbar .theme-toggle-btn {
+        padding: 6px 10px;
+        font-size: 0.85rem; /* تصغير الزر ليأخذ مساحة مريحة */
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+:root {
+    --card-bg: rgba(15, 23, 42, 0.85);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --text-color: #f8fafc;
+}
+
+/* الألوان عندما يتغير الوضع إلى الفاتح (light-theme) */
+:root {
+    --bg-main: #0f172a;
+    --card-bg: rgba(15, 23, 42, 0.85);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --text-color: #f8fafc;
+    --text-muted: #94a3b8;
+}
+
+/* التعديلات عند تفعيل الوضع الفاتح */
+body.light-theme {
+    --bg-main: #f1f5f9;
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --card-border: rgba(0, 0, 0, 0.12);
+    --text-color: #0f172a;
+    --text-muted: #475569;
+
+    background-color: var(--bg-main) !important;
+    color: var(--text-color) !important;
+}
+
+/* توحيد ألوان النصوص والأزرار مع الوضع الفاتح */
+body.light-theme .top-brand-name {
+    /* تجنيب جعل الاسم مظلماً جداً ليظل التدرج واضحاً */
+    filter: brightness(0.85); 
+}
+
+body.light-theme .card-btn,
+body.light-theme .top-navbar {
+    background-color: var(--card-bg);
+    border-color: var(--card-border);
+    color: var(--text-color);
+}
+
+/* 2. تنسيق الشريط العلوي */
+.top-navbar {
+    width: 100%;
+    position: relative !important;
+    background-color: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border);
+    padding: 10px 20px;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    border-radius: 20px !important;
+}
+
+/* حاوية العناصر للضبط في سطر واحد */
+.top-nav-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100%;
+}
+
+/* الشعار والاسم - تأثيرات التكبير والحركة */
+.top-brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+}
+
+.top-brand-logo:hover {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
+}
+
+.top-brand-logo:active {
+    transform: scale(0.96);
+}
+
+.top-logo-img {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.top-brand-logo:hover .top-logo-img {
+    transform: rotate(6deg) scale(1.05);
+}
+
+.top-brand-name {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+}
+
+/* 3. تنسيق زر التبديل نفسه ليعمل ويتجاوب بشكل ممتاز */
+.top-navbar .theme-toggle-btn {
+    margin: 0 !important;
+    white-space: nowrap;
+    background: transparent;
+    border: 1px solid var(--card-border);
+    color: var(--text-color);
+    padding: 8px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.top-navbar .theme-toggle-btn:hover {
+    border-color: #38bdf8;
+    transform: translateY(-2px);
+}
+
+/* تجاوب الشاشات الصغيرة */
+@media (max-width: 600px) {
+    .top-navbar {
+        padding: 8px 15px;
+        border-radius: 12px !important;
+    }
+
+    .top-brand-logo {
+        gap: 8px;
+    }
+
+    .top-logo-img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .top-brand-name {
+        font-size: 1.3rem;
+    }
+
+    .top-navbar .theme-toggle-btn {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+}
+
+
+
+
+body.light-theme .card-btn,
+body.light-theme .top-navbar {
+    background-color: var(--card-bg) !important;
+    color: var(--text-primary) !important;
+}
+
+
+
+
     </style>
 
-<link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="style.css">
+    <meta name="google-site-verification" content="yWTn70MukZMsqqzmelv7CxgCHDi87GIOYffl56O2YW4" />
 </head>
 <body>
+
+    <!-- كانفاس خلفية العضيات -->
+    <canvas id="cellCanvas"></canvas>
+
+    <div class="main-wrapper">
+        
+
+
+
+
+<header class="top-navbar">
+    <div class="top-nav-container">
+        <!-- الشعار والاسم (يعود بك للصفحة الرئيسية) -->
+        <a href="index.html" class="top-brand-logo">
+            <img src="favicon.png" alt="شعار" class="top-logo-img" onerror="this.onerror=null; this.src='favicon.ico';">
+            <span class="top-brand-name">bio-bac-dz</span>
+        </a>
+
+        <!-- زر التبديل -->
+        <button class="theme-toggle-btn" onclick="toggleTheme()">
+    <span id="theme-icon">🌙</span>
+    <span id="theme-text">الوضع الليلي</span>
+</button>
+    </div>
+</header>
+
 
 <div class="bg-animation">
     <div class="particle"></div>
@@ -316,234 +1458,341 @@
     <section>
         <h2><span class="num-badge">01</span> التخصص الوظيفي والتحكم في التعبير المورثي</h2>
         <div class="mechanism-box">
-             تعتمد حياة الخلية الحية على قدرتها العالية في التحكم في نوعية وكمية البروتينات المصنعة في زمن محدد، وهذا ما يعرف بالتعبير المورثي الانتقائي. فبالرغم من تماثل الذخيرة الوراثية <span class="latin-tech">ADN</span> في جميع خلايا العضوية الواحدة، إلا أن تخصص الخلية (كخلية بنكرياسية أو عصبية) يفرض تفعيل مورثات معينة وكبح أخرى، مما يسمح بظهور نمط ظاهري متميز لكل نوع خلوي.
+             تعتمد حيوية الخلية على قدرتها العالية على <span style="color: #38bdf8; font-weight: bold;">التحكم الدقيق</span> في نوعية وكمية البروتينات المصنعة في زمن محدد، وهو ما يُعرف بـ <span style="color: #818cf8; font-weight: bold;">التعبير المورثي الانتقائي</span>. ورغم تماثل <span style="color: #4ade80; font-weight: bold;">المعلومة الوراثية</span> (<span class="latin-tech">ADN</span>) في جميع خلايا العضوية الواحدة، إلا أن <span style="color: #fb923c; font-weight: bold;">التخصص الوظيفي للخلية</span> يعتمد على <span style="color: #facc15; font-weight: bold;">التعبير عن مورثات نوعية</span> وتثبيط أخرى، مما يؤدي إلى تشكيل بروتينات نوعية تُحدد <span style="color: #a78bfa; font-weight: bold;">النمط الظاهري</span> للخلية.
         </div>
     </section>
 
     <section>
         <h2><span class="num-badge">02</span> المقر الخلوي لبناء البروتين والوسيط الناقل</h2>
         <div class="step-card">
-             أثبتت التجارب التاريخية المعتمدة على تقنية التصوير الإشعاعي الذاتي أن الأحماض الأمينية المشعة تتجمع في الهيولى، وبالتحديد على مستوى الشبكة الهيولية المحببة. ولما كان الـ <span class="latin-tech">ADN</span> جزيئاً ضخماً محبوساً داخل النواة، استوجب ذلك وجود وسيط ناقل للمعلومة الوراثية يسمى <span class="latin-tech">ARNm</span>، يتميز بقدرته على الخروج عبر الثقوب النووية ليصل إلى ريبوزومات الهيولى، حيث يتم فك شفرته وبناء البروتين الموافق.
+             أثبتت نتائج تقنية <span style="color: #38bdf8; font-weight: bold;">التصوير الإشعاعي الذاتي</span> أن دمج <span style="color: #818cf8; font-weight: bold;">الأحماض الأمينية المشعة</span> يتم في <span style="color: #4ade80; font-weight: bold;">الهيولى</span> وتحديداً على مستوى <span style="color: #fb923c; font-weight: bold;">الشبكة الهيولية المحببة (الفعالة)</span>. ولأن جزيئة الـ <span class="latin-tech">ADN</span> ذات حجم ضخم ومستقرة داخل <span style="color: #facc15; font-weight: bold;">النواة</span>، يتطلب ذلك وجود وسيط ناقل للمعلومة الوراثية هو جزيء <span style="color: #a78bfa; font-weight: bold;">ARN الرسول (<span class="latin-tech">ARNm</span>)</span>، ينفذ عبر <span style="color: #38bdf8; font-weight: bold;">الثقوب النووية</span> نحو الهيولى ليرتبط بـ <span style="color: #4ade80; font-weight: bold;">الريبوزومات</span> حيث تتم ترجمته لبناء البروتين الموافق.
         </div>
-        
-        <img src="lesson1-img1.png" alt="مقر بناء البروتين" class="educational-img" onerror="this.style.display='none'">
-        <p class="img-caption">الشكل (1): رسم توضيحي يُظهر خروج الـ ARNm عبر الثقوب النووية نحو الهيولى.</p>
     </section>
 
     <section>
-        <h2><span class="num-badge">03</span> المكونات الكيميائية والفيزيائية للـ ARN</h2>
+        <h2><span class="num-badge">03</span> التركيب الكيميائي والبنية الفضائية للـ ARN</h2>
         <div class="step-card">
-             يتكون الحمض النووي الريبي الرسول من سلسلة واحدة من النكليوتيدات الريبية المرتبطة بروابط إستر-فوسفاتية قوية. تتكون كل نكليوتيدة من سكر ريبوز خماسي، حمض الفوسفوريك، وإحدى القواعد الآزوتية الأربعة (<span class="latin-tech">A, G, C, U</span>). يتميز الـ <span class="latin-tech">ARN</span> بكونه أقل استقراراً من الـ <span class="latin-tech">ADN</span> بسبب طبيعة سكر الريبوز كونه أحادي السلسلة (بخلاف الـ ADN ثنائي السلسلة)، وهذا يسمح للخلية بتفكيكه بسرعة فور انتهاء الحاجة لتركيب بروتين معين.
+             يتكون <span style="color: #a78bfa; font-weight: bold;">الحمض النووي الريبي</span> (<span class="latin-tech">ARN</span>) من متعدد <span style="color: #38bdf8; font-weight: bold;">النيكليوتيدات الريبية</span> المرتبطة فيما بينها بـ <span style="color: #818cf8; font-weight: bold;">روابط إستر فوسفاتية</span>. تُظهر <span style="color: #4ade80; font-weight: bold;">الإماهة الكلية</span> لـ <span class="latin-tech">ARN</span> جزيء <span style="color: #fb923c; font-weight: bold;">سكر ريبوز</span> (<span class="latin-tech">C₅H₁₀O₅</span>)، و<span style="color: #facc15; font-weight: bold;">حمض الفوسفوريك</span> (<span class="latin-tech">H₃PO₄</span>)، وواحدة من <span style="color: #2dd4bf; font-weight: bold;">القواعد الآزوتية الأربع</span>: <span style="color: #38bdf8; font-weight: bold;">الأدينين (A)</span>، <span style="color: #818cf8; font-weight: bold;">الغوانين (G)</span>، <span style="color: #4ade80; font-weight: bold;">السيتوزين (C)</span>، وتتميز بحضور قاعدة <span style="color: #fb923c; font-weight: bold;">اليوراسيل (U)</span> بدلاً من التيمين (<span class="latin-tech">T</span>). بينما تُظهر <span style="color: #4ade80; font-weight: bold;">الإماهة الجزئية</span> أربعة أنواع من <span style="color: #38bdf8; font-weight: bold;">النيكليوتيدات الريبية</span> وهي: <span style="color: #38bdf8; font-weight: bold;">الأدينوزين أحادي الفوسفات (AMP)</span>، <span style="color: #818cf8; font-weight: bold;">الغوانوزين أحادي الفوسفات (GMP)</span>، <span style="color: #4ade80; font-weight: bold;">السيتيدين أحادي الفوسفات (CMP)</span>، و<span style="color: #fb923c; font-weight: bold;">اليوريدين أحادي الفوسفات (UMP)</span>. يتميز <span class="latin-tech">ARN</span> بكونه يمتلك <span style="color: #facc15; font-weight: bold;">سلسلة واحدة مفردة</span> غير مستقرة مقارنة بـ <span class="latin-tech">ADN</span> المزدوج، مما يمنحه <span style="color: #2dd4bf; font-weight: bold;">عمرًا قصيرًا في الهيولى</span> لتفكيكه بسرعة عبر أنزيمات <span class="latin-tech">RNase</span> فور الانتهاء من عملية الترجمة.
         </div>
     </section>
 
-    <div class="ad-space">
-        <span>[ مساحة إعلانية وسطى ]</span>
-    </div>
 
     <section>
         <h2><span class="num-badge">04</span> التفصيل الجزيئي لآلية الاستنساخ (Transcription)</h2>
         
-        <h3>أ- مرحلة الانطلاق وتعرف المحفز:</h3>
-        <p> يبدأ إنزيم <span class="latin-tech">ARN Polymérase</span> بالارتباط بمنطقة نوعية من الـ <span class="latin-tech">ADN</span> تسمى المحفز، وهي إشارة البدء الكيميائية. يقوم الإنزيم في هذه اللحظة بكسر الروابط الهيدروجينية الضعيفة التي تربط القواعد الآزوتية في السلسلتين، مما يؤدي إلى انفتاح جزئي للمورثة وتشكيل ما يعرف بـ "فقاعة الاستنساخ"، وهي الحيز الحيوي الذي ستتم فيه قراءة المعلومات الوراثية وبناء النسخة الجديدة.</p>
+        <h3>أ- مرحلة الانطلاق (الانكشاف):</h3>
+        <p> يرتبط إنزيم <span style="color: #38bdf8; font-weight: bold;">ARN بوليميراز (<span class="latin-tech">ARN Polymérase</span>)</span> بمنطقة نوعية من الـ <span class="latin-tech">ADN</span> تُعرف بـ <span style="color: #818cf8; font-weight: bold;">المحفز (Promoteur)</span>. يقوم الإنزيم بكسر <span style="color: #4ade80; font-weight: bold;">الروابط الهيدروجينية</span> بين القواعد الآزوتية للمتكاملتين، مما يؤدي إلى <span style="color: #fb923c; font-weight: bold;">انفصال سلسلتي الـ ADN</span> وزوال الالتفاف الحلزوني لتتشكل <span style="color: #facc15; font-weight: bold;">فقاعة الاستنساخ</span>. يبدأ الإنزيم قراءة تتابع النيكليوتيدات على <span style="color: #2dd4bf; font-weight: bold;">السلسلة المستنسخة (المعبرة)</span> لبدء تكثيف النيكليوتيدات الريبية الأولى.</p>
 
-        <h3>ب- مرحلة الاستطالة وتكامل النكليوتيدات:</h3>
-        <p> يتحرك الإنزيم بانتظام على طول السلسلة المستنسخة للمورثة قارئاً إياها في الاتجاه <span class="latin-tech">3' → 5'</span> ليبني خيط الـ <span class="latin-tech">ARN</span> في الاتجاه <span class="latin-tech">5' → 3'</span>، وفي كل خطوة يقوم بجذب النكليوتيدات الريبية الحرة المتواجدة في الوسط النووي. يقوم الإنزيم بربط هذه النكليوتيدات بسلسلة الـ <span class="latin-tech">ARN</span> النامية حسب مبدأ التكامل، حيث يضع اليوراسيل <span class="latin-tech">U</span> مقابل الأدينين <span class="latin-tech">A</span>، والسيتوزين <span class="latin-tech">C</span> مقابل الغوانين <span class="latin-tech">G</span>، مما ينتج خيطاً متطاولاً يحمل الشفرة الوراثية بدقة متناهية.</p>
+        <h3>ب- مرحلة الاستطالة:</h3>
+        <p> يتحرك إنزيم <span class="latin-tech">ARN Polymérase</span> على طول <span style="color: #2dd4bf; font-weight: bold;">السلسلة المستنسخة</span> لقراءتها في الاتجاه <span class="latin-tech">3' → 5'</span>، بينما يتم بناء جزيء الـ <span class="latin-tech">ARNm</span> في الاتجاه <span class="latin-tech">5' → 3'</span>. يقوم الإنزيم بقراءة النيكليوتيدات على السلسلة المستنسخة وربط <span style="color: #38bdf8; font-weight: bold;">النيكليوتيدات الريبية الحرة</span> المتواجدة في <span style="color: #facc15; font-weight: bold;">العصارة النووية</span> حسب <span style="color: #818cf8; font-weight: bold;">مبدأ التكامل بين القواعد الآزوتية</span>: يضع <span style="color: #fb923c; font-weight: bold;">اليوراسيل (U)</span> مقابل الأدينين (<span class="latin-tech">A</span>)، <span style="color: #4ade80; font-weight: bold;">الأدينين (A)</span> مقابل التيمين (<span class="latin-tech">T</span>)، و<span style="color: #2dd4bf; font-weight: bold;">الغوانين (G)</span> مقابل السيتوزين (<span class="latin-tech">C</span>). تتشكل <span style="color: #818cf8; font-weight: bold;">روابط إستر-فوسفاتية</span> بين النيكليوتيدات المتتالية لتستطيل سلسلة الـ <span class="latin-tech">ARNm</span> تدريجياً.</p>
 
-        <h3>ج- مرحلة النهاية وانفصال المعقد:</h3>
-        <p> عند وصول إنزيم الاستنساخ إلى تتابع نكليوتيدي محدد يسمى إشارة النهاية، يتوقف عن إضافة الوحدات الريبية وينفصل عن المورثة تماماً. يؤدي هذا الانفصال إلى تحرر جزيء الـ <span class="latin-tech">ARN</span> الأولي (عند حقيقيات النوى)، في حين تعود سلسلتا الـ <span class="latin-tech">ADN</span> إلى حالتهما الأصلية من الالتفاف بفضل الروابط الهيدروجينية التي تعيد تشكيل نفسها تلقائياً، وبذلك تنتهي عملية النسخ بنجاح.</p>
+        <h3>ج- مرحلة النهاية:</h3>
+        <p> عند وصول الإنزيم إلى <span style="color: #fb923c; font-weight: bold;">مُشار النهاية (تتابع التوقف)</span> على المورثة، ينفصل إنزيم <span class="latin-tech">ARN Polymérase</span> عن المورثة، ويتنسخ جزيء <span style="color: #a78bfa; font-weight: bold;">الـ ARN الرسول الأولي (<span class="latin-tech">ARNm</span>)</span> لكي يتحرر، بينما تعود سلسلتا الـ <span class="latin-tech">ADN</span> للالتحام وإعادة <span style="color: #4ade80; font-weight: bold;">التفاف الحلزوني التلقائي</span> عبر تشكل الروابط الهيدروجينية مجدداً.</p>
 
-       <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
-    
-       <!-- عنوان الصورة أعلى الإطار -->
-       <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
-        رسم تخطيطي يوضح مراحل عملية الاستنساخ
-          </div>
+        <div class="img-container-box">
+            <!-- عنوان الصورة أعلى الإطار -->
+            <div class="img-container-title">
+                رسم تخطيطي يوضح مراحل عملية الاستنساخ
+            </div>
 
-          <!-- كود الصورة متكيف بالكامل -->
-          <img src="images1/0.1.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
-
-      </div>
+            <!-- كود الصورة متكيف بالكامل -->
+            <img src="images1/0.1.png" alt="رسم تخطيطي لآلية ومراحل عملية الاستنساخ عند حقيقيات النوى">
+        </div>
     </section>
 
     <section>
         <h2><span class="num-badge">05</span> نضج الـ ARNm وعملية القص والربط (Splicing)</h2>
         <div class="step-card">
-             تتميز مورثات حقيقيات النوى بكونها "مجزأة"، أي أنها تحتوي على قطع تحمل معلومات مفيدة (إكسونات) وقطع لا تشفر لأي بروتين (إنترونات). بعد عملية الاستنساخ، تتدخل معقدات بروتينية إنزيمية ضخمة داخل النواة، حيث تقوم بقص الإنترونات بدقة عالية ثم تربط الإكسونات ببعضها البعض لتشكيل خيط <span class="latin-tech">ARNm</span> ناضجاً، يكون جاهزاً لمغادرة النواة والتوجه للهيولى لبدء مرحلة الترجمة.
+             تتميز مورثات <span style="color: #38bdf8; font-weight: bold;">حقيقيات النوى</span> بكونها <span style="color: #818cf8; font-weight: bold;">مورثات مجزأة</span>، حيث تتكون من <span style="color: #4ade80; font-weight: bold;">قطع دالة </span> تحمل المعلومات اللازمة لتركيب البروتين، تفصل بينها <span style="color: #fb923c; font-weight: bold;">قطع غير دالة </span> لا تشفر لأي أحماض أمينية. ينتج عن عملية الاستنساخ أولاً <span style="color: #facc15; font-weight: bold;">ARNm أولي (مسبق)</span> يخضع لـ <span style="color: #2dd4bf; font-weight: bold;">آلية النضج (القص والربط)</span> داخل النواة، حيث يتم <span style="color: #a78bfa; font-weight: bold;">حذف القطع غير الدالة</span> و<span style="color: #38bdf8; font-weight: bold;">ربط القطع الدالة</span> ببعضها البعض، ليشكل جزيء <span style="color: #facc15; font-weight: bold;">ARNm ناضج</span> يتكون فقط من قطع مشفرة، ليغادر النواة عبر <span style="color: #fb923c; font-weight: bold;">الثقوب النووية</span> نحو <span style="color: #2dd4bf; font-weight: bold;">الهيولى</span> لبدء عملية الترجمة.
         </div>
     </section>
 
-    <section>
+<section>
         <h2><span class="num-badge">06</span> الشفرة الوراثية وتجربة نيرنبرغ التاريخية</h2>
-    
+        
         <div class="mechanism-box">
-        اعتمد العالم نيرنبرغ على وسط اصطناعي يحتوي على كافة مستلزمات الترجمة مع خيط <span class="latin-tech">Poly-U</span> الاصطناعي، مما مكنه من اكتشاف أول رامزة (<span class="latin-tech">UUU</span> التي تشفر للحمض الأميني الفينيل ألانين)، وفك أسرار الشفرة الوراثية التي تتميز بالخصائص الأساسية التالية:
+             تُعبر الشفرة الوراثية عن نظام التناظر بين <span style="color: #facc15; font-weight: bold;">4 قواعد آزوتية</span> في الـ <span class="latin-tech">ARNm</span> و<span style="color: #2dd4bf; font-weight: bold;">20 حمضاً أمينياً</span> يُدخل في تركيب البروتين. ولتحديد عدد القواعد المسؤولة عن تشفير كل حمض أميني، اعتُمدت الحسابات الرياضية والاحتمالية التالية:
+             <br><br>
+             • <strong>إذا كانت الشفرة أحادية (4¹ = 4):</strong> تُشفر لـ <span style="color: #fb923c; font-weight: bold;">4 أحماض أمينية فقط</span> (وهو غير كافٍ لـ 20 حمضاً).<br>
+             • <strong>إذا كانت الشفرة ثنائية (4² = 16):</strong> تُشفر لـ <span style="color: #fb923c; font-weight: bold;">16 حمضاً أمينياً فقط</span> (وهو أيضاً غير كافٍ).<br>
+             • <strong>إذا كانت الشفرة ثلاثية (4³ = 64):</strong> تُوفر <span style="color: #4ade80; font-weight: bold;">64 رامزة</span>، وهو عدد أكثر من كافٍ لتشفير الـ 20 حمضاً أمينياً.
+             <br><br>
+             قام العالم <span style="color: #38bdf8; font-weight: bold;">نيرنبرغ</span> بإثبات هذه الحسابات تجريبياً باستعمال مستخلص خلوي مع خيط اصطناعي (<span class="latin-tech">Poly-U</span>)، حيث اكتشف أن الرامزة <span style="color: #4ade80; font-weight: bold;">UUU</span> تشفر للحمض الأميني <span style="color: #fb923c; font-weight: bold;">الفينيل ألانين (Phe)</span>.
+        </div>
+
+        <div class="mechanism-box">
+            تُعبر الشفرة الوراثية عن نظام التناظر بين <span style="color: #facc15; font-weight: bold;">4 قواعد آزوتية</span> في الـ <span class="latin-tech">ARNm</span> و<span style="color: #2dd4bf; font-weight: bold;">20 حمضاً أمينياً</span> يُدخل في تركيب البروتين. ولتحديد عدد القواعد المسؤولة عن تشفير كل حمض أميني، اعتُمدت الحسابات الرياضية والاحتمالية التالية:
+            <br><br>
+            • <strong>إذا كانت الشفرة أحادية (4¹ = 4):</strong> تُشفر لـ <span style="color: #fb923c; font-weight: bold;">4 أحماض أمينية فقط</span> (وهو غير كافٍ لـ 20 حمضاً).<br>
+            • <strong>إذا كانت الشفرة ثنائية (4² = 16):</strong> تُشفر لـ <span style="color: #fb923c; font-weight: bold;">16 حمضاً أمينياً فقط</span> (وهو أيضاً غير كافٍ).<br>
+            • <strong>إذا كانت الشفرة ثلاثية (4³ = 64):</strong> تُوفر <span style="color: #4ade80; font-weight: bold;">64 رامزة</span>، وهو عدد أكثر من كافٍ لتشفير الـ 20 حمضاً أمينياً.
+            <br><br>
+            قام العالم <span style="color: #38bdf8; font-weight: bold;">نيرنبرغ</span> بإثبات هذه الحسابات تجريبياً باستعمال مستخلص خلوي مع خيط اصطناعي (<span class="latin-tech">Poly-U</span>)، حيث اكتشف أن الرامزة <span style="color: #4ade80; font-weight: bold;">UUU</span> تشفر للحمض الأميني <span style="color: #fb923c; font-weight: bold;">الفينيل ألانين (Phe)</span>.
         </div>
 
         <!-- بطاقات خصائص الشفرة الوراثية -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin: 20px 0;">
-        
-            <!-- 1. خاصية التثليث -->
-            <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--accent-blue); border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-                <h3 style="color: var(--accent-blue); border-right: none; padding: 0; margin-top: 0; background: none; font-size: 1.05em;">
-                    1. خاصية التثليث (Triplet Code)
+        <div class="grid-cards-container">
+            
+            <!-- 1. خاصية التثليث والحساب -->
+            <div class="feature-card blue-border">
+                <h3 class="feature-card-title" style="color: var(--accent-blue);">
+                    1. خاصية التثليث وحساب الرامزات
                 </h3>
-                <p style="font-size: 0.95em; color: var(--text-main); margin-top: 8px;">
-                  الشفرة الوراثية مكتوبة بلغة "ثلاثية"، حيث تشفر كل <strong>ثلاث نكليوتيدات متتالية</strong> (تسمى الرامزة) لحمض أميني واحد في السلسلة الببتيدية.
+                <p class="feature-card-text">
+                    تتكون <span style="color: #38bdf8; font-weight: bold;">الرامزة (Codon)</span> من تتابع <span style="color: #4ade80; font-weight: bold;">3 نيوكليوتيدات متتالية</span>. المجموع الكلي للرامزات هو <span style="color: #facc15; font-weight: bold;">4³ = 64 رامزة</span>، تنقسم إلى: <span style="color: #4ade80; font-weight: bold;">61 رامزة دالة</span> تُشفر للأحماض الأمينية، و<span style="color: #fb923c; font-weight: bold;">3 رامزات غير دالة (رامزات توقف)</span>.
                 </p>
             </div>
 
-            <!-- 2. خاصية الترادف -->
-            <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--accent-purple); border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-                <h3 style="color: var(--accent-purple); border-right: none; padding: 0; margin-top: 0; background: none; font-size: 1.05em;">
-                    2. خاصية الترادف (Redundancy)
+            <!-- 2. خاصية عدم الإبهام والترادف -->
+            <div class="feature-card purple-border">
+                <h3 class="feature-card-title" style="color: var(--accent-purple);">
+                    2. عدم الإبهام والترادف
                 </h3>
-                <p style="font-size: 0.95em; color: var(--text-main); margin-top: 8px;">
-                  قد يُشفر للحمض الأميني الواحد <strong>عدة رامزات مختلفة</strong> (مثل اللوسين الذي تشفر له 6 رامزات)، مما يقليل من الآثار الضارة لبعض الطفرات الوراثية.
+                <p class="feature-card-text">
+                    بما أن عدد الرامزات الدالة (61) أكبر من عدد الأحماض الأمينية (20)، نجد أن <span style="color: #818cf8; font-weight: bold;">للحمض الأميني الواحد عدة رامزات مترادفة</span>، بينما <span style="color: #a78bfa; font-weight: bold;">الرامزة الواحدة تشفر لحمض أميني واحد فقط</span> بدون إبهام.
                 </p>
             </div>
 
-            <!-- 3. خاصية الشمولية -->
-            <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--accent-orange); border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-                <h3 style="color: var(--accent-orange); border-right: none; padding: 0; margin-top: 0; background: none; font-size: 1.05em;">
-                   3. خاصية الشمولية (Universality)
+            <!-- 3. الشمولية ورامزات خاصة -->
+            <div class="feature-card orange-border">
+                <h3 class="feature-card-title" style="color: var(--accent-orange);">
+                    3. الشمولية والرامزات الخاصة
                 </h3>
-                <p style="font-size: 0.95em; color: var(--text-main); margin-top: 8px;">
-                  الشفرة الوراثية <strong>موحدة ومترجمة بنفس الطريقة</strong> لدى جميع الكائنات الحية تقريباً (من البكتيريا إلى   الإنسان)، مما يثبت وحدة المظهر الجزيئي للحياة.
+                <p class="feature-card-text">
+                    الشفرة <span style="color: #2dd4bf; font-weight: bold;">عالمية وموحدة</span> لكل الكائنات الحية. تبدأ الترجمة دائماً بـ <span style="color: #4ade80; font-weight: bold;">رامزة الانطلاق AUG</span> (تشفر للميثيونين <span class="latin-tech">Met</span>)، وتتوقف عند <span style="color: #fb923c; font-weight: bold;">رامزات التوقف (UAA, UAG, UGA)</span>.
                 </p>
             </div>
 
         </div>
         
-        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
-    
+        <div class="img-container-box">
+
             <!-- عنوان الصورة أعلى الإطار -->
-            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
-             جدول الشفرة الوراثية
+            <div class="img-container-title">
+                جدول الشفرة الوراثية (توضيح الاحتمالات والرامزات الـ 64)
             </div>
 
             <!-- كود الصورة متكيف بالكامل -->
-            <img src="images1/0.4.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
+            <img src="images1/0.4.png" alt="جدول الشفرة الوراثية يبين الرامزات الـ 64 والأحماض الأمينية الموافقة ورامزات التوقف والانطلاق">
 
         </div>
         
     </section>
 
-    <section>
-        <h2><span class="num-badge">07</span> بنية ووظيفة الريبوزوم (The Ribosome)</h2>
+
+
+<section>
+        <h2><span class="num-badge">07</span> البنية الفضائية والوظيفية للـ ARNt</h2>
         <div class="step-card">
-             يعتبر الريبوزوم مصنع البروتين في الخلية، وهو عضية تتكون كيميائياً من بروتينات و <span class="latin-tech">ARNr</span>، وتتألف بنيوياً من تحت وحدتين. تحتوي تحت الوحدة الكبرى على المواقع الوظيفية <span class="latin-tech">P</span> و <span class="latin-tech">A</span> اللذين يسمحان باستقبال النواقل <span class="latin-tech">ARNt</span> المحملة بالأحماض الأمينية، وموقع ثالث <span class="latin-tech">E</span> لخروج النواقل الفارغة. تعمل تحت الوحدة الصغرى كنقطة تثبيت للـ <span class="latin-tech">ARNm</span>، مما يسمح للريبوزوم بالانزلاق عليه وقراءة الشفرة رامزة برامزة.
+             يُعتبر <span style="color: #a78bfa; font-weight: bold;">الحمض النووي الريبي الناقل (<span class="latin-tech">ARNt</span>)</span> جزيئاً تخصصياً يتكون من سلسلة واحدة من النيكليوتيدات الريبية الملتفة فضائياً. يأخذ في **البنية ثنائية الأبعاد** شكل <span style="color: #38bdf8; font-weight: bold;">ورقة النفل (Feuille de trèfle)</span> بفضل تشكل <span style="color: #818cf8; font-weight: bold;">روابط هيدروجينية</span> بين القواعد الآزوتية المتقابلة والمتكاملة في أجزاء منها، بينما يظهر في **البنية ثلاثية الأبعاد** على شكل <span style="color: #2dd4bf; font-weight: bold;">حرف L</span>.
+             <br><br>
+             يتميز جزيء الـ <span class="latin-tech">ARNt</span> بوجود موقعين وظيفيين أساسيين:
+             <br><br>
+             • <span style="color: #4ade80; font-weight: bold;">موقع تثبيت الحمض الأميني</span>: يقع في <span style="color: #facc15; font-weight: bold;">النهاية 3'</span> ويتميز بتتابع نيوكليوتيدي ثابت هو <span class="latin-tech">CCA</span>.<br>
+             • <span style="color: #fb923c; font-weight: bold;">موقع الرامزة المضادة (Anticodon)</span>: يتكون من <span style="color: #38bdf8; font-weight: bold;">ثلاثية نيوكليوتيدية نوعية</span> تتكامل مع الرامزة الموافقة لها على جزيء الـ <span class="latin-tech">ARNm</span>، مما يضمن التعرف النوعي ودقة وضع الحمض الأميني في السلسلة الببتيدية أثناء الترجمة.
         </div>
 
-        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
-    
+        <div class="img-container-box">
+
             <!-- عنوان الصورة أعلى الإطار -->
-            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
-             رسم تخطيطي لبنية الريبوزوم
+            <div class="img-container-title">
+                رسم تخطيطي يبين البنية الفضائية للـ ARNt والمواقع الوظيفية
             </div>
 
             <!-- كود الصورة متكيف بالكامل -->
-            <img src="images1/0.5.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
+            <img src="images1/0.6.jpg" alt="رسم تخطيطي يبين بنية جزيء الـ ARNt وموقع تثبيت الحمض الأميني والرامزة المضادة">
 
         </div>
-
     </section>
 
-    <section>
-        <h2><span class="num-badge">08</span> آلية تنشيط الأحماض الأمينية (Activation)</h2>
-        
-        <h3>أ- معقد إنزيم التنشيط النوعي:</h3>
-        <p> تتم عملية التنشيط في الهيولى بتدخل إنزيمات متخصصة تسمى <span class="latin-tech">Aminoacyl-tRNA Synthetase</span>، حيث يمتلك كل إنزيم موقعين نوعيين في غاية الدقة. الموقع الأول يختص بالتعرف على الحمض الأميني والموقع الثاني يختص بالـ <span class="latin-tech">ARNt</span> الموافق له، وهذا الضمان المزدوج هو ما يمنع حدوث أي خطأ في ترجمة المعلومة الوراثية، إذ أن أي خطأ في الربط سيؤدي حتماً لبروتين معيب.</p>
 
-        <h3>ب- استهلاك الطاقة وتشكيل الرابطة:</h3>
-        <p> تعد هذه العملية "مكلفة" طاقوياً للخلية، حيث تستهلك جزيئة <span class="latin-tech">ATP</span> لتوفير الطاقة اللازمة لربط الحمض بالناقل برابطة تساهمية قوية. يتم تحلل الـ <span class="latin-tech">ATP</span> إلى <span class="latin-tech">AMP</span>، وتخزن الطاقة الناتجة في الرابطة الكيميائية بين الحمض والـ <span class="latin-tech">ARNt</span>، وهي نفس الطاقة التي سيستخدمها الريبوزوم لاحقاً لدمج هذا الحمض في السلسلة الببتيدية عبر رابطة ببتيدية متينة.</p>
 
-        <h3>ج- تحرر المعقد المنشط:</h3>
-        <p> بعد اكتمال عملية الربط، يتحرر معقد "حمض أميني-ناقل" في الهيولى ويكون جاهزاً للالتحاق بالريبوزوم فور استدعاء الرامزة المقابلة له. يضمن تحرر هذا المعقد استمرار تدفق الأحماض الأمينية نحو مواقع البناء، مما يحافظ على وتيرة تصنيع البروتين ثابتة ومستقرة تلبي احتياجات الخلية المستمرة للإنزيمات والبروتينات البنيوية.</p>
-        
-        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
-    
-    <!-- عنوان الصورة أعلى الإطار -->
-    <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
-       رسم تخطيطي لآلية عملية تنشيط الحمض الأميني
-    </div>
-
-    <!-- كود الصورة متكيف بالكامل -->
-    <img src="images1/0.2.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
-
-</div>
-        
-    </section>
 
     <section>
-        <h2><span class="num-badge">09</span> التفصيل الجزيئي لآلية الترجمة (Translation)</h2>
-        
-        <h3>أ- مرحلة الانطلاق (Initiation Phase):</h3>
-        <p> تبدأ هذه المرحلة بارتباط تحت الوحدة الصغرى للريبوزوم بخيط الـ <span class="latin-tech">ARNm</span> عند الرامزة <span class="latin-tech">AUG</span>، وهي رامزة البداية العالمية. يلتحق فوراً الـ <span class="latin-tech">ARNt</span> الأول الحامل للميثيونين بالموقع <span class="latin-tech">P</span> بفضل تكامل رامزته المضادة مع الرامزة البدئية، ثم تأتي تحت الوحدة الكبرى لتنغلق على المعقد. تضمن هذه الخطوات التحضيرية توفير بيئة جزيئية مغلقة تسمح ببدء بناء السلسلة الببتيدية دون تدخل العوامل الخارجية المشوشة.</p>
+        <h2><span class="num-badge">08</span> بنية ووظيفة الريبوزوم (The Ribosome)</h2>
+        <div class="step-card">
+             تُعتبر <span style="color: #38bdf8; font-weight: bold;">الريبوزومات</span> العضيات الخلوية الفعالة المسؤولة عن <span style="color: #4ade80; font-weight: bold;">ترجمة المعلومة الوراثية</span> وتركيب البروتين. تتكون كيميائياً من تجمع بين <span style="color: #818cf8; font-weight: bold;">بروتينات ريبوزومية</span> و<span style="color: #facc15; font-weight: bold;">أحماض نووية ريبوزومية (<span class="latin-tech">ARNr</span>)</span> تختلف أنواعها حسب معامل الترسيب (مثل <span class="latin-tech">18S</span> في تحت الوحدة الصغرى، و <span class="latin-tech">28S, 5.8S, 5S</span> في تحت الوحدة الكبرى عند حقيقيات النوى). وتتألف بنيوياً من تحت وحدتين:
+             <br><br>
+             • <span style="color: #fb923c; font-weight: bold;">تحت الوحدة الصغرى</span>: تحتوي على <span style="color: #2dd4bf; font-weight: bold;">موقع تثبيت وقراءة الـ <span class="latin-tech">ARNm</span></span>، وتسمح بانزلاقه لقراءة الرامزات متتالية.<br>
+             • <span style="color: #a78bfa; font-weight: bold;">تحت الوحدة الكبرى</span>: تحتوي على موقعين تحفيزيين رئيسيين ونفق خروج:
+             <br>
+             - <span style="color: #38bdf8; font-weight: bold;">الموقع البيبتيدي (P)</span>: موقع تثبيت جزيء الـ <span class="latin-tech">ARNt</span> الحامل للسلسلة البيبتيدية النامية.<br>
+             - <span style="color: #4ade80; font-weight: bold;">الموقع الأميني (A)</span>: موقع استقبال جزيء الـ <span class="latin-tech">ARNt</span> الجديد الحامل للحمض الأميني المنشط الموالي.<br>
+             - <span style="color: #2dd4bf; font-weight: bold;">موقع (نفق) خروج السلسلة البيبتيدية</span>: ممر ممتد في تحت الوحدة الكبرى يسمح بخروج السلسلة البيبتيدية المتشكلة تدريجياً أثناء استطالتها.<br>
+             - <span style="color: #818cf8; font-style: italic;">(معلومة إضافية خارج المقرر: تحتوي تحت الوحدة الكبرى أيضاً على **الموقع E** لخروج جزيئات الـ <span class="latin-tech">ARNt</span> الشاغرة)</span>.
+        </div>
 
-        <h3>ب- مرحلة الاستطالة (Elongation Phase):</h3>
-        <p> يدخل <span class="latin-tech">ARNt</span> ثانٍ حاملاً حمضه الأميني للموقع <span class="latin-tech">A</span> الشاغر، فيقوم إنزيم البيبتيديل ترانسفيراز بإنشاء رابطة ببتيدية بين الميثيونين والحمض الثاني. يتحرك الريبوزوم بمقدار رامزة واحدة (3 نكليوتيدات) باتجاه النهاية <span class="latin-tech">3'</span>، مما يؤدي لانزياح الـ <span class="latin-tech">ARNt</span> الثاني للموقع <span class="latin-tech">P</span> وخروج الأول من الموقع <span class="latin-tech">E</span>. تتكرر هذه الدورة الميكانيكية آلاف المرات، حيث تزداد السلسلة الببتيدية طولاً مع كل "قفزة" للريبوزوم على طول خيط الرسول.</p>
+        <div class="img-container-box">
 
-        <img src="lesson1-img4.png" alt="مراحل الترجمة" class="educational-img" onerror="this.style.display='none'">
-        <p class="img-caption">الشكل (4): الرسم التخطيطي الكامل لمرحلة الاستطالة واستطالة السلسلة الببتيدية.</p>
-
-        <h3>ج- مرحلة النهاية (Termination Phase):</h3>
-        <p> تتوقف الترجمة فجأة عند وصول الريبوزوم لإحدى رامزات التوقف الثلاث (<span class="latin-tech">UAA, UAG, UGA</span>) في الموقع <span class="latin-tech">A</span>، حيث لا توجد نواقل مقابلة لها. يرتبط بدلاً من ذلك "عامل التحرير" الذي يحفز انفصال السلسلة الببتيدية الناتجة وتفكك تحت وحدتي الريبوزوم عن الـ <span class="latin-tech">ARNm</span>. في كثير من البروتينات، يتم لاحقاً حذف حمض الميثيونين الأول من بداية السلسلة بواسطة إنزيمات نوعية، لتبدأ السلسلة الببتيدية في الانطواء واتخاذ شكلها الفراغي النهائي لتصبح بروتيناً وظيفياً فاعلاً.</p>
-        
-        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
-    
             <!-- عنوان الصورة أعلى الإطار -->
-            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
-            رسم تخطيطي تفصيلي لآلية ومراحل عملية الترجمة
+            <div class="img-container-title">
+                رسم تخطيطي يوضح البنية الفضائية والمواقع الوظيفية للريبوزوم
             </div>
 
             <!-- كود الصورة متكيف بالكامل -->
-            <img src="images1/0.3.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
+            <img src="images1/0.5.png" alt="رسم تخطيطي لبنية الريبوزوم يوضح تحت الوحدة الصغرى وتحت الوحدة الكبرى والمواقع الوظيفية ونفق خروج السلسلة البيبتيدية">
+
+        </div>
+
+    </section>
+
+    <section>
+        <h2><span class="num-badge">09</span> آلية تنشيط الأحماض الأمينية (Activation)</h2>
+        
+        <!-- عناصر وشروط التنشيط -->
+        <div class="step-card">
+             تُعتبر <span style="color: #38bdf8; font-weight: bold;">عملية تنشيط الأحماض الأمينية</span> مرحلة تحضيرية أساسية تسبق مرحلة الترجمة وتحدث في <span style="color: #4ade80; font-weight: bold;">الهيولى</span>. تتطلب العملية توفر 4 عناصر أساسية: <span style="color: #fb923c; font-weight: bold;">إنزيم التنشيط النوعي</span> (<span class="latin-tech">Aminoacyl-tRNA Synthetase</span>)، <span style="color: #2dd4bf; font-weight: bold;">حمض أميني نوعي</span>، <span style="color: #a78bfa; font-weight: bold;"><span class="latin-tech">ARNt</span> موافق</span>، وطاقة بشكل <span style="color: #facc15; font-weight: bold;"><span class="latin-tech">ATP</span></span>.
+        </div>
+
+        <div style="margin: 25px 0;">
+            
+            <!-- المرحلة الأولى -->
+            <h3 style="color: #fb923c; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">1. مرحلة تثبيت الحمض الأميني والـ ATP وتشكل المركب الانتقالي:</h3>
+            <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
+               يتعرف إنزيم التنشيط بفضل التكامل البنيوي لموقعه الفعال فيثبت كلاً من <span style="color: #2dd4bf; font-weight: bold;">الحمض الأميني</span> وجزيء <span style="color: #facc15; font-weight: bold;">الـ <span class="latin-tech">ATP</span></span>. يُحفز الإنزيم إماهة الـ <span class="latin-tech">ATP</span> وتنفصل جزيئة البيوفوسفات (<span class="latin-tech">PPi</span>)، مما يؤدي إلى ربط الحمض الأميني بـ <span class="latin-tech">AMP</span> وتشكل مركب انتقالي مؤقت: <span style="color: #818cf8; font-weight: bold;">أمينوأسيل-<span class="latin-tech">AMP</span></span> متصل بالإنزيم.
+            </p>
+
+            <!-- المرحلة الثانية -->
+            <h3 style="color: #fb923c; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">2. مرحلة تثبيت الـ ARNt وتشكيل الرابطة الطاقوية:</h3>
+            <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
+               يرتبط جزيء <span style="color: #a78bfa; font-weight: bold;">الـ <span class="latin-tech">ARNt</span> الموافق</span> بموقعه الخاص على الإنزيم، فتُنقل الطاقة من المركب الانتقالي ليتشكل رابطة تساهمية غنية بالطاقة بين <span style="color: #2dd4bf; font-weight: bold;">الحمض الأميني</span> والنهاية <span class="latin-tech">'3</span> لجزيء الـ <span class="latin-tech">ARNt</span>، مع تحرر جزيء الـ <span class="latin-tech">AMP</span>.
+            </p>
+
+            <!-- المرحلة الثالثة -->
+            <h3 style="color: #fb923c; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">3. مرحلة تحرر الناتج واسترجاع الإنزيم:</h3>
+            <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
+               ينفصل الناتج النهائي وهو **المعقد المنشط: <span style="color: #4ade80; font-weight: bold;">"حمض أميني - <span class="latin-tech">ARNt</span>"</span> (أمينوأسيل-<span class="latin-tech">ARNt</span>)** عن الموقع الفعال للإنزيم وينطلق نحو الريبوزوم، بينما يسترجع الإنزيم حالته الأصلية ليكون جاهزاً لتكرار التفاعل.
+            </p>
+
+        </div>
+
+
+        <div class="img-container-box">
+
+            <!-- عنوان الصورة أعلى الإطار -->
+            <div class="img-container-title">
+                رسم تخطيطي يوضح مراحل آلية تنشيط الحمض الأميني
+            </div>
+
+            <!-- كود الصورة متكيف بالكامل -->
+            <img src="images1/0.2.png" alt="رسم تخطيطي يوضح مراحل عملية تنشيط الحمض الأميني التفصيلية: تشكل المركب الانتقالي أمينوأسيل-AMP ثم ربط الـ ARNt وتحرر المعقد المنشط">
+
+        </div>
+
+    </section>
+
+
+<section>
+        <h2><span class="num-badge">10</span> التفصيل الجزيئي لآلية الترجمة (Translation)</h2>
+        
+        <div style="margin: 25px 0;">
+
+            <!-- أ- مرحلة الانطلاق -->
+            <h3 style="color: #fb923c; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">أ- مرحلة الانطلاق (Initiation Phase):</h3>
+            <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
+               تبدأ المرحلة بارتباط <span style="color: #38bdf8; font-weight: bold;">تحت الوحدة الصغرى</span> للريبوزوم بخيط الـ <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNm</span> عند <span style="color: #facc15; font-weight: bold;">رامزة البداية (<span class="latin-tech">AUG</span>)</span>. يتوضع الـ <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNt</span> الأول الحامل لحمض <span style="color: #2dd4bf; font-weight: bold;">الميثيونين (<span class="latin-tech">Met</span>)</span> في <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">P</span></span> بفضل التكامل بين <span style="color: #facc15; font-weight: bold;">رامزته المضادة (<span class="latin-tech">UAC</span>)</span> ورامزة البداية. ترتبط بعدها <span style="color: #38bdf8; font-weight: bold;">تحت الوحدة الكبرى</span> ليتشكل <span style="color: #fb923c; font-weight: bold;">معقد الانطلاق</span>، حيث يكون <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">P</span></span> مشغولاً و<span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">A</span></span> شاغراً.
+            </p>
+
+            <!-- ب- مرحلة الاستطالة -->
+            <h3 style="color: #fb923c; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">ب- مرحلة الاستطالة (Elongation Phase):</h3>
+            <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
+               يتوضع جزيء <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNt</span> ثانٍ حامل لـ <span style="color: #2dd4bf; font-weight: bold;">حمض أميني ثانٍ</span> في <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">A</span></span> الشاغر بفضل التكامل بين رامزته المضادة والرامزة الثانية. تتشكل <span style="color: #fb923c; font-weight: bold;">رابطة ببتيدية</span> بين الحمض الأميني الأول والحمض الأميني الثاني بتدخل إنزيم نوعي واستهلاك طاقة. ينفصل الـ <span class="latin-tech">ARNt</span> الأول، وينتقل الريبوزوم بمقدار <span style="color: #facc15; font-weight: bold;">رامزة واحدة (3 نكليوتيدات)</span> باتجاه <span style="color: #facc15; font-weight: bold;">النهاية <span class="latin-tech">'3</span></span>، فيصبح الـ <span class="latin-tech">ARNt</span> الثاني في <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">P</span></span> ويفرغ <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">A</span></span> لاستقبال ناقل جديد. تتكرر هذه الدورة فتستطيل السلسلة الببتيدية تدريجياً.
+            </p>
+
+            <!-- ج- مرحلة النهاية -->
+            <h3 style="color: #fb923c; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">ج- مرحلة النهاية (Termination Phase):</h3>
+            <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
+               تنتهي الترجمة عند وصول <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">A</span></span> إلى إحدى <span style="color: #facc15; font-weight: bold;">رامزات التوقف الثلاث (<span class="latin-tech">UAA, UAG, UGA</span>)</span>. يتدخل <span style="color: #fb923c; font-weight: bold;">عامل التحرير (<span class="latin-tech">Release Factor</span>)</span> الذي يفصل السلسلة الببتيدية المتشكلة، وتتفكك <span style="color: #38bdf8; font-weight: bold;">تحت وحدتي الريبوزوم</span> وينفصل خيط الـ <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNm</span>. ينفصل حمض <span style="color: #2dd4bf; font-weight: bold;">الميثيونين (<span class="latin-tech">Met</span>)</span> الأول عن بداية السلسلة، ثم تنطوي السلسلة الببتيدية لتتخذ <span style="color: #4ade80; font-weight: bold;"> بنيتها الفراغية</span> وتصبح بروتيناً وظيفياً.
+            </p>
+
+        </div>
+        
+
+        <div class="img-container-box">
+
+            <!-- عنوان الصورة أعلى الإطار -->
+            <div class="img-container-title">
+                رسم تخطيطي تفصيلي لآلية ومراحل عملية الترجمة
+            </div>
+
+            <!-- كود الصورة متكيف بالكامل -->
+            <img src="images1/0.3.png" alt="رسم تخطيطي يوضح المراحل الثلاث لعملية الترجمة: الانطلاق، الاستطالة، والنهاية">
 
         </div>
         
     </section>
 
     <section>
-        <h2><span class="num-badge">10</span> دور متعدد الريبوزوم (Polysome) في الإنتاجية</h2>
+        <h2><span class="num-badge">11</span> دور متعدد الريبوزوم (Polysome) في الإنتاجية</h2>
+        
         <div class="step-card">
-             عندما تتطلب الظروف الفيزيولوجية إنتاج كميات هائلة من بروتين معين، ترتبط عدة ريبوزومات متتالية بخيط <span class="latin-tech">ARNm</span> واحد، مشكلة ما يعرف بالبوليزوم. كل ريبوزوم في هذا القطار الجزيئي يقوم بتصنيع نسخة كاملة من البروتين بشكل مستقل عن الآخرين، مما يضاعف سرعة التعبير المورثي بشكل مذهل. تسمح هذه الآلية للخلية بالاقتصاد في الجهد والوقت، حيث تنتج عدداً كبيراً من النسخ انطلاقاً من جزيئة وسيط واحدة قبل أن يتم تفكيكها.
+            <p style="line-height: 1.8; color: var(--text-main); margin: 0;">
+                <span style="color: #fb923c; font-weight: bold;">متعدد الريبوزوم (البوليزوم)</span> هو عبارة عن <span style="color: #38bdf8; font-weight: bold;">مجموعة من الريبوزومات</span> ترتبط بـ <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNm</span> واحد وقراءة تسلسله النكليوتيدي في نفس الوقت. يقضي كل ريبوزوم بتركيب <span style="color: #2dd4bf; font-weight: bold;">سلسلة ببتيدية كاملة</span> ومماثلة للآخرين. تسمح هذه الآلية بـ <span style="color: #4ade80; font-weight: bold;">تركيب كميات كبيرة من نفس البروتين</span> في <span style="color: #facc15; font-weight: bold;">وقت قصير</span> وبـ <span style="color: #facc15; font-weight: bold;">جهد أقل</span> انطلاقاً من جزيء واحد من الـ <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNm</span>.
+            </p>
         </div>
     </section>
 
     <section>
-        <h2><span class="num-badge">11</span> اكتساب البنية الفراغية وانطواء السلسلة</h2>
+        <h2><span class="num-badge">12</span> اكتساب البنية الفراغية وانطواء السلسلة</h2>
+        
         <div class="step-card">
-             بمجرد خروج السلسلة الببتيدية من الريبوزوم، تبدأ في اتخاذ ترتيب فراغي محدد بفضل نشوء روابط كيميائية بين جذور الأحماض الأمينية المكونة لها. تنشأ روابط هيدروجينية، جسور كبريتية، وروابط شاردية تجبر السلسلة على الانطواء والالتفاف لتشكيل بنيات ثانوية ثم ثالثية أو رابعية. هذه البنية ثلاثية الأبعاد هي التي تمنح البروتين "هويته الوظيفية"، إذ أن أي خلل بسيط في شكل البروتين سيمنعه من الارتباط بركيزته ويجعله عديم الفائدة تماماً.
+            <p style="line-height: 1.8; color: var(--text-main); margin: 0;">
+                بعد اكتمال تركيب <span style="color: #2dd4bf; font-weight: bold;">السلسلة الببتيدية</span>، يحدث لها <span style="color: #fb923c; font-weight: bold;">انطواء وتفاف تلقائي</span> لتكتسب <span style="color: #4ade80; font-weight: bold;">بنية فراغية ثلاثية الأبعاد</span> مستقرة. يعود استقرار البنية الفراغية إلى تشكل <span style="color: #38bdf8; font-weight: bold;">روابط كيميائية</span> (هيدروجينية، شاردية، تجاذب الجذور الكارهة للماء، وجسور ثنائية الكبريت) بين <span style="color: #facc15; font-weight: bold;">جذور أحماض أمينية متموضعة بطريقة محددة</span> في السلسلة. يحدد نوع وترتيب وموقع الأحماض الأمينية البنية الفراغية للبروتين، والتي تكسبه <span style="color: #fb923c; font-weight: bold;">تخصصه الوظيفي</span>.
+            </p>
         </div>
     </section>
 
     <section>
-        <h2><span class="num-badge">12</span> دور جهاز غولجي في نضج وتوجيه البروتين</h2>
+        <h2><span class="num-badge">13</span> دور جهاز غولجي في نضج وتوجيه البروتين</h2>
+        
         <div class="mechanism-box">
-             تنتقل البروتينات غير الناضجة من الشبكة الهيولية عبر حويصلات انتقالية لتصل إلى جهاز غولجي، وهو المركز اللوجستي للخلية. داخل أكياس غولجي، تخضع البروتينات لتعديلات كيميائية نهائية كإضافة المجموعات السكرية (الغلوزة) أو إزالة بعض الأحماض الأمينية لضمان نضجها التام. يقوم جهاز غولجي بعد ذلك بفرز هذه البروتينات وتعبئتها في حويصلات إفرازية وتوجيهها بدقة نحو غشاء الخلية لطرحها للخارج أو نحو العضيات الداخلية التي تحتاجها.
+            <p style="line-height: 1.8; color: var(--text-main); margin: 0;">
+                تنتقل <span style="color: #2dd4bf; font-weight: bold;">البروتينات غير الناضجة</span> المُصنّعة في <span style="color: #38bdf8; font-weight: bold;">الشبكة الهيولية المحببة</span> عبر <span style="color: #a78bfa; font-weight: bold;">حويصلات انتقالية</span> إلى <span style="color: #fb923c; font-weight: bold;">جهاز غولجي</span>. تطرأ عليها داخل أكياسه <span style="color: #facc15; font-weight: bold;">تعديلات كيميائية</span> (مثل <span style="color: #a78bfa; font-weight: bold;">الغلوزة - إضافة السكريات</span>) لاكتساب <span style="color: #4ade80; font-weight: bold;">البنية الفراغية الناضجة والوظيفية</span>. تُفرز البروتينات الناضجة بعدها داخل <span style="color: #38bdf8; font-weight: bold;">حويصلات إفرازية</span> لتوجّه نحو <span style="color: #38bdf8; font-weight: bold;">الغشاء الهيولي</span> قصد طرحها بـ <span style="color: #facc15; font-weight: bold;">الإطراح الخلوي</span>، أو تُوجّه إلى عضيات خلوية أخرى لاستعمالها.
+            </p>
         </div>
     </section>
 
     <section>
-        <h2><span class="num-badge">13</span> العلاقة الجزيئية بين المورثة والنمط الظاهري</h2>
+        <h2><span class="num-badge">14</span> العلاقة الجزيئية بين المورثة والنمط الظاهري</h2>
+        
         <div class="step-card">
-             النمط الظاهري للفرد هو الانعكاس المباشر لنوعية البروتينات التي تصنعها خلاياه، والتي تحددها المورثات الموجودة في الـ <span class="latin-tech">ADN</span>. أي تغير في تتابع النكليوتيدات (طفرة) سيؤدي بالضرورة لتغير في تتابع الأحماض الأمينية في البروتين، مما يغير بنيته الفراغية ووظيفته الحيوية. هذا التغير الجزيئي يظهر في النهاية على مستوى الخلية ثم العضوية كصفة جديدة أو مرض وراثي، مما يثبت أن البروتين هو الجسر الرابط بين عالم المعلومات (المورثة) وعالم الواقع (الصفة).
+            <p style="line-height: 1.8; color: var(--text-main); margin: 0;">
+                تُحدد المعلومة الوراثية المحمولة على <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ADN</span> <span style="color: #fb923c; font-weight: bold;">المورثة</span> تتالي الأحماض الأمينية في البروتين (<span style="color: #2dd4bf; font-weight: bold;">النمط الظاهري على المستوى الجزيئي</span>). يحدد البروتين بدور اختلاله أو سلامته شكل ووظيفة الخلية (<span style="color: #38bdf8; font-weight: bold;">النمط الظاهري على المستوى الخلوي</span>)، والذي ينعكس بدوره على صفات الفرد (<span style="color: #4ade80; font-weight: bold;">النمط الظاهري على مستوى العضوية</span>). يؤدي حدوث أي تغيّر في تتالي النكليوتيدات (<span style="color: #facc15; font-weight: bold;">طفرة وراثية</span>) إلى تغيّر في تتالي الأحماض الأمينية، مما يغير <span style="color: #fb923c; font-weight: bold;">البنية الفراغية للبروتين</span> وفقدان <span style="color: #fb923c; font-weight: bold;">تخصصه الوظيفي</span>، وينتج عن ذلك تغير في الصفة أو ظهور مرض وراثي.
+            </p>
         </div>
     </section>
 
     <section>
-        <h2><span class="num-badge">14</span> التأثير الجزيئي للمضادات الحيوية على البكتيريا</h2>
+        <h2><span class="num-badge">15</span> التأثير الجزيئي للمضادات الحيوية على البكتيريا</h2>
+        
         <div class="step-card">
-             تستهدف العديد من المضادات الحيوية عملية تركيب البروتين لقتل البكتيريا المسببة للأمراض دون المساس بخلايا الإنسان. على سبيل المثال، يقوم "التتراسيكلين" بمنع ارتباط الـ <span class="latin-tech">ARNt</span> بالموقع <span class="latin-tech">A</span> للريبوزوم، بينما يعرقل "الستربتومايسين" قراءة الرامزات ويؤدي لإنتاج بروتينات خاطئة. فهم هذه الآليات الدقيقة يسمح بتطوير أدوية ذكية تستغل الاختلافات الهيكلية بين ريبوزومات حقيقيات النوى وبدائيات النوى للقضاء على العدوى بفعالية وأمان.
+            <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 10px 0;">
+                تُستعمل <span style="color: #fb923c; font-weight: bold;">المضادات الحيوية</span> لتثبيط <span style="color: #4ade80; font-weight: bold;">تركيب البروتين</span> لدى <span style="color: #38bdf8; font-weight: bold;">البكتيريا (بدائيات النوى)</span> بالتأثير النوعي على إحدى مراحل التعبير المورثي:
+            </p>
+            
+            <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 8px 0; padding-right: 12px;">
+                • <span style="color: #fb923c; font-weight: bold;">مرحلة الاستنساخ:</span> يرتبط مضاد <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">Rifampicine</span> بإنزيم <span style="color: #38bdf8; font-weight: bold;" class="latin-tech">ARN</span> بوليميراز ويمنع تصنيع الـ <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNm</span>.
+            </p>
+            
+            <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 8px 0; padding-right: 12px;">
+                • <span style="color: #fb923c; font-weight: bold;">مرحلة الترجمة:</span> يمنع <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">Tetracycline</span> تثبيت معقد <span style="color: #2dd4bf; font-weight: bold;">أمينوأسيل-<span class="latin-tech">ARNt</span></span> في <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">A</span></span> للريبوزوم، بينما يثبت <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">Streptomycin</span> على <span style="color: #38bdf8; font-weight: bold;">تحت الوحدة الصغرى</span> ويعرقل قراءة الرامزات.
+            </p>
+            
+            <p style="line-height: 1.8; color: var(--text-main); margin: 10px 0 0 0;">
+                يؤدي هذا التثبيط النوعي إلى <span style="color: #facc15; font-weight: bold;">توقف نمو وتكاثر البكتيريا</span> وموتها بسبب غياب البروتينات الضرورية لحياتها.
+            </p>
         </div>
     </section>
 
-    <section>
-        <h2><span class="num-badge">15</span> التدمير الذاتي للـ ARNm وآلية تدوير الموارد</h2>
+        <section>
+        <h2><span class="num-badge">16</span> تفكيك الـ ARNm وإعادة استعمال النكليوتيدات</h2>
+        
         <div class="mechanism-box">
-             بمجرد انتهاء حاجة الخلية لبروتين معين، تبدأ إنزيمات "الريبونوكلياز" بتفكيك خيوط الـ <span class="latin-tech">ARNm</span> إلى نكليوتيدات ريبية حرة في الهيولى. تهدف هذه العملية إلى منع الهدر الطاقوي الذي قد ينتج عن استمرار تصنيع بروتين غير ضروري، كما تضمن توفير الوحدات البنائية اللازمة لاستنساخ مورثات أخرى جديدة. تعود هذه النكليوتيدات إلى النواة لتستخدم مجدداً في دورات تعبير مورثي أخرى، مما يعكس كفاءة الخلية العالية في إعادة تدوير مواردها المحدودة.
+            <p style="line-height: 1.8; color: var(--text-main); margin: 0;">
+                بعد انتهاء عملية الترجمة، يُفرّق <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNm</span> ويتفكك في <span style="color: #38bdf8; font-weight: bold;">الهيولى</span> بتدخل <span style="color: #fb923c; font-weight: bold;">إنزيمات نوعية (Ribonucleases)</span> إلى <span style="color: #2dd4bf; font-weight: bold;">نكليوتيدات ريبية حرة</span>. تُعاد إعادة استعمال هذه النكليوتيدات الحرة ونقلها إلى <span style="color: #38bdf8; font-weight: bold;">النواة</span> لاستغلالها في <span style="color: #4ade80; font-weight: bold;">عمليات استنساخ جديدة</span> عند حاجة الخلية لبروتينات أخرى. يسمح عمر الـ <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNm</span> المحدود بـ <span style="color: #facc15; font-weight: bold;">المراقبة الدقيقة لمعدل التعبير المورثي</span> وتوقيف تركيب البروتين فور عدم الحاجة إليه.
+            </p>
         </div>
+
     </section>
 
     <div class="tip-box">
@@ -563,7 +1812,52 @@
 
 </div>
 
-<script src="script.js"></script>
+
+<script>
+    
+
+
+
+
+function updateThemeUI(isLight) {
+    var icon = document.getElementById('theme-icon');
+    var text = document.getElementById('theme-text');
+    
+    if (icon) icon.textContent = isLight ? '☀️' : '🌙';
+    if (text) text.textContent = isLight ? 'الوضع النهاري' : 'الوضع الليلي';
+}
+
+// 2. دالة التبديل عند الضغط على الزر
+function toggleTheme() {
+    // تبديل الكلاس على الـ body
+    var isLight = document.body.classList.toggle('light-theme');
+    
+    // حفظ التفضيل في ذاكرة المتصفح
+    localStorage.setItem('bio_theme', isLight ? 'light' : 'dark');
+    
+    // تحديث الواجهة
+    updateThemeUI(isLight);
+}
+
+// 3. قراءة الوضع المحفوظ فور فتح الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    var savedTheme = localStorage.getItem('bio_theme');
+    var isLight = (savedTheme === 'light');
+    
+    // إذا كان الوضع المحفوظ نهارياً، نطبقه فوراً
+    if (isLight) {
+        document.body.classList.add('light-theme');
+    }
+    
+    // تحديث الزر ليتوافق مع الوضع الحالي
+    updateThemeUI(isLight);
+});
+
+
+
+
+
+</script>
 
 </body>
 </html>
