@@ -6,9 +6,6 @@
     <title>الوحدة 1: تركيب البروتين</title>
     <style>
 
-
-
-
     :root {
         --bg-dark: #0b0f19;
         --card-bg: rgba(21, 30, 49, 0.85);
@@ -157,22 +154,27 @@ body.light-theme .particle, body.light .particle {
         box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
     }
 
-    .unit-hero-img {
+.unit-hero-img {
         display: block;
         width: fit-content;
         max-width: 100%;
         height: auto;
         margin: 25px auto;
         padding: 0;
-        border: 2px solid var(--accent-blue);
+        border: 2px solid #1e40af !important;
         border-radius: 16px;
         box-sizing: border-box;
-        box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        box-shadow: 0 0 22px rgba(30, 64, 175, 0.6) !important;
         transition: box-shadow 0.3s ease, transform 0.3s ease;
     }
 
     .unit-hero-img:hover {
-        box-shadow: 0 0 28px rgba(56, 189, 248, 0.5);
+        box-shadow: 0 0 22px rgba(30, 64, 175, 0.6) !important;
+    }
+
+    .light-theme .unit-hero-img, body.light .unit-hero-img {
+        border-color: #1e40af !important;
+        box-shadow: 0 0 22px rgba(30, 64, 175, 0.6) !important;
     }
 
     h1 { 
@@ -218,24 +220,31 @@ body.light-theme .particle, body.light .particle {
         box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
     }
 
+/* إضافة هذا السطر لمنعه من التغير إطلاقاً في الوضع النهاري */
+.light-theme .num-badge {
+    background: linear-gradient(135deg, #38bdf8, #c084fc) !important;
+    color: #0f172a !important;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.4) !important;
+}
+
     /* تم تصحيح ألوان h3 لتستجيب للأوضاع */
     h3 { 
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #1e40af; 
-    border-right: 4px solid #1e40af;
-    padding-right: 12px;
-    margin-top: 25px; 
-    margin-bottom: 12px;
-    font-size: 1.1em; 
-    font-weight: 700;
-    background: var(--h3-bg);
-    padding-top: 6px;
-    padding-bottom: 6px;
-    border-radius: 0 8px 8px 0;
-    transition: color 0.3s ease, border-color 0.3s ease, background 0.4s ease;
-}
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #1e40af; 
+        border-right: 4px solid #1e40af;
+        padding-right: 12px;
+        margin-top: 25px; 
+        margin-bottom: 12px;
+        font-size: 1.1em; 
+        font-weight: 700;
+        background: var(--h3-bg);
+        padding-top: 6px;
+        padding-bottom: 6px;
+        border-radius: 0 8px 8px 0;
+        transition: color 0.3s ease, border-color 0.3s ease, background 0.4s ease;
+    }
 
     .mechanism-box { 
         background: var(--mechanism-bg); 
@@ -1062,13 +1071,6 @@ body {
 }
 
 
-
-
-
-
-
-
-
 /* --- الألوان الجديدة المخصصة للبطاقات --- */
 
 /* الوحدة 1: أزرق داكن */
@@ -1125,14 +1127,6 @@ body {
     border-color: var(--card-glow);
     transform: translateY(-4px);
 }
-
-
-
-
-
-
-
-
 
 
 .top-navbar {
@@ -1227,15 +1221,6 @@ body {
         font-size: 0.85rem; /* تصغير الزر ليأخذ مساحة مريحة */
     }
 }
-
-
-
-
-
-
-
-
-
 
 
 :root {
@@ -1395,9 +1380,6 @@ body.light-theme .top-navbar {
     background-color: var(--card-bg) !important;
     color: var(--text-primary) !important;
 }
-
-
-
 
     </style>
 
@@ -1647,19 +1629,19 @@ body.light-theme .top-navbar {
         <div style="margin: 25px 0;">
             
             <!-- المرحلة الأولى -->
-            <h3 style="color: #fb923c; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">1. مرحلة تثبيت الحمض الأميني والـ ATP وتشكل المركب الانتقالي:</h3>
+            <h3 style="color: #1e40af; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">1. مرحلة تثبيت الحمض الأميني والـ ATP وتشكل المركب الانتقالي:</h3>
             <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
                يتعرف إنزيم التنشيط بفضل التكامل البنيوي لموقعه الفعال فيثبت كلاً من <span style="color: #2dd4bf; font-weight: bold;">الحمض الأميني</span> وجزيء <span style="color: #facc15; font-weight: bold;">الـ <span class="latin-tech">ATP</span></span>. يُحفز الإنزيم إماهة الـ <span class="latin-tech">ATP</span> وتنفصل جزيئة البيوفوسفات (<span class="latin-tech">PPi</span>)، مما يؤدي إلى ربط الحمض الأميني بـ <span class="latin-tech">AMP</span> وتشكل مركب انتقالي مؤقت: <span style="color: #818cf8; font-weight: bold;">أمينوأسيل-<span class="latin-tech">AMP</span></span> متصل بالإنزيم.
             </p>
 
             <!-- المرحلة الثانية -->
-            <h3 style="color: #fb923c; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">2. مرحلة تثبيت الـ ARNt وتشكيل الرابطة الطاقوية:</h3>
+            <h3 style="color: #1e40af; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">2. مرحلة تثبيت الـ ARNt وتشكيل الرابطة الطاقوية:</h3>
             <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
                يرتبط جزيء <span style="color: #a78bfa; font-weight: bold;">الـ <span class="latin-tech">ARNt</span> الموافق</span> بموقعه الخاص على الإنزيم، فتُنقل الطاقة من المركب الانتقالي ليتشكل رابطة تساهمية غنية بالطاقة بين <span style="color: #2dd4bf; font-weight: bold;">الحمض الأميني</span> والنهاية <span class="latin-tech">'3</span> لجزيء الـ <span class="latin-tech">ARNt</span>، مع تحرر جزيء الـ <span class="latin-tech">AMP</span>.
             </p>
 
             <!-- المرحلة الثالثة -->
-            <h3 style="color: #fb923c; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">3. مرحلة تحرر الناتج واسترجاع الإنزيم:</h3>
+            <h3 style="color: #1e40af; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">3. مرحلة تحرر الناتج واسترجاع الإنزيم:</h3>
             <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
                ينفصل الناتج النهائي وهو **المعقد المنشط: <span style="color: #4ade80; font-weight: bold;">"حمض أميني - <span class="latin-tech">ARNt</span>"</span> (أمينوأسيل-<span class="latin-tech">ARNt</span>)** عن الموقع الفعال للإنزيم وينطلق نحو الريبوزوم، بينما يسترجع الإنزيم حالته الأصلية ليكون جاهزاً لتكرار التفاعل.
             </p>
@@ -1688,19 +1670,19 @@ body.light-theme .top-navbar {
         <div style="margin: 25px 0;">
 
             <!-- أ- مرحلة الانطلاق -->
-            <h3 style="color: #fb923c; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">أ- مرحلة الانطلاق (Initiation Phase):</h3>
+            <h3 style="color: #1e40af; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">أ- مرحلة الانطلاق (Initiation Phase):</h3>
             <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
                تبدأ المرحلة بارتباط <span style="color: #38bdf8; font-weight: bold;">تحت الوحدة الصغرى</span> للريبوزوم بخيط الـ <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNm</span> عند <span style="color: #facc15; font-weight: bold;">رامزة البداية (<span class="latin-tech">AUG</span>)</span>. يتوضع الـ <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNt</span> الأول الحامل لحمض <span style="color: #2dd4bf; font-weight: bold;">الميثيونين (<span class="latin-tech">Met</span>)</span> في <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">P</span></span> بفضل التكامل بين <span style="color: #facc15; font-weight: bold;">رامزته المضادة (<span class="latin-tech">UAC</span>)</span> ورامزة البداية. ترتبط بعدها <span style="color: #38bdf8; font-weight: bold;">تحت الوحدة الكبرى</span> ليتشكل <span style="color: #fb923c; font-weight: bold;">معقد الانطلاق</span>، حيث يكون <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">P</span></span> مشغولاً و<span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">A</span></span> شاغراً.
             </p>
 
             <!-- ب- مرحلة الاستطالة -->
-            <h3 style="color: #fb923c; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">ب- مرحلة الاستطالة (Elongation Phase):</h3>
+            <h3 style="color: #1e40af; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">ب- مرحلة الاستطالة (Elongation Phase):</h3>
             <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
                يتوضع جزيء <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNt</span> ثانٍ حامل لـ <span style="color: #2dd4bf; font-weight: bold;">حمض أميني ثانٍ</span> في <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">A</span></span> الشاغر بفضل التكامل بين رامزته المضادة والرامزة الثانية. تتشكل <span style="color: #fb923c; font-weight: bold;">رابطة ببتيدية</span> بين الحمض الأميني الأول والحمض الأميني الثاني بتدخل إنزيم نوعي واستهلاك طاقة. ينفصل الـ <span class="latin-tech">ARNt</span> الأول، وينتقل الريبوزوم بمقدار <span style="color: #facc15; font-weight: bold;">رامزة واحدة (3 نكليوتيدات)</span> باتجاه <span style="color: #facc15; font-weight: bold;">النهاية <span class="latin-tech">'3</span></span>، فيصبح الـ <span class="latin-tech">ARNt</span> الثاني في <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">P</span></span> ويفرغ <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">A</span></span> لاستقبال ناقل جديد. تتكرر هذه الدورة فتستطيل السلسلة الببتيدية تدريجياً.
             </p>
 
             <!-- ج- مرحلة النهاية -->
-            <h3 style="color: #fb923c; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">ج- مرحلة النهاية (Termination Phase):</h3>
+            <h3 style="color: ##1e40af; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">ج- مرحلة النهاية (Termination Phase):</h3>
             <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
                تنتهي الترجمة عند وصول <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">A</span></span> إلى إحدى <span style="color: #facc15; font-weight: bold;">رامزات التوقف الثلاث (<span class="latin-tech">UAA, UAG, UGA</span>)</span>. يتدخل <span style="color: #fb923c; font-weight: bold;">عامل التحرير (<span class="latin-tech">Release Factor</span>)</span> الذي يفصل السلسلة الببتيدية المتشكلة، وتتفكك <span style="color: #38bdf8; font-weight: bold;">تحت وحدتي الريبوزوم</span> وينفصل خيط الـ <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNm</span>. ينفصل حمض <span style="color: #2dd4bf; font-weight: bold;">الميثيونين (<span class="latin-tech">Met</span>)</span> الأول عن بداية السلسلة، ثم تنطوي السلسلة الببتيدية لتتخذ <span style="color: #4ade80; font-weight: bold;"> بنيتها الفراغية</span> وتصبح بروتيناً وظيفياً.
             </p>
