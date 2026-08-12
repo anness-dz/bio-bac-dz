@@ -48,11 +48,6 @@
     </script>
 
     <style>
-
-
-
-
-
 /* =========================================================
    1. نظام المتغيرات الشامل (Variables System)
    ========================================================= */
@@ -175,9 +170,9 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0; /* تم تغييرها من -1 إلى 0 لكي يظهر فوق خلفية body وتحت محتوى الموقع */
     pointer-events: none;
 }
 
@@ -1150,349 +1145,316 @@ body.light .legal-box {
 
 
 
+    <!-- 1. كود السكريبت الرئيسي للكانفاس والعد التنازلي والوضع الليلي -->
     <script>
+        // ==========================================
+        // A. كانفاس تحريك العضيات (Cell Canvas)
+        // ==========================================
         const canvas = document.getElementById('cellCanvas');
-        const ctx = canvas.getContext('2d');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
 
-        // إعدادات العضيات
-        const organellesData = [
-            { src: 'nucleus.png', sizeMin: 200, sizeMax: 230, opacity: 0.35, count: 1 },     // نواة واحدة كبيرة
-            { src: 'mitochondria.png', sizeMin: 45, sizeMax: 65, opacity: 0.45, count: 6 },  // ميتوكندري
-            { src: 'chloroplast.png', sizeMin: 55, sizeMax: 75, opacity: 0.45, count: 6 },   // صانعة خضراء
-            { src: 'ribosome.png', sizeMin: 24, sizeMax: 34, opacity: 0.65, count: 18 }       // ريبوزوم
-        ];
+            const organellesData = [
+                { src: 'nucleus.png', sizeMin: 200, sizeMax: 230, opacity: 0.35, count: 1 },
+                { src: 'mitochondria.png', sizeMin: 45, sizeMax: 65, opacity: 0.45, count: 6 },
+                { src: 'chloroplast.png', sizeMin: 55, sizeMax: 75, opacity: 0.45, count: 6 },
+                { src: 'ribosome.png', sizeMin: 24, sizeMax: 34, opacity: 0.65, count: 18 }
+            ];
 
-        const floatingObjects = [];
+            const floatingObjects = [];
 
-        organellesData.forEach(data => {
-            const img = new Image();
-            img.src = data.src;
-            img.onload = () => {
-                for (let i = 0; i < data.count; i++) {
-                    floatingObjects.push(new FloatingOrganelle(img, data));
+            class FloatingOrganelle {
+                constructor(imgObj, data) {
+                    this.img = imgObj;
+                    this.opacity = data.opacity;
+                    
+                    const baseSize = Math.random() * (data.sizeMax - data.sizeMin) + data.sizeMin;
+                    const aspectRatio = (this.img.naturalWidth / this.img.naturalHeight) || 1;
+                    
+                    if (aspectRatio >= 1) {
+                        this.width = baseSize * aspectRatio;
+                        this.height = baseSize;
+                    } else {
+                        this.width = baseSize;
+                        this.height = baseSize / aspectRatio;
+                    }
+
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 0.4;
+                    this.vy = (Math.random() - 0.5) * 0.4;
+                    this.angle = Math.random() * Math.PI * 2;
+                    this.vAngle = (Math.random() - 0.5) * 0.008;
                 }
-            };
-        });
 
-        class FloatingOrganelle {
-            constructor(imgObj, data) {
-                this.img = imgObj;
-                
-                const baseSize = Math.random() * (data.sizeMax - data.sizeMin) + data.sizeMin;
-                const aspectRatio = this.img.naturalWidth / this.img.naturalHeight || 1;
-                
-                if (aspectRatio >= 1) {
-                    this.width = baseSize * aspectRatio;
-                    this.height = baseSize;
-                } else {
-                    this.width = baseSize;
-                    this.height = baseSize / aspectRatio;
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.angle += this.vAngle;
+
+                    if (this.x < -150) this.x = canvas.width + 150;
+                    if (this.x > canvas.width + 150) this.x = -150;
+                    if (this.y < -150) this.y = canvas.height + 150;
+                    if (this.y > canvas.height + 150) this.y = -150;
                 }
 
-                this.opacity = data.opacity;
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.4;
-                this.vy = (Math.random() - 0.5) * 0.4;
-                this.angle = Math.random() * Math.PI * 2;
-                this.vAngle = (Math.random() - 0.5) * 0.008;
+                draw() {
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.angle);
+                    ctx.globalAlpha = this.opacity;
+                    ctx.drawImage(this.img, -this.width / 2, -this.height / 2, this.width, this.height);
+                    ctx.restore();
+                }
             }
 
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                this.angle += this.vAngle;
+            organellesData.forEach(data => {
+                const img = new Image();
+                img.src = data.src;
+                
+                img.onload = () => {
+                    for (let i = 0; i < data.count; i++) {
+                        floatingObjects.push(new FloatingOrganelle(img, data));
+                    }
+                };
 
-                if (this.x < -150) this.x = canvas.width + 150;
-                if (this.x > canvas.width + 150) this.x = -150;
-                if (this.y < -150) this.y = canvas.height + 150;
-                if (this.y > canvas.height + 150) this.y = -150;
-            }
-
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.angle);
-                ctx.globalAlpha = this.opacity;
-                ctx.drawImage(this.img, -this.width / 2, -this.height / 2, this.width, this.height);
-                ctx.restore();
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            floatingObjects.forEach(obj => {
-                obj.update();
-                obj.draw();
+                img.onerror = () => {
+                    console.error(`⚠️ تعذر تحميل الصورة: ${data.src}`);
+                };
             });
-            requestAnimationFrame(animate);
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                floatingObjects.forEach(obj => {
+                    obj.update();
+                    obj.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
         }
 
-        animate();
+        // ==========================================
+        // B. العد التنازلي للباكالوريا (Bac Countdown)
+        // ==========================================
+        const bacDate = new Date(2027, 5, 14, 8, 0, 0).getTime();
+        let currentDaysLeft = 0;
+        let prevSec = -1;
 
+        function updateSingleNode(circleClass, numId, exactValue, maxVal, displayNum) {
+            const circle = document.querySelector(circleClass);
+            const numSpan = document.getElementById(numId);
+            if (!circle) return;
 
+            const percent = Math.max(0, Math.min(100, (exactValue / maxVal) * 100));
+            let color, glow;
 
+            if (percent >= 80) {
+                color = "#00f2fe"; glow = "rgba(0, 242, 254, 0.75)";
+            } else if (percent >= 50) {
+                color = "#00ff88"; glow = "rgba(0, 255, 136, 0.75)";
+            } else if (percent >= 20) {
+                color = "#ffdd00"; glow = "rgba(255, 221, 0, 0.75)";
+            } else {
+                color = "#ff5252"; glow = "rgba(255, 82, 82, 0.85)";
+            }
 
+            const radius = circle.r.baseVal.value;
+            const circumference = 2 * Math.PI * radius;
+            const offset = circumference - (percent / 100 * circumference);
 
+            circle.style.strokeDashoffset = offset;
 
+            if (numSpan) {
+                numSpan.innerText = displayNum < 10 ? '0' + displayNum : displayNum;
+                numSpan.style.color = color;
+            }
 
+            circle.style.stroke = color;
+            circle.style.filter = `drop-shadow(0 0 10px ${glow})`;
+        }
 
+        function triggerCyberFlash(circleId) {
+            const el = document.getElementById(circleId);
+            if (!el) return;
+            el.classList.add('cyber-pulse-effect');
+            setTimeout(() => el.classList.remove('cyber-pulse-effect'), 180);
+        }
 
+        function updateQuote(daysLeft) {
+            const quoteElement = document.getElementById('bio-quote');
+            if (!quoteElement) return;
 
-
-
-
-
-
-
-const bacDate = new Date(2027, 5, 14, 8, 0, 0).getTime();
-let currentDaysLeft = 0;
-let prevSec = -1;
-
-function updateSingleNode(circleClass, numId, exactValue, maxVal, displayNum) {
-    const circle = document.querySelector(circleClass);
-    const numSpan = document.getElementById(numId);
-    if (!circle) return;
-
-    const percent = Math.max(0, Math.min(100, (exactValue / maxVal) * 100));
-
-    let color, glow;
-
-    if (percent >= 80) {
-        color = "#00f2fe";
-        glow = "rgba(0, 242, 254, 0.75)";
-    } else if (percent >= 50) {
-        color = "#00ff88";
-        glow = "rgba(0, 255, 136, 0.75)";
-    } else if (percent >= 20) {
-        color = "#ffdd00";
-        glow = "rgba(255, 221, 0, 0.75)";
-    } else {
-        color = "#ff5252";
-        glow = "rgba(255, 82, 82, 0.85)";
-    }
-
-    const radius = circle.r.baseVal.value;
-    const circumference = 2 * Math.PI * radius;
-    const offset = circumference - (percent / 100 * circumference);
-
-    // سحب الشريط باستمرار مع كل ثانية
-    circle.style.strokeDashoffset = offset;
-
-    if (numSpan) {
-        numSpan.innerText = displayNum < 10 ? '0' + displayNum : displayNum;
-        numSpan.style.color = color;
-    }
-
-    circle.style.stroke = color;
-    circle.style.filter = `drop-shadow(0 0 10px ${glow})`;
-}
-
-// شرارة خاطفة جداً (180ms)
-function triggerCyberFlash(circleId) {
-    const el = document.getElementById(circleId);
-    if (!el) return;
-    el.classList.add('cyber-pulse-effect');
-    setTimeout(() => el.classList.remove('cyber-pulse-effect'), 180);
-}
-
-function updateQuote(daysLeft) {
-    const quoteElement = document.getElementById('bio-quote');
-    if (!quoteElement) return;
-
-    if (daysLeft > 180) {
-        quoteElement.innerText = "🌿 البدايات القوية تصنع النهايات المذهلة.. نظّم وقتك واثبت!";
-    } else if (daysLeft > 90) {
-        quoteElement.innerText = "📚 استمراريتك اليوم هي التي ستجعلك تبتسم يوم النتائج!";
-    } else if (daysLeft > 30) {
-        quoteElement.innerText = "🌾 اقترب الموعد! ضاعف تركيزك ولا تدع الدقائق تضيع سدى.";
-    } else if (daysLeft > 0) {
-        quoteElement.innerText = "🍂 الشوط الأخير! ضع كل طاقتك هنا، المجد ينتظرك يا بطل!";
-    } else {
-        quoteElement.innerText = "🎓 حان وقت حصاد التعب! توكلوا على الله وبالتوفيق لكم جميعاً.";
-    }
-}
-
-function showInfo(type) {
-    const tooltip = document.getElementById('bio-tooltip');
-    if (type === 'days') {
-        const weeks = Math.floor(currentDaysLeft / 7);
-        tooltip.innerHTML = `📅 متبقي حوالي <b>${weeks} أسبوعاً</b> على الامتحان!`;
-    } else if (type === 'hours') {
-        tooltip.innerHTML = `⏳ استغل ساعتك الحالية في ملخص أو حل تمرين!`;
-    } else if (type === 'minutes') {
-        tooltip.innerHTML = `⚡ كل دقيقة هي استثمار في معدلك النهائي.`;
-    } else {
-        tooltip.innerHTML = `🔥 الثواني تمضي.. اصنع أثرك الآن!`;
-    }
-}
-
-function toggleShareMenu() {
-    const menu = document.getElementById('share-menu');
-    menu.classList.toggle('active');
-}
-
-document.addEventListener('click', function(e) {
-    const wrapper = document.querySelector('.share-wrapper');
-    if (wrapper && !wrapper.contains(e.target)) {
-        document.getElementById('share-menu').classList.remove('active');
-    }
-});
-
-function shareTo(platform) {
-    const quoteText = document.getElementById('bio-quote').innerText;
-    const siteUrl = window.location.href;
-    const fullMessage = `${quoteText}\n\nتابع العد التنازلي للبكالوريا عبر bio-bac-dz:\n${siteUrl}`;
-
-    const encodedText = encodeURIComponent(fullMessage);
-    const encodedUrl = encodeURIComponent(siteUrl);
-
-    if (platform === 'facebook') {
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`, '_blank');
-    } else if (platform === 'messenger') {
-        window.open(`fb-messenger://share/?link=${encodedUrl}`, '_blank') || 
-        window.open(`https://www.facebook.com/dialog/send?link=${encodedUrl}&app_id=291494419055276&redirect_uri=${encodedUrl}`, '_blank');
-    } else if (platform === 'whatsapp') {
-        window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
-    } else if (platform === 'telegram') {
-        window.open(`https://t.me/share/url?url=${encodedUrl}&text=${encodeURIComponent(quoteText)}`, '_blank');
-    } else if (platform === 'copy') {
-        navigator.clipboard.writeText(fullMessage).then(() => {
-            showToast("تم نسخ العبارة ورابط الموقع بنجاح! 📋");
-        });
-    }
-    
-    document.getElementById('share-menu').classList.remove('active');
-}
-
-function showToast(msg) {
-    const toast = document.getElementById('toast-msg');
-    toast.innerText = msg;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
-}
-
-function updateCountdown() {
-    const now = new Date().getTime();
-    const difference = bacDate - now;
-
-    if (difference > 0) {
-        const totalSeconds = difference / 1000;
-        const totalMinutes = totalSeconds / 60;
-        const totalHours = totalMinutes / 60;
-        const totalDays = totalHours / 24;
-
-        const exactSeconds = totalSeconds % 60;
-        const exactMinutes = totalMinutes % 60;
-        const exactHours = totalHours % 24;
-        const exactDays = totalDays % 365;
-
-        const displaySeconds = Math.floor(exactSeconds);
-        const displayMinutes = Math.floor(exactMinutes);
-        const displayHours = Math.floor(exactHours);
-        const displayDays = Math.floor(totalDays);
-
-        currentDaysLeft = displayDays;
-
-        // تزامن دقيق: إطلاق التأثير فوراً عند الانتهاء وتجدد الدورة (من 0 إلى 59)
-        if (prevSec !== -1 && prevSec !== displaySeconds) {
-            // إذا انتقلنا من الثواني الأخيرة إلى الصفر/البداية
-            if (displaySeconds === 59 || displaySeconds === 0) {
-                triggerCyberFlash('seconds-circle');
+            if (daysLeft > 180) {
+                quoteElement.innerText = "🌿 البدايات القوية تصنع النهايات المذهلة.. نظّم وقتك واثبت!";
+            } else if (daysLeft > 90) {
+                quoteElement.innerText = "📚 استمراريتك اليوم هي التي ستجعلك تبتسم يوم النتائج!";
+            } else if (daysLeft > 30) {
+                quoteElement.innerText = "🌾 اقترب الموعد! ضاعف تركيزك ولا تدع الدقائق تضيع سدى.";
+            } else if (daysLeft > 0) {
+                quoteElement.innerText = "🍂 الشوط الأخير! ضع كل طاقتك هنا، المجد ينتظرك يا بطل!";
+            } else {
+                quoteElement.innerText = "🎓 حان وقت حصاد التعب! توكلوا على الله وبالتوفيق لكم جميعاً.";
             }
         }
-        prevSec = displaySeconds;
 
-        // تحديث الدوائر مع التزامن المباشر
-        updateSingleNode('.seconds-progress', 'seconds', exactSeconds, 60, displaySeconds);
-        updateSingleNode('.minutes-progress', 'minutes', exactMinutes, 60, displayMinutes);
-        updateSingleNode('.hours-progress', 'hours', exactHours, 24, displayHours);
-        updateSingleNode('.days-progress', 'days', exactDays, 365, displayDays);
+        function showInfo(type) {
+            const tooltip = document.getElementById('bio-tooltip');
+            if (!tooltip) return;
+            if (type === 'days') {
+                const weeks = Math.floor(currentDaysLeft / 7);
+                tooltip.innerHTML = `📅 متبقي حوالي <b>${weeks} أسبوعاً</b> على الامتحان!`;
+            } else if (type === 'hours') {
+                tooltip.innerHTML = `⏳ استغل ساعتك الحالية في ملخص أو حل تمرين!`;
+            } else if (type === 'minutes') {
+                tooltip.innerHTML = `⚡ كل دقيقة هي استثمار في معدلك النهائي.`;
+            } else {
+                tooltip.innerHTML = `🔥 الثواني تمضي.. اصنع أثرك الآن!`;
+            }
+        }
 
-        updateQuote(displayDays);
-    }
-}
+        function toggleShareMenu() {
+            const menu = document.getElementById('share-menu');
+            if (menu) menu.classList.toggle('active');
+        }
 
-updateCountdown();
-setInterval(updateCountdown, 1000);
+        document.addEventListener('click', function(e) {
+            const wrapper = document.querySelector('.share-wrapper');
+            const menu = document.getElementById('share-menu');
+            if (wrapper && menu && !wrapper.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
 
+        function shareTo(platform) {
+            const quoteEl = document.getElementById('bio-quote');
+            const quoteText = quoteEl ? quoteEl.innerText : "";
+            const siteUrl = window.location.href;
+            const fullMessage = `${quoteText}\n\nتابع العد التنازلي للبكالوريا عبر bio-bac-dz:\n${siteUrl}`;
 
+            const encodedText = encodeURIComponent(fullMessage);
+            const encodedUrl = encodeURIComponent(siteUrl);
 
+            if (platform === 'facebook') {
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`, '_blank');
+            } else if (platform === 'messenger') {
+                window.open(`fb-messenger://share/?link=${encodedUrl}`, '_blank') || 
+                window.open(`https://www.facebook.com/dialog/send?link=${encodedUrl}&app_id=291494419055276&redirect_uri=${encodedUrl}`, '_blank');
+            } else if (platform === 'whatsapp') {
+                window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
+            } else if (platform === 'telegram') {
+                window.open(`https://t.me/share/url?url=${encodedUrl}&text=${encodeURIComponent(quoteText)}`, '_blank');
+            } else if (platform === 'copy') {
+                navigator.clipboard.writeText(fullMessage).then(() => {
+                    showToast("تم نسخ العبارة ورابط الموقع بنجاح! 📋");
+                });
+            }
+            
+            const menu = document.getElementById('share-menu');
+            if (menu) menu.classList.remove('active');
+        }
 
+        function showToast(msg) {
+            const toast = document.getElementById('toast-msg');
+            if (!toast) return;
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
 
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = bacDate - now;
 
+            if (difference > 0) {
+                const totalSeconds = difference / 1000;
+                const totalMinutes = totalSeconds / 60;
+                const totalHours = totalMinutes / 60;
+                const totalDays = totalHours / 24;
 
+                const exactSeconds = totalSeconds % 60;
+                const exactMinutes = totalMinutes % 60;
+                const exactHours = totalHours % 24;
+                const exactDays = totalDays % 365;
 
+                const displaySeconds = Math.floor(exactSeconds);
+                const displayMinutes = Math.floor(exactMinutes);
+                const displayHours = Math.floor(exactHours);
+                const displayDays = Math.floor(totalDays);
 
+                currentDaysLeft = displayDays;
 
+                if (prevSec !== -1 && prevSec !== displaySeconds) {
+                    if (displaySeconds === 59 || displaySeconds === 0) {
+                        triggerCyberFlash('seconds-circle');
+                    }
+                }
+                prevSec = displaySeconds;
 
+                updateSingleNode('.seconds-progress', 'seconds', exactSeconds, 60, displaySeconds);
+                updateSingleNode('.minutes-progress', 'minutes', exactMinutes, 60, displayMinutes);
+                updateSingleNode('.hours-progress', 'hours', exactHours, 24, displayHours);
+                updateSingleNode('.days-progress', 'days', exactDays, 365, displayDays);
 
+                updateQuote(displayDays);
+            }
+        }
 
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
 
-
-
-
-
+        // ==========================================
+        // C. التحكم بالوضع الليلي / النهاري (Theme)
+        // ==========================================
+        // 1. دالة تحديث شكل الزر والنصوص
 function updateThemeUI(isLight) {
     const themeIcon = document.getElementById('theme-icon');
     const themeText = document.getElementById('theme-text');
     
     if (isLight) {
-      document.body.classList.add('light-theme');
-      if (themeIcon) themeIcon.textContent = '☀️';
-      if (themeText) themeText.textContent = 'الوضع النهاري';
+        document.body.classList.add('light-theme');
+        if (themeIcon) themeIcon.textContent = '☀️';
+        if (themeText) themeText.textContent = 'الوضع النهاري';
     } else {
-      document.body.classList.remove('light-theme');
-      if (themeIcon) themeIcon.textContent = '🌙';
-      if (themeText) themeText.textContent = 'الوضع الليلي';
+        document.body.classList.remove('light-theme');
+        if (themeIcon) themeIcon.textContent = '🌙';
+        if (themeText) themeText.textContent = 'الوضع الليلي';
     }
-  }
+}
 
-  function toggleTheme() {
-    // 1. هل الصفحة حالياً في الوضع الفاتح؟
+// 2. دالة التبديل (التي يستدعيها الزر عند النقر)
+function toggleTheme() {
     const isCurrentlyLight = document.body.classList.contains('light-theme');
-    
-    // 2. اعكس الوضع
     const newStatus = !isCurrentlyLight;
     
-    // 3. حفظ الخيار في ذاكرة المتصفح
+    // حفظ الخيار في المتصفح
     localStorage.setItem('theme', newStatus ? 'light' : 'dark');
     
-    // 4. تحديث الواجهة والزر
+    // تطبيق التغيير فوراً
     updateThemeUI(newStatus);
-  }
+}
 
-  // عند فتح الصفحة الرئيسية مباشرة
-  document.addEventListener('DOMContentLoaded', () => {
+// 3. تطبيق الوضع المحفوظ فور فتح الصفحة
+(function initTheme() {
     const savedTheme = localStorage.getItem('theme');
     updateThemeUI(savedTheme === 'light');
-  });
-
-
-
-
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-72KM3WGRYW"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-72KM3WGRYW');
-</script>
-
-
+})();
     </script>
 
-    <script src="script.js"></script>
-
+    <!-- 2. كود التحليلات من Google Tag (خارج وسوم الـ JavaScript) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-72KM3WGRYW"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-72KM3WGRYW');
+    </script>
 </body>
 </html>
