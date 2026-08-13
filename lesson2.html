@@ -4,732 +4,638 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الوحدة 2: العلاقة بين بنية ووظيفة البروتين</title>
-    <style>
+<style>
+    :root {
+        --bg-dark: #0b0f19;
+        --card-bg: rgba(21, 30, 49, 0.85);
+        --accent-blue: #38bdf8;
+        --accent-purple: #a855f7;
+        --accent-orange: #f97316;
+        --text-main: #f8fafc;
+        --text-sub: #94a3b8;
+        --border-glow: rgba(56, 189, 248, 0.25);
+        --tip-yellow: #f59e0b;
+        --bg-main: #0f172a;
+        --card-border: rgba(255, 255, 255, 0.1);
+        --text-color: #f8fafc;
+        --text-muted: #94a3b8;
+    }
 
-        @media (max-width: 640px) {
-            div[style*="max-width: 800px"] {
-                width: 95% !important;
-                padding: 8px !important;
-                margin: 15px auto !important;
-                border-radius: 12px !important;
-            }
+    /* 1. تصفير شامل للمسافات الخارجية والداخلية */
+    * { 
+        box-sizing: border-box; 
+        margin: 0; 
+        padding: 0; 
+    }
 
-            div[style*="max-width: 800px"] img {
-                width: 100% !important;
-                height: auto !important;
-                border-radius: 8px !important;
-                object-fit: contain !important;
-            }
+    html, 
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100%;
+        overflow-x: hidden;
+    }
 
-            div[style*="max-width: 800px"] div[style*="text-align: center"] {
-                font-size: 0.95rem !important;
-                padding-bottom: 6px !important;
-                margin-bottom: 8px !important;
-            }
+    body { 
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+        background-color: var(--bg-dark); 
+        line-height: 2.1; 
+        color: var(--text-main);
+        min-height: 100vh;
+        position: relative;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* 2. إصلاح الكانفاس ليكون خلفية ثابته ولا يدفع العناصر للأسفل */
+    #cellCanvas {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: -2 !important;
+        pointer-events: none !important;
+    }
+
+    /* 3. تعديل الحاوية الرئيسية لتلتصق بالأعلى مباشرة */
+    .main-wrapper {
+        padding-top: 10px !important;
+        margin-top: 0 !important;
+        width: 100%;
+    }
+
+    /* 4. إزالة أي هامش علوي لشريط الهيدر */
+    .top-navbar {
+        width: 100%;
+        max-width: 950px;
+        margin: 0 auto 20px auto !important;
+        padding: 10px 20px;
+        box-sizing: border-box;
+        position: relative !important;
+        background-color: var(--card-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--card-border);
+        border-radius: 20px !important;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .bg-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .particle {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(15px);
+        opacity: 0.3;
+        animation: floatParticle 18s infinite ease-in-out;
+    }
+
+    .particle:nth-child(1) { 
+        width: 180px; 
+        height: 180px; 
+        background: var(--accent-blue); 
+        top: 10%; 
+        left: 10%; 
+        animation-duration: 20s; 
+    }
+
+    .particle:nth-child(2) { 
+        width: 250px; 
+        height: 250px; 
+        background: var(--accent-purple); 
+        top: 60%; 
+        right: 5%; 
+        animation-duration: 25s; 
+        animation-delay: -5s; 
+    }
+
+    .particle:nth-child(3) { 
+        width: 140px; 
+        height: 140px; 
+        background: var(--accent-orange); 
+        top: 40%; 
+        left: 70%; 
+        animation-duration: 16s; 
+        animation-delay: -2s; 
+    }
+
+    .particle:nth-child(4) { 
+        width: 200px; 
+        height: 200px; 
+        background: #10b981; 
+        bottom: 5%; 
+        left: 20%; 
+        animation-duration: 22s; 
+        animation-delay: -8s; 
+    }
+
+    @keyframes floatParticle {
+        0%, 100% { 
+            transform: translateY(0) translateX(0) scale(1); 
         }
-
-        :root {
-            --bg-dark: #0b0f19;
-            --card-bg: rgba(21, 30, 49, 0.85);
-            --accent-blue: #38bdf8;
-            --accent-purple: #a855f7;
-            --accent-orange: #f97316;
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
-            --border-glow: rgba(56, 189, 248, 0.25);
-            --tip-yellow: #f59e0b;
-            --bg-main: #0f172a;
-            --card-border: rgba(255, 255, 255, 0.1);
-            --text-color: #f8fafc;
-            --text-muted: #94a3b8;
+        33% { 
+            transform: translateY(-50px) translateX(30px) scale(1.1); 
         }
+        66% { 
+            transform: translateY(30px) translateX(-40px) scale(0.9); 
+        }
+    }
 
-        /* 1. تصفير شامل للمسافات الخارجية والداخلية */
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
+    .mega-container { 
+        max-width: 950px; 
+        margin: auto; 
+        background: var(--card-bg); 
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        padding: 25px; 
+        border-radius: 24px; 
+        box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
+        border: 1px solid var(--border-glow);
+        position: relative;
+        z-index: 1;
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .top-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .nav-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(168, 85, 247, 0.15));
+        color: var(--accent-blue);
+        text-decoration: none;
+        border-radius: 12px;
+        border: 1px solid var(--border-glow);
+        font-weight: bold;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+    .nav-btn:hover {
+        transform: translateY(-2px);
+        background: var(--accent-blue);
+        color: var(--bg-dark);
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    }
+
+    .unit-hero-img {
+        width: 100%;
+        height: auto;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 18px;
+        margin-bottom: 25px;
+        border: 2px solid #14b8a6;
+        box-shadow: 0 0 20px rgba(20, 184, 166, 0.6), 
+                    0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 { 
+        text-align: center; 
+        background: linear-gradient(135deg, #38bdf8, #a855f7);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: calc(1.6em + 0.8vw); 
+        padding-bottom: 15px; 
+        margin-bottom: 30px; 
+        border-bottom: 2px dashed var(--border-glow);
+        font-weight: 800;
+    }
+
+    h2 { 
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: linear-gradient(90deg, rgba(56, 189, 248, 0.12) 0%, rgba(15, 23, 42, 0.2) 100%); 
+        color: #ffffff; 
+        padding: 12px 18px; 
+        border-radius: 14px; 
+        margin-top: 45px; 
+        margin-bottom: 20px;
+        font-size: calc(1.1em + 0.4vw); 
+        box-shadow: inset 0 0 10px rgba(56, 189, 248, 0.05);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    .num-badge {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+        color: var(--bg-dark);
+        border-radius: 8px;
+        font-size: 0.9em;
+        font-weight: 800;
+        flex-shrink: 0;
+        box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+    }
+
+    h3 { 
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #14b8a6; 
+        border-right: 4px solid #14b8a6;
+        padding-right: 12px;
+        margin-top: 25px; 
+        margin-bottom: 12px;
+        font-size: 1.1em; 
+        font-weight: 700;
+        background: rgba(20, 184, 166, 0.08);
+        padding-top: 6px;
+        padding-bottom: 6px;
+        border-radius: 0 8px 8px 0;
+    }
+
+    .mechanism-box { 
+        background: rgba(30, 41, 59, 0.6); 
+        border-right: 5px solid var(--accent-blue); 
+        padding: 22px; 
+        margin: 20px 0; 
+        border-radius: 14px; 
+        text-align: justify; 
+        font-size: 1.05em; 
+        border: 1px solid rgba(255,255,255,0.05);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+.step-card {
+    padding: 22px;
+    margin-bottom: 20px;
+    border-radius: 16px;
+    border: 2px solid #14b8a6 !important;
+    background: var(--card-bg);
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.3s ease;
+}
+
+.step-card:hover {
+    transform: translateY(-2px);
+    border-color: #14b8a6 !important;
+}
+
+    /* ==========================================
+       إطار الصور الأول (ملتصق بالحواف)
+       ========================================== */
+    .img-frame {
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+        margin: 25px auto;
+        border: 2px solid var(--accent-blue);
+        border-radius: 14px;
+        padding: 0 !important;
+        background: rgba(15, 23, 42, 0.7);
+        box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+        overflow: hidden;
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .img-title {
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: var(--accent-blue);
+        margin: 12px 12px 8px 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    .img-frame img {
+        width: 100%;
+        height: auto;
+        max-height: 500px;
+        object-fit: contain;
+        border-radius: 0 0 12px 12px;
+        display: block;
+        margin: 0;
+    }
+
+    /* ==========================================
+       إطار الصور الثاني (مطابق للأول بلون أرجواني)
+       ========================================== */
+    .img-frame-container-alt {
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+        margin: 25px auto;
+        border: 2px solid var(--accent-purple);
+        border-radius: 14px;
+        padding: 0 !important;
+        background: rgba(15, 23, 42, 0.7);
+        box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
+        overflow: hidden;
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .img-frame-title-alt {
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: var(--accent-purple);
+        margin: 12px 12px 8px 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+    }
+
+    .img-frame-src-alt {
+        width: 100%;
+        height: auto;
+        max-height: 500px;
+        object-fit: contain;
+        border-radius: 0 0 12px 12px;
+        display: block;
+        margin: 0;
+    }
+
+    .ad-space {
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px dashed var(--accent-blue);
+        border-radius: 12px;
+        padding: 14px;
+        text-align: center;
+        color: var(--text-sub);
+        margin: 30px 0;
+        font-size: 0.85rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .tip-box { 
+        background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05)); 
+        border-right: 6px solid var(--tip-yellow); 
+        padding: 20px; 
+        border-radius: 14px; 
+        margin: 30px 0; 
+        color: #fef3c7;
+        border-top: 1px solid rgba(245, 158, 11, 0.2);
+        transition: background-color 0.3s ease;
+    }
+
+    .tip-title {
+        color: var(--tip-yellow);
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .latin-tech { 
+        direction: ltr; 
+        display: inline-block; 
+        font-family: 'Consolas', monospace; 
+        color: #f43f5e; 
+        font-weight: bold; 
+        background: rgba(255,255,255,0.08); 
+        padding: 2px 8px; 
+        border-radius: 6px; 
+        border: 1px solid rgba(244, 63, 94, 0.2);
+    }
+
+    .bottom-nav {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 2px dashed var(--border-glow);
+    }
+
+    /* ==========================================
+       الوضع النهاري (Light Theme Overrides)
+       ========================================== */
+
+    body.light-theme {
+        --bg-main: #f1f5f9;
+        --card-bg: #ffffff;
+        --card-border: rgba(0, 0, 0, 0.08);
+        --text-color: #0f172a;
+        --text-muted: #334155;
+
+        background-color: var(--bg-main) !important;
+        color: var(--text-color) !important;
+    }
+
+    body.light-theme .particle {
+        opacity: 0.6 !important;
+        filter: blur(30px) !important;
+    }
+
+    body.light-theme .particle:nth-child(1) { background: #0284c7 !important; }
+    body.light-theme .particle:nth-child(2) { background: #9333ea !important; }
+    body.light-theme .particle:nth-child(3) { background: #ea580c !important; }
+    body.light-theme .particle:nth-child(4) { background: #059669 !important; }
+
+    body.light-theme .top-navbar,
+    body.light-theme .mega-container,
+    body.light-theme .step-card,
+    body.light-theme .mechanism-box,
+    body.light-theme .img-frame,
+    body.light-theme .img-frame-container-alt,
+    body.light-theme .ad-space {
+        background-color: var(--card-bg) !important;
+        border-color: var(--card-border) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    body.light-theme p,
+    body.light-theme li,
+    body.light-theme div,
+    body.light-theme .step-card,
+    body.light-theme .mechanism-box {
+        color: var(--text-color) !important;
+    }
+
+    body.light-theme h2 {
+        background: linear-gradient(90deg, rgba(56, 189, 248, 0.15) 0%, rgba(241, 245, 249, 0.8) 100%) !important;
+        color: #0f172a !important;
+        border-color: rgba(56, 189, 248, 0.3) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    body.light-theme .num-badge {
+        color: #ffffff !important;
+        box-shadow: 0 2px 8px rgba(56, 189, 248, 0.3) !important;
+    }
+
+    body.light-theme h3 {
+        color: #0d9488 !important;
+        background: rgba(20, 184, 166, 0.1) !important;
+    }
+
+    body.light-theme .latin-tech {
+        color: #e11d48 !important;
+        background: rgba(225, 29, 72, 0.08) !important;
+        border-color: rgba(225, 29, 72, 0.2) !important;
+    }
+
+    body.light-theme .tip-box {
+        background: #fffbeeb3 !important;
+        color: #78350f !important;
+        border-color: rgba(245, 158, 11, 0.3) !important;
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.08) !important;
+    }
+
+    body.light-theme .img-frame {
+        border-color: #0284c7 !important;
+    }
+    body.light-theme .img-title {
+        color: #0284c7 !important;
+        border-bottom-color: rgba(2, 132, 199, 0.2) !important;
+    }
+
+    body.light-theme .img-frame-container-alt {
+        border-color: #9333ea !important;
+    }
+    body.light-theme .img-frame-title-alt {
+        color: #9333ea !important;
+        border-bottom-color: rgba(147, 51, 234, 0.2) !important;
+    }
+
+    .top-nav-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+
+    .top-brand-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+    }
+
+    .top-brand-logo:hover {
+        transform: scale(1.08);
+        filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
+    }
+
+    .top-logo-img {
+        width: 38px;
+        height: 38px;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+    }
+
+    .top-brand-name {
+        font-size: 1.8rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #38bdf8, #818cf8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        white-space: nowrap;
+    }
+
+    .top-navbar .theme-toggle-btn {
+        margin: 0 !important;
+        white-space: nowrap;
+        background: transparent;
+        border: 1px solid var(--card-border);
+        color: var(--text-color);
+        padding: 8px 16px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .top-navbar .theme-toggle-btn:hover {
+        border-color: #38bdf8;
+        transform: translateY(-2px);
+    }
+
+    /* الاستجابة للشاشات الصغيرة والهواتف */
+    @media (max-width: 600px) { 
+        body { 
             padding: 0; 
         }
-
-        html, 
-        body {
-            margin: 0 !important;
-            padding: 0 !important;
-            width: 100%;
-            overflow-x: hidden;
-        }
-
-        body { 
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background-color: var(--bg-dark); 
-            line-height: 2.1; 
-            color: var(--text-main);
-            min-height: 100vh;
-            position: relative;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        /* 2. إصلاح الكانفاس ليكون خلفية ثابته ولا يدفع العناصر للأسفل */
-        #cellCanvas {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100vw !important;
-            height: 100vh !important;
-            z-index: -2 !important;
-            pointer-events: none !important;
-        }
-
-        /* 3. تعديل الحاوية الرئيسية لتلتصق بالأعلى مباشرة */
-        .main-wrapper {
-            padding-top: 10px !important;
-            margin-top: 0 !important;
-            width: 100%;
-        }
-
-        /* 4. إزالة أي هامش علوي لشريط الهيدر */
-        .top-navbar {
-            width: 100%;
-            max-width: 950px;
-            margin: 0 auto 20px auto !important;
-            padding: 10px 20px;
-            box-sizing: border-box;
-            position: relative !important;
-            background-color: var(--card-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--card-border);
-            border-radius: 20px !important;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(15px);
-            opacity: 0.3;
-            animation: floatParticle 18s infinite ease-in-out;
-        }
-
-        .particle:nth-child(1) { 
-            width: 180px; 
-            height: 180px; 
-            background: var(--accent-blue); 
-            top: 10%; 
-            left: 10%; 
-            animation-duration: 20s; 
-        }
-
-        .particle:nth-child(2) { 
-            width: 250px; 
-            height: 250px; 
-            background: var(--accent-purple); 
-            top: 60%; 
-            right: 5%; 
-            animation-duration: 25s; 
-            animation-delay: -5s; 
-        }
-
-        .particle:nth-child(3) { 
-            width: 140px; 
-            height: 140px; 
-            background: var(--accent-orange); 
-            top: 40%; 
-            left: 70%; 
-            animation-duration: 16s; 
-            animation-delay: -2s; 
-        }
-
-        .particle:nth-child(4) { 
-            width: 200px; 
-            height: 200px; 
-            background: #10b981; 
-            bottom: 5%; 
-            left: 20%; 
-            animation-duration: 22s; 
-            animation-delay: -8s; 
-        }
-
-        @keyframes floatParticle {
-            0%, 100% { 
-                transform: translateY(0) translateX(0) scale(1); 
-            }
-            33% { 
-                transform: translateY(-50px) translateX(30px) scale(1.1); 
-            }
-            66% { 
-                transform: translateY(30px) translateX(-40px) scale(0.9); 
-            }
-        }
-
+        
         .mega-container { 
-            max-width: 950px; 
-            margin: auto; 
-            background: var(--card-bg); 
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 25px; 
-            border-radius: 24px; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
-            border: 1px solid var(--border-glow);
-            position: relative;
-            z-index: 1;
-            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .nav-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 18px;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(168, 85, 247, 0.15));
-            color: var(--accent-blue);
-            text-decoration: none;
-            border-radius: 12px;
-            border: 1px solid var(--border-glow);
-            font-weight: bold;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
-
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            background: var(--accent-blue);
-            color: var(--bg-dark);
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
-        }
-
-        .unit-hero-img {
-            width: 100%;
-            height: auto;
-            max-height: 100%;
-            object-fit: contain;
-            border-radius: 18px;
-            margin-bottom: 25px;
-            border: 2px solid #14b8a6;
-            box-shadow: 0 0 20px rgba(20, 184, 166, 0.6), 
-                        0 10px 30px rgba(0, 0, 0, 0.5);
-        }
+            padding: 14px; 
+            border-radius: 16px; 
+        } 
 
         h1 { 
-            text-align: center; 
-            background: linear-gradient(135deg, #38bdf8, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: calc(1.6em + 0.8vw); 
-            padding-bottom: 15px; 
-            margin-bottom: 30px; 
-            border-bottom: 2px dashed var(--border-glow);
-            font-weight: 800;
-        }
+            font-size: 1.35em; 
+        } 
 
         h2 { 
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: linear-gradient(90deg, rgba(56, 189, 248, 0.12) 0%, rgba(15, 23, 42, 0.2) 100%); 
-            color: #ffffff; 
-            padding: 12px 18px; 
-            border-radius: 14px; 
-            margin-top: 45px; 
-            margin-bottom: 20px;
-            font-size: calc(1.1em + 0.4vw); 
-            box-shadow: inset 0 0 10px rgba(56, 189, 248, 0.05);
-            border: 1px solid rgba(56, 189, 248, 0.2);
+            font-size: 1.05em; 
+            padding: 10px 12px; 
+            gap: 10px; 
         }
 
-        .num-badge {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            color: var(--bg-dark);
-            border-radius: 8px;
-            font-size: 0.9em;
-            font-weight: 800;
-            flex-shrink: 0;
-            box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+        .num-badge { 
+            width: 26px; 
+            height: 26px; 
+            font-size: 0.8em; 
         }
 
         h3 { 
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #14b8a6; 
-            border-right: 4px solid #14b8a6;
-            padding-right: 12px;
-            margin-top: 25px; 
-            margin-bottom: 12px;
-            font-size: 1.1em; 
-            font-weight: 700;
-            background: rgba(20, 184, 166, 0.08);
-            padding-top: 6px;
-            padding-bottom: 6px;
-            border-radius: 0 8px 8px 0;
+            font-size: 0.98em; 
         }
 
-        .mechanism-box { 
-            background: rgba(30, 41, 59, 0.6); 
-            border-right: 5px solid var(--accent-blue); 
-            padding: 22px; 
-            margin: 20px 0; 
-            border-radius: 14px; 
-            text-align: justify; 
-            font-size: 1.05em; 
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+        .unit-hero-img { 
+            height: auto; 
+            border-radius: 12px; 
         }
 
-        .step-card { 
-            border: 1px solid rgba(255,255,255,0.08); 
-            padding: 22px; 
-            margin-bottom: 20px; 
-            border-radius: 16px; 
-            background: rgba(15, 23, 42, 0.6); 
-            transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.3s ease;
+        .bottom-nav { 
+            flex-direction: column; 
         }
 
-        .step-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--border-glow);
+        .nav-btn { 
+            justify-content: center; 
+            width: 100%; 
         }
 
-        .img-frame {
-            width: 100%;
-            max-width: 800px;
-            height: auto;
-            margin: 25px auto;
-            border: 2px solid var(--accent-blue);
-            border-radius: 16px;
-            padding: 12px;
-            background: rgba(15, 23, 42, 0.7);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
-            overflow: hidden;
-            transition: background-color 0.3s ease;
+        .top-navbar {
+            padding: 8px 15px;
+            border-radius: 12px !important;
+            margin-bottom: 15px !important;
         }
 
-        .img-title {
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--accent-blue);
-            margin-bottom: 10px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+        .top-brand-logo { 
+            gap: 8px; 
         }
 
-        .img-frame img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            display: block;
+        .top-logo-img { 
+            width: 30px; 
+            height: 30px; 
         }
 
-        .ad-space {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px dashed var(--accent-blue);
-            border-radius: 12px;
-            padding: 14px;
-            text-align: center;
-            color: var(--text-sub);
-            margin: 30px 0;
-            font-size: 0.85rem;
-            transition: background-color 0.3s ease;
+        .top-brand-name { 
+            font-size: 1.3rem; 
         }
 
-        .tip-box { 
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05)); 
-            border-right: 6px solid var(--tip-yellow); 
-            padding: 20px; 
-            border-radius: 14px; 
-            margin: 30px 0; 
-            color: #fef3c7;
-            border-top: 1px solid rgba(245, 158, 11, 0.2);
-            transition: background-color 0.3s ease;
+        .top-navbar .theme-toggle-btn { 
+            padding: 6px 10px; 
+            font-size: 0.85rem; 
         }
-
-        .tip-title {
-            color: var(--tip-yellow);
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-        }
-
-        .latin-tech { 
-            direction: ltr; 
-            display: inline-block; 
-            font-family: 'Consolas', monospace; 
-            color: #f43f5e; 
-            font-weight: bold; 
-            background: rgba(255,255,255,0.08); 
-            padding: 2px 8px; 
-            border-radius: 6px; 
-            border: 1px solid rgba(244, 63, 94, 0.2);
-        }
-
-        .bottom-nav {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px dashed var(--border-glow);
-        }
-
-        /* ==========================================
-           الوضع النهاري (Light Theme Overrides)
-           ========================================== */
-
-        body.light-theme {
-            --bg-main: #f1f5f9;
-            --card-bg: #ffffff;
-            --card-border: rgba(0, 0, 0, 0.08);
-            --text-color: #0f172a;
-            --text-muted: #334155;
-
-            background-color: var(--bg-main) !important;
-            color: var(--text-color) !important;
-        }
-
-        /* تحسين وضوح الدوائر الكبيرة الملونة (Particles) في النهاري */
-        body.light-theme .particle {
-            opacity: 0.6 !important;
-            filter: blur(30px) !important;
-        }
-
-        body.light-theme .particle:nth-child(1) { 
-            background: #0284c7 !important; 
-        }
-
-        body.light-theme .particle:nth-child(2) { 
-            background: #9333ea !important; 
-        }
-
-        body.light-theme .particle:nth-child(3) { 
-            background: #ea580c !important; 
-        }
-
-        body.light-theme .particle:nth-child(4) { 
-            background: #059669 !important; 
-        }
-
-        /* تحويل خلفيات الحاويات والصناديق إلى إطارات بيضاء واضحة ذات ظلال ناعمة */
-        body.light-theme .top-navbar,
-        body.light-theme .mega-container,
-        body.light-theme .step-card,
-        body.light-theme .mechanism-box,
-        body.light-theme .img-frame,
-        body.light-theme .ad-space {
-            background-color: var(--card-bg) !important;
-            border-color: var(--card-border) !important;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        }
-
-        /* ضبط ألوان النصوص العامة والبطاقات في الوضع النهاري */
-        body.light-theme p,
-        body.light-theme li,
-        body.light-theme div,
-        body.light-theme .step-card,
-        body.light-theme .mechanism-box {
-            color: var(--text-color) !important;
-        }
-
-        /* تحسين العناوين الرئيسية والمرقمة في الوضع النهاري */
-        body.light-theme h2 {
-            background: linear-gradient(90deg, rgba(56, 189, 248, 0.15) 0%, rgba(241, 245, 249, 0.8) 100%) !important;
-            color: #0f172a !important;
-            border-color: rgba(56, 189, 248, 0.3) !important;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
-        }
-
-        body.light-theme .num-badge {
-            color: #ffffff !important;
-            box-shadow: 0 2px 8px rgba(56, 189, 248, 0.3) !important;
-        }
-
-        body.light-theme h3 {
-            color: #0d9488 !important;
-            background: rgba(20, 184, 166, 0.1) !important;
-        }
-
-        /* الحفاظ على ألوان الكلمات الملونة والرموز اللاتينية بدلاً من جعلها سوداء */
-        body.light-theme .latin-tech {
-            color: #e11d48 !important;
-            background: rgba(225, 29, 72, 0.08) !important;
-            border-color: rgba(225, 29, 72, 0.2) !important;
-        }
-
-        body.light-theme .tip-box {
-            background: #fffbeeb3 !important;
-            color: #78350f !important;
-            border-color: rgba(245, 158, 11, 0.3) !important;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.08) !important;
-        }
-
-        body.light-theme .top-brand-name {
-            filter: brightness(0.95); 
-        }
-
-        body.light-theme .card-btn {
-            background-color: var(--card-bg) !important;
-            border-color: var(--card-border) !important;
-            color: var(--text-color) !important;
-        }
-
-        .top-nav-container {
-            width: 100%;
-            max-width: 100%;
-            margin: 0;
-            display: flex !important;
-            flex-direction: row !important;
-            justify-content: space-between !important;
-            align-items: center !important;
-        }
-
-        .top-brand-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            cursor: pointer;
-            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
-        }
-
-        .top-brand-logo:hover {
-            transform: scale(1.08);
-            filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
-        }
-
-        .top-brand-logo:active {
-            transform: scale(0.96);
-        }
-
-        .top-logo-img {
-            width: 38px;
-            height: 38px;
-            object-fit: contain;
-            transition: transform 0.3s ease;
-        }
-
-        .top-brand-logo:hover .top-logo-img {
-            transform: rotate(6deg) scale(1.05);
-        }
-
-        .top-brand-name {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            white-space: nowrap;
-        }
-
-        .top-navbar .theme-toggle-btn {
-            margin: 0 !important;
-            white-space: nowrap;
-            background: transparent;
-            border: 1px solid var(--card-border);
-            color: var(--text-color);
-            padding: 8px 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .top-navbar .theme-toggle-btn:hover {
-            border-color: #38bdf8;
-            transform: translateY(-2px);
-        }
-
-        /* الاستجابة للشاشات الصغيرة */
-        @media (max-width: 600px) { 
-            body { 
-                padding: 0; 
-            }
-            
-            .mega-container { 
-                padding: 16px; 
-                border-radius: 16px; 
-            } 
-
-            h1 { 
-                font-size: 1.35em; 
-            } 
-
-            h2 { 
-                font-size: 1.05em; 
-                padding: 10px 12px; 
-                gap: 10px; 
-            }
-
-            .num-badge { 
-                width: 26px; 
-                height: 26px; 
-                font-size: 0.8em; 
-            }
-
-            h3 { 
-                font-size: 0.98em; 
-            }
-
-            .unit-hero-img { 
-                height: 180px; 
-                border-radius: 12px; 
-            }
-
-            .bottom-nav { 
-                flex-direction: column; 
-            }
-
-            .nav-btn { 
-                justify-content: center; 
-                width: 100%; 
-            }
-
-            .top-navbar {
-                padding: 8px 15px;
-                border-radius: 12px !important;
-                margin-bottom: 15px !important;
-            }
-
-            .top-brand-logo { 
-                gap: 8px; 
-            }
-
-            .top-logo-img { 
-                width: 30px; 
-                height: 30px; 
-            }
-
-            .top-brand-name { 
-                font-size: 1.3rem; 
-            }
-
-            .top-navbar .theme-toggle-btn { 
-                padding: 6px 10px; 
-                font-size: 0.85rem; 
-            }
-        }
-
-/* ==========================================
-   إطار الصور - الوضع الافتراضي (الداكن)
-   ========================================== */
-
-.img-frame-container {
-    width: 100%;
-    max-width: 800px;
-    height: auto;
-    margin: 25px auto;
-    border: 2px solid #38bdf8;
-    border-radius: 16px;
-    padding: 12px;
-    background: rgba(15, 23, 42, 0.7);
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
-    overflow: hidden;
-    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.img-frame-title {
-    text-align: center;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #38bdf8;
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(56, 189, 248, 0.2);
-    transition: color 0.3s ease, border-color 0.3s ease;
-}
-
-.img-frame-src {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    display: block;
-}
-
-
-/* ==========================================
-   إطار الصور - التكيف مع الوضع النهاري
-   ========================================== */
-
-body.light-theme .img-frame-container {
-    background: #ffffff !important;
-    border-color: #0284c7 !important;
-    box-shadow: 0 4px 20px rgba(2, 132, 199, 0.12) !important;
-}
-
-body.light-theme .img-frame-title {
-    color: #0284c7 !important;
-    border-bottom-color: rgba(2, 132, 199, 0.2) !important;
-}
-
-/* ==========================================
-           الوضع النهاري - بطاقات تصنيف الأحماض والإطار
-           ========================================== */
-
-        body.light-theme div[style*="background: rgba(15, 23, 42, 0.7)"] {
-            background: #ffffff !important;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06) !important;
-        }
-
-        /* إصلاح ألوان العناوين لتأخذ ألوان المتغيرات/الإطارات الخاصة بها في النهار */
-        body.light-theme h3[style*="color: var(--accent-blue)"] {
-            color: var(--accent-blue) !important;
-        }
-
-        body.light-theme h3[style*="color: var(--accent-purple)"] {
-            color: var(--accent-purple) !important;
-        }
-
-        body.light-theme h3[style*="color: var(--accent-orange)"] {
-            color: var(--accent-orange) !important;
-        }
-
-        /* تثبيت اللون الأزرق لعنوان الصورة أعلى الإطار */
-        body.light-theme div[style*="color: #38bdf8"] {
-            color: #0284c7 !important; /* درجة أزرق واضحة ومناسبة للخلفية البيضاء */
-        }
-
-        body.light-theme span[style*="color: #ffff00"] {
-            color: #d97706 !important; /* تحويل الأصفر الفسفوري للون غامق واضح في النهار */
-        }
-
-        body.light-theme strong[style*="color: #00ff88"] {
-            color: #059669 !important; /* تحويل الأخضر الفسفوري للون أخضر زاهي */
-        }
-
-        body.light-theme span[style*="color: #ff007f"] {
-            color: #db2777 !important; /* تحويل الوردي إلى درجة أغمق قليلاً للتباين */
-        }
-
-        body.light-theme span[style*="color: #ff5252"] {
-            color: #dc2626 !important;
-        }
-
-
-    </style>
+    }
+</style>
 
     <!-- استدعاء ملف CSS الخارجي قبل أي إجراء -->
     <link rel="stylesheet" href="style.css"> 
@@ -795,12 +701,15 @@ body.light-theme .img-frame-title {
             ويتوقف <span style="color: #00f2fe; font-weight: bold;">التخصص الوظيفي</span> للبروتين على: <span style="color: #ff5252; font-weight: bold;">عدد</span>، <span style="color: #ff007f; font-weight: bold;">نوع</span>، و<span style="color: #ffff00; font-weight: bold;">ترتيب</span> الأحماض الأمينية في السلسلة الببتيدية.
         </div>
 
-<div class="img-frame-container">
-    <div class="img-frame-title">
-        الصيغة الكيميائية العامة للحمض الأميني
-    </div>
-    <img src="image2/0.1.png" alt="الصيغة الكيميائية العامة للحمض الأميني" class="img-frame-src">
-</div>
+        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid var(--accent-blue); border-radius: 16px; padding: 12px; background: var(--card-bg); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); overflow: hidden; transition: background-color 0.3s ease, border-color 0.3s ease;">
+            <!-- عنوان الصورة أعلى الإطار (يتكيف مع الوضعين) -->
+            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: var(--accent-blue) !important; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border-glow);">
+                الصيغة الكيميائية العامة للحمض الأميني
+            </div>
+
+            <!-- صورة توضيحية للصيغة الكيميائية العامة للحمض الأميني -->
+            <img src="image2/0.1.png" alt="الصيغة الكيميائية العامة للحمض الأميني" style="width: 100%; height: auto; border-radius: 10px; display: block; background: var(--card-bg);">
+        </div>
     </section>
 
     <section>
@@ -810,45 +719,45 @@ body.light-theme .img-frame-title {
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin: 20px 0;">
-            <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--accent-blue); border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-                <h3 style="color: var(--accent-blue); border-right: none; padding: 0; margin-top: 0; background: none; font-size: 1.05em;">
+            <div style="background: var(--card-bg); border: 1px solid var(--accent-blue); border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: background-color 0.3s ease, border-color 0.3s ease;">
+                <h3 style="color: var(--accent-blue) !important; border-right: none; padding: 0; margin-top: 0; background: none; font-size: 1.05em;">
                     1. أحماض أمينية حامضية (Acidic)
                 </h3>
                 <p style="font-size: 0.95em; color: var(--text-main); margin-top: 8px;">
-                    يحتوي جذرها الجانبي <span class="latin-tech">R</span> على <span style="color: #ffff00; font-weight: bold;">وظيفة كربوكسيلية إضافية</span> (<span class="latin-tech">-COOH</span>).<br><br>
-                    <strong style="color: #00ff88;">أمثلة:</strong> <span style="color: #ff007f; font-weight: bold;">Glu</span>, <span style="color: #ff007f; font-weight: bold;">Asp</span>
+                    يحتوي جذرها الجانبي <span class="latin-tech">R</span> على <span style="color: #f59e0b; font-weight: bold;">وظيفة كربوكسيلية إضافية</span> (<span class="latin-tech">-COOH</span>).<br><br>
+                    <strong style="color: #10b981;">أمثلة:</strong> <span style="color: #e11d48; font-weight: bold;">Glu</span>, <span style="color: #e11d48; font-weight: bold;">Asp</span>
                 </p>
             </div>
 
-            <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--accent-purple); border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-                <h3 style="color: var(--accent-purple); border-right: none; padding: 0; margin-top: 0; background: none; font-size: 1.05em;">
+            <div style="background: var(--card-bg); border: 1px solid var(--accent-purple); border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: background-color 0.3s ease, border-color 0.3s ease;">
+                <h3 style="color: var(--accent-purple) !important; border-right: none; padding: 0; margin-top: 0; background: none; font-size: 1.05em;">
                     2. أحماض أمينية قاعدية (Basic)
                 </h3>
                 <p style="font-size: 0.95em; color: var(--text-main); margin-top: 8px;">
-                    يحتوي جذرها الجانبي <span class="latin-tech">R</span> على <span style="color: #ffff00; font-weight: bold;">وظيفة أمينية إضافية</span> (<span class="latin-tech">-NH2</span>).<br><br>
-                    <strong style="color: #00ff88;">أمثلة:</strong> <span style="color: #ff007f; font-weight: bold;">Lys</span>, <span style="color: #ff007f; font-weight: bold;">Arg</span>, <span style="color: #ff007f; font-weight: bold;">His</span>
+                    يحتوي جذرها الجانبي <span class="latin-tech">R</span> على <span style="color: #f59e0b; font-weight: bold;">وظيفة أمينية إضافية</span> (<span class="latin-tech">-NH2</span>).<br><br>
+                    <strong style="color: #10b981;">أمثلة:</strong> <span style="color: #e11d48; font-weight: bold;">Lys</span>, <span style="color: #e11d48; font-weight: bold;">Arg</span>, <span style="color: #e11d48; font-weight: bold;">His</span>
                 </p>
             </div>
 
-            <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--accent-orange); border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-                <h3 style="color: var(--accent-orange); border-right: none; padding: 0; margin-top: 0; background: none; font-size: 1.05em;">
+            <div style="background: var(--card-bg); border: 1px solid var(--accent-orange); border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: background-color 0.3s ease, border-color 0.3s ease;">
+                <h3 style="color: var(--accent-orange) !important; border-right: none; padding: 0; margin-top: 0; background: none; font-size: 1.05em;">
                     3. أحماض أمينية متعادلة (Neutral)
                 </h3>
                 <p style="font-size: 0.95em; color: var(--text-main); margin-top: 8px;">
-                    جذرها الجانبي <span class="latin-tech">R</span> <span style="color: #ff5252; font-weight: bold;">خالٍ</span> من الوظائف الحمضية والقاعدية الإضافية.<br><br>
-                    <strong style="color: #00ff88;">أمثلة:</strong> <span style="color: #ff007f; font-weight: bold;">Ala</span>, <span style="color: #ff007f; font-weight: bold;">Val</span>, <span style="color: #ff007f; font-weight: bold;">Ser</span>
+                    جذرها الجانبي <span class="latin-tech">R</span> <span style="color: #ef4444; font-weight: bold;">خالٍ</span> من الوظائف الحمضية والقاعدية الإضافية.<br><br>
+                    <strong style="color: #10b981;">أمثلة:</strong> <span style="color: #e11d48; font-weight: bold;">Ala</span>, <span style="color: #e11d48; font-weight: bold;">Val</span>, <span style="color: #e11d48; font-weight: bold;">Ser</span>
                 </p>
             </div>
         </div>
 
-        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
-            <!-- عنوان الصورة أعلى الإطار (أزرق ثابت) -->
-            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8 !important; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
+        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid var(--accent-blue); border-radius: 16px; padding: 12px; background: var(--card-bg); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); overflow: hidden; transition: background-color 0.3s ease, border-color 0.3s ease;">
+            <!-- عنوان الصورة أعلى الإطار (يتكيف مع الوضعين) -->
+            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: var(--accent-blue) !important; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border-glow);">
                 تصنيف الأحماض الأمينية حسب طبيعة الجذر الجانبي (R)
             </div>
 
             <!-- صورة توضيحية لتصنيف الأحماض الأمينية -->
-            <img src="image2/0.5.jpg" alt="تصنيف الأحماض الأمينية حسب طبيعة الجذر الجانبي R" style="width: 100%; height: auto; border-radius: 10px; display: block;">
+            <img src="image2/0.5.jpg" alt="تصنيف الأحماض الأمينية حسب طبيعة الجذر الجانبي R" style="width: 100%; height: auto; border-radius: 10px; display: block; background: var(--card-bg);">
         </div>
 
     </section>
@@ -895,14 +804,14 @@ body.light-theme .img-frame-title {
             </div>
         </div>
 
-        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
-            <!-- عنوان الصورة أعلى الإطار -->
-            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
+        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid var(--accent-blue); border-radius: 16px; padding: 12px; background: var(--card-bg); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); overflow: hidden; transition: background-color 0.3s ease, border-color 0.3s ease;">
+            <!-- عنوان الصورة أعلى الإطار (يتكيف مع الوضعين) -->
+            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: var(--accent-blue) !important; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border-glow);">
                 آلية تشكل الرابطة الببتيدية
             </div>
 
             <!-- صورة آلية تشكل الرابطة الببتيدية -->
-            <img src="image2/0.2.png" alt="آلية تشكل الرابطة الببتيدية" style="width: 100%; height: auto; border-radius: 10px; display: block;">
+            <img src="image2/0.2.png" alt="آلية تشكل الرابطة الببتيدية" style="width: 100%; height: auto; border-radius: 10px; display: block; background: var(--card-bg);">
         </div>
     </section>
 
@@ -943,14 +852,14 @@ body.light-theme .img-frame-title {
             • <span style="color: #00f2fe; font-weight: bold;">مثال منهجية:</span> جزيء الهيموغلوبين (يتكون من 4 تحت وحدات).
         </div>
 
-        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
-            <!-- عنوان الصورة أعلى الإطار -->
-            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
+        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid var(--accent-blue); border-radius: 16px; padding: 12px; background: var(--card-bg); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); overflow: hidden; transition: background-color 0.3s ease, border-color 0.3s ease;">
+            <!-- عنوان الصورة أعلى الإطار (يتكيف مع الوضعين) -->
+            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: var(--accent-blue) !important; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border-glow);">
                 مستويات التنظيم الفراغي للبروتينات
             </div>
 
             <!-- صورة توضيحية لمستويات التنظيم الفراغي -->
-            <img src="image2/0.4.png" alt="مستويات التنظيم الفراغي للبروتين" style="width: 100%; height: auto; border-radius: 10px; display: block;">
+            <img src="image2/0.4.png" alt="مستويات التنظيم الفراغي للبروتين" style="width: 100%; height: auto; border-radius: 10px; display: block; background: var(--card-bg);">
         </div>
     </section>
 
@@ -968,15 +877,14 @@ body.light-theme .img-frame-title {
             • <span style="color: #ff5252; font-weight: bold;">4. تجاذب الأقطاب الكارهة للماء:</span> تنشأ بين <span style="color: #00ff88; font-weight: bold;">الأقطاب الكارهة للماء</span> للجذور التي تتجه نحو الداخل مبتعدة عن الوسط المائي.
         </div>
         
-        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
-
-            <!-- عنوان الصورة أعلى الإطار -->
-            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
+        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid var(--accent-blue); border-radius: 16px; padding: 12px; background: var(--card-bg); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); overflow: hidden; transition: background-color 0.3s ease, border-color 0.3s ease;">
+            <!-- عنوان الصورة أعلى الإطار (يتكيف مع الوضعين) -->
+            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: var(--accent-blue) !important; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border-glow);">
                 الروابط المساهمة في استقرار البنية الثالثية
             </div>
 
-            <!-- كود الصورة متكيف بالكامل مرتبط بمجلد image2 -->
-            <img src="image2/0.3.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
+            <!-- صورة توضيحية للروابط المساهمة في استقرار البنية الثالثية -->
+            <img src="image2/0.3.png" alt="الروابط المساهمة في استقرار البنية الثالثية" style="width: 100%; height: auto; border-radius: 10px; display: block; background: var(--card-bg);">
         </div>
 
     </section>
