@@ -10,357 +10,835 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
 
     <style>
-        :root {
-            --bg-dark: #0b0f19;
-            --card-bg: rgba(21, 30, 49, 0.85);
-            --accent-blue: #38bdf8;
-            --accent-purple: #a855f7;
-            --accent-orange: #f97316;
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
-            --border-glow: rgba(56, 189, 248, 0.25);
-            --tip-yellow: #f59e0b;
-        }
+    :root {
+        --bg-dark: #0b0f19;
+        --card-bg: rgba(21, 30, 49, 0.85);
+        --accent-blue: #38bdf8;
+        --accent-purple: #a855f7;
+        --accent-orange: #f97316;
+        --text-main: #f8fafc;
+        --text-sub: #94a3b8;
+        --border-glow: rgba(56, 189, 248, 0.25);
+        --tip-yellow: #f59e0b;
+        --bg-main: #0f172a;
+        --card-border: rgba(255, 255, 255, 0.1);
+        --text-color: #f8fafc;
+        --text-muted: #94a3b8;
+    }
 
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
+    /* 1. تصفير شامل للمسافات الخارجية والداخلية */
+    * { 
+        box-sizing: border-box; 
+        margin: 0; 
+        padding: 0; 
+    }
+
+    html, 
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    body { 
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+        background-color: var(--bg-dark); 
+        line-height: 2.1; 
+        color: var(--text-main);
+        min-height: 100vh;
+        position: relative;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* 2. إصلاح الكانفاس ليكون خلفية ثابته ولا يدفع العناصر للأسفل */
+    #cellCanvas {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: -2 !important;
+        pointer-events: none !important;
+    }
+
+    /* 3. تعديل الحاوية الرئيسية لتلتصق بالأعلى مباشرة */
+    .main-wrapper {
+        padding-top: 10px !important;
+        margin-top: 0 !important;
+        width: 100%;
+    }
+
+    /* 4. إزالة أي هامش علوي لشريط الهيدر */
+    .top-navbar {
+        width: 100%;
+        max-width: 950px;
+        margin: 0 auto 20px auto !important;
+        padding: 10px 20px;
+        box-sizing: border-box;
+        position: relative !important;
+        background-color: var(--card-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--card-border);
+        border-radius: 20px !important;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .bg-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .particle {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(15px);
+        opacity: 0.3;
+        animation: floatParticle 18s infinite ease-in-out;
+    }
+
+    .particle:nth-child(1) { 
+        width: 180px; 
+        height: 180px; 
+        background: var(--accent-blue); 
+        top: 10%; 
+        left: 10%; 
+        animation-duration: 20s; 
+    }
+
+    .particle:nth-child(2) { 
+        width: 250px; 
+        height: 250px; 
+        background: var(--accent-purple); 
+        top: 60%; 
+        right: 5%; 
+        animation-duration: 25s; 
+        animation-delay: -5s; 
+    }
+
+    .particle:nth-child(3) { 
+        width: 140px; 
+        height: 140px; 
+        background: var(--accent-orange); 
+        top: 40%; 
+        left: 70%; 
+        animation-duration: 16s; 
+        animation-delay: -2s; 
+    }
+
+    .particle:nth-child(4) { 
+        width: 200px; 
+        height: 200px; 
+        background: #10b981; 
+        bottom: 5%; 
+        left: 20%; 
+        animation-duration: 22s; 
+        animation-delay: -8s; 
+    }
+
+    @keyframes floatParticle {
+        0%, 100% { 
+            transform: translateY(0) translateX(0) scale(1); 
+        }
+        33% { 
+            transform: translateY(-50px) translateX(30px) scale(1.1); 
+        }
+        66% { 
+            transform: translateY(30px) translateX(-40px) scale(0.9); 
+        }
+    }
+
+    .mega-container { 
+        max-width: 950px; 
+        margin: auto; 
+        background: var(--card-bg); 
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        padding: 25px; 
+        border-radius: 24px; 
+        box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
+        border: 1px solid var(--border-glow);
+        position: relative;
+        z-index: 1;
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .top-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .nav-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(168, 85, 247, 0.15));
+        color: var(--accent-blue);
+        text-decoration: none;
+        border-radius: 12px;
+        border: 1px solid var(--border-glow);
+        font-weight: bold;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+    .nav-btn:hover {
+        transform: translateY(-2px);
+        background: var(--accent-blue);
+        color: var(--bg-dark);
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    }
+
+    .unit-hero-img {
+        width: 100%;
+        height: auto;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 18px;
+        margin-bottom: 25px;
+        border: 2px solid #38bdf8;
+        box-shadow: 0 0 20px rgba(20, 184, 166, 0.6), 
+                    0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 { 
+        text-align: center; 
+        background: linear-gradient(135deg, #38bdf8, #a855f7);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: calc(1.6em + 0.8vw); 
+        padding-bottom: 15px; 
+        margin-bottom: 30px; 
+        border-bottom: 2px dashed var(--border-glow);
+        font-weight: 800;
+    }
+
+    h2 { 
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: linear-gradient(90deg, rgba(56, 189, 248, 0.12) 0%, rgba(15, 23, 42, 0.2) 100%); 
+        color: #ffffff; 
+        padding: 12px 18px; 
+        border-radius: 14px; 
+        margin-top: 45px; 
+        margin-bottom: 20px;
+        font-size: calc(1.1em + 0.4vw); 
+        box-shadow: inset 0 0 10px rgba(56, 189, 248, 0.05);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    .num-badge {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+        color: var(--bg-dark);
+        border-radius: 8px;
+        font-size: 0.9em;
+        font-weight: 800;
+        flex-shrink: 0;
+        box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+    }
+
+    .inhibitor-card h3 {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: transparent !important;
+        border: none !important;
+        border-right: none !important;
+        padding: 0 0 10px 0 !important;
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-size: 1.1em;
+        font-weight: 700;
+        border-radius: 0;
+    }
+
+    /* تخصيص لون وعنوان كل بطاقة بدقة */
+    .inhibitor-card.competitive h3 {
+        color: #ffa500 !important;
+        border-bottom: 2px dashed rgba(249, 115, 22, 0.3);
+    }
+
+    .inhibitor-card.non-competitive h3 {
+        color: #a855f7 !important;
+        border-bottom: 2px dashed rgba(168, 85, 247, 0.3);
+    }
+
+    .mechanism-box { 
+        background: rgba(30, 41, 59, 0.6); 
+        border-right: 5px solid var(--accent-blue); 
+        padding: 22px; 
+        margin: 20px 0; 
+        border-radius: 14px; 
+        text-align: justify; 
+        font-size: 1.05em; 
+        border: 1px solid rgba(255,255,255,0.05);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .step-card {
+        padding: 22px;
+        margin-bottom: 20px;
+        border-radius: 16px;
+        border: 1px solid var(--border-color, rgba(255, 255, 255, 0.15));
+        background: var(--card-bg);
+        transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.3s ease;
+    }
+
+    .step-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* إطارات الصور */
+    .img-frame {
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+        margin: 25px auto;
+        border: 2px solid var(--accent-blue);
+        border-radius: 14px;
+        padding: 0 !important;
+        background: rgba(15, 23, 42, 0.7);
+        box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+        overflow: hidden;
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .img-title {
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: var(--accent-blue);
+        margin: 12px 12px 8px 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    .img-frame img {
+        width: 100%;
+        height: auto;
+        max-height: 500px;
+        object-fit: contain;
+        border-radius: 0 0 12px 12px;
+        display: block;
+        margin: 0;
+    }
+
+    .img-frame-container-alt {
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+        margin: 25px auto;
+        border: 2px solid var(--accent-purple);
+        border-radius: 14px;
+        padding: 0 !important;
+        background: rgba(15, 23, 42, 0.7);
+        box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
+        overflow: hidden;
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .img-frame-title-alt {
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: var(--accent-purple);
+        margin: 12px 12px 8px 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+    }
+
+    .img-frame-src-alt {
+        width: 100%;
+        height: auto;
+        max-height: 500px;
+        object-fit: contain;
+        border-radius: 0 0 12px 12px;
+        display: block;
+        margin: 0;
+    }
+
+    .ad-space {
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px dashed var(--accent-blue);
+        border-radius: 12px;
+        padding: 14px;
+        text-align: center;
+        color: var(--text-sub);
+        margin: 30px 0;
+        font-size: 0.85rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .tip-box { 
+        background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05)); 
+        border-right: 6px solid var(--tip-yellow); 
+        padding: 20px; 
+        border-radius: 14px; 
+        margin: 30px 0; 
+        color: #fef3c7;
+        border-top: 1px solid rgba(245, 158, 11, 0.2);
+        transition: background-color 0.3s ease;
+    }
+
+    .tip-title {
+        color: var(--tip-yellow);
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .latin-tech { 
+        direction: ltr; 
+        display: inline-block; 
+        font-family: 'Consolas', monospace; 
+        color: #f43f5e; 
+        font-weight: bold; 
+        background: rgba(255,255,255,0.08); 
+        padding: 2px 8px; 
+        border-radius: 6px; 
+        border: 1px solid rgba(244, 63, 94, 0.2);
+    }
+
+    .bottom-nav {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 2px dashed var(--border-glow);
+    }
+
+    /* ==========================================
+        الوضع النهاري (Light Theme Overrides)
+       ========================================== */
+
+    body.light-theme {
+        --bg-main: #f1f5f9;
+        --card-bg: #ffffff;
+        --card-border: rgba(0, 0, 0, 0.08);
+        --text-color: #0f172a;
+        --text-muted: #334155;
+
+        background-color: var(--bg-main) !important;
+        color: var(--text-color) !important;
+    }
+
+    body.light-theme .particle {
+        opacity: 0.6 !important;
+        filter: blur(30px) !important;
+    }
+
+    body.light-theme .particle:nth-child(1) { background: #0284c7 !important; }
+    body.light-theme .particle:nth-child(2) { background: #9333ea !important; }
+    body.light-theme .particle:nth-child(3) { background: #ea580c !important; }
+    body.light-theme .particle:nth-child(4) { background: #059669 !important; }
+
+    body.light-theme .top-navbar,
+    body.light-theme .mega-container,
+    body.light-theme .step-card,
+    body.light-theme .mechanism-box,
+    body.light-theme .img-frame,
+    body.light-theme .img-frame-container-alt,
+    body.light-theme .ad-space {
+        background-color: var(--card-bg) !important;
+        border-color: var(--card-border) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    body.light-theme p,
+    body.light-theme li,
+    body.light-theme div:not(.inhibitor-card),
+    body.light-theme .step-card,
+    body.light-theme .mechanism-box {
+        color: var(--text-color) !important;
+    }
+
+    body.light-theme h2 {
+        background: linear-gradient(90deg, rgba(56, 189, 248, 0.15) 0%, rgba(241, 245, 249, 0.8) 100%) !important;
+        color: #0f172a !important;
+        border-color: rgba(56, 189, 248, 0.3) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    body.light-theme .num-badge {
+        color: #ffffff !important;
+        box-shadow: 0 2px 8px rgba(56, 189, 248, 0.3) !important;
+    }
+
+    body.light-theme h3 {
+        color: #0d9488 !important;
+        background: rgba(20, 184, 166, 0.1) !important;
+    }
+
+    body.light-theme .latin-tech {
+        color: #e11d48 !important;
+        background: rgba(225, 29, 72, 0.08) !important;
+        border-color: rgba(225, 29, 72, 0.2) !important;
+    }
+
+    body.light-theme .tip-box {
+        background: #fffbeeb3 !important;
+        color: #78350f !important;
+        border-color: rgba(245, 158, 11, 0.3) !important;
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.08) !important;
+    }
+
+    body.light-theme .img-frame {
+        border-color: #0284c7 !important;
+    }
+    body.light-theme .img-title {
+        color: #0284c7 !important;
+        border-bottom-color: rgba(2, 132, 199, 0.2) !important;
+    }
+
+    body.light-theme .img-frame-container-alt {
+        border-color: #9333ea !important;
+    }
+    body.light-theme .img-frame-title-alt {
+        color: #9333ea !important;
+        border-bottom-color: rgba(147, 51, 234, 0.2) !important;
+    }
+
+    .top-nav-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+
+    .top-brand-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+    }
+
+    .top-brand-logo:hover {
+        transform: scale(1.08);
+        filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
+    }
+
+    .top-logo-img {
+        width: 38px;
+        height: 38px;
+        object-fit: contain;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .top-brand-logo:hover .top-logo-img {
+        transform: rotate(10deg); /* ميلان الشعار فقط نحو اليمين */
+    }
+
+    .top-brand-name {
+        font-size: 1.8rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #38bdf8, #818cf8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        white-space: nowrap;
+    }
+
+    .top-navbar .theme-toggle-btn {
+        margin: 0 !important;
+        white-space: nowrap;
+        background: transparent;
+        border: 1px solid var(--card-border);
+        color: var(--text-color);
+        padding: 8px 16px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .top-navbar .theme-toggle-btn:hover {
+        border-color: #38bdf8;
+        transform: translateY(-2px);
+    }
+
+    /* تنسيق بطاقات المثبطات (مُصحح ومستقل تماماً) */
+    .inhibitor-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-top: 15px;
+    }
+
+    .inhibitor-card {
+        background: rgba(15, 23, 42, 0.85);
+        border-radius: 14px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* البطاقة الأولى (التنافسي) - إطار ثابت برتقالي بالكامل */
+    .inhibitor-card.competitive {
+        border: 2px solid #f97316 !important;
+        border-top: 5px solid #f97316 !important;
+    }
+
+    /* البطاقة الثانية (غير التنافسي) - إطار ثابت بنفسجي بالكامل */
+    .inhibitor-card.non-competitive {
+        border: 2px solid #a855f7 !important;
+        border-top: 5px solid #a855f7 !important;
+    }
+
+    .inhibitor-card p {
+        color: #f8fafc !important;
+        margin-bottom: 8px;
+        font-size: 0.98rem;
+    }
+
+    /* ألوان البطاقات والثبات في الوضع النهاري (Light Theme) */
+    body.light-theme .inhibitor-card {
+        background: #ffffff !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+    }
+
+    /* إبقاء الحدود ثابتة وواضحة حتى في الوضع النهاري */
+    body.light-theme .inhibitor-card.competitive {
+        border: 2px solid #f97316 !important;
+        border-top: 5px solid #f97316 !important;
+    }
+
+    body.light-theme .inhibitor-card.non-competitive {
+        border: 2px solid #a855f7 !important;
+        border-top: 5px solid #a855f7 !important;
+    }
+
+    body.light-theme .inhibitor-card p {
+        color: #0f172a !important;
+    }
+
+    /* الاستجابة للشاشات الصغيرة والهواتف */
+    @media (max-width: 600px) { 
+        body { 
             padding: 0; 
         }
-
-        body { 
-            font-family: 'Tajawal', system-ui, -apple-system, BlinkMacSystemFont, sans-serif; 
-            background-color: var(--bg-dark); 
-            line-height: 2.1; 
-            padding: 15px 10px; 
-            color: var(--text-main);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(15px);
-            opacity: 0.3;
-            animation: floatParticle 18s infinite ease-in-out;
-        }
-
-        .particle:nth-child(1) { width: 180px; height: 180px; background: var(--accent-blue); top: 10%; left: 10%; animation-duration: 20s; }
-        .particle:nth-child(2) { width: 250px; height: 250px; background: var(--accent-purple); top: 60%; right: 5%; animation-duration: 25s; animation-delay: -5s; }
-        .particle:nth-child(3) { width: 140px; height: 140px; background: var(--accent-orange); top: 40%; left: 70%; animation-duration: 16s; animation-delay: -2s; }
-        .particle:nth-child(4) { width: 200px; height: 200px; background: #10b981; bottom: 5%; left: 20%; animation-duration: 22s; animation-delay: -8s; }
-
-        @keyframes floatParticle {
-            0%, 100% { transform: translateY(0) translateX(0) scale(1); }
-            33% { transform: translateY(-50px) translateX(30px) scale(1.1); }
-            66% { transform: translateY(30px) translateX(-40px) scale(0.9); }
-        }
-
+        
         .mega-container { 
-            max-width: 950px; 
-            margin: auto; 
-            background: var(--card-bg); 
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 25px; 
-            border-radius: 24px; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
-            border: 1px solid var(--border-glow);
-            position: relative;
-            z-index: 1;
-        }
-
-        .top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .nav-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 18px;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(168, 85, 247, 0.15));
-            color: var(--accent-blue);
-            text-decoration: none;
-            border-radius: 12px;
-            border: 1px solid var(--border-glow);
-            font-weight: bold;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
-
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            background: var(--accent-blue);
-            color: var(--bg-dark);
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
-        }
-
-        .unit-hero-img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            border-radius: 18px;
-            margin-bottom: 25px;
-            border: 1px solid var(--border-glow);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-        }
+            padding: 14px; 
+            border-radius: 16px; 
+        } 
 
         h1 { 
-            text-align: center; 
-            background: linear-gradient(135deg, #38bdf8, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: calc(1.6em + 0.8vw); 
-            padding-bottom: 15px; 
-            margin-bottom: 30px; 
-            border-bottom: 2px dashed var(--border-glow);
-            font-weight: 800;
-        }
+            font-size: 1.35em; 
+        } 
 
         h2 { 
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: linear-gradient(90deg, rgba(56, 189, 248, 0.12) 0%, rgba(15, 23, 42, 0.2) 100%); 
-            color: #ffffff; 
-            padding: 12px 18px; 
-            border-radius: 14px; 
-            margin-top: 45px; 
-            margin-bottom: 20px;
-            font-size: calc(1.1em + 0.4vw); 
-            box-shadow: inset 0 0 10px rgba(56, 189, 248, 0.05);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-        }
-
-        .num-badge {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            color: var(--bg-dark);
-            border-radius: 8px;
-            font-size: 0.9em;
-            font-weight: 800;
-            flex-shrink: 0;
-            box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
-        }
-
-        .mechanism-box, .molecular-analysis { 
-            background: rgba(30, 41, 59, 0.6); 
-            border-right: 5px solid var(--accent-blue); 
-            padding: 22px; 
-            margin: 20px 0; 
-            border-radius: 14px; 
-            text-align: justify; 
             font-size: 1.05em; 
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 10px 12px; 
+            gap: 10px; 
         }
 
-        .step-card, .mechanism-card { 
-            border: 1px solid rgba(255,255,255,0.08); 
-            padding: 22px; 
-            margin-bottom: 20px; 
-            border-radius: 16px; 
-            background: rgba(15, 23, 42, 0.6); 
-            transition: transform 0.2s ease, border-color 0.2s ease;
-            text-align: justify;
-            font-size: 1.05em;
+        .num-badge { 
+            width: 26px; 
+            height: 26px; 
+            font-size: 0.8em; 
         }
 
-        .step-card:hover, .mechanism-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--border-glow);
+        h3 { 
+            font-size: 0.98em; 
         }
 
-        /* تنسيقات الجدول العلمي */
-        .comparison-section {
-            margin: 35px 0;
-            overflow-x: auto;
+        .unit-hero-img { 
+            height: auto; 
+            border-radius: 12px; 
         }
 
-        .science-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(15, 23, 42, 0.8);
-            border-radius: 14px;
-            overflow: hidden;
-            border: 1px solid var(--border-glow);
-            font-size: 0.95rem;
+        .bottom-nav { 
+            flex-direction: column; 
         }
 
-        .science-table th, .science-table td {
-            padding: 14px 16px;
-            text-align: right;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        .nav-btn { 
+            justify-content: center; 
+            width: 100%; 
         }
 
-        .science-table th {
-            background: rgba(56, 189, 248, 0.15);
-            color: var(--accent-blue);
-            font-weight: 800;
+        .top-navbar {
+            padding: 8px 15px;
+            border-radius: 12px !important;
+            margin-bottom: 15px !important;
         }
 
-        .science-table tr:hover {
-            background: rgba(255, 255, 255, 0.03);
+        .top-brand-logo { 
+            gap: 8px; 
         }
 
-        /* تنسيق قسم المثبطات المدمج */
-        .inhibitor-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 15px;
+        .top-logo-img { 
+            width: 30px; 
+            height: 30px; 
         }
 
-        .inhibitor-card {
-            background: rgba(15, 23, 42, 0.7);
-            border-radius: 14px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .top-brand-name { 
+            font-size: 1.3rem; 
         }
 
-        .inhibitor-card.competitive {
-            border-top: 4px solid var(--accent-orange);
+        .top-navbar .theme-toggle-btn { 
+            padding: 6px 10px; 
+            font-size: 0.85rem; 
         }
+    }
 
-        .inhibitor-card.non-competitive {
-            border-top: 4px solid var(--accent-purple);
-        }
 
-        .inhibitor-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-            color: #fff;
-        }
 
-        .inhibitor-card p {
-            margin-bottom: 8px;
-            font-size: 0.98rem;
-        }
 
-        .img-frame {
-            width: 100%;
-            max-width: 800px;
-            height: auto;
-            margin: 25px auto;
-            border: 2px solid var(--accent-blue);
-            border-radius: 16px;
-            padding: 12px;
-            background: rgba(15, 23, 42, 0.7);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
-            overflow: hidden;
-        }
 
-        .img-title {
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--accent-blue);
-            margin-bottom: 10px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
-        }
 
-        .img-frame img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            display: block;
-        }
 
-        .ad-space {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px dashed var(--accent-blue);
-            border-radius: 12px;
-            padding: 14px;
-            text-align: center;
-            color: var(--text-sub);
-            margin: 30px 0;
-            font-size: 0.85rem;
-        }
+/* تنسيق الجدول العلمي والخطوط الفاصلة */
+    .science-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: rgba(15, 23, 42, 0.7);
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
 
-        .tip-box { 
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05)); 
-            border-right: 6px solid var(--tip-yellow); 
-            padding: 20px; 
-            border-radius: 14px; 
-            margin: 30px 0; 
-            color: #fef3c7;
-            border-top: 1px solid rgba(245, 158, 11, 0.2);
-        }
+    .science-table th, 
+    .science-table td {
+        padding: 14px 18px;
+        text-align: right;
+        border: 1px solid rgba(255, 255, 255, 0.12); /* خطوط واضحة بين الخلايا */
+        font-size: 0.98rem;
+    }
 
-        .tip-title {
-            color: var(--tip-yellow);
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-        }
+    .science-table th {
+        background: rgba(56, 189, 248, 0.15);
+        color: #38bdf8;
+        font-weight: 700;
+        border-bottom: 2px solid rgba(56, 189, 248, 0.4);
+    }
 
-        .latin-tech { 
-            direction: ltr; 
-            display: inline-block; 
-            font-family: 'Consolas', monospace; 
-            color: #f43f5e; 
-            font-weight: bold; 
-            background: rgba(255,255,255,0.08); 
-            padding: 2px 8px; 
-            border-radius: 6px; 
-            border: 1px solid rgba(244, 63, 94, 0.2);
-        }
+    .science-table tbody tr:nth-child(even) {
+        background: rgba(255, 255, 255, 0.02);
+    }
 
-        .bottom-nav {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px dashed var(--border-glow);
-        }
+    .science-table tbody tr:hover {
+        background: rgba(56, 189, 248, 0.05);
+    }
 
-        footer {
-            margin-top: 30px;
-            text-align: center;
-            color: var(--text-sub);
-            font-size: 0.95rem;
-        }
+    /* توافق الجدول مع الوضع النهاري (Light Theme) */
+    body.light-theme .science-table {
+        background: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.15) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+    }
 
-        @media (max-width: 600px) { 
-            body { padding: 8px 5px; }
-            .mega-container { padding: 16px; border-radius: 16px; } 
-            h1 { font-size: 1.35em; } 
-            h2 { font-size: 1.05em; padding: 10px 12px; gap: 10px; }
-            .num-badge { width: 26px; height: 26px; font-size: 0.8em; }
-            .unit-hero-img { height: 180px; border-radius: 12px; }
-            .bottom-nav { flex-direction: column; }
-            .nav-btn { justify-content: center; width: 100%; }
-            .science-table { font-size: 0.85rem; }
-        }
+    body.light-theme .science-table th, 
+    body.light-theme .science-table td {
+        border: 1px solid rgba(0, 0, 0, 0.12) !important;
+        color: #0f172a !important;
+    }
+
+    body.light-theme .science-table th {
+        background: rgba(2, 132, 199, 0.1) !important;
+        color: #0284c7 !important;
+        border-bottom: 2px solid rgba(2, 132, 199, 0.3) !important;
+    }
+
+    body.light-theme .science-table tbody tr:nth-child(even) {
+        background: rgba(0, 0, 0, 0.015) !important;
+    }
+
+    body.light-theme .science-table tbody tr:hover {
+        background: rgba(2, 132, 199, 0.04) !important;
+    }
+
+
+
+
+
+
+/* 1. تحديث المتغيرات العامة للتحكم بالألوان بثلاسة */
+    :root {
+        --card-bg-dark: rgba(15, 23, 42, 0.75); /* خلفية داكنة شفافة وناعمة وليست سوداء صلبة */
+        --card-bg-light: #ffffff;               /* خلفية بيضاء نقية للوضع النهاري */
+    }
+
+    /* 2. تطبيق المتغيرات على الإطارات والحاويات لتتخلص من الأسود الثابت */
+    .mega-container,
+    .step-card,
+    .mechanism-box,
+    .img-frame,
+    .img-frame-container-alt,
+    .inhibitor-card {
+        background-color: var(--card-bg-dark) !important;
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* 3. التكيف تلقائياً مع الوضع النهاري (Light Theme) */
+    body.light-theme .mega-container,
+    body.light-theme .step-card,
+    body.light-theme .mechanism-box,
+    body.light-theme .img-frame,
+    body.light-theme .img-frame-container-alt,
+    body.light-theme .inhibitor-card {
+        background-color: var(--card-bg-light) !important;
+    }
+
+
+
+
+/* إزالة اللون الأسود نهائياً من خلفية إطارات الصور في الوضع النهاري */
+    body.light-theme .img-frame,
+    body.light-theme [style*="background: rgba(15, 23, 42"] {
+        background-color: #ffffff !important;
+        background: #ffffff !important;
+    }
+
+
+
     </style>
 
 <link rel="stylesheet" href="style.css">
     
 </head>
 <body>
+
+<canvas id="cellCanvas"></canvas>
+
+    <div class="main-wrapper">
+        <header class="top-navbar">
+            <div class="top-nav-container">
+                <a href="index.html" class="top-brand-logo">
+                    <img src="favicon.png" alt="شعار" class="top-logo-img" onerror="this.onerror=null; this.src='favicon.ico';">
+                    <span class="top-brand-name">bio-bac-dz</span>
+                </a>
+
+                <button class="theme-toggle-btn" onclick="toggleTheme()">
+                    <span id="theme-icon">🌙</span>
+                    <span id="theme-text">الوضع الليلي</span>
+                </button>
+            </div>
+        </header>
+
 
 <div class="bg-animation">
     <div class="particle"></div>
@@ -369,7 +847,9 @@
     <div class="particle"></div>
 </div>
 
+
 <div class="mega-container">
+
 
     <!-- التنقل العلوي -->
     <div class="top-nav">
@@ -389,25 +869,37 @@
 
     <!-- 1 -->
     <section>
-        <h2><span class="num-badge">01</span> المفهوم الحديث للإنزيم كوسيط حيوي</h2>
-        <div class="molecular-analysis">
-            الإنزيمات هي وحدات بروتينية متخصصة تعمل كعوامل حفازة حيوية، حيث تقوم بتسريع التفاعلات الكيميائية داخل الخلية بمعدلات تصل إلى ملايين المرات دون أن تُستهلك. تكمن قوتها في قدرتها على خفض طاقة التنشيط اللازمة لبدء التفاعل، مما يسمح للعمليات الحيوية بالحدوث في درجات حرارة وضغوط منخفضة تتناسب مع استقرار المادة الحية والخلية.
+        <h2><span class="num-badge">01</span>المفهوم الحديث عن الإنزيم كوسيط حيوي</h2>
+        <div class="step-card">
+            &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #00f2fe; font-weight: bold;">الإنزيمات</span> هي جزيئات <span style="color: #ff007f; font-weight: bold;">بروتينية</span> متخصصة تعمل كعوامل مساعدة، حيث تساهم في تسريع <span style="color: #ffff00; font-weight: bold;">التفاعلات الكيميائية</span> داخل <span style="color: #ff007f; font-weight: bold;">الخلية</span> بشكل كبير دون أن تتغير أو تُستهلك بنهاية التفاعل.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #ffff00; font-weight: bold;">دور الإنزيم:</span> يقوم <span style="color: #00f2fe; font-weight: bold;">الإنزيم</span> بخفض <span style="color: #00ff88; font-weight: bold;">طاقة التنشيط</span> اللازمة لحدوث <span style="color: #ffff00; font-weight: bold;">التفاعل</span>، مما يتيح للعمليات الحيوية أن تتم في ظروف عادية ومناسبة تحافظ على سلامة <span style="color: #ff007f; font-weight: bold;">الخلية</span>.
         </div>
     </section>
 
     <!-- 2 -->
     <section>
         <h2><span class="num-badge">02</span> النوعية المزدوجة تجاه الركيزة ونوع التفاعل</h2>
-        <div class="mechanism-card">
-            يتميز الإنزيم بتخصص عالٍ جداً، حيث يمتلك نوعية تجاه مادة التفاعل (الركيزة) فلا يرتبط إلا بجزيئات تتوافق بنيوياً مع موقعه الفعال. بالإضافة إلى ذلك، يمتلك نوعية تجاه نوع التفاعل، فجزيئة الغلوكوز مثلاً قد تتعرض للأكسدة أو الفسفرة، ولكل عملية إنزيم محدد يقوم بها، مما يضمن دقة المسارات الاستقلابية وتفادي الفوضى الكيميائية داخل الهيولى.
+        <div class="step-card">
+            &nbsp;&nbsp;&nbsp;&nbsp;يتميز <span style="color: #00f2fe; font-weight: bold;">الإنزيم</span> بتخصص عالٍ ودقيق، حيث يُظهر <span style="color: #ffff00; font-weight: bold;">نوعية مزدوجة</span> تضمن انتظام التفاعلات داخل الخلية:
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #00ff88; font-weight: bold;">نوعية تجاه مادة التفاعل:</span> لا يرتبط <span style="color: #00f2fe; font-weight: bold;">الإنزيم</span> إلا بـ <span style="color: #00ff88; font-weight: bold;">مادة التفاعل</span> (الركيزة) التي تتوافق بنيوياً مع <span style="color: #ff007f; font-weight: bold;">الموقع الفعال</span> الخاص به.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #ffff00; font-weight: bold;">نوعية تجاه نوع التفاعل:</span> يقتصر دور <span style="color: #00f2fe; font-weight: bold;">الإنزيم</span> على تحفيز نمط واحد محدد من <span style="color: #ffff00; font-weight: bold;">التفاعلات الكيميائية</span> لنفس <span style="color: #00ff88; font-weight: bold;">مادة التفاعل</span> دون غيره.
         </div>
     </section>
 
     <!-- 3 -->
     <section>
         <h2><span class="num-badge">03</span> التشريح الجزيئي للموقع الفعال (Active Site)</h2>
-        <div class="molecular-analysis">
-            الموقع الفعال هو منطقة محدودة من الإنزيم تتكون من عدد قليل من الأحماض الأمينية التي تأخذ وضعية فراغية دقيقة جداً. هذه الأحماض الأمينية قد تكون متباعدة في السلسلة الببتيدية ولكنها تتقارب فراغياً بفضل طيات البروتين. ينقسم الموقع الفعال وظيفياً إلى منطقة التثبيت التي تضمن تموضع الركيزة، ومنطقة التحفيز التي تحتوي على المجموعات الكيميائية المسؤولة عن تحويل الركيزة إلى منتج.
+        <div class="step-card">
+            &nbsp;&nbsp;&nbsp;&nbsp;يُعرّف <span style="color: #ff007f; font-weight: bold;">الموقع الفعال</span> بأنه منطقة محدودة من الإنزيم تتكون من عدد قليل من <span style="color: #00f2fe; font-weight: bold;">الأحماض الأمينية</span> ذات وضعية فراغية دقيقة، وتكون هذه الأحماض متباعدة في <span style="color: #ff007f; font-weight: bold;">السلسلة الببتيدية</span> لكنها تتقارب فراغياً بفضل انثناءات البروتين.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ينقسم <span style="color: #ff007f; font-weight: bold;">الموقع الفعال</span> وظيفياً إلى جزأين أساسيين:
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #00ff88; font-weight: bold;">منطقة التثبيت:</span> تضمن تموضع <span style="color: #00ff88; font-weight: bold;">الركيزة</span> بدقة داخل <span style="color: #ff007f; font-weight: bold;">الموقع الفعال</span>.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #ffff00; font-weight: bold;">منطقة التحفيز:</span> تحتوي على المجموعات الكيميائية المسؤولة عن تفاعل وتحويل <span style="color: #00ff88; font-weight: bold;">الركيزة</span> إلى ناتج.
         </div>
         
         <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
@@ -420,22 +912,31 @@
             <!-- كود الصورة متكيف بالكامل مرتبط بمجلد image3 -->
             <img src="image3/0.1.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
         </div>
-
     </section>
 
     <!-- 4 -->
     <section>
-        <h2><span class="num-badge">04</span> آلية التحفيز المستحث (Induced Fit Model)</h2>
-        <div class="mechanism-card">
-            على عكس نموذج "القفل والمفتاح" القديم، أثبتت الدراسات أن الموقع الفعال يتميز بالمرونة، حيث يتغير شكله بشكل طفيف بمجرد اقتراب الركيزة منه. هذا "التحفيز المستحث" يضمن تقارب المجموعات الكيميائية للإنزيم من الروابط الحساسة في الركيزة، مما يسهل كسرها أو تكوين روابط جديدة، وهو ما يفسر الكفاءة العالية للإنزيمات في التعامل مع جزيئات معقدة.
+        <h2><span class="num-badge">04</span> آليتا التكامل البنيوي (المباشر والمحفز)</h2>
+        <div class="step-card">
+            &nbsp;&nbsp;&nbsp;&nbsp;يعتمد عمل <span style="color: #00f2fe; font-weight: bold;">الإنزيم</span> على نوعين أساسيين من <span style="color: #ffff00; font-weight: bold;">التكامل البنيوي</span> لضمان دقة الارتباط والتحفيز:
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #ffff00; font-weight: bold;">التكامل المباشر:</span> يتوافق فيه شكل <span style="color: #ff007f; font-weight: bold;">الموقع الفعال</span> مع شكل <span style="color: #00ff88; font-weight: bold;">الركيزة</span> توافقاً ثابتاً ومسبقاً وفق نموذج "القفل والمفتاح".
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #ffff00; font-weight: bold;">التكامل المحفز:</span> يتميز فيه <span style="color: #ff007f; font-weight: bold;">الموقع الفعال</span> بالمرونة، حيث يتغير شكله بشكل طفيف ومستحث عند اقتراب <span style="color: #00ff88; font-weight: bold;">الركيزة</span> منه (معظم <span style="color: #00f2fe; font-weight: bold;">الإنزيمات</span> تتبع هذه الآلية)، مما يضمن تقارب المجموعات الكيميائية الفعالة لتحفيز التفاعل بكفاءة عالية.
         </div>
     </section>
 
     <!-- 5 -->
     <section>
         <h2><span class="num-badge">05</span> مراحل التفاعل الإنزيمي وتشكل المعقد (ES)</h2>
-        <div class="molecular-analysis">
-            يمر التفاعل الإنزيمي بثلاث مراحل أساسية: تبدأ بمرحلة الارتباط حيث تتشكل روابط انتقالية ضعيفة بين الموقع الفعال والركيزة لينتج المعقد <span class="latin-tech">ES</span>. تليها مرحلة التحويل الكيميائي داخل تجويف الإنزيم. وأخيراً مرحلة التحرير حيث يفقد الناتج <span class="latin-tech">P</span> تكامله البنيوي مع الموقع الفعال فتتفكك الروابط الضعيفة ويتنحى الناتج مستعيداً الإنزيم بنيته الأصلية للدخول في تفاعل جديد.
+        <div class="step-card">
+            &nbsp;&nbsp;&nbsp;&nbsp;يمر <span style="color: #ffff00; font-weight: bold;">التفاعل الإنزيمي</span> بثلاث مراحل أساسية:
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #00ff88; font-weight: bold;">مرحلة الارتباط:</span> تبدأ بتشكل روابط انتقالية ضعيفة بين <span style="color: #ff007f; font-weight: bold;">الموقع الفعال</span> و<span style="color: #00ff88; font-weight: bold;">الركيزة</span> لينتج المعقد <span style="color: #ffff00; font-weight: bold;" class="latin-tech">ES</span>.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #ffff00; font-weight: bold;">مرحلة التحويل الكيميائي:</span> يتم خلالها تحويل <span style="color: #00ff88; font-weight: bold;">الركيزة</span> إلى ناتج داخل تجويف <span style="color: #00f2fe; font-weight: bold;">الإنزيم</span>.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #ff007f; font-weight: bold;">مرحلة التحرير:</span> يفقد الناتج <span style="color: #ffff00; font-weight: bold;" class="latin-tech">P</span> تكامله البنيوي مع <span style="color: #ff007f; font-weight: bold;">الموقع الفعال</span> فتتفكك الروابط الضعيفة ويتنحى الناتج مستعيداً <span style="color: #00f2fe; font-weight: bold;">الإنزيم</span> بنيته الأصلية للدخول في تفاعل جديد.
         </div>
         
         <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
@@ -448,65 +949,81 @@
             <!-- كود الصورة متكيف بالكامل مرتبط بمجلد image3 -->
             <img src="image3/0.2.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
         </div>
-
     </section>
 
     <!-- 6 -->
     <section>
-        <h2><span class="num-badge">06</span> تصنيف التفاعلات الإنزيمية (تحويل، بناء، تفكيك)</h2>
+        <h2><span class="num-badge">06</span> تصنيف التفاعلات الإنزيمية (تفكيك، بناء، تحويل)</h2>
         <div class="mechanism-card">
-            تتعدد أنماط النشاط الإنزيمي حسب الغاية من التفاعل، فنجد تفاعلات التفكيك (الهدم) حيث يتم تكسير جزيئة كبيرة إلى جزيئات أصغر. وهناك تفاعلات البناء (التركيب) حيث يتم ربط جزيئتين لإنتاج مركب أعقد. أما النوع الثالث فهو تفاعلات التحويل حيث يتم تغيير مجموعة وظيفية أو إعادة ترتيب ذرات الركيزة دون إضافة أو حذف، مما يعكس مرونة البروتينات الإنزيمية في إدارة المادة.
+            &nbsp;&nbsp;&nbsp;&nbsp;تتعدد أنماط النشاط الإنزيمي حسب الغاية من التفاعل، حيث تنقسم إلى ثلاثة أنواع رئيسية:
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #ff007f; font-weight: bold;">تفاعلات التفكيك (الهدم):</span> يتم فيها تكسير جزيئة ضخمة ومعقدة إلى جزيئات أصغر حجماً.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #00ff88; font-weight: bold;">تفاعلات البناء (التركيب):</span> يتم فيها ربط جزيئتين أو أكثر لإنتاج مركب عضوي أكثر تعقيداً.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #ffff00; font-weight: bold;">تفاعلات التحويل:</span> يتم فيها تغيير بنية <span style="color: #00ff88; font-weight: bold;">الركيزة</span> عبر إعادة ترتيب ذراتها أو تعديل مجموعة وظيفية دون حذف أو إضافة، مما يعكس مرونة <span style="color: #00f2fe; font-weight: bold;">الإنزيمات</span>.
         </div>
         
         <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
     
             <!-- عنوان الصورة أعلى الإطار -->
             <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
-           أنواع التفاعلات الإنزيمية
+            أنواع التفاعلات الإنزيمية
             </div>
 
             <!-- كود الصورة متكيف بالكامل مرتبط بمجلد image3 -->
-            <img src="image3/0.3.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
+            <img src="image3/0.3.png" alt="أنواع التفاعلات الإنزيمية" style="width: 100%; height: auto; border-radius: 10px; display: block;">
         </div>
-
     </section>
 
     <!-- 7 -->
     <section>
         <h2><span class="num-badge">07</span> تأثير درجة الحرارة على طاقة حركة الجزيئات</h2>
         <div class="molecular-analysis">
-            تعتبر درجة الحرارة عاملاً حاسماً؛ ففي درجات الحرارة المنخفضة جداً **يتثبط النشاط الإنزيمي مؤقتاً (أثر عكوس)** بسبب انخفاض الطاقة الحركية للجزيئات وقلة التصادمات الفعالة. أما عند درجة الحرارة المثالية فيبلغ النشاط ذروته. بينما تتسبب الحرارة العالية (أكبر من 50°C) في تكسير الروابط المحافظة على البنية الفراغية فيتخرب الإنزيم نهائياً (أثر غير عكوس).
-        </div>
-        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
-    
-            <!-- عنوان الصورة أعلى الإطار -->
-            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
-          منحنى تأثير درجة الحرارة لنشاط الانزيم
-            </div>
-
-            <!-- كود الصورة متكيف بالكامل مرتبط بمجلد image3 -->
-            <img src="image3/0.6.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
-       </div>
-    </section>
-
-    <!-- 8 -->
-    <section>
-        <h2><span class="num-badge">08</span> تأثير درجة الحموضة (pH) على الحالة الكهربائية</h2>
-        <div class="mechanism-box">
-            يؤثر الـ <span class="latin-tech">pH</span> على الحالة الكهربائية للجذور الجانبية للأحماض الأمينية للموقع الفعال مما يمنع تشكل الروابط الشاردية مع الركيزة. أما التغير المتطرف في الـ <span class="latin-tech">pH</span> فيؤدي إلى كسر الروابط المساهمة في استقرار البنية الفراغية للإنزيم وفقدان وظيفته بشكل غير عكوس. لكل إنزيم درجة <span class="latin-tech">pH</span> أمثل يكون عندها في أقصى نشاطه.
+            &nbsp;&nbsp;&nbsp;&nbsp;تعتبر <span style="color: #38bdf8; font-weight: bold;">درجة الحرارة</span> عاملاً حاسماً في تنظيم نشاط <span style="color: #00f2fe; font-weight: bold;">الإنزيمات</span>، حيث تؤثر بشكل مباشر على <span style="color: #ffff00; font-weight: bold;">الطاقة الحركية</span> للجزيئات وفق الحالات التالية:
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #ff007f; font-weight: bold;">درجات الحرارة المنخفضة جداً:</span> يؤدي انخفاض <span style="color: #ffff00; font-weight: bold;">الطاقة الحركية</span> إلى قلة <span style="color: #ffff00; font-weight: bold;">التصادمات الفعالة</span>، مما يتسبب في <span style="color: #ff007f; font-weight: bold;">تثبيط النشاط الإنزيمي مؤقتاً (تأثير عكوس)</span>.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #00ff88; font-weight: bold;">درجة الحرارة المثالية:</span> يبلغ فيها <span style="color: #00f2fe; font-weight: bold;">النشاط الإنزيمي</span> ذروته نتيجة التوازن الأمثل للتصادمات.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #ff007f; font-weight: bold;">درجة الحرارة العالية:</span> تتسبب في تكسير الروابط المحافظة على <span style="color: #ff007f; font-weight: bold;">البنية الفراغية</span> وتخريب <span style="color: #00f2fe; font-weight: bold;">الموقع الفعال</span>، مما يؤدي إلى <span style="color: #ff007f; font-weight: bold;">تخرب الإنزيم نهائياً (تأثير غير عكوس)</span>.
         </div>
         
         <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
     
             <!-- عنوان الصورة أعلى الإطار -->
             <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
-           منحنى تأثير درجة الحموضة (pH) على بنية ونشاط الإنزيم
+            منحنى تأثير درجة الحرارة لنشاط الانزيم
             </div>
 
             <!-- كود الصورة متكيف بالكامل مرتبط بمجلد image3 -->
-            <img src="image3/0.5.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
-       </div>
+            <img src="image3/0.6.png" alt="منحنى تأثير درجة الحرارة لنشاط الانزيم" style="width: 100%; height: auto; border-radius: 10px; display: block;">
+        </div>
+    </section>
 
+    <!-- 8 -->
+    <section>
+        <h2><span class="num-badge">08</span> تأثير درجة الحموضة (pH) على الحالة الكهربائية</h2>
+        <div class="mechanism-box">
+            &nbsp;&nbsp;&nbsp;&nbsp;تعتبر درجة الحموضة (<span class="latin-tech" style="color: #38bdf8; font-weight: bold;">pH</span>) عاملاً أساسياً يؤثر على نشاط وبنية <span style="color: #00f2fe; font-weight: bold;">الإنزيمات</span> وفق الحالات التالية:
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #00ff88; font-weight: bold;">درجة الحموضة المثلى (pH الأمثل):</span> لكل <span style="color: #00f2fe; font-weight: bold;">إنزيم</span> قيمة <span class="latin-tech" style="color: #38bdf8; font-weight: bold;">pH</span> أمثل يكون عندها في أقصى نشاطه وحالته الوظيفية السليمة.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #ffff00; font-weight: bold;">التغيرات في الوسط:</span> يؤثر الـ <span class="latin-tech" style="color: #38bdf8; font-weight: bold;">pH</span> على الحالة الكهربائية للجذور الجانبية الحرة للأحماض الأمينية في <span style="color: #ff007f; font-weight: bold;">الموقع الفعال</span>، مما يمنع تشكل الروابط الشاردية مع <span style="color: #00ff88; font-weight: bold;">الركيزة</span>.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #ff007f; font-weight: bold;">التغير المتطرف:</span> يؤدي التغير الشديد في الـ <span class="latin-tech" style="color: #38bdf8; font-weight: bold;">pH</span> إلى كسر الروابط المساهمة في استقرار <span style="color: #ff007f; font-weight: bold;">البنية الفراغية</span> للإنزيم وفقدان وظيفته بشكل <span style="color: #ff007f; font-weight: bold;">تأثير غير عكوس</span>.
+        </div>
+        
+        <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
+    
+            <!-- عنوان الصورة أعلى الإطار -->
+            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
+            منحنى تأثير درجة الحموضة (pH) على بنية ونشاط الإنزيم
+            </div>
+
+            <!-- كود الصورة متكيف بالكامل مرتبط بمجلد image3 -->
+            <img src="image3/0.5.png" alt="منحنى تأثير درجة الحموضة (pH) على بنية ونشاط الإنزيم" style="width: 100%; height: auto; border-radius: 10px; display: block;">
+        </div>
     </section>
 
     <!-- جدول المقارنة العلمي بين التأثير العكوس وغير العكوس -->
@@ -516,30 +1033,30 @@
             <thead>
                 <tr>
                     <th>وجه المقارنة</th>
-                    <th>التأثير العكوس (Reverse Effect)</th>
-                    <th>التأثير غير العكوس (Irreversible)</th>
+                    <th>التأثير العكوس </th>
+                    <th>التأثير غير العكوس </th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><strong>العامل المسبب</strong></td>
-                    <td>الحرارة المنخفضة / تغير بسيط في pH حول القيمة المثلى.</td>
-                    <td>الحرارة العالية جداً / التغير المتطرف (الشديد) في pH.</td>
+                    <td><span style="color: #38bdf8;">الحرارة المنخفضة</span> / تغير بسيط في الـ <span class="latin-tech" style="color: #38bdf8;">pH</span> حول القيمة المثلى.</td>
+                    <td><span style="color: #ff007f;">الحرارة العالية</span> / التغير المتطرف (الشديد) في الـ <span class="latin-tech" style="color: #ff007f;">pH</span>.</td>
                 </tr>
                 <tr>
                     <td><strong>حالة البنية الفراغية</strong></td>
-                    <td>تبقى سليمة ومحافظاً عليها.</td>
-                    <td>تتكسر الروابط الضعيفة وتتخرب البنية نهائياً (Denaturation).</td>
+                    <td>تبقى البنية الفراغية لـ <span style="color: #00f2fe; font-weight: bold;">الإنزيم</span> سليمة ومحافظاً عليها.</td>
+                    <td>تتكسر الروابط المسؤولة عن الاستقرار وتتخرب <span style="color: #ff007f; font-weight: bold;">البنية الفراغية</span> كلياً .</td>
                 </tr>
                 <tr>
                     <td><strong>آلية التأثير</strong></td>
-                    <td>تراجع الحركة التنسيقية وتغير الشحنة للروابط الانتقالية.</td>
-                    <td>تشوه الموقع الفعال وفقدان القدرة على استقبال الركيزة.</td>
+                    <td>نقص <span style="color: #ffff00; font-weight: bold;">الطاقة الحركية</span> أو تأثر الطابع الكهربائي للجذور الجانبية مؤقتاً.</td>
+                    <td>تشوه <span style="color: #ff007f; font-weight: bold;">الموقع الفعال</span> وفقدان التوافق البنيوي مع <span style="color: #00ff88; font-weight: bold;">الركيزة</span> نهائياً.</td>
                 </tr>
                 <tr>
                     <td><strong>استرجاع النشاط</strong></td>
-                    <td>يستعيد الإنزيم نشاطه عند العودة للظروف المثلى.</td>
-                    <td>يفقد الإنزيم وظيفته نهائياً ولا يستعيد نشاطه أبداً.</td>
+                    <td>يستعيد <span style="color: #00f2fe; font-weight: bold;">الإنزيم</span> نشاطه الوظيفي عند العودة للظروف المثلى.</td>
+                    <td>يفقد <span style="color: #00f2fe; font-weight: bold;">الإنزيم</span> وظيفته بصورة نهائية ولا يمكنه استرجاع نشاطه.</td>
                 </tr>
             </tbody>
         </table>
@@ -547,42 +1064,47 @@
 
     <!-- 10 -->
     <section>
-        <h2><span class="num-badge">10</span> حركية التفاعل الإنزيمي وتركيز الركيزة [S]</h2>
+        <h2><span class="num-badge">10</span> حركية التفاعل الإنزيمي وتركيز الركيزة <span class="latin-tech">[S]</span></h2>
         <div class="step-card">
-            عند تثبيت كمية الإنزيم وزيادة تركيز الركيزة تدريجياً، نلاحظ زيادة في سرعة التفاعل حتى نصل إلى نقطة التشبع. عند هذه النقطة، تصبح جميع المواقع الفعالة للإنزيمات مشغولة بالركائز، وتصل السرعة إلى قيمتها القصوى <span class="latin-tech">Vmax</span>. هذا يفسر لماذا لا تزيد سرعة الاستقلاب في الجسم بمجرد تناول المزيد من الغذاء، بل تعتمد على عدد الإنزيمات المتوفرة للعمل.
+            &nbsp;&nbsp;&nbsp;&nbsp;عند تثبيت كمية <span style="color: #00f2fe; font-weight: bold;">الإنزيم</span> وزيادة تركيز <span style="color: #00ff88; font-weight: bold;">الركيزة</span> <span class="latin-tech">[S]</span> تدريجياً، تتأثر سرعة التفاعل وفق المراحل التالية:
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #00ff88; font-weight: bold;">مرحلة التزايد الطردي:</span> ترتفع سرعة التفاعل كلما زاد تركيز <span style="color: #00ff88; font-weight: bold;">الركيزة</span> نظراً لزيادة عدد التصادمات المثمرة مع <span style="color: #00f2fe; font-weight: bold;">الإنزيم</span>.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #ff007f; font-weight: bold;">نقطة التشبع والسرعة القصوى (<span class="latin-tech">Vmax</span>):</span> عند زيادة تركيز <span style="color: #00ff88; font-weight: bold;">الركيزة</span> باستمراية، تصبح جميع <span style="color: #ff007f; font-weight: bold;">المواقع الفعالة</span> للإنزيمات مشغولة بالكامل، فتثبت السرعة عند قيمتها القصوى <span class="latin-tech" style="color: #ffff00; font-weight: bold;">Vmax</span>.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #ffff00; font-weight: bold;">مغزى حيوي:</span> يفسر هذا التشبع سبب محدودية سرعة التفاعلات الأيضية في الجسم رغم زيادة المواد الغذائية، لارتباطها طرداً بـ <span style="color: #00f2fe; font-weight: bold;">عدد الإنزيمات</span> المتاحة.
         </div>
         
         <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 2px solid #38bdf8; border-radius: 16px; padding: 12px; background: rgba(15, 23, 42, 0.7); box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); overflow: hidden;">
     
             <!-- عنوان الصورة أعلى الإطار -->
             <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
-         منحنى تأثير تركيز مادة التفاعل [S] على سرعة التفاعل الأنزيمية
-           </div>
+            منحنى تأثير تركيز مادة التفاعل [S] على سرعة التفاعل الإنزيمية
+            </div>
 
-           <!-- كود الصورة متكيف بالكامل مرتبط بمجلد image3 -->
-           <img src="image3/0.4.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
-</div>
-
+            <!-- كود الصورة متكيف بالكامل مرتبط بمجلد image3 -->
+            <img src="image3/0.4.png" alt="منحنى تأثير تركيز مادة التفاعل [S] على سرعة التفاعل الإنزيمية" style="width: 100%; height: auto; border-radius: 10px; display: block;">
+        </div>
     </section>
 
     <!-- 11: دمج المثبطات -->
     <section>
         <h2><span class="num-badge">11</span> المثبطات الإنزيمية (أنواعها وآلية عملها)</h2>
         <div class="mechanism-box">
-            المثبطات هي مواد كيميائية ترتبط بالإنزيم وتؤدي إلى تقليل أو إيقاف نشاطه الإنزيمي، وتصنف حسب مكان ارتباطها وآلية تأُثيرها إلى نوعين أساسيين:
+            &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #ff007f; font-weight: bold;">المثبطات</span> هي مواد كيميائية ترتبط بـ <span style="color: #00f2fe; font-weight: bold;">الإنزيم</span> وتؤدي إلى تقليل أو إيقاف نشاطه، وتصنف حسب مكان ارتباطها وآلية تأثيرها إلى نوعين أساسيين:
         </div>
         <div class="inhibitor-grid">
             <div class="inhibitor-card competitive">
-                <h3>أ. المثبط المنافس (Competitive Inhibitor)</h3>
-                <p><strong>آلية العمل:</strong> يمتلك المثبط بنية فراغية تشبه بنية مادة التفاعل (الركيزة S)، فيتنافس معها مباشرة على التثبيت في <strong>الموقع الفعال</strong> للإنزيم.</p>
-                <p><strong>النتيجة:</strong> يمنع تشكل المعقد [ES] ويقلل من سرعة التفاعل.</p>
-                <p><strong>التغلب عليه:</strong> يمكن تجاوز هذا التثبيط بزيادة تركيز مادة التفاعل [S] لإزاحة المثبط من الموقع الفعال.</p>
+                <h3 style="color: #ffa500;">أ. المثبط التنافسي </h3>
+                <p><strong style="color: #ffa500;">آلية العمل:</strong> يمتلك <span style="color: #ff007f; font-weight: bold;">المثبط</span> بنية فراغية تشبه بنية <span style="color: #00ff88; font-weight: bold;">مادة التفاعل (الركيزة S)</span>، فيتنافس معها مباشرة على التثبيت في <span style="color: #ff007f; font-weight: bold;">الموقع الفعال</span> للإنزيم.</p>
+                <p><strong style="color: #ffa500;">النتيجة:</strong> يمنع تشكل المعقد <span class="latin-tech" style="color: #ffff00; font-weight: bold;">ES</span> ويقلل من سرعة التفاعل.</p>
+                <p><strong style="color: #ffa500;">التغلب عليه:</strong> يمكن تجاوز هذا التثبيط بزيادة تركيز <span style="color: #00ff88; font-weight: bold;">مادة التفاعل [S]</span> لإزاحة <span style="color: #ff007f; font-weight: bold;">المثبط</span> من الموقع الفعال.</p>
             </div>
             <div class="inhibitor-card non-competitive">
-                <h3>ب. المثبط غير المنافس (Non-Competitive Inhibitor)</h3>
-                <p><strong>آلية العمل:</strong> يرتبط المثبط بموقع آخر يختلف عن الموقع الفعال يُسمى <strong>الموقع التظافري/المنظم (Allosteric Site)</strong>.</p>
-                <p><strong>النتيجة:</strong> يتسبب هذا الارتباط في تغيير تشكلي في البنية الفراغية للموقع الفعال، فيصبح غير وظيفي.</p>
-                <p><strong>التغلب عليه:</strong> لا يمكن رفع هذا التثبيط بزيادة تركيز الركيزة [S] لأن الموقع الفعال أصبح مشوهاً.</p>
+                <h3 style="color: #a855f7;">ب. المثبط غير التنافسي </h3>
+                <p><strong style="color: #a855f7;">آلية العمل:</strong> يرتبط <span style="color: #ff007f; font-weight: bold;">المثبط</span> بموقع آخر يختلف عن الموقع الفعال يُسمى <span style="color: #ffff00; font-weight: bold;">الموقع التظافري/المنظم (Allosteric Site)</span>.</p>
+                <p><strong style="color: #a855f7;">النتيجة:</strong> يتسبب هذا الارتباط في تغيير تشكلي في <span style="color: #ff007f; font-weight: bold;">البنية الفراغية</span> للموقع الفعال، فيصبح غير وظيفي.</p>
+                <p><strong style="color: #a855f7;">التغلب عليه:</strong> لا يمكن رفع هذا التثبيط بزيادة تركيز <span style="color: #00ff88; font-weight: bold;">الركيزة [S]</span> لأن <span style="color: #ff007f; font-weight: bold;">الموقع الفعال</span> أصبح مشوهاً.</p>
             </div>
         </div>
 
@@ -590,20 +1112,24 @@
     
             <!-- عنوان الصورة أعلى الإطار -->
             <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
-         آلية عمل المثبطات الإنزيمية (التنافسية، غير التنافسية، واللاتنافسية)
-           </div>
+            آلية عمل المثبطات الإنزيمية (التنافسية، غير التنافسية، واللاتنافسية)
+            </div>
 
-           <!-- كود الصورة متكيف بالكامل مرتبط بمجلد image3 -->
-           <img src="image3/0.7.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
+            <!-- كود الصورة متكيف بالكامل مرتبط بمجلد image3 -->
+            <img src="image3/0.7.png" alt="آلية عمل المثبطات الإنزيمية (التنافسية، غير التنافسية، واللاتنافسية)" style="width: 100%; height: auto; border-radius: 10px; display: block;">
        </div>
 
     </section>
 
     <!-- 12 -->
     <section>
-        <h2><span class="num-badge">12</span> الطاقة التنشيطية (Activation Energy) ودور الإنزيم</h2>
+        <h2><span class="num-badge">12</span> الطاقة التنشيطية (<span class="latin-tech">Activation Energy</span>) ودور الإنزيم</h2>
         <div class="molecular-analysis">
-            أي تفاعل كيميائي يحتاج إلى دفعة طاقة أولية لكسر الروابط القديمة، وهي ما تسمى طاقة التنشيط. بدون الإنزيمات، يحتاج الجسم لحرارة عالية جداً لتوفير هذه الطاقة، وهو ما يدمر الخلايا. الإنزيم يعمل كممر بديل منخفض الطاقة، حيث يقوم بتقريب الجزيئات من بعضها وتوجيهها بوضعية مثالية، مما يقلل الجهد الطاقوي اللازم ويسمح بالتفاعل بالحدوث بسرعة في درجة حرارة الجسم.
+            &nbsp;&nbsp;&nbsp;&nbsp;يحتاج أي تفاعل كيميائي إلى دفعة طاقة أولية لكسر الروابط القديمة، وهي ما تُعرف بـ <span style="color: #ffff00; font-weight: bold;">طاقة التنشيط</span>. وبدون وجود <span style="color: #00f2fe; font-weight: bold;">الإنزيمات</span>، سيتطلب الأمر طاقة هائلة وحرارة عالية جداً لتوفير هذه الطاقة، وهو ما يؤدي إلى تدمير الخلايا الحية.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #00ff88; font-weight: bold;">دور الإنزيم:</span> يعمل <span style="color: #00f2fe; font-weight: bold;">الإنزيم</span> كممر بديل ومنخفض الطاقة، حيث يقلل من قيمة <span style="color: #ffff00; font-weight: bold;">طاقة التنشيط</span> اللازمة لبدء التفاعل.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #ff007f; font-weight: bold;">آلية العمل:</span> يقوم <span style="color: #ff007f; font-weight: bold;">الموقع الفعال</span> بتقريب جزيئات <span style="color: #00ff88; font-weight: bold;">الركيزة</span> من بعضها وتوجيهها بوضعيات مثالية، مما يقلل الجهد الطاقوي ويسمح بحدوث التفاعل بسرعة فائقة وفي <span style="color: #38bdf8; font-weight: bold;">درجة حرارة الجسم الطبيعية</span>.
         </div>
     </section>
 
@@ -611,30 +1137,20 @@
     <section>
         <h2><span class="num-badge">13</span> العلاقة بين البنية الفراغية والتخصص الوظيفي</h2>
         <div class="step-card">
-            تعتبر البنية الفراغية للإنزيم هي الضامن الوحيد لوظيفته، فالموقع الفعال هو نتيجة انطواء دقيق للسلسلة البروتينية. أي تغير طفيف في درجة الحرارة أو الحموضة أو حدوث طفرة وراثية قد يغير زاوية انحناء السلسلة، مما يباعد بين الأحماض الأمينية للموقع الفعال ويفقد الإنزيم تخصصه. هذا يثبت أن الوظيفة الإنزيمية هي حالة ميكانيكية وهندسية تعتمد على دقة التموضع الذري.
-        </div>
-    </section>
-
-    <!-- 14 -->
-    <section>
-        <h2><span class="num-badge">14</span> أهمية الإنزيمات في التشخيص الطبي والصناعة</h2>
-        <div class="molecular-analysis">
-            تستخدم الإنزيمات اليوم كأدوات تشخيصية بالغة الدقة، فارتفاع إنزيمات معينة في الدم (مثل Transaminases) يشير لتلف في الكبد، ووجود إنزيمات القلب يشير لجلطة. صناعياً، تستخدم الإنزيمات في صناعة الأجبان، المنظفات، وتحويل النشا إلى سكريات بسيطة، نظراً لكونها بدائل نظيفة وصديقة للبيئة تغني عن استخدام المواد الكيميائية الحارقة أو العمليات الطاقوية المكلفة.
-        </div>
-    </section>
-
-    <!-- 15 -->
-    <section>
-        <h2><span class="num-badge">15</span> التوازن الاستقلابي وإعادة تدوير الإنزيم</h2>
-        <div class="step-card">
-            الإنزيم لا يتغير بنهاية التفاعل، وهذا ما يجعله وسيطاً اقتصادياً بامتياز، حيث يمكن لجزيئة إنزيم واحدة أن تحول آلاف جزيئات الركيزة في الثانية الواحدة. تضمن هذه الآلية استمرارية العمليات الاستقلابية (Metabolism) من هدم وبناء دون الحاجة لتصنيع بروتينات جديدة باستمرار، مما يحافظ على الموارد الطاقوية للخلية ويضمن استقرار الوسط الداخلي للعضوية.
+            &nbsp;&nbsp;&nbsp;&nbsp;تعتبر <span style="color: #ff007f; font-weight: bold;">البنية الفراغية الثلاثية الأبعاد</span> لـ <span style="color: #00f2fe; font-weight: bold;">الإنزيم</span> هي الضامن الأساسي والوحيد لوظيفته، حيث يُعد <span style="color: #ff007f; font-weight: bold;">الموقع الفعال</span> نتيجة مباشرة للانطواء الدقيق والتخصصي لـ <span style="color: #ffff00; font-weight: bold;">السلسلة البروتينية</span>.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #ffff00; font-weight: bold;">عوامل الاختلال:</span> أي تغير طفيف في العوامل المحيطة (مثل <span style="color: #38bdf8;">درجة الحرارة</span> أو <span class="latin-tech" style="color: #38bdf8;">pH</span>) أو حدوث <span style="color: #ff007f; font-weight: bold;">طفرة وراثية</span> قد يغير زاوية انحناء السلسلة.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #00ff88; font-weight: bold;">الأثر المترتب:</span> يتسبب ذلك في تباعد <span style="color: #ff007f; font-weight: bold;">الأحماض الأمينية الفعالة</span> عن بعضها، مما يفقد <span style="color: #00f2fe; font-weight: bold;">الإنزيم</span> تخصصه البنيوي والوظيفي.
+            <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: #00f2fe; font-weight: bold;">الخلاصة:</span> يثبت ذلك أن <span style="color: #00f2fe; font-weight: bold;">الوظيفة الإنزيمية</span> هي حالة هندسية وميكانيكية دقيقة تعتمد كلياً على دقة التموضع الذري وتكامل البنية.
         </div>
     </section>
 
     <!-- ملخص النصائح -->
     <div class="tip-box">
-        <span class="tip-title">🎓 ملخص البكالوريا:</span>
-        الإنزيم وسيط حيوي، بروتيني الطبيعة، يتميز بالنوعية المزدوجة، يتأثر بالحرارة والـ pH، ويعمل من خلال الموقع الفعال وفق نموذج التحفيز المستحث.
+        <span class="tip-title">🎓 نصيحة ذهبية للبكالوريا:</span>
+        احرص دائماً على ذكر اسم ورقم الحمض الأميني في السلسلة الببتيدية، مع التركيز على تشكيل الروابط الانتقالية بفضل تفاعل المجاميع الكيميائية الحرة لجذوره الفعالة مع المجاميع الكيميائية الحرة للركيزة. هذا الربط الدقيق بين بنية الحمض الأميني، رقمه، ومجاميعه الكيميائية هو أساس الإجابة النموذجية.
     </div>
 
     <div class="ad-space">
@@ -654,7 +1170,170 @@
 
 </div>
 
-<script src="script.js"></script>
+<script>
+    
+
+
+
+
+    function toggleTheme() {
+        const bodyElement = document.body;
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+
+        // تبديل الكلاس على جسم الصفحة
+        bodyElement.classList.toggle('light-theme');
+        const isLightTheme = bodyElement.classList.contains('light-theme');
+
+        // تحديث النصوص والأيقونات والمحفوظات
+        if (isLightTheme) {
+            if (themeIcon) themeIcon.textContent = '☀️';
+            if (themeText) themeText.textContent = 'الوضع النهاري';
+            localStorage.setItem('theme', 'light');
+        } else {
+            if (themeIcon) themeIcon.textContent = '🌙';
+            if (themeText) themeText.textContent = 'الوضع الليلي';
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+
+    /* ==========================================
+       2. عند تحميل الصفحة (تطبيق الثيم والكانفاس)
+       ========================================== */
+    document.addEventListener('DOMContentLoaded', () => {
+        const bodyElement = document.body;
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+
+        // استرجاع الثيم المحفوظ عند فتح الصفحة
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme === 'light') {
+            bodyElement.classList.add('light-theme');
+            if (themeIcon) themeIcon.textContent = '☀️';
+            if (themeText) themeText.textContent = 'الوضع النهاري';
+        } else {
+            bodyElement.classList.remove('light-theme');
+            if (themeIcon) themeIcon.textContent = '🌙';
+            if (themeText) themeText.textContent = 'الوضع الليلي';
+        }
+
+        /* ==========================================
+           3. أنيميشن خلفية الجسيمات (Canvas)
+           ========================================== */
+        const canvas = document.getElementById('cellCanvas');
+
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let particlesArray = [];
+            const numberOfParticles = 35;
+
+            function setCanvasSize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            setCanvasSize();
+
+            window.addEventListener('resize', () => {
+                setCanvasSize();
+                initParticles();
+            });
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 3.5 + 1.5; // زيادة الحجم قليلاً للوضوح
+                    this.speedX = (Math.random() - 0.5) * 0.6;
+                    this.speedY = (Math.random() - 0.5) * 0.6;
+                    this.opacity = Math.random() * 0.5 + 0.3;
+                }
+
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+
+                    if (this.x < 0 || this.x > canvas.width) {
+                        this.speedX = -this.speedX;
+                    }
+                    if (this.y < 0 || this.y > canvas.height) {
+                        this.speedY = -this.speedY;
+                    }
+                }
+
+                draw() {
+                    const isLight = bodyElement.classList.contains('light-theme');
+                    
+                    // في الوضع النهاري نستخدم ألوان أغمق مع شفافية أرقامها أعلى للوضوح
+                    ctx.fillStyle = isLight 
+                        ? `rgba(2, 132, 199, ${this.opacity * 1.2})`  /* أزرق داكن وواضح */
+                        : `rgba(248, 250, 252, ${this.opacity})`;     /* أبيض ناصع لليلي */
+
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            function initParticles() {
+                particlesArray = [];
+                for (let i = 0; i < numberOfParticles; i++) {
+                    particlesArray.push(new Particle());
+                }
+            }
+
+            function connectParticles() {
+                const maxDistance = 130;
+                const isLight = bodyElement.classList.contains('light-theme');
+
+                for (let a = 0; a < particlesArray.length; a++) {
+                    for (let b = a; b < particlesArray.length; b++) {
+                        const dx = particlesArray[a].x - particlesArray[b].x;
+                        const dy = particlesArray[a].y - particlesArray[b].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < maxDistance) {
+                            const opacityLevel = 1 - (distance / maxDistance);
+                            
+                            // زيادة تباين الخطوط الرابطة بين النقاط في النهاري
+                            ctx.strokeStyle = isLight 
+                                ? `rgba(14, 116, 144, ${opacityLevel * 0.35})` /* خطوط زرقاء داكنة هادئة */
+                                : `rgba(255, 255, 255, ${opacityLevel * 0.08})`;
+
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            function animateCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].update();
+                    particlesArray[i].draw();
+                }
+
+                connectParticles();
+                requestAnimationFrame(animateCanvas);
+            }
+
+            initParticles();
+            animateCanvas();
+        }
+    });
+
+
+
+
+
+
+</script>
 
 </body>
 </html>

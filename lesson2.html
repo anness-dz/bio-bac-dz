@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الوحدة 2: العلاقة بين بنية ووظيفة البروتين</title>
-<style>
+    <style>
     :root {
         --bg-dark: #0b0f19;
         --card-bg: rgba(21, 30, 49, 0.85);
@@ -536,7 +536,11 @@
         width: 38px;
         height: 38px;
         object-fit: contain;
-        transition: transform 0.3s ease;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .top-brand-logo:hover .top-logo-img {
+        transform: rotate(10deg); /* ميلان الشعار فقط نحو اليمين */
     }
 
     .top-brand-name {
@@ -635,7 +639,7 @@
             font-size: 0.85rem; 
         }
     }
-</style>
+    </style>
 
     <!-- استدعاء ملف CSS الخارجي قبل أي إجراء -->
     <link rel="stylesheet" href="style.css"> 
@@ -957,7 +961,7 @@
 
 
 
-<script>
+    <script>
     
 
 
