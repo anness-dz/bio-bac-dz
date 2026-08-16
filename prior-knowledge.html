@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موسوعة المكتسبات القبلية الشاملة </title>
+    <style>
+        :root {
+            --bg-main: #030712;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --card-bg: rgba(11, 17, 32, 0.92);
+            --card-border: rgba(99, 102, 241, 0.35);
+            --card-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.5);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        /* تخصيص شريط التمرير (Scrollbar) بلون رمادي داكن وبنفسجي متناسق */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(3, 7, 18, 0.6);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.5);
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            min-height: 100vh;
+            font-family: system-ui, -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* خلفية الجزيئات المتحركة */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .presentation-wrapper {
+            width: 100%;
+            max-width: 1050px;
+            z-index: 1;
+        }
+
+        /* شريط علوي أنيق للعودة والمؤشر */
+        .top-navigation-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+            padding: 0 5px;
+        }
+        .back-home-badge {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 10px 20px;
+            border-radius: 14px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .back-home-badge:hover {
+            background: rgba(99, 102, 241, 0.15);
+            border-color: var(--accent);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+        
+        .progress-indicator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            background: rgba(15, 23, 42, 0.85);
+            padding: 10px 18px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .progress-track {
+            width: 150px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #6366f1, #38bdf8);
+            width: 25%;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* بطاقة العرض الرئيسية */
+        .slide-container {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            box-shadow: var(--card-shadow);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slide-header {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(56, 189, 248, 0.1));
+            padding: 30px 40px;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .slide-header h2 {
+            font-size: 1.8rem;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .slide-tag {
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid var(--accent);
+            color: #c7d2fe;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .slide-content-area {
+            padding: 40px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .slide {
+            display: none;
+            animation: slideAnimation 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .slide.active {
+            display: block;
+        }
+        @keyframes slideAnimation {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .lead-text {
+            background: rgba(255, 255, 255, 0.03);
+            border-right: 4px solid var(--accent);
+            padding: 18px 22px;
+            border-radius: 0 14px 14px 0;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            color: #f1f5f9;
+            line-height: 1.8;
+        }
+        .content-block {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 25px;
+        }
+        .content-block h3 {
+            color: #38bdf8;
+            margin-bottom: 12px;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .content-block p, .content-block li {
+            color: var(--text-secondary);
+            font-size: 1.02rem;
+            line-height: 1.8;
+        }
+        
+        /* قوائم منسقة بنقاط واضحة */
+        .emoji-list {
+            list-style: none;
+            margin-top: 12px;
+        }
+        .emoji-list li {
+            position: relative;
+            padding-right: 25px;
+            margin-bottom: 12px;
+            line-height: 1.8;
+        }
+        .emoji-list li::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.2rem;
+            position: absolute;
+            right: 0;
+            top: -2px;
+        }
+
+        /* أماكن الصور المخصصة */
+        .image-slot {
+            border: 2px dashed rgba(99, 102, 241, 0.4);
+            padding: 20px;
+            text-align: center;
+            border-radius: 14px;
+            margin-top: 18px;
+            background: rgba(99, 102, 241, 0.03);
+            color: #a5b4fc;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            transition: 0.3s;
+        }
+        .image-slot:hover {
+            border-color: var(--accent);
+            background: rgba(99, 102, 241, 0.06);
+        }
+        .image-slot span {
+            font-size: 0.82rem;
+            color: #64748b;
+        }
+
+        /* شريط التنقل السفلي */
+        .slide-footer {
+            padding: 22px 40px;
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(4, 7, 15, 0.6);
+        }
+        .control-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 13px 32px;
+            border-radius: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px var(--accent-glow);
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .control-btn:hover {
+            transform: translateY(-2px);
+            background: #4f46e5;
+        }
+        .control-btn:disabled {
+            background: #1e293b;
+            color: #475569;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .slide-header {
+                padding: 20px;
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+            .slide-header h2 {
+                font-size: 1.3rem;
+            }
+            .slide-content-area {
+                padding: 20px 15px;
+                max-height: 500px;
+            }
+            .progress-track {
+                width: 90px; /* تصغير شريط التقدم ليناسب الهواتف */
+            }
+            .top-navigation-bar {
+                flex-direction: column;
+                gap: 10px;
+                align-items: stretch;
+            }
+            .back-home-badge, .progress-indicator {
+                justify-content: center;
+            }
+            .slide-footer {
+                padding: 15px 20px;
+            }
+            .control-btn {
+                padding: 10px 20px;
+                font-size: 0.95rem;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <!-- خلفية الجزيئات المتحركة -->
+    <canvas id="particles-canvas"></canvas>
+
+    <div class="presentation-wrapper">
+        <!-- شريط علوي أنيق للعودة والمؤشر -->
+        <div class="top-navigation-bar">
+            <a href="index.html" class="back-home-badge">
+                <span>🏠</span> العودة إلى الصفحة الرئيسية
+            </a>
+            <div class="progress-indicator">
+                <span id="progress-text">25%</span>
+                <div class="progress-track">
+                    <div class="progress-bar" id="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- وعاء العرض التقديمي -->
+        <div class="slide-container">
+            <div class="slide-header">
+                <h2 id="slide-title">الخلية الحيوانية، النباتية، وبدائية النواة</h2>
+                <span class="slide-tag" id="slide-badge">الشريحة 1 من 4</span>
+            </div>
+
+            <div class="slide-content-area">
+                
+                <!-- الشريحة 1: العنوان الأول -->
+                <div class="slide active" data-title="1. الخلية الحيوانية، النباتية، وبدائية النواة مع عضياتها" data-progress="25">
+                    <div class="lead-text">
+                        <strong>تعريف الخلية:</strong> هي وحدة البناء والوظيفة الأساسية في الكائنات الحية؛ حيث يتدرج التنظيم الحيوي من الكائن الحي ثم الأجهزة فالأعضاء فالأنسجة وصولاً إلى الخلايا، لنتناول إثر ذلك الخصائص البنيوية المميزة لكل من الخلايا النباتية، والحيوانية، والمشتركة، فضلاً عن الخلايا بدائية النواة.
+                    </div>
+                    
+                    <div class="content-block">
+                        <h3>أ. العضيات التي تميز الخلية النباتية</h3>
+                        <p>تنفرد الخلية النباتية بوجود تراكيب تعطيها الصلابة والقدرة على صنع الغذاء:</p>
+                        <ul class="emoji-list">
+                            <li><strong>الجدار الهيكلي (السليلوزي):</strong> غلاف خارجي سميك وصلب يحيط بالغشاء الهيولي ليحمي الخلية ويمنحها شكلاً ثابتاً.</li>
+                            <li><strong>الفجوة العصارية الضخمة:</strong> كيس مركزي كبير يملأ معظم حجم الخلية ويخزن الماء والمغذيات.</li>
+                            <li><strong>الصانعات الخضراء:</strong> عضيات مسؤولة عن التقاط طاقة الشمس وإجراء التركيب الضوئي.</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-block">
+                        <h3>ب. العضيات التي تميز الخلية الحيوانية</h3>
+                        <p>تتميز الخلية الحيوانية بمرونتها وغياب الجدار الصلب:</p>
+                        <ul class="emoji-list">
+                            <li><strong>الغشاء الهيولي المرن:</strong> غشاء رقيق ومرن يحيط بالهيولى ويسمح بتغير شكل الخلية وحركتها وتنظيم التبادل.</li>
+                            <li><strong>الجسيمات المركزية (Centrioles):</strong> تساعد في تنظيم وتوجيه خيوط المغزل أثناء انقسام الخلية الحيوانية.</li>
+                            <li><strong>الجسيمات الحالة (Lysosomes):</strong> حويصلات غنية بالأنزيمات الهاضمة لتنظيف الخلية وتحليل الفضلات.</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-block">
+                        <h3>ج. العضيات المشتركة بين الخلية النباتية والحيوانية (الحقيقية)</h3>
+                        <p>عضيات أساسية تتواجد في نوعي الخلايا للقيام بالوظائف الحيوية:</p>
+                        <ul class="emoji-list">
+                            <li><strong>الشبكة الهيولية الداخلية المحببة (REG):</strong> مغطاة بالريبوزومات وتعتبر مصنع تركيب البروتينات.</li>
+                            <li><strong>الشبكة الهيولية الداخلية الملساء (REL):</strong> تخلو من الريبوزومات وتركب الدهون وتزيل السموم.</li>
+                            <li><strong>جهاز جولجي:</strong> محطة الاستقبال وتعديل وتغليف البروتينات.</li>
+                            <li><strong>الميتوكوندريا:</strong> بيت الطاقة ومقر التنفس الخلوي وإنتاج (ATP).</li>
+                            <li><strong>الريبوزومات الحرة:</strong> حبيبات مسؤولة مباشرة عن تصنيع البروتينات داخل الهيولى.</li>
+                        </ul>
+                        <div class="image-slot" style="text-align: center;">
+                        
+                            <img src="image9/good.png" alt="مقارنة الخلايا" style="width: 100%; height: auto; display: block; border-radius: 8px; margin-top: 10px;">
+                        </div>
+                    </div>
+
+                    <div class="content-block" style="margin-bottom: 0;">
+                        <h3>د. الخلية بدائية النواة (مثل البكتيريا)</h3>
+                        <p>خلايا بسيطة جداً تخلو من النواة الحقيقية ومن العضيات المغلفة:</p>
+                        <ul class="emoji-list">
+                            <li><strong>الصبغي البكتيري (ADN حلقي حر):</strong> توجد المادة الوراثية مباشرة في الهيولى بدون غلاف نووي.</li>
+                            <li><strong>الريبوزومات البدائية:</strong> الوحيدة الموجودة لتركيب البروتينات.</li>
+                            <li><strong>الجدار الخارجي:</strong> غلاف بكتيري يمنح الحماية.</li>
+                        </ul>
+                        <div class="image-slot" style="text-align: center;">
+                        
+                            <img src="image9/bacteria.png" alt="رسم تخطيطي لخلية بكتيرية" style="width: 100%; height: auto; display: block; border-radius: 8px; margin-top: 10px;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الشريحة 2: العنوان الثاني -->
+                <div class="slide" data-title="2. مقر ووحدة المعلومة الوراثية" data-progress="50">
+                    <div class="lead-text">
+                        <strong>المعلومة الوراثية:</strong> تتوضع المادة الوراثية المسؤولة عن نقل الصفات في نواة الخلية على شكل صبغيات مكونة من جزيء الـ ADN، وتحمل وحدات مسؤولة عن ظهور الصفات تُدعى المورثات والأليلات.
+                    </div>
+
+                    <div class="content-block">
+                        <h3>🧬 أ. الصبغيات (الكروموسومات)</h3>
+                        <p>تُعرّف بأنها الهياكل الحاملة للبرنامج الوراثي للكائن الحي:</p>
+                        <ul class="emoji-list">
+                            <li><strong>المظهر البنيوي:</strong> تراكيب خيطية متكاثفة ومنظمة بدقة تظهر بوضوح داخل النواة خلال مراحل انقسام الخلية.</li>
+                            <li><strong>الدور الوظيفي:</strong> تمثل الدعامة الأساسية التي تنقل الصفات الوراثية بانتظام من الخلية الأم إلى الخلايا البنت.</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-block">
+                        <h3> ب. جزيء الـ ADN (الحمض النووي الريبي منقوص الأكسجين)</h3>
+                        <p>هو الجزيء الكيميائي المسؤول عن تخزين ونقل المعلومة الوراثية:</p>
+                        <ul class="emoji-list">
+                            <li><strong>البنية الفراغية:</strong> يتألف من سلسلتين متلتفتين على شكل حلزون مزدوج متعاكس الاتجاه.</li>
+                            <li><strong>الوحدة البنائية (النيكليوتيدة):</strong> تتكون كل سلسلة من تتابع وحدات صغرى تدعى النيكليوتيدات، والتي تتألف من (حمض الفوسفوريك + سكر خماسي + قاعدة أزوتية من بين الأربع: A, T, G, C).</li>
+                            <li><strong>مبدأ التكامل:</strong> ترتبط القواعد الأزوتية فيما بينها وفق قواعد تكامل محددة (A مع T) و(G مع C) لضمان استقرار ونقل الشفرة بدقة.</li>
+                        </ul>
+                        <div class="image-slot" style="text-align: center;">
+                            [مكان الصورة: مخطط تفصيلي لبنية الـ ADN والنيكليوتيدات والتكامل]
+                            <img src="image9/dna-structure.png" alt="بنية جزيء ADN" style="width: 100%; height: auto; display: block; border-radius: 8px; margin-top: 10px;">
+                        </div>
+                    </div>
+
+                    <div class="content-block">
+                        <h3>📜 ج. المورثة (الجين)</h3>
+                        <p>هي الوحدة الوظيفية للمعلومة الوراثية:</p>
+                        <ul class="emoji-list">
+                            <li><strong>التعريف الدقيق:</strong> عبارة عن تسلسل محدد ومعين من النيكليوتيدات على جزيء الـ ADN.</li>
+                            <li><strong>الأهمية البيولوجية:</strong> تحمل الشيفرة الوراثية الخاصة بتصنيع بروتين معين، والذي ينعكس بدوره على ظهور صفة وراثية محددة.</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-block" style="margin-bottom: 0;">
+                        <h3>🔀 د. الأليل</h3>
+                        <p>هو أحد الأشكال الممكنة والمتباينة لنفس المورثة:</p>
+                        <ul class="emoji-list">
+                            <li><strong>المفهوم العلمي:</strong> تفرّع أو نسخة بديلة لذات المورثة على مستوى التسلسل النيكليوتيدي.</li>
+                            <li><strong>النتيجة الظاهرة:</strong> الاختلاف الطفيف في ترتيب النيكليوتيدات بين الأليلات هو السبب الأساسي لتنوع الصفات وتعدد الأنماط الظاهرة بين الكائنات الحية.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- الشريحة 3: العنوان الثالث (مفصل بالكامل) -->
+                <div class="slide" data-title="3. النمط الوراثي والنمط الظاهري" data-progress="75">
+                    <div class="lead-text">
+                        <strong>التعبير العضوي:</strong> ترجمة الشفرات الوراثية الكامنة إلى صفات مرئية ووظيفية في الكائن الحي.
+                    </div>
+
+                    <div class="content-block">
+                        <h3>أ. النمط الوراثي (Genotype)</h3>
+                        <p>هو مجموع المورثات والأليلات التي يمتلكها الفرد في خلاياه، ويمثل المخطط البنائي أو الشيفرة الكامنة داخل جزيئات الـ ADN والتي تحدد الإمكانيات البيولوجية للفرد.</p>
+                    </div>
+
+                    <div class="content-block" style="margin-bottom: 0;">
+                        <h3>ب. النمط الظاهري (Phenotype)</h3>
+                        <p>هو مجموع الصفات المرئية أو القابلة للقياس الناتجة عن تعبير النمط الوراثي وتأثير العوامل البيئية.</p>
+                        <p><strong>يظهر على ثلاثة مستويات أساسية:</strong></p>
+                        <ul class="emoji-list">
+                            <li><strong>المستوى العضوي:</strong> الصفات المرئية الظاهرة للعيان (مثل لون العينين، شكل الزهرة، أو الطول).</li>
+                            <li><strong>المستوى الخلوي:</strong> الصفات المجهرية للخلية (مثل شكل خلايا الدم أو بنيتها).</li>
+                            <li><strong>المستوى الجزيئي:</strong> طبيعة ونوع البروتينات المركبة داخل الخلية (مثل نوع الخضاب الدموي أو الأنزيمات).</li>
+                        </ul>
+                        <p style="margin-top: 15px;"><strong>القاعدة الأساسية:</strong> <span style="color: #38bdf8;">النمط الظاهري = النمط الوراثي + تأثير العوامل البيئية.</span></p>
+                        <div class="image-slot">
+                            
+                            <img src="image9/phenotype.png" alt="مستويات النمط الظاهري والوراثي" style="width: 100%; height: auto; display: block; border-radius: 8px; margin-top: 10px;">
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الشريحة 4: العنوان الرابع (مفصل بالكامل) -->
+                <div class="slide" data-title="4. الطفرات (Mutations)" data-progress="100">
+                    <div class="lead-text">
+                        <strong>التغير الوراثي:</strong> التغيرات المفاجئة في الشيفرة الوراثية وتأثيراتها البنيوية والوظائفية.
+                    </div>
+                    <div class="content-block" style="margin-bottom: 12px;">
+                        <h3 style="margin-bottom: 5px;">أ. تعريف الطفرة</h3>
+                        <p style="margin: 0;">هي تغيرات فجائية، عشوائية، وثابتة في تتابع النيكليوتيدات (القواعد الأزوتية) لجزيء الـ ADN.</p>
+                    </div>
+                    <div class="content-block" style="margin-bottom: 12px;">
+                        <h3 style="margin-bottom: 5px;">ب. الأنواع الجزيئية للطفرات</h3>
+                        <ul class="emoji-list" style="margin: 0; padding-right: 20px;">
+                            <li><strong>طفرة الاستبدال:</strong> استبدال قاعدة أزوتية بأخرى (صامتة أو تؤثر على حمض أميني).</li>
+                            <li><strong>طفرة الحذف:</strong> ضياع قاعدة أو مقطع، مما يؤدي لاختلال إطار القراءة وإنتاج بروتين غير وظيفي.</li>
+                            <li><strong>طفرة الإضافة (الإدراج):</strong> إدخال قاعدة جديدة وتماثل الحذف في تأثيرها المدمر على إطار القراءة.</li>
+                        </ul>
+                    </div>
+                    <div class="content-block" style="margin-bottom: 0;">
+                        <h3 style="margin-bottom: 5px;">ج. تأثيرات وأهمية الطفرات</h3>
+                        <ul class="emoji-list" style="margin: 0; padding-right: 20px;">
+                            <li><strong>المصدر الرئيسي للتنوع:</strong> المسبب الأساسي لتنوع الكائنات الحية وتطورها.</li>
+                            <li><strong>طبيعة التأثير:</strong> قد تكون ضارة، محايدة، أو مفيدة تزيد من قدرة التكيف.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- أزرار التنقل السفلي -->
+            <div class="slide-footer"> 
+                <button class="control-btn" id="prev-btn" onclick="moveSlide(-1)" disabled>← السابق</button>
+                <button class="control-btn" id="next-btn" onclick="moveSlide(1)">التالي →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- محرك الجزيئات المتحركة في الخلفية (Canvas Particles) ---
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particlesArray = [];
+        const numberOfParticles = 50;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.color = Math.random() > 0.5 ? 'rgba(99, 102, 241, 0.45)' : 'rgba(56, 189, 248, 0.45)';
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+        initParticles();
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+
+                for (let j = i + 1; j < particlesArray.length; j++) {
+                    const dx = particlesArray[i].x - particlesArray[j].x;
+                    const dy = particlesArray[i].y - particlesArray[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 140) {
+                        ctx.strokeStyle = `rgba(99, 102, 241, ${0.12 * (1 - distance / 140)})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                        ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+
+        // --- منطق التنقل بين الشرائح ---
+        let currentIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const titleElement = document.getElementById('slide-title');
+        const badgeElement = document.getElementById('slide-badge');
+        const progressFill = document.getElementById('progress-fill');
+        const progressText = document.getElementById('progress-text');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        function updateSlidePresenter() {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentIndex);
+            });
+
+            const currentActive = slides[currentIndex];
+            titleElement.textContent = currentActive.getAttribute('data-title');
+            badgeElement.textContent = `الشريحة ${currentIndex + 1} من ${slides.length}`;
+            
+            const progressVal = currentActive.getAttribute('data-progress');
+            progressFill.style.width = progressVal + '%';
+            progressText.textContent = progressVal + '%';
+
+            prevBtn.disabled = currentIndex === 0;
+            if (currentIndex === slides.length - 1) {
+                nextBtn.innerHTML = 'إنهاء المراجعة ✓';
+            } else {
+                nextBtn.innerHTML = 'التالي →';
+            }
+        }
+
+        function moveSlide(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = 0;
+            if (currentIndex >= slides.length) {
+                window.location.href = 'index.html';
+                return;
+            }
+            updateSlidePresenter();
+            document.querySelector('.slide-content-area').scrollTop = 0;
+        }
+    </script>
+
+<script src="script.js"></script>
+
+</body>
+</html>

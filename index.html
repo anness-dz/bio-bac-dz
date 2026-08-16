@@ -767,7 +767,41 @@ body.light .legal-box {
     transform: translateY(-4px);
 }
 
+/* بطاقة المكتسبات القبلية (بنفسجي عميق وأنيق) */
+.card-prior {
+    --card-glow: #6366f1; 
+    border-bottom: 3px solid #6366f1;
+}
+.card-prior:hover span { 
+    color: #6366f1; 
+}
 
+/* بطاقة فارغة 1: أزرق سماوي هادئ */
+.card-empty1 {
+    --card-glow: #38bdf8;
+    border-bottom: 3px solid #38bdf8;
+}
+.card-empty1:hover span { 
+    color: #38bdf8; 
+}
+
+/* بطاقة فارغة 2: ليموني / أخضر مضيء */
+.card-empty2 {
+    --card-glow: #84cc16;
+    border-bottom: 3px solid #84cc16;
+}
+.card-empty2:hover span { 
+    color: #84cc16; 
+}
+
+/* بطاقة فارغة 3: برتقالي محروق / كهرماني */
+.card-empty3 {
+    --card-glow: #f59e0b;
+    border-bottom: 3px solid #f59e0b;
+}
+.card-empty3:hover span { 
+    color: #f59e0b; 
+}
 
 
 
@@ -997,6 +1031,40 @@ body.light .legal-box {
         <div class="ad-banner">
             <span>[ مساحة إعلانية سفلية ]</span>
         </div>
+
+
+
+
+
+<main class="buttons-grid">
+    <a href="prior-knowledge.html" class="card-btn card-prior">
+        <img src="prior.png" alt="المكتسبات القبلية" onerror="this.src='https://via.placeholder.com/300x200/0f172a/6366f1?text=المكتسبات+القبلية'">
+        <span>المكتسبات القبلية الشاملة</span>
+    </a>
+
+    <!-- البطاقة الفارغة الأولى (أزرق سماوي) -->
+    <a href="#" class="card-btn card-empty1">
+        <img src="empty1.jpg" alt="قريباً" onerror="this.src='https://via.placeholder.com/300x200/0f172a/38bdf8?text=قريباً'">
+        <span>قريباً...</span>
+    </a>
+
+    <!-- البطاقة الفارغة الثانية (ليموني) -->
+    <a href="#" class="card-btn card-empty2">
+        <img src="empty2.jpg" alt="قريباً" onerror="this.src='https://via.placeholder.com/300x200/0f172a/84cc16?text=قريباً'">
+        <span>قريباً...</span>
+    </a>
+
+    <!-- البطاقة الفارغة الثالثة (كهرماني) -->
+    <a href="#" class="card-btn card-empty3">
+        <img src="empty3.jpg" alt="قريباً" onerror="this.src='https://via.placeholder.com/300x200/0f172a/f59e0b?text=قريباً'">
+        <span>قريباً...</span>
+    </a>
+</main>
+
+
+
+
+
 
 
 
@@ -1456,5 +1524,8 @@ function toggleTheme() {
         gtag('js', new Date());
         gtag('config', 'G-72KM3WGRYW');
     </script>
+
+<script src="script.js"></script>
+
 </body>
 </html>
