@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منهجية الإجابة الشاملة - البكالوريا</title>
+    <style>
+        :root {
+            --primary: #38bdf8;
+            --secondary: #818cf8;
+            --accent: #c084fc;
+            --primary-glow: rgba(56, 189, 248, 0.4);
+            --bg-dark: #020617;
+            --glass: rgba(15, 23, 42, 0.85);
+            --card-border: rgba(56, 189, 248, 0.3);
+            --text-main: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(129, 140, 248, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(192, 132, 252, 0.08) 0%, transparent 60%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(2, 6, 23, 0.8); }
+        ::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.4); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        .presentation-wrapper {
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: var(--glass);
+            padding: 12px 25px;
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(15px);
+        }
+
+        .back-btn {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+        .back-btn:hover { color: #fff; text-shadow: 0 0 10px var(--primary); }
+
+        .progress-info {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .legendary-card {
+            background: var(--glass);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(56, 189, 248, 0.15);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slide-header {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(15, 23, 42, 0.6));
+            padding: 25px 35px;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .slide-header h2 {
+            color: var(--primary);
+            font-size: 1.6rem;
+            text-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        /* شريط التقدم السفلي */
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(2, 6, 23, 0.8);
+            position: relative;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            width: 16.66%;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .slide-content-area {
+            padding: 35px;
+            max-height: 520px;
+            overflow-y: auto;
+        }
+
+        .slide {
+            display: none;
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .method-block {
+            background: rgba(2, 6, 23, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+        .method-block:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+        }
+
+        .method-block h3 {
+            color: #38bdf8;
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+        }
+
+        .method-block p, .method-block li {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .method-list {
+            list-style: none;
+            margin-top: 10px;
+        }
+        .method-list li {
+            position: relative;
+            padding-right: 22px;
+            margin-bottom: 8px;
+        }
+        .method-list li::before {
+            content: "◆";
+            color: var(--primary);
+            position: absolute;
+            right: 0;
+            font-size: 0.8rem;
+            top: 2px;
+        }
+
+        .image-slot {
+            border: 2px dashed rgba(56, 189, 248, 0.4);
+            padding: 15px;
+            text-align: center;
+            border-radius: 14px;
+            margin-top: 18px;
+            background: rgba(56, 189, 248, 0.03);
+            transition: 0.3s;
+        }
+        .image-slot:hover {
+            border-color: var(--primary);
+            background: rgba(56, 189, 248, 0.06);
+        }
+        .image-slot img {
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: 10px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+        .image-slot span {
+            font-size: 0.85rem;
+            color: var(--primary);
+            margin-top: 8px;
+            display: block;
+            font-weight: 500;
+        }
+
+        .exercise-box {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(2, 6, 23, 0.9));
+            border: 2px dashed var(--primary);
+            border-radius: 16px;
+            padding: 22px;
+            margin-top: 25px;
+        }
+        .exercise-box h4 {
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .slide-footer {
+            padding: 20px 35px;
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(4, 8, 20, 0.7);
+        }
+
+        /* تعديل أزرار التحكم لتثبيت ألوان النصوص وعدم تغييرها بشكل مزعج عند التحويم */
+        .control-btn {
+            background: rgba(56, 189, 248, 0.05);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 11px 28px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-btn:hover:not(:disabled) {
+            background: rgba(56, 189, 248, 0.15);
+            color: #ffffff;
+            border-color: #60a5fa;
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .control-btn:disabled {
+            background: transparent;
+            border-color: #1e293b;
+            color: #475569;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .slide-header { padding: 20px; }
+            .slide-header h2 { font-size: 1.3rem; }
+            .slide-content-area { padding: 20px 15px; max-height: 480px; }
+            .slide-footer { padding: 15px 20px; }
+            .control-btn { padding: 10px 18px; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-wrapper">
+        
+        <div class="top-nav">
+            <a href="index.html" class="back-btn">⬅ العودة للموسوعة الرئيسية</a>
+            <div class="progress-info" id="progressIndicator">الشريحة 1 من 6</div>
+        </div>
+
+        <div class="legendary-card">
+            
+            <div class="slide-header">
+                <h2 id="slideTitle">النص العلمي</h2>
+            </div>
+
+            <!-- شريط التقدم السفلي -->
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+
+            <div class="slide-content-area">
+                
+                <!-- الشريحة 1: النص العلمي -->
+                <div class="slide active" id="slide-1">
+                    <div class="method-block">
+                        <h3>هيكلة النص العلمي (مقدمة، عرض، خاتمة)</h3>
+                        <p>النص العلمي ليس مقالاً أدبياً، بل هو إجابة منظمة مدعومة بمصطلحات دقيقة.</p>
+                        <ul class="method-list">
+                            <li><strong class="gradient-text">المقدمة:</strong> الإشارة للموضوع بذكر عنوان الدرس أو الجزء المتعلق بالسياق أو الوثيقة مع إعادة صياغة السؤال.</li>
+                            <li><strong class="gradient-text">العرض:</strong>
+                                <ul class="method-list" style="margin-top: 8px;">
+                                    <li><strong class="gradient-text">1. التمهيد:</strong> ذكر سطر تمهيدي مثل أهمية الظاهرة أو العناصر الضرورية لحدوثها.</li>
+                                    <li><strong class="gradient-text">2. الظاهرة المدروسة:</strong> ذكر العنصر المستهدف من الدرس (عنوان ذلك الجزء والعناوين الفرعية إن وجدت)، مع شرح ما تعلمته وذكر الكلمات المفتاحية اللازمة في أماكنها المثالية للتنظيم.</li>
+                                    <li><strong class="gradient-text">3. تحليل المشكل:</strong> إضافة عنوان للمشكلة المطروحة في السياق، الوثيقة، أو السؤال، مع ذكر نفس الخطوات السابقة إلى غاية مكان تأثير العنصر المؤثر على الظاهرة المعنية مع شرح تفصيلي ودقيق وذكر الكلمات المفتاحية.</li>
+                                </ul>
+                            </li>
+                            <li><strong class="gradient-text">الخاتمة:</strong> استنتاج عام يحل الإشكالية أو إجابة مباشرة عن التساؤل المطروح.</li>
+                        </ul>
+                        
+                    </div>
+                    <div class="exercise-box">
+                        <h4>🎯ملاحظة هامة :</h4>
+                        <p><strong>المنهجية :</strong> تعتبر هذه الطريقة في الاغلب فعالة لكسب نقاط في التمرين الاول<br>
+                        <em>التطبيق:</em> اتبع الهيكلة أعلاه (مقدمة، عرض، والخاتمة) بالاعماد على الاسلوب المقال .</p>
+                    </div>
+                </div>
+
+                <!-- الشريحة 2: المنحنيات البيانية (محدثة بطريقة X و Y) -->
+                <div class="slide" id="slide-2">
+                    <div class="method-block">
+                        <h3>منهجية تحليل وتفسير واستنتاج المنحنيات البيانية و الاعمدة البيانية</h3>
+                        <p>الفرق بين المطالب الثلاثة هو سر العلامة الكاملة، ويمكننا فهمها بمنهجية المتغيرات (X و Y):</p>
+                        <ul class="method-list">
+                            <li><strong class="gradient-text">1. التحليل (قراءة المتغيرات X و Y):</strong> 
+                                وصف دقيق لتغيرات المتغير التابع (<strong class="gradient-text">Y</strong> مثل: السرعة، النشاط، الكمية) بدلالة تغيرات المتغير المستقل (<strong class="gradient-text">X</strong> مثل: الزمن، التركيز، درجة الحرارة) مع ذكر قيمتين و زمنين على الاقل.
+                                <br><span style="color: var(--primary); font-size: 0.9rem;">💡 الصيغة: " بزيادة المتغير X، نلاحظ تزايد/تناقص/ثبات/انعدام في المتغير Y ..."</span>
+                            </li>
+                            <li><strong class="gradient-text">2. التفسير (استخدام دلالات السبب والنتيجة):</strong> 
+                                التعليل العلمي لسبب تغير <strong class="gradient-text">Y</strong> بدلالة <strong class="gradient-text">X</strong> باستخدام عبارات الربط السببية الصريحة (مثل: <strong class="gradient-text">راجع إلى، بسبب، نظراً لـ، بفعل</strong>) وربطها بالآلية الحيوية.
+                                 <br><span style="color: var(--primary); font-size: 0.9rem;">💡 الصيغة الدقيقة: "هذا التغير في <strong class="gradient-text">Y</strong> (بدلالة <strong class="gradient-text">X</strong>) <strong class="gradient-text">راجع إلى / بسبب</strong> [تأثير X أو الآلية الحيوية كزيادة تشكل المعقدات...] <strong class="gradient-text">مما يؤدي إلى...</strong>"</span>
+                            </li>
+                            <li><strong class="gradient-text">3. الاستنتاج (الخلاصة العلاقتية بين X و Y):</strong> 
+                                استخلاص العلاقة العامة أو القاعدة المستفادة من التجربة.
+                                <br><span style="color: var(--primary); font-size: 0.9rem;">💡 الصيغة: "نستنتج أن المتغير X يعتبر عاملاً أساسياً في تحفيز أو تثبيط المتغير Y..."</span>
+                            </li>
+                        </ul>
+                        <div class="image-slot">
+                            <img src="image10/curve-example.png" alt="مثال منحنى بياني">
+                            <span>📷 نموذج تطبيق منهجية (X و Y) على المنحنيات (image10)</span>
+                        </div>
+                    </div>
+                    <div class="exercise-box">
+                        <h4>🎯 ملاحظات هامة لضمان العلامة الكاملة في الاستنتاج:</h4>
+                        <p>
+                            1. <strong class="gradient-text">تجنب العموميات:</strong> لا تكتفِ أبداً بقول عبارات فضفاضة مثل "يؤثر التركيز على السرعة" أو استخدام كلمة يؤثر فقط، بل يجب تحديد نوع التأثير بدقة مثل <strong class="gradient-text">تحفيز أو تثبيط</strong>.<br>
+                            2. <strong class="gradient-text">التفصيل والدقة:</strong> حدد بوضوح <strong class="gradient-text">متى</strong> يؤثر X على Y، كأن توضح أن X يؤثر ويظهر أثره في التراكيز الأكبر من تلك القيمة المحددة لحظة التغير على Y.<br>
+                            3. <strong class="gradient-text">تقسيم المنحنى إلى مجالات:</strong> ضرورة تقسيم المنحنى أثناء الملاحظة والاستنتاج إلى مجالات دقيقة (مثل **قبل وبعد** لحظة التغير أو نقطة الانعطاف) في حالة وجود تغيرات في المنحنى عند لحظة معينة.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- الشريحة 3: الجداول (مبسطة جداً) -->
+                <div class="slide" id="slide-3">
+                    <div class="method-block">
+                        <h3>منهجية التعامل مع الجداول</h3>
+                        <p>الجداول هي أداة للمقارنة؛ لا تصف الجدول، بل قارن بين النتائج:</p>
+                        <ul class="method-list">
+                            <li><strong class="gradient-text">1. المقارنة (ماذا نرى؟):</strong> 
+                                لا تذكر الأرقام فقط، بل قارن بين شروط التجربة.
+                                <br><span style="color: var(--primary); font-size: 0.9rem;">💡 الصيغة البسيطة: "عند المقارنة بين الشرط (أ) والشرط (ب)، نلاحظ أن قيمة Y في (أ) أكبر/أصغر منها في (ب)..."</span>
+                            </li>
+                            <li><strong class="gradient-text">2. الاستنتاج (ماذا نستفيد؟):</strong> 
+                                هنا نحدد "المفعول" العلمي، ونبتعد عن كلمة "يؤثر" العامة.
+                                <br><span style="color: var(--primary); font-size: 0.9rem;">💡 الصيغة البسيطة: "نستنتج أن المادة المضافة تسببت في <strong class="gradient-text">تثبيط / تحفيز</strong> النشاط (Y) مقارنة بالشاهد."</span>
+                            </li>
+                        </ul>
+                        <div class="image-slot">
+                            <img src="image10/table-example.png" alt="مثال جدول">
+                            <span>📷 تحليل الجداول بالمقارنة (image10)</span>
+                        </div>
+                    </div>
+                    <div class="exercise-box">
+                        <h4>🎯 ملاحظة هامة:</h4>
+                        <p>في الجداول، تجنب تماماً استخدام كلمة "يؤثر" وحدها؛ بل يجب ربط الاستنتاج بنتيجة المقارنة المباشرة مع تحديد طبيعة التأثير بدقة مثل <strong class="gradient-text">تحفيز أو تثبيط</strong>، مع ضرورة ربطه بـ <strong class="gradient-text">الظاهرة الواضحة أو الخفية</strong> (المدروسة) في بعض الحالات لتكون الإجابة كاملة.</p>
+                    </div>
+                </div>
+
+                <!-- الشريحة 4: تقنية الهجرة الكهربائية وفصل البروتينات حسب الوزن الجزيئي -->
+                <div class="slide" id="slide-4">
+                    <div class="method-block">
+                        <h3>تقنية الهجرة الكهربائية والوزن الجزيئي</h3>
+                        <p>تقنيات فصل الجزيئات الحيوية (الأحماض الأمينية، الببتيدات، أو البروتينات) بناءً على الشحنة أو الحجم.</p>
+                        <ul class="method-list">
+                            <li><strong class="gradient-text">1. الهجرة الكهربائية (حسب الشحنة و PHi):</strong> 
+                                تتحدد هجرة الجزيء حسب شحنته الكهربائية مقارنة بـ pH الوسط. الجزيء الموجب يتجه نحو القطب السالب والعكس صحيح، بينما الجزيء الذي يكون عنده (pH = PHi) تنعدم شحنته ولا يتحرك.
+                            </li>
+                            <li><strong class="gradient-text">2. الهجرة حسب الوزن الجزيئي:</strong> 
+                                تقنية تعتمد على الفصل بناءً على الحجم أو الوزن الجزيئي؛ حيث أن الجزيئات ذات <strong class="gradient-text">الوزن الجزيئي الأصغر أو الحجم الأقل</strong> تكون هجرتها أسرع وأعمق في الوسط مقارنة بالجزيئات الأكبر حجماً.
+                            </li>
+                        </ul>
+                        <div class="image-slot">
+                            <img src="image10/electro-example.png" alt="مثال تقنية الهجرة الكهربائية والوزن الجزيئي">
+                            <span>📷 مبدأ الهجرة الكهربائية وفصل البروتينات (image10)</span>
+                        </div>
+                    </div>
+                    <div class="exercise-box">
+                        <h4>🎯 الاستنتاج العلمي والأسباب المحتملة:</h4>
+                        <p>
+                            - <strong class="gradient-text">استنتاج اختلاف الشحنة / PHi:</strong> اختلاف مسافة أو اتجاه هجرة الجزيئات يعود إلى تغير في بنيتها، وغالباً ما يكون سببه <strong class="gradient-text">طفرة استبدال</strong> أدت لتغيير حمض أميني وبالتالي تغيير الشحنة الإجمالية.<br>
+                            - <strong class="gradient-text">استنتاج اختلاف الوزن الجزيئي:</strong> اختلاف مسافة الهجرة حسب الحجم يعود لتفاوت الكتلة الجزيئية، وقد يكون سببه <strong class="gradient-text">طفرة حذف أو إضافة</strong> أثّرت على عدد الأحماض الأمينية وطول السلسلة الببتيدية.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- الشريحة 5: الرسوم التخطيطية -->
+                <div class="slide" id="slide-5">
+                    <div class="method-block">
+                        <h3>الرسوم التخطيطية</h3>
+                        <p>كيفية قراءة وفهم البنيات الخلوية أو الجزيئية واستخلاص المعنى العلمي منها ببساطة.</p>
+                        <ul class="method-list">
+                            <li><strong class="gradient-text">التعرف على المكونات:</strong> تحديد الأشكال والعناصر الظاهرة في الرسم وربط كل عنصر بوظيفته الأساسية.</li>
+                            <li><strong class="gradient-text">قراءة الرسم:</strong> تقتصر كيفية القراءة على ذكر <strong class="gradient-text">مراحل الظاهرة الحيوية</strong> الموجودة في الصورة بترتيبها الصحيح.</li>
+                        </ul>
+                        <div class="image-slot">
+                            <img src="image10/schema-example.png" alt="مثال رسم تخطيطي">
+                            <span>📷 قراءة الرسوم التخطيطية (image10)</span>
+                        </div>
+                    </div>
+                    <div class="exercise-box">
+                        <h4>🎯 ملاحظة هامة للاستنتاج:</h4>
+                        <p>في الرسوم التخطيطية، يجب أن يقتصر الاستنتاج على <strong class="gradient-text">الربط بين أهم جزيئة</strong> (مثل الإنزيم، المستقبل، أو الجسم المضاد) وبين <strong class="gradient-text">الظاهرة</strong> المدروسة بدقة.</p>
+                    </div>
+                </div>
+
+                <!-- الشريحة 6: برنامج الأناجان (Anagen) -->
+                <div class="slide" id="slide-6">
+                    <div class="method-block">
+                        <h3>برنامج الأناجان (Anagen)</h3>
+                        <p>منهجية استغلال نتائج البرنامج لتتبع التغيرات الوراثية بدقة مطلقة.</p>
+                        <ul class="method-list">
+                            <li><strong class="gradient-text">1. إعادة الرسم والتتبع (المقارنة):</strong> 
+                                رسم وكتابة السلاسل الخاصة بالحالة <strong class="gradient-text">السليمة (العادية)</strong> مقابل الحالة <strong class="gradient-text">المصابة (المطفرة)</strong> لكل من: سلسلة الـ ADN (المستنسخة أو غير المستنسخة)، ثم سلسلة الـ ARNm المقابلة لها، وصولاً إلى السلسلة الببتيدية الناتجة.
+                            </li>
+                            <li><strong class="gradient-text">2. الشرح التفصيلي بالأرقام:</strong> 
+                                توضيح <strong class="gradient-text">رقم النكليوتيدة</strong> المتغيرة وتحديد موقعها بدقة ضمن الثلاثية أو <strong class="gradient-text">الرامزة</strong> الخاصة بسلسلة الـ ADN (المستنسخة أو غير المستنسخة)، ثم توضيح كيف تسبب هذا التغيير في التأثير على الرامزة المقابلة في سلسلة الـ ARNm، وصولاً إلى تحديد <strong class="gradient-text">رقم الحمض الأميني</strong> المعني بالتغيير وموقعه في السلسلة الببتيدية الناتجة.
+                            </li>
+                        </ul>
+                        <div class="image-slot">
+                            <img src="image10/anagen-example.png" alt="برنامج الأناجان">
+                            <span>📷 تحليل السلاسل ببرنامج Anagen (image10)</span>
+                        </div>
+                    </div>
+                    <div class="exercise-box">
+                        <h4>🎯 ملاحظة هامة للاستنتاج:</h4>
+                        <p>إذا وُجدت طفرة، يكون الاستنتاج: حدوث <strong class="gradient-text">طفرة</strong> في سلسلة الـ ADN أدت إلى تغير في سلسلة الـ ARNm، مما نتج عنه تغير في <strong class="gradient-text">عدد ونوع وترتيب الأحماض الأمينية</strong> في السلسلة الببتيدية، وهو ما يؤدي إلى تشكل <strong class="gradient-text">بنية فراغية مخربة</strong> ومنه <strong class="gradient-text">فقدان الوظيفة</strong>.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- أزرار التحكم -->
+            <div class="slide-footer">
+                <button class="control-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>⬅ السابق</button>
+                <button class="control-btn" id="nextBtn" onclick="handleNextButton()">التالي ➔</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const titles = [
+            "النص العلمي",
+            "المنحنيات البيانية و الاعمدة البيانية",
+            "الجداول",
+            "تقنية الهجرة الكهربائية و الوزن الجزيئي",
+            "الرسومات التخطيطية",
+            "برنامج الأناجان"
+        ];
+
+        function updatePresentation() {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+
+            document.getElementById('slideTitle').innerText = titles[currentSlide];
+            document.getElementById('progressIndicator').innerText = `الشريحة ${currentSlide + 1} من ${slides.length}`;
+            
+            // تحديث شريط التقدم
+            const progressPercentage = ((currentSlide + 1) / slides.length) * 100;
+            document.getElementById('progressBar').style.width = progressPercentage + "%";
+
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+
+            const nextBtn = document.getElementById('nextBtn');
+            if (currentSlide === slides.length - 1) {
+                nextBtn.innerHTML = "🏠 العودة للصفحة الرئيسية";
+                nextBtn.style.borderColor = "#10b981";
+                nextBtn.style.color = "#10b981";
+            } else {
+                nextBtn.innerHTML = "التالي ➔";
+                nextBtn.style.borderColor = "var(--primary)";
+                nextBtn.style.color = "var(--primary)";
+            }
+        }
+
+        function handleNextButton() {
+            if (currentSlide === slides.length - 1) {
+                window.location.href = "index.html";
+            } else {
+                currentSlide++;
+                updatePresentation();
+                document.querySelector('.slide-content-area').scrollTop = 0;
+            }
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+            updatePresentation();
+            document.querySelector('.slide-content-area').scrollTop = 0;
+        }
+    </script>
+
+</body>
+</html>
