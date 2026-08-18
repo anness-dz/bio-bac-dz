@@ -5,235 +5,843 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الوحدة 5: دور البروتينات في الاتصال العصبي</title>
     <style>
-        :root {
-            --bg-dark: #0b0f19;
-            --card-bg: rgba(21, 30, 49, 0.85);
-            --accent-blue: #38bdf8;
-            --accent-purple: #a855f7;
-            --accent-orange: #f97316;
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
-            --border-glow: rgba(56, 189, 248, 0.25);
-            --tip-yellow: #f59e0b;
-        }
+    :root {
+        --bg-dark: #0b0f19;
+        --card-bg: rgba(21, 30, 49, 0.85);
+        --accent-blue: #38bdf8;
+        --accent-purple: #a855f7;
+        --accent-orange: #f97316;
+        --text-main: #f8fafc;
+        --text-sub: #94a3b8;
+        --border-glow: rgba(56, 189, 248, 0.25);
+        --tip-yellow: #f59e0b;
+        --bg-main: #0f172a;
+        --card-border: rgba(255, 255, 255, 0.1);
+        --text-color: #f8fafc;
+        --text-muted: #94a3b8;
+    }
 
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
+    /* 1. تصفير شامل للمسافات الخارجية والداخلية */
+    * { 
+        box-sizing: border-box; 
+        margin: 0; 
+        padding: 0; 
+    }
+
+    html, 
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    body { 
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+        background-color: var(--bg-dark); 
+        line-height: 2.1; 
+        color: var(--text-main);
+        min-height: 100vh;
+        position: relative;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* 2. إصلاح الكانفاس ليكون خلفية ثابته ولا يدفع العناصر للأسفل */
+    #cellCanvas {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: -2 !important;
+        pointer-events: none !important;
+    }
+
+    /* 3. تعديل الحاوية الرئيسية لتلتصق بالأعلى مباشرة */
+    .main-wrapper {
+        padding-top: 10px !important;
+        margin-top: 0 !important;
+        width: 100%;
+    }
+
+    /* 4. إزالة أي هامش علوي لشريط الهيدر */
+    .top-navbar {
+        width: 100%;
+        max-width: 950px;
+        margin: 0 auto 20px auto !important;
+        padding: 10px 20px;
+        box-sizing: border-box;
+        position: relative !important;
+        background-color: var(--card-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--card-border);
+        border-radius: 20px !important;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .bg-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .particle {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(15px);
+        opacity: 0.3;
+        animation: floatParticle 18s infinite ease-in-out;
+    }
+
+    .particle:nth-child(1) { 
+        width: 180px; 
+        height: 180px; 
+        background: var(--accent-blue); 
+        top: 10%; 
+        left: 10%; 
+        animation-duration: 20s; 
+    }
+
+    .particle:nth-child(2) { 
+        width: 250px; 
+        height: 250px; 
+        background: var(--accent-purple); 
+        top: 60%; 
+        right: 5%; 
+        animation-duration: 25s; 
+        animation-delay: -5s; 
+    }
+
+    .particle:nth-child(3) { 
+        width: 140px; 
+        height: 140px; 
+        background: var(--accent-orange); 
+        top: 40%; 
+        left: 70%; 
+        animation-duration: 16s; 
+        animation-delay: -2s; 
+    }
+
+    .particle:nth-child(4) { 
+        width: 200px; 
+        height: 200px; 
+        background: #10b981; 
+        bottom: 5%; 
+        left: 20%; 
+        animation-duration: 22s; 
+        animation-delay: -8s; 
+    }
+
+    @keyframes floatParticle {
+        0%, 100% { 
+            transform: translateY(0) translateX(0) scale(1); 
+        }
+        33% { 
+            transform: translateY(-50px) translateX(30px) scale(1.1); 
+        }
+        66% { 
+            transform: translateY(30px) translateX(-40px) scale(0.9); 
+        }
+    }
+
+    .mega-container { 
+        max-width: 950px; 
+        margin: auto; 
+        background: var(--card-bg); 
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        padding: 25px; 
+        border-radius: 24px; 
+        box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
+        border: 1px solid var(--border-glow);
+        position: relative;
+        z-index: 1;
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .top-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .nav-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(168, 85, 247, 0.15));
+        color: var(--accent-blue);
+        text-decoration: none;
+        border-radius: 12px;
+        border: 1px solid var(--border-glow);
+        font-weight: bold;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+    .nav-btn:hover {
+        transform: translateY(-2px);
+        background: var(--accent-blue);
+        color: var(--bg-dark);
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    }
+
+    .unit-hero-img {
+        width: 100%;
+        height: auto;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 18px;
+        margin-bottom: 25px;
+        border: 2px solid #eab308;
+        box-shadow: 0 0 20px rgba(234, 179, 8, 0.5), 
+                    0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+
+
+    h1 { 
+        text-align: center; 
+        background: linear-gradient(135deg, #38bdf8, #a855f7);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: calc(1.6em + 0.8vw); 
+        padding-bottom: 15px; 
+        margin-bottom: 30px; 
+        border-bottom: 2px dashed var(--border-glow);
+        font-weight: 800;
+    }
+
+    h2 { 
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: linear-gradient(90deg, rgba(56, 189, 248, 0.12) 0%, rgba(15, 23, 42, 0.2) 100%); 
+        color: #ffffff; 
+        padding: 12px 18px; 
+        border-radius: 14px; 
+        margin-top: 45px; 
+        margin-bottom: 20px;
+        font-size: calc(1.1em + 0.4vw); 
+        box-shadow: inset 0 0 10px rgba(56, 189, 248, 0.05);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    .num-badge {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+        color: var(--bg-dark);
+        border-radius: 8px;
+        font-size: 0.9em;
+        font-weight: 800;
+        flex-shrink: 0;
+        box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+    }
+
+    h3 { 
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #eab308; 
+        border-right: 4px solid #eab308;
+        padding-right: 12px;
+        margin-top: 25px; 
+        margin-bottom: 12px;
+        font-size: 1.1em; 
+        font-weight: 700;
+        background: rgba(234, 179, 8, 0.05);
+        padding-top: 6px;
+        padding-bottom: 6px;
+        border-radius: 0 8px 8px 0;
+    }
+
+
+
+        .content h4 {
+           color: #c084fc; /* لون بنفسجي فاتح مضيء */
+           margin-top: 20px;
+           margin-bottom: 12px;
+           font-weight: bold;
+           padding: 10px 15px;
+           background-color: rgba(192, 132, 252, 0.08); /* خلفية بنفسجية داكنة وشفافة */
+           border-right: 4px solid #c084fc; /* إطار جانبي بنفسجي */
+           border-radius: 6px;
+        }
+        
+
+    .mechanism-box { 
+        background: rgba(30, 41, 59, 0.6); 
+        border-right: 5px solid var(--accent-blue); 
+        padding: 22px; 
+        margin: 20px 0; 
+        border-radius: 14px; 
+        text-align: justify; 
+        font-size: 1.05em; 
+        border: 1px solid rgba(255,255,255,0.05);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .step-card {
+        padding: 22px;
+        margin-bottom: 20px;
+        border-radius: 16px;
+        border: 1px solid var(--border-color, rgba(255, 255, 255, 0.15));
+        background: var(--card-bg);
+        transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.3s ease;
+    }
+
+    .step-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* إطارات الصور */
+    .img-frame {
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+        margin: 25px auto;
+        border: 2px solid var(--accent-blue);
+        border-radius: 14px;
+        padding: 0 !important;
+        background: rgba(15, 23, 42, 0.7);
+        box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+        overflow: hidden;
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .img-title {
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: var(--accent-blue);
+        margin: 12px 12px 8px 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    .img-frame img {
+        width: 100%;
+        height: auto;
+        max-height: 500px;
+        object-fit: contain;
+        border-radius: 0 0 12px 12px;
+        display: block;
+        margin: 0;
+    }
+
+    .img-frame-container-alt {
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+        margin: 25px auto;
+        border: 2px solid var(--accent-purple);
+        border-radius: 14px;
+        padding: 0 !important;
+        background: rgba(15, 23, 42, 0.7);
+        box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
+        overflow: hidden;
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .img-frame-title-alt {
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: var(--accent-purple);
+        margin: 12px 12px 8px 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+    }
+
+    .img-frame-src-alt {
+        width: 100%;
+        height: auto;
+        max-height: 500px;
+        object-fit: contain;
+        border-radius: 0 0 12px 12px;
+        display: block;
+        margin: 0;
+    }
+
+    .ad-space {
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px dashed var(--accent-blue);
+        border-radius: 12px;
+        padding: 14px;
+        text-align: center;
+        color: var(--text-sub);
+        margin: 30px 0;
+        font-size: 0.85rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .tip-box { 
+        background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05)); 
+        border-right: 6px solid var(--tip-yellow); 
+        padding: 20px; 
+        border-radius: 14px; 
+        margin: 30px 0; 
+        color: #fef3c7;
+        border-top: 1px solid rgba(245, 158, 11, 0.2);
+        transition: background-color 0.3s ease;
+    }
+
+    .tip-title {
+        color: var(--tip-yellow);
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .latin-tech { 
+        direction: ltr; 
+        display: inline-block; 
+        font-family: 'Consolas', monospace; 
+        color: #f43f5e; 
+        font-weight: bold; 
+        background: rgba(255,255,255,0.08); 
+        padding: 2px 8px; 
+        border-radius: 6px; 
+        border: 1px solid rgba(244, 63, 94, 0.2);
+    }
+
+    .bottom-nav {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 2px dashed var(--border-glow);
+    }
+
+    /* ==========================================
+        الوضع النهاري (Light Theme Overrides)
+        ========================================== */
+
+    body.light-theme {
+        --bg-main: #f1f5f9;
+        --card-bg: #ffffff;
+        --card-border: rgba(0, 0, 0, 0.08);
+        --text-color: #0f172a;
+        --text-muted: #334155;
+
+        background-color: var(--bg-main) !important;
+        color: var(--text-color) !important;
+    }
+
+    body.light-theme .particle {
+        opacity: 0.6 !important;
+        filter: blur(30px) !important;
+    }
+
+    body.light-theme .particle:nth-child(1) { background: #0284c7 !important; }
+    body.light-theme .particle:nth-child(2) { background: #9333ea !important; }
+    body.light-theme .particle:nth-child(3) { background: #ea580c !important; }
+    body.light-theme .particle:nth-child(4) { background: #059669 !important; }
+
+    body.light-theme .top-navbar,
+    body.light-theme .mega-container,
+    body.light-theme .step-card,
+    body.light-theme .mechanism-box,
+    body.light-theme .img-frame,
+    body.light-theme .img-frame-container-alt,
+    body.light-theme .ad-space {
+        background-color: var(--card-bg) !important;
+        border-color: var(--card-border) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    body.light-theme p,
+    body.light-theme li,
+    body.light-theme div:not(.inhibitor-card),
+    body.light-theme .step-card,
+    body.light-theme .mechanism-box {
+        color: var(--text-color) !important;
+    }
+
+    body.light-theme h2 {
+        background: linear-gradient(90deg, rgba(56, 189, 248, 0.15) 0%, rgba(241, 245, 249, 0.8) 100%) !important;
+        color: #0f172a !important;
+        border-color: rgba(56, 189, 248, 0.3) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    body.light-theme .num-badge {
+        color: #ffffff !important;
+        box-shadow: 0 2px 8px rgba(56, 189, 248, 0.3) !important;
+    }
+
+
+
+    body.light-theme .latin-tech {
+        color: #e11d48 !important;
+        background: rgba(225, 29, 72, 0.08) !important;
+        border-color: rgba(225, 29, 72, 0.2) !important;
+    }
+
+    body.light-theme .tip-box {
+        background: #fffbeeb3 !important;
+        color: #78350f !important;
+        border-color: rgba(245, 158, 11, 0.3) !important;
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.08) !important;
+    }
+
+    body.light-theme .img-frame {
+        border-color: #0284c7 !important;
+    }
+    body.light-theme .img-title {
+        color: #0284c7 !important;
+        border-bottom-color: rgba(2, 132, 199, 0.2) !important;
+    }
+
+    body.light-theme .img-frame-container-alt {
+        border-color: #9333ea !important;
+    }
+    body.light-theme .img-frame-title-alt {
+        color: #9333ea !important;
+        border-bottom-color: rgba(147, 51, 234, 0.2) !important;
+    }
+
+    .top-nav-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+
+    .top-brand-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+    }
+
+    .top-brand-logo:hover {
+        transform: scale(1.08);
+        filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
+    }
+
+    .top-logo-img {
+        width: 38px;
+        height: 38px;
+        object-fit: contain;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .top-brand-logo:hover .top-logo-img {
+        transform: rotate(10deg); /* ميلان الشعار فقط نحو اليمين */
+    }
+
+    .top-brand-name {
+        font-size: 1.8rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #38bdf8, #818cf8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        white-space: nowrap;
+    }
+
+    .top-navbar .theme-toggle-btn {
+        margin: 0 !important;
+        white-space: nowrap;
+        background: transparent;
+        border: 1px solid var(--card-border);
+        color: var(--text-color);
+        padding: 8px 16px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .top-navbar .theme-toggle-btn:hover {
+        border-color: #38bdf8;
+        transform: translateY(-2px);
+    }
+
+    /* تنسيق بطاقات المثبطات (مُصحح ومستقل تماماً) */
+    .inhibitor-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-top: 15px;
+    }
+
+    .inhibitor-card {
+        background: rgba(15, 23, 42, 0.85);
+        border-radius: 14px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* البطاقة الأولى (التنافسي) - إطار ثابت برتقالي بالكامل */
+    .inhibitor-card.competitive {
+        border: 2px solid #f97316 !important;
+        border-top: 5px solid #f97316 !important;
+    }
+
+    /* البطاقة الثانية (غير التنافسي) - إطار ثابت بنفسجي بالكامل */
+    .inhibitor-card.non-competitive {
+        border: 2px solid #a855f7 !important;
+        border-top: 5px solid #a855f7 !important;
+    }
+
+    .inhibitor-card p {
+        color: #f8fafc !important;
+        margin-bottom: 8px;
+        font-size: 0.98rem;
+    }
+
+    /* ألوان البطاقات والثبات في الوضع النهاري (Light Theme) */
+    body.light-theme .inhibitor-card {
+        background: #ffffff !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+    }
+
+    /* إبقاء الحدود ثابتة وواضحة حتى في الوضع النهاري */
+    body.light-theme .inhibitor-card.competitive {
+        border: 2px solid #f97316 !important;
+        border-top: 5px solid #f97316 !important;
+    }
+
+    body.light-theme .inhibitor-card.non-competitive {
+        border: 2px solid #a855f7 !important;
+        border-top: 5px solid #a855f7 !important;
+    }
+
+    body.light-theme .inhibitor-card p {
+        color: #0f172a !important;
+    }
+
+    /* الاستجابة للشاشات الصغيرة والهواتف */
+    @media (max-width: 600px) { 
+        body { 
             padding: 0; 
         }
-
-        body { 
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background-color: var(--bg-dark); 
-            line-height: 2.1; 
-            padding: 15px 10px; 
-            color: var(--text-main);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(15px);
-            opacity: 0.3;
-            animation: floatParticle 18s infinite ease-in-out;
-        }
-
-        .particle:nth-child(1) { width: 180px; height: 180px; background: var(--accent-blue); top: 10%; left: 10%; animation-duration: 20s; }
-        .particle:nth-child(2) { width: 250px; height: 250px; background: var(--accent-purple); top: 60%; right: 5%; animation-duration: 25s; animation-delay: -5s; }
-        .particle:nth-child(3) { width: 140px; height: 140px; background: var(--accent-orange); top: 40%; left: 70%; animation-duration: 16s; animation-delay: -2s; }
-        .particle:nth-child(4) { width: 200px; height: 200px; background: #10b981; bottom: 5%; left: 20%; animation-duration: 22s; animation-delay: -8s; }
-
-        @keyframes floatParticle {
-            0%, 100% { transform: translateY(0) translateX(0) scale(1); }
-            33% { transform: translateY(-50px) translateX(30px) scale(1.1); }
-            66% { transform: translateY(30px) translateX(-40px) scale(0.9); }
-        }
-
+        
         .mega-container { 
-            max-width: 950px; 
-            margin: auto; 
-            background: var(--card-bg); 
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 25px; 
-            border-radius: 24px; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
-            border: 1px solid var(--border-glow);
-            position: relative;
-            z-index: 1;
-        }
-
-        .top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .nav-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 18px;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(168, 85, 247, 0.15));
-            color: var(--accent-blue);
-            text-decoration: none;
-            border-radius: 12px;
-            border: 1px solid var(--border-glow);
-            font-weight: bold;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
-
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            background: var(--accent-blue);
-            color: var(--bg-dark);
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
-        }
-
-        .unit-hero-img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            border-radius: 18px;
-            margin-bottom: 25px;
-            border: 1px solid var(--border-glow);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-        }
-
-        .mechanism-box { 
-            background: rgba(30, 41, 59, 0.6); 
-            border-right: 5px solid var(--accent-blue); 
-            padding: 22px; 
-            margin: 20px 0; 
-            border-radius: 14px; 
-            text-align: justify; 
-            font-size: 1.05em; 
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .step-card { 
-            border: 1px solid rgba(255,255,255,0.08); 
-            padding: 22px; 
-            margin-bottom: 20px; 
+            padding: 14px; 
             border-radius: 16px; 
-            background: rgba(15, 23, 42, 0.6); 
-            transition: transform 0.2s ease, border-color 0.2s ease;
+        } 
+
+        h1 { 
+            font-size: 1.35em; 
+        } 
+
+        h2 { 
+            font-size: 1.05em; 
+            padding: 10px 12px; 
+            gap: 10px; 
         }
 
-        .step-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--border-glow);
+        .num-badge { 
+            width: 26px; 
+            height: 26px; 
+            font-size: 0.8em; 
         }
 
-        .img-frame {
-            width: 100%;
-            max-width: 800px;
-            height: auto;
-            margin: 25px auto;
-            border: 2px solid var(--accent-blue);
-            border-radius: 16px;
-            padding: 12px;
-            background: rgba(15, 23, 42, 0.7);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
-            overflow: hidden;
+        h3 { 
+            font-size: 0.98em; 
         }
 
-        .img-title {
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--accent-blue);
-            margin-bottom: 10px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+        .unit-hero-img { 
+            height: auto; 
+            border-radius: 12px; 
         }
 
-        .img-frame img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            display: block;
+        .bottom-nav { 
+            flex-direction: column; 
         }
 
-        .ad-space {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px dashed var(--accent-blue);
-            border-radius: 12px;
-            padding: 14px;
-            text-align: center;
-            color: var(--text-sub);
-            margin: 30px 0;
-            font-size: 0.85rem;
+        .nav-btn { 
+            justify-content: center; 
+            width: 100%; 
         }
 
-        .tip-box { 
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05)); 
-            border-right: 6px solid var(--tip-yellow); 
-            padding: 20px; 
-            border-radius: 14px; 
-            margin: 30px 0; 
-            color: #fef3c7;
-            border-top: 1px solid rgba(245, 158, 11, 0.2);
+        .top-navbar {
+            padding: 8px 15px;
+            border-radius: 12px !important;
+            margin-bottom: 15px !important;
         }
 
-        .tip-title {
-            color: var(--tip-yellow);
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
+        .top-brand-logo { 
+            gap: 8px; 
         }
 
-        .latin-tech { 
-            direction: ltr; 
-            display: inline-block; 
-            font-family: 'Consolas', monospace; 
-            color: #f43f5e; 
-            font-weight: bold; 
-            background: rgba(255,255,255,0.08); 
-            padding: 2px 8px; 
-            border-radius: 6px; 
-            border: 1px solid rgba(244, 63, 94, 0.2);
+        .top-logo-img { 
+            width: 30px; 
+            height: 30px; 
         }
 
-        .bottom-nav {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px dashed var(--border-glow);
+        .top-brand-name { 
+            font-size: 1.3rem; 
         }
 
-        @media (max-width: 600px) { 
-            body { padding: 8px 5px; }
-            .mega-container { padding: 16px; border-radius: 16px; } 
-            .bottom-nav { flex-direction: column; }
-            .nav-btn { justify-content: center; width: 100%; }
+        .top-navbar .theme-toggle-btn { 
+            padding: 6px 10px; 
+            font-size: 0.85rem; 
         }
+    }
+
+
+
+
+
+
+
+/* تنسيق الجدول العلمي والخطوط الفاصلة */
+    .science-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: rgba(15, 23, 42, 0.7);
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .science-table th, 
+    .science-table td {
+        padding: 14px 18px;
+        text-align: right;
+        border: 1px solid rgba(255, 255, 255, 0.12); /* خطوط واضحة بين الخلايا */
+        font-size: 0.98rem;
+    }
+
+    .science-table th {
+        background: rgba(56, 189, 248, 0.15);
+        color: #38bdf8;
+        font-weight: 700;
+        border-bottom: 2px solid rgba(56, 189, 248, 0.4);
+    }
+
+    .science-table tbody tr:nth-child(even) {
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .science-table tbody tr:hover {
+        background: rgba(56, 189, 248, 0.05);
+    }
+
+    /* توافق الجدول مع الوضع النهاري (Light Theme) */
+    body.light-theme .science-table {
+        background: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.15) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+    }
+
+    body.light-theme .science-table th, 
+    body.light-theme .science-table td {
+        border: 1px solid rgba(0, 0, 0, 0.12) !important;
+        color: #0f172a !important;
+    }
+
+    body.light-theme .science-table th {
+        background: rgba(2, 132, 199, 0.1) !important;
+        color: #0284c7 !important;
+        border-bottom: 2px solid rgba(2, 132, 199, 0.3) !important;
+    }
+
+    body.light-theme .science-table tbody tr:nth-child(even) {
+        background: rgba(0, 0, 0, 0.015) !important;
+    }
+
+    body.light-theme .science-table tbody tr:hover {
+        background: rgba(2, 132, 199, 0.04) !important;
+    }
+
+
+
+
+
+
+/* 1. تحديث المتغيرات العامة للتحكم بالألوان بثلاسة */
+    :root {
+        --card-bg-dark: rgba(15, 23, 42, 0.75); /* خلفية داكنة شفافة وناعمة وليست سوداء صلبة */
+        --card-bg-light: #ffffff;             /* خلفية بيضاء نقية للوضع النهاري */
+    }
+
+    /* 2. تطبيق المتغيرات على الإطارات والحاويات لتتخلص من الأسود الثابت */
+    .mega-container,
+    .step-card,
+    .mechanism-box,
+    .img-frame,
+    .img-frame-container-alt,
+    .inhibitor-card {
+        background-color: var(--card-bg-dark) !important;
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* 3. التكيف تلقائياً مع الوضع النهاري (Light Theme) */
+    body.light-theme .mega-container,
+    body.light-theme .step-card,
+    body.light-theme .mechanism-box,
+    body.light-theme .img-frame,
+    body.light-theme .img-frame-container-alt,
+    body.light-theme .inhibitor-card {
+        background-color: var(--card-bg-light) !important;
+    }
+
+
+
+
+/* إزالة اللون الأسود نهائياً من خلفية إطارات الصور في الوضع النهاري */
+    body.light-theme .img-frame,
+    body.light-theme [style*="background: rgba(15, 23, 42"] {
+        background-color: #ffffff !important;
+        background: #ffffff !important;
+    }
     </style>
 
 <link rel="stylesheet" href="style.css">
     
 </head>
 <body>
+
+<canvas id="cellCanvas"></canvas>
+
+
+
+    <div class="main-wrapper">
+        <header class="top-navbar">
+            <div class="top-nav-container">
+                <a href="index.html" class="top-brand-logo">
+                    <img src="favicon.png" alt="شعار" class="top-logo-img" onerror="this.onerror=null; this.src='favicon.ico';">
+                    <span class="top-brand-name">bio-bac-dz</span>
+                </a>
+
+                <button class="theme-toggle-btn" onclick="toggleTheme()">
+                    <span id="theme-icon">🌙</span>
+                    <span id="theme-text">الوضع الليلي</span>
+                </button>
+            </div>
+        </header>
+
+
+
+
+
+
 
 <div class="bg-animation">
     <div class="particle"></div>
@@ -260,181 +868,183 @@
 
 
     <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">1. مفهوم كمون الراحة والاستقطاب</h2>
+        <h2><span class="num-badge">1</span> مفهوم كمون الراحة والاستقطاب</h2>
         <div class="mechanism-box">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. القياس الكهربائي والقطبية الغشائية:</h4>
-            يُقاس كمون الراحة بوضع مجهرين؛ أحدهما على السطح والآخر في المقطع، حيث يسجل جهاز الأوسيلوسكوب فرق جهد ثابتاً يقدر بـ <span class="latin-tech">-70 mV</span>. يعكس هذا الرقم حالة الاستقطاب، حيث يكون السطح الخارجي موجباً والداخلي سالباً، وهي الحالة الأساسية لليفة العصبية الحية في غياب أي تنبيه خارجي فعال.
-            <h4 style="color: var(--accent-purple); margin: 15px 0 8px 0;">ب. التوزع غير المتساوي للشوارد:</h4>
-            يعود كمون الراحة إلى اختلاف تركيز الشوارد بين الوسطين؛ حيث يتركز الصوديوم Na⁺ والكلور Cl⁻ في الخارج، بينما يتركز البوتاسيوم K⁺ والبروتينات السالبة في الداخل. هذا التباين هو الذي يخلق تدرج التركيز (المنحدر الشاردي) الذي يسعى دائماً لتحريك الشوارد عبر الغشاء.
+            <h3>أ. القياس الكهربائي والقطبية الغشائية:</h3>
+            يُقاس <span style="color: var(--accent-blue); font-weight: bold;">كمون الراحة</span> بتسجيل الفرق الكهربائي بواسطة <span style="color: var(--accent-purple); font-weight: bold;">مسريين (إلكترودين)</span>؛ أحدهما يوضع على السطح الخارجي للغشاء الهيولي والآخر في الداخل، حيث يسجل جهاز <span style="color: var(--accent-orange); font-weight: bold;">الأوسيلوسكوب</span> فرق جهد ثابتاً يقدر بـ <span class="latin-tech">-70 mV</span>. يعكس هذا الرقم حالة <span style="color: var(--accent-purple); font-weight: bold;">الاستقطاب</span>؛ حيث يكون السطح الخارجي موجباً والداخلي سالباً، وهي الحالة الكهربائية لليفة العصبية في غياب أي تنبيه.
+            <h3>ب. التوزع غير المتساوي للشوارد أساس الاستقطاب:</h3>
+            يعود سبب ثبات كمون الراحة إلى الاختلاف في تركيز الشوارد عبر <span style="color: var(--accent-blue); font-weight: bold;">الغشاء الهيولي</span>؛ حيث تتركز شوارد الصوديوم <span class="latin-tech">Na⁺</span> بكثرة في الوسط الخارجي، بينما تتركز شوارد البوتاسيوم <span class="latin-tech">K⁺</span> بكثرة في الوسط الداخلي (الهيولى)، وهذا التباين يخلق <span style="color: var(--accent-orange); font-weight: bold;">تدرج تركيز</span> شاردي لازماً للحفاظ على ظاهرة الاستقطاب.
         </div>
     </section>
 
     <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">2. القنوات المفتوحة باستمرار (قنوات الميز)</h2>
+        <h2><span class="num-badge">2</span> دور قنوات الميز (القنوات المفتوحة باستمرار)</h2>
         <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. النفاذية الانتقائية لشوارد البوتاسيوم:</h4>
-            يحتوي الغشاء على بروتينات تسمى قنوات الميز تسمح بمرور الشوارد حسب تدرج التركيز. تمتاز هذه القنوات بنفاذية عالية جداً لـ <span class="latin-tech">K⁺</span> مقارنة بـ <span class="latin-tech">Na⁺</span>، مما يؤدي لخروج مستمر للشحنات الموجبة نحو الخارج، وهو السبب المباشر في جعل الوسط الداخلي سالباً (ظهور الاستقطاب).
-            <h4 style="color: var(--accent-purple); margin: 15px 0 8px 0;">ب. الحفاظ على التوازن الكيميائي الكهربائي:</h4>
-            رغم خروج <span class="latin-tech">K⁺</span> المستمر، لا يتفرغ العصبون من شحناته بفضل قوى التجاذب الكهربائي التي تمنع خروج المزيد من الموجب نحو الخارج المشبع أصلاً بالشحنات الموجبة. هذا التوازن الدقيق بين تدرج التركيز والتدرج الكهربائي هو ما يثبت قيمة كمون الراحة عند القيمة المعلومة.
+            <h3>أ. ما هي قنوات الميز؟</h3>
+            هي عبارة عن <span style="color: var(--accent-blue); font-weight: bold;">بروتينات غشائية</span> توجد مفتوحة باستمرار على مستوى <span style="color: var(--accent-blue); font-weight: bold;">الغشاء الهيولي</span>، وتسمح بمرور الشوارد وفق <span style="color: var(--accent-orange); font-weight: bold;">تدرج التركيز</span>. كما أنها <span style="color: var(--accent-purple); font-weight: bold;">قنوات نوعية</span>؛ أي أن كل قناة مخصصة لنوع معين من الشوارد.
+            <h3>ب. الناقلية والنفاذية الانتقائية للشوارد:</h3>
+            تتميز هذه القنوات بوجود تفاوت في <span style="color: var(--accent-blue); font-weight: bold;">الناقلية</span>؛ حيث تكون <span style="color: var(--accent-purple); font-weight: bold;">ناقلية شوارد البوتاسيوم</span> <span class="latin-tech">K⁺</span> عبر الغشاء أكبر بكثير مقارنة بناقلية شوارد الصوديوم <span class="latin-tech">Na⁺</span>.
+            <h3>ج. التفسير العلمي لثبات كمون الراحة:</h3>
+            يؤدي هذا الاختلاف في الناقلية إلى <span style="color: var(--accent-orange); font-weight: bold;">الخروج المستمر</span> لشوارد <span class="latin-tech">K⁺</span> نحو الوسط الخارجي، وهو ما ينتج عنه جعل السطح الخارجي موجباً والداخلي سالباً، وبالتالي <span style="color: var(--accent-blue); font-weight: bold;">ثبات كمون الراحة</span> عند القيمة المقررة.
         </div>
     </section>
 
     <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">3. دور مضخة صوديوم-بوتاسيوم (ATPase)</h2>
+        <h2><span class="num-badge">3</span> دور مضخة صوديوم-بوتاسيوم (ATPase)</h2>
         <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. النقل النشط واستهلاك الطاقة:</h4>
-            للحفاظ على تدرج التراكيز ومنع تلاشيه، تتدخل المضخة كبروتين غشائي ينقل الشوارد <span style="color: var(--accent-orange); font-weight: bold;">عكس تدرج التركيز</span>. تستهلك هذه العملية طاقة <span class="latin-tech">ATP</span> لطرد 3 شوارد صوديوم للخارج وإدخال شاردتين بوتاسيوم للداخل، مما يضمن بقاء الخلية في حالة استقطاب دائمة وجاهزية قصوى.
-            <h4 style="color: var(--accent-purple); margin: 15px 0 8px 0;">ب. الطبيعة الكهروموجبة للمضخة:</h4>
-            بما أن المضخة تخرج 3 شحنات موجبة وتدخل 2 فقط، فهي تساهم بشكل مباشر في جعل الخارج أكثر إيجابية من الداخل. هذا الفرق العددي في الشوارد المنقولة يعزز من قيمة سالبية الداخل، مما يجعل المضخة ركيزة أساسية لا غنى عنها في استقرار النشاط الكهربائي للعصبون.
+            <h3>أ. تعريف المضخة وطبيعتها:</h3>
+            هي عبارة عن <span style="color: var(--accent-blue); font-weight: bold;">بروتين غشائي</span> يتدخل لضمان استقرار <span style="color: var(--accent-blue); font-weight: bold;">كمون الراحة</span> من خلال نقل الشوارد <span style="color: var(--accent-orange); font-weight: bold;">عكس تدرج التركيز</span> (أي من الوسط ذو التركيز المنخفض إلى الوسط ذو التركيز المرتفع)، وهي عملية تستلزم استهلاك طاقة على شكل <span class="latin-tech">ATP</span>.
+            <h3>ب. خطوات عمل المضخة:</h3>
+            تتم عملية النقل النشط وفق الخطوات التالية:
+            <ul>
+                <li>ارتباط 3 شوارد <span class="latin-tech">Na⁺</span> من الوسط الداخلي بالمواقع الخاصة بها على المضخة.</li>
+                <li>إماهة جزيئة <span class="latin-tech">ATP</span> وتحرير طاقة تؤدي إلى تغيير الفراغ البنيوي للمضخة.</li>
+                <li>إخراج الشوارد الثلاثة <span class="latin-tech">Na⁺</span> نحو الوسط الخارجي.</li>
+                <li>ارتباط شاردتي بوتاسيوم <span class="latin-tech">K⁺</span> من الوسط الخارجي بالمضخة، ثم عودتها إلى شكلها الأصلي لإدخالهما نحو الوسط الداخلي.</li>
+            </ul>
+            <h3>ج. مساهمة المضخة في ثبات كمون الراحة:</h3>
+            بسبب إخراج 3 شوارد موجبة <span class="latin-tech">Na⁺</span> وإدخال شاردتين موجبتين فقط <span class="latin-tech">K⁺</span> في كل دورة، تحدث خسارة صافية لشحنة موجبة في الداخل (أو زيادة الإيجابية في الخارج)، مما يساهم بشكل أساسي في الحفاظ على <span style="color: var(--accent-purple); font-weight: bold;">حالة الاستقطاب</span> وثبات قيمة كمون الراحة.
         </div>
     </section>
 
     <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">4. كمون العمل: زوال الاستقطاب</h2>
+        <h2><span class="num-badge">4</span> كمون العمل والقنوات الفولطية (المرتبطة بتغير الجهد)</h2>
         <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. انفتاح القنوات الفولطية للصوديوم:</h4>
-            عند حدوث تنبيه يصل للعتبة، تفتح القنوات المرتبطة بالكهرباء الخاصة بـ <span class="latin-tech">Na⁺</span>، فيتدفق الصوديوم بقوة نحو الداخل حسب تدرج التركيز والجذب الكهربائي. هذا الدخول المفاجئ للشحنات الموجبة يقلب القطبية، فيصبح الداخل موجباً والخارج سالباً، وهو ما نسجله كقمة في منحنى كمون العمل.
+            <h3>أ. تأثير التنبيه الفعال وغير الفعال وتسجيل كمون العمل:</h3>
+            عند تطبيق <span style="color: #e74c3c; font-weight: bold;">تنبيه غير فعال</span> (أقل من العتبة)، فإنه <span style="color: #e74c3c; font-weight: bold;">لا يؤثر</span> على قيمة كمون الراحة ولا يولد كمون عمل بل يُسجل تغير طفيف يزول بسرعة. أما عند تطبيق <span style="color: #f39c12; font-weight: bold;">تنبيه فعال</span> (يبلغ أو يتجاوز عتبة التنبيه) على ليفة عصبية في حالة راحة، يُسجل على جهاز <span style="color: #9b59b6; font-weight: bold;">الأوسيلوسكوب</span> تغير مفاجئ وسريع ومؤقت في كمون الغشاء يُعرف بـ <span style="color: #2ecc71; font-weight: bold;">كمون العمل</span>، ويمر عبر مراحل متسلسلة.
+            
+            <h3>ب. خصائص ودور القنوات الفولطية (المرتبطة بتغير الجهد):</h3>
+            تتميز هذه القنوات بكونها بروتينات غشائية <span style="color: #3498db; font-weight: bold;">نوعية</span> (كل قناة مخصصة لنوع معين من الشوارد)، وتتوزع هذه القنوات <span style="color: #f39c12; font-weight: bold;">على طول الليف العصبي</span>. وهي تتفتح أو تنغلق استجابةً لـ <span style="color: #e74c3c; font-weight: bold;">التغير في قيمة كمون الغشاء</span>، وتنقسم إلى نوعين أساسيين:
+            <ul>
+                <li><span style="color: #3498db; font-weight: bold;">قنوات Na⁺ الفولطية</span>: مسؤولة عن تدفق الصوديوم نحو الداخل أثناء زوال الاستقطاب.</li>
+                <li><span style="color: #2ecc71; font-weight: bold;">قنوات K⁺ الفولطية</span>: مسؤولة عن خروج البوتاسيوم نحو الخارج أثناء عودة الاستقطاب.</li>
+            </ul>
+
+            <h3>ج. مراحل تسجيل كمون العمل:</h3>
+            <ul>
+                <li><span style="color: #e74c3c; font-weight: bold;">1. زوال الاستقطاب (إزالة الاستقطاب):</span> عند بلوغ عتبة التنبيه، تنفتح بسرعة فائقة <span style="color: #3498db; font-weight: bold;">قنوات Na⁺ الفولطية</span>، مما يسمح بدخول مكثف وسريع لشوارد Na⁺ نحو الوسط الداخلي وفق <span style="color: #f39c12; font-weight: bold;">تدرج التركيز</span>، فيتجلى ذلك بانعكاس الاستقطاب ليصبح الداخل موجباً (+30 mV) والخارج سالباً.</li>
+                <li><span style="color: #f39c12; font-weight: bold;">2. عودة الاستقطاب:</span> بعد بلوغ الذروة، تنغلق قنوات Na⁺ الفولطية تلقائياً (تصبح غير منفتحة مؤقتاً)، وفي نفس الوقت تنفتح <span style="color: #2ecc71; font-weight: bold;">قنوات K⁺ الفولطية</span>، مما يؤدي إلى خروج مكثف لشوارد K⁺ نحو الوسط الخارجي، فيفقد الوسط الداخلي شحناته الموجبة ويعود للقطبية السالبة.</li>
+                <li><span style="color: #9b59b6; font-weight: bold;">3. فرط الاستقطاب (جزء من فترة الجموح):</span> نظراً للبطء في إغلاق <span style="color: #2ecc71; font-weight: bold;">قنوات K⁺ الفولطية</span>، تستمر شوارد K⁺ في الخروج لفترة إضافية، مما يجعل الوسط الداخلي سالباً أكثر من قيمة كمون الراحة (أقل من -70 mV مؤقتاً).</li>
+                <li><span style="color: #2ecc71; font-weight: bold;">4. العودة إلى كمون الراحة:</span> في المرحلة الأخيرة، وبعد انغلاق قنوات K⁺ الفولطية تماماً، تتدخل آليات الراحة الأساسية والمتمثلة في <span style="color: #3498db; font-weight: bold;">قنوات الميز (المفتوحة باستمرار)</span> و<span style="color: #f39c12; font-weight: bold;">مضخة الصوديوم-بوتاسيوم (ATPase)</span> لضمان إعادة توزيع الشوارد وإرجاع كمون الغشاء بصفة نهائية إلى قيمته الأصلية وثبات <span style="color: #9b59b6; font-weight: bold;">كمون الراحة (-70 mV)</span> استعداداً لتنبيه جديد.</li>
+            </ul>
         </div>
     </section>
 
     <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">5. كمون العمل: عودة الاستقطاب وفرطه</h2>
+        <h2><span class="num-badge">5</span> الرسالة العصبية على مستوى المشابك (التبليغ المشبكي)</h2>
         <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. خروج البوتاسيوم المتأخر:</h4>
-            بعد جزء من الثانية، تنغلق قنوات الصوديوم وتفتح <span style="color: var(--accent-orange); font-weight: bold;">القنوات الفولطية للبوتاسيوم</span>، فيخرج <span class="latin-tech">K⁺</span> بسرعة نحو الخارج لاستعادة التوازن الموجب في الخارج. هذا الخروج يؤدي لعودة منحنى الأوسيلوسكوب نحو القيمة السالبة الأصلية (عودة الاستقطاب).
-            <h4 style="color: var(--accent-purple); margin: 15px 0 8px 0;">ب. ظاهرة فرط الاستقطاب:</h4>
-            بسبب تأخر انغلاق قنوات <span class="latin-tech">K⁺</span> الفولطية، تستمر الشوارد في الخروج لفترة أطول مما يجب، مما يجعل الجهد ينزل تحت <span class="latin-tech">-70 mV</span>. تسمى هذه الحالة فرط الاستقطاب، والتي تنتهي بمجرد انغلاق القنوات وتدخل المضخة لإعادة ضبط التراكيز الشاردية إلى حالتها الأصلية قبل التنبيه.
+            <h3>أ. مفهوم المشبك:</h3>
+            المشبك هو منطقة اتصال وظيفي بين <span style="color: #e74c3c; font-weight: bold;">الخلية قبل المشبكية</span> (التي تحتوي على حويصلات مشبكية) و<span style="color: #2ecc71; font-weight: bold;">الخلية بعد مشبكية</span> (التي تحتوي على مستقبلات غشائية). تفصل بينهما "الشق المشبكي" الذي لا تعبره السيالة الكهربائية، بل تتحول إلى <span style="color: #f39c12; font-weight: bold;">رسالة كيميائية</span>.
+
+            <h3>ب. مراحل التبليغ المشبكي:</h3>
+            تتم العملية وفق الخطوات الدقيقة التالية:
+            <ul>
+                <li><span style="color: #9b59b6; font-weight: bold;">وصول كمون العمل:</span> يصل كمون العمل إلى النهاية العصبية قبل المشبكية.</li>
+                <li><span style="color: #3498db; font-weight: bold;">فتح قنوات الكالسيوم:</span> يؤدي تغير الجهد إلى انفتاح <span style="color: #3498db; font-weight: bold;">قنوات الكالسيوم الفولطية</span>، مما يسمح بدخول شوارد الكالسيوم <span style="color: #e74c3c; font-weight: bold;">Ca²⁺</span> نحو النهاية قبل المشبكية.</li>
+                <li><span style="color: #f39c12; font-weight: bold;">هجرة الحويصلات:</span> يؤدي دخول الكالسيوم إلى هجرة الحويصلات المشبكية نحو الغشاء قبل المشبكي، فتندمج معه وتطرح <span style="color: #2ecc71; font-weight: bold;">الوسيط الكيميائي العصبي</span> (مثل الأستيل كولين) في الشق المشبكي عبر ظاهرة الإطراح الخلوي.</li>
+                <li><span style="color: #9b59b6; font-weight: bold;">تثبت الوسيط العصبي:</span> ينتشر الوسيط العصبي في الشق المشبكي ويتثبت على <span style="color: #3498db; font-weight: bold;">مستقبلات غشائية نوعية</span> موجودة على غشاء الخلية بعد المشبكية.</li>
+                <li><span style="color: #e74c3c; font-weight: bold;">استجابة الخلية بعد مشبكية:</span> يؤدي تثبت الوسيط العصبي إلى انفتاح <span style="color: #f39c12; font-weight: bold;">قنوات كيميائية</span>، مما يؤدي إلى تغير في كمون غشاء الخلية بعد المشبكية (توليد كمون بعد مشبكي).</li>
+            </ul>
+
+            <h3>ج. مصير الوسيط العصبي (الإنهاء المشبكي):</h3>
+            لضمان عدم استمرار التنبيه، يتم إبطال مفعول الوسيط العصبي (مثلاً بفضل <span style="color: #e74c3c; font-weight: bold;">إنزيم أستيل كولين إستراز</span>) الذي يفكك الأستيل كولين إلى كولين وحمض الخل، ليُعاد امتصاص الكولين وتُصنع منه جزيئات أستيل كولين جديدة، مما يضمن <span style="color: #2ecc71; font-weight: bold;">زوال التنبيه</span>.
         </div>
     </section>
 
     <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">6. انتشار السيالة العصبية في الألياف</h2>
+        <h2><span class="num-badge">6</span> أنواع المشابك وتأثيرها (مشابك منبهة ومشابك مثبطة) ودور الكمونات البعد مشبكية</h2>
         <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. التيارات المحلية والانتقال الوثبي:</h4>
-            في الألياف غير النخاعينية، تنتقل السيالة عبر تيارات محلية زاحفة، بينما في الألياف <span style="color: var(--accent-orange); font-weight: bold;">النخاعينية</span>، تقفز السيالة بين اختناقات رانفييه. هذا الانتقال الوثبي يزيد من سرعة الرسالة بشكل مذهل، مما يسمح للعضوية بالاستجابة السريعة جداً للمؤثرات البيئية.
+            <h3>أ. المشبك المنبه وتوليد وتسجيل كمون بعد مشبكي منبه (PPSE):</h3>
+            يؤدي إلى <span style="color: #f39c12; font-weight: bold;">رفع احتمالية</span> توليد كمون عمل في الخلية بعد المشبكية عبر إحداث <span style="color: #2ecc71; font-weight: bold;">كمون بعد مشبكي منبه</span>:
+            <ul>
+                <li><strong><span style="color: #3498db; font-weight: bold;">الآلية:</span></strong> <span style="color: #e74c3c; font-weight: bold;">تثبت الوسيط العصبي المنبه</span> على <span style="color: #9b59b6; font-weight: bold;">مستقبلاته النوعية</span> يفتح <span style="color: #f39c12; font-weight: bold;">قنوات كيميائية</span> خاصة بشوارد <span style="color: #3498db; font-weight: bold;">Na⁺</span>.</li>
+                <li><strong><span style="color: #2ecc71; font-weight: bold;">النتيجة</span> و<span style="color: #f39c12; font-weight: bold;">الدور</span>:</strong> دخول Na⁺ يسبب <span style="color: #e74c3c; font-weight: bold;">زوال استقطاب موضعي</span> ينتشر نحو <span style="color: #9b59b6; font-weight: bold;">المنطقة المجاورة</span> (منطقة الاستقبال)، وإذا بلغ مجموع هذه الكمونات <span style="color: #e74c3c; font-weight: bold;">عتبة التنبيه</span>، فإنه يؤدي إلى <span style="color: #2ecc71; font-weight: bold;">توليد كمون عمل جديد</span> و<span style="color: #f39c12; font-weight: bold;">انتقال الرسالة العصبية</span>.</li>
+            </ul>
+
+            <h3>ب. المشبك المثبط وتوليد وتسجيل كمون بعد مشبكي مثبط (PPSI):</h3>
+            يؤدي إلى <span style="color: #f39c12; font-weight: bold;">خفض احتمالية</span> توليد كمون عمل عبر إحداث <span style="color: #9b59b6; font-weight: bold;">كمون بعد مشبكي مثبط</span>:
+            <ul>
+                <li><strong><span style="color: #3498db; font-weight: bold;">الآلية:</span></strong> <span style="color: #e74c3c; font-weight: bold;">تثبت الوسيط العصبي المثبط</span> (مثل <span style="color: #f39c12; font-weight: bold;">GABA</span>) على <span style="color: #9b59b6; font-weight: bold;">مستقبلاته النوعية</span> يفتح <span style="color: #f39c12; font-weight: bold;">قنوات كيميائية</span> خاصة بشوارد الكلور (<span style="color: #3498db; font-weight: bold;">Cl⁻</span>).</li>
+                <li><strong><span style="color: #2ecc71; font-weight: bold;">النتيجة</span> و<span style="color: #f39c12; font-weight: bold;">الدور</span>:</strong> دخول شوارد الكلور السالبة إلى الداخل <span style="color: #e74c3c; font-weight: bold;">يزيد من سالبية الوسط الداخلي</span> للخلية بعد المشبكية، مما يسبب <span style="color: #3498db; font-weight: bold;">فرط استقطاب موضعي</span>، وهذا <span style="color: #f39c12; font-weight: bold;">يبعد كمون الغشاء عن عتبة التنبيه</span> و<span style="color: #e74c3c; font-weight: bold;">يُبطِل أو يمنع</span> توليد كمون العمل (<span style="color: #9b59b6; font-weight: bold;">تثبيط الرسالة العصبية</span>).</li>
+            </ul>
         </div>
     </section>
 
     <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">7. التشفير الكهربائي لشدة التنبيه</h2>
+        <h2><span class="num-badge">7</span> الإدماج العصبي (الجمع الفضائي والجمع الزماني) وجمع الكمونات الموضعية</h2>
         <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. ثبات السعة وتغير التواتر:</h4>
-            لا تتغير سعة كمون العمل (الارتفاع) مهما زادت شدة التنبيه، بل يترجم العصبون شدة التنبيه بزيادة <span style="color: var(--accent-orange); font-weight: bold;">تواتر كمونات العمل</span> (عددها في الثانية). التنبيه القوي ينتج "قطاراً" من الكمونات المتقاربة، بينما التنبيه الضعيف ينتج كمونات متباعدة زمنياً.
+            <h3>أ. مفهوم الإدماج العصبي وجمع الكمونات الموضعية:</h3>
+            هو العملية التي يقوم بها <span style="color: #3498db; font-weight: bold;">العصبون المحرك</span> (الخلية بعد مشبكية) والتي تعتمد أساساً على <span style="color: #e74c3c; font-weight: bold;">جمع الكمونات الموضعية</span> (أي الكمونات البعد مشبكية المنبهة <span style="color: #2ecc71; font-weight: bold;">PPSE</span> المزيلة للاستقطاب، والكمونات البعد مشبكية المثبطة <span style="color: #9b59b6; font-weight: bold;">PPSI</span> المفرطة للاستقطاب) الواردة إليه، ليقرر في النهاية إما <span style="color: #f39c12; font-weight: bold;">توليد كمون عمل</span> أو عدم توليده.
+
+            <h3>ب. الجمع الفضائي (المكاني):</h3>
+            <ul>
+                <li><strong><span style="color: #3498db; font-weight: bold;">الآلية:</span></strong> يتميز بتنبيه عدة <span style="color: #f39c12; font-weight: bold;">مشابك مختلفة في نفس الوقت</span> وبشكل متزامن على نفس العصبون المحرك (تكون متباعدة مكانياً على الغشاء).</li>
+                <li><strong><span style="color: #2ecc71; font-weight: bold;">النتيجة</span> و<span style="color: #f39c12; font-weight: bold;">الدور</span>:</strong> تتداخل وتجتمع هذه الكمونات الموضعية معاً في منطقة <span style="color: #9b59b6; font-weight: bold;">القطعة الابتدائية</span> لليف العصبي، فإذا بلغ مجموعها <span style="color: #e74c3c; font-weight: bold;">عتبة التنبيه</span>، يتم <span style="color: #2ecc71; font-weight: bold;">توليد كمون عمل</span> وانتقال الرسالة العصبية، أما إذا كانت المحصلة الإجمالية <span style="color: #e74c3c; font-weight: bold;">أقل من عتبة التنبيه</span>، فإنه <span style="color: #e74c3c; font-weight: bold;">لا يُولد كمون عمل</span> ولا تنتقل الرسالة العصبية.</li>
+            </ul>
+
+            <h3>ج. الجمع الزماني:</h3>
+            <ul>
+                <li><strong><span style="color: #3498db; font-weight: bold;">الآلية:</span></strong> يتميز بتنبيه <span style="color: #f39c12; font-weight: bold;">نفس المشبك عدة مرات بتواترات متتالية</span> وسريعة (بفارق زمني قصير جداً بين تنبيه وآخر).</li>
+                <li><strong><span style="color: #2ecc71; font-weight: bold;">النتيجة</span> و<span style="color: #f39c12; font-weight: bold;">الدور</span>:</strong> نظراً لتقارب التنبيهات زمنياً وقبل زوال أثر الكمون الموضعي السابق، يحدث <span style="color: #e74c3c; font-weight: bold;">تراكم للكمونات الموضعية</span> في منطقة القطعة الابتدائية، فإذا تجاوزت الحصيلة <span style="color: #e74c3c; font-weight: bold;">عتبة التنبيه</span>، يتم <span style="color: #2ecc71; font-weight: bold;">توليد كمون عمل</span> جديد، أما إذا كانت المحصلة النهائية <span style="color: #e74c3c; font-weight: bold;">أقل من عتبة التنبيه</span>، فلا يُولد أي كمون عمل.</li>
+            </ul>
         </div>
     </section>
 
     <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">8. بنية المشبك وآلية النقل</h2>
+        <h2><span class="num-badge">8</span> الإحساس بالألم، دور المسكنات (الإنكيفالين والمورفين)، ومخاطر الإدمان</h2>
         <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. الحويصلات والمبلغ الكيميائي:</h4>
-            يتميز الغشاء قبل مشبكي بوجود حويصلات تحتوي على وسائط كيميائية (مثل الأستيل كولين). عند وصول موجة زوال الاستقطاب، تتحرر هذه الوسائط في الشق المشبكي، محولة الرسالة من طبيعة كهربائية إلى طبيعة كيميائية قادرة على عبور الفراغ الفاصل بين العصبونات.
-        </div>
+            <h3>أ. مسار نقل رسالة الألم في الحالة العادية (كيف نشعر بالألم؟):</h3>
+            <ul>
+                <li><strong><span style="color: #3498db; font-weight: bold;">الآلية:</span></strong> عندما تتعرض لجرح أو ضربة، تنتشر رسالة عصبية مؤلمة عبر الأعصاب لتصل إلى النخاع الشوكي. على مستوى المشبك العصبي، تقوم النهاية العصبية للعصبون الأول (القبل مشبكي) بإطلاق وسيط عصبي كيميائي خاص بنقل الألم يُسمى <span style="color: #e74c3c; font-weight: bold;">المادة P (Substance P)</span>. تسبح هذه المادة في الشق المشبكي وتتثبت على مستقبلاتها الخاصة الموجودة في العصبون الموالي (البعد مشبكي).</li>
+                <li><strong><span style="color: #2ecc71; font-weight: bold;">النتيجة</span> و<span style="color: #f39c12; font-weight: bold;">الدور</span>:</strong> هذا التثبت يولد كمونات بعد مشبكية منبهة (<span style="color: #2ecc71; font-weight: bold;">PPSE</span>) تجعل الرسالة العصبية تواصل طريقها نحو الدماغ، فيقوم الدماغ بترجمتها مباشرة ونشعر بالألم.</li>
+            </ul>
 
-        <div class="img-frame">
-            <div class="img-title">بنية المشبك العصبي</div>
-            <img src="image2/synapse-structure.jpg" alt="بنية المشبك العصبي" onerror="this.src='https://via.placeholder.com/800x400/0b0f19/38bdf8?text=%D8%A8%D9%86%D9%8A%D8%A9+%D8%A7%D9%84%D9%85%D8%B4%D8%A8%D9%83+%D8%A7%D9%84%D8%B9%D8%B5%D8%A8%D9%8A'">
+            <h3>ب. دور المسكن الطبيعي (الإنكيفالين) واستخداماته:</h3>
+            <ul>
+                <li><strong><span style="color: #3498db; font-weight: bold;">الآلية:</span></strong> يمتلك الجسم داخلياً جزيئاً مسكناً طبيعياً تُفرزه بعض الخلايا العصبية لتقليل الألم يُدعى <span style="color: #9b59b6; font-weight: bold;">الإنكيفالين (Enkephalin)</span>. يتثبت الإنكيفالين بصفة مؤقتة وطبيعية على <span style="color: #9b59b6; font-weight: bold;">مستقبلات أفيونية غشائية نوعية</span> متواجدة على غشاء العصبونات الناقلة للألم.</li>
+                <li><strong><span style="color: #2ecc71; font-weight: bold;">النتيجة</span> و<span style="color: #f39c12; font-weight: bold;">الدور</span>:</strong> 
+                    بمجرد ارتباطه، يثبط العصبون القبل مشبكي عبر منع دخول شوارد الكالسيوم، مما يمنع تحرير <span style="color: #e74c3c; font-weight: bold;">المادة P</span> مؤقتاً لتخفيف الألم وتسكينه بشكل طبيعي دون إحداث أي ضرر.
+                </li>
+            </ul>
+
+            <h3>ج. دور المورفين (المسكن الخارجي) والاستخدامات الطبية:</h3>
+            <ul>
+                <li><strong><span style="color: #3498db; font-weight: bold;">الآلية:</span></strong> <span style="color: #f39c12; font-weight: bold;">المورفين</span> هو مادة مسكنة قوية جداً تُستخلص من نبات <span style="color: #f39c12; font-weight: bold;">الخشخاش</span>، وله بنية فراغية مشابهة تماماً للإنكيفالين، مما يجعله قادراً على الارتباط بنفس المستقبلات الأفيونية وبقوة أكبر.</li>
+                <li><strong><span style="color: #2ecc71; font-weight: bold;">النتيجة</span> و<span style="color: #f39c12; font-weight: bold;">الدور</span>:</strong> 
+                    يُستخدم طبياً لتسكين الآلام الحادة والخطيرة (مثل تسكين آلام المرضى بعد <span style="color: #f39c12; font-weight: bold;">العمليات الجراحية الكبرى</span> أو حوادث السير الخطيرة)، حيث يمنع تحرير المادة P ويقطع إرسال الألم تماماً.
+                </li>
+            </ul>
+
+            <h3>د. مخاطر الاستعمال المفرط للمورفين (الإدمان وتخريب المستقبلات):</h3>
+            <ul>
+                <li><strong><span style="color: #3498db; font-weight: bold;">الآلية:</span></strong> الاستهلاك المفرط أو غير الطبي للمورفين يجعل الدماغ يعتمد عليه كلياً ويتوقف عن إنتاج الإنكيفالين الطبيعي، كما يؤدي الارتباط الدائم والمكثف إلى <span style="color: #e74c3c; font-weight: bold;">تخريب وتعطيل المستقبلات الأفيونية</span> وفقدان حساسيتها.</li>
+                <li><strong><span style="color: #2ecc71; font-weight: bold;">النتيجة</span> و<span style="color: #f39c12; font-weight: bold;">الدور</span>:</strong> 
+                    ينتج عن ذلك دخول الشخص في حالة <span style="color: #e74c3c; font-weight: bold;">إدمان خطير</span> وتبعية نفسية وجسدية، حيث يصبح عاجزاً عن تحمل الألم أو العيش بدون الجرعة، وتصبح مستقبلات جهازه العصبي غير قادرة على العمل بشكل طبيعي.
+                </li>
+            </ul>
         </div>
     </section>
 
     <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">9. القنوات الفولطية للكالسيوم ($Ca^{2+}$)</h2>
+        <h2><span class="num-badge">9</span> الإدمان (التأثيرات العصبية للمخدرات وآليات الاعتماد)</h2>
         <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. مفتاح تحرير المبلغات:</h4>
-            تعتبر القنوات الفولطية للكالسيوم الموجودة في النهاية العصبية هي المسؤول الأول عن التحرير. دخول <span class="latin-tech">Ca²⁺</span> يحفز بروتينات التقلص التي تجذب الحويصلات نحو الغشاء للاندماج معه؛ فكلما زاد دخول الكالسيوم، زادت كمية المبلغ المطروح، وزادت قوة الرسالة المشبكية.
-        </div>
-    </section>
+            <h3>أ. مفهوم الإدمان وآليته على مستوى المشابك العصبية:</h3>
+            <ul>
+                <li><strong><span style="color: #3498db; font-weight: bold;">الآلية:</span></strong> تتداخل المواد المخدرة (مثل الكوكايين، النيكوتين، أو المورفين بجرعات مفرطة) مع نظام المكافأة في الدماغ، حيث ترتبط بمستقبلات عصبية نوعية وتتسبب في إفراز كميات هائلة ومفرطة من وسيط عصبي مسؤولة عن المتعة والشعور بالرضا يُدعى <span style="color: #e74c3c; font-weight: bold;">الدوبامين (Dopamine)</span> في الشق المشبكي، مع منع إعادة امتصاصه أو تفكيكه بشكل طبيعي.</li>
+                <li><strong><span style="color: #2ecc71; font-weight: bold;">النتيجة</span> و<span style="color: #f39c12; font-weight: bold;">الدور</span>:</strong> يؤدي هذا الفائض الكبير والمستمر من الدوبامين إلى توليد إشارات عصبية قوية جداً تترجمها المراكز العليا في الدماغ على شكل شعور مفرط بالنشوة والسعادة المؤقتة.</li>
+            </ul>
 
-    <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">10. القنوات الكيميائية ومستقبلات الأستيل كولين</h2>
-        <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. الارتباط وتوليد الـ PPSE:</h4>
-            يحتوي الغشاء بعد مشبكي على مستقبلات قنوية (مبوبة كيميائياً). عند تثبيت الأستيل كولين عليها، تنفتح وتسمح بدخول <span class="latin-tech">Na⁺</span>، مما يسبب زوال استقطاب موضعي يسمى <span style="color: var(--accent-orange); font-weight: bold;">كمون بعد مشبكي تنبيهي (PPSE)</span>. إذا وصل هذا الكمون للعتبة، انتشرت الرسالة في العصبون الموالي.
-        </div>
-    </section>
-
-    <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">11. المشابك التثبيطية والـ GABA</h2>
-        <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. فرط الاستقطاب وتوليد الـ PPSI:</h4>
-            تفرز بعض العصبونات مبلغ الـ GABA الذي يرتبط بمستقبلات تفتح قنوات الكلور <span class="latin-tech">Cl⁻</span>. دخول هذه الشحنات السالبة يسبب انخفاض الجهد (فرط استقطاب) يسمى <span style="color: var(--accent-orange); font-weight: bold;">كمون بعد مشبكي تثبيطي (PPSI)</span>، مما يجعل العصبون أقل استجابة وأصعب في التنبيه.
-        </div>
-    </section>
-
-    <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">12. مصير المبلغ الكيميائي والإنزيمات</h2>
-        <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. إماهة الأستيل كولين إستراز:</h4>
-            لمنع استمرار التنبيه، يقوم إنزيم <span class="latin-tech">AChE</span> بتفكيك الأستيل كولين بسرعة في الشق المشبكي. تتحول النواتج (كولين) ليعاد امتصاصها وبناؤها من جديد. أي خلل في هذا الإنزيم يؤدي لتشنجات قاتلة بسبب بقاء المشبك في حالة تنبيه دائم.
-        </div>
-    </section>
-
-    <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">13. الإدماج العصبي: التجميع الزمني</h2>
-        <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. دمج التنبيهات المتتالية:</h4>
-            عندما يتلقى عصبون واحد عدة تنبيهات متلاحقة من نفس المصدر قبل أن يعود لحالة الراحة، يقوم بجمع قيمها الجبرية. هذا التجميع الزمني يسمح للتنبيهات الضعيفة المتكررة بأن تصبح قوية بما يكفي لتوليد استجابة في العصبون المحرك.
-        </div>
-    </section>
-
-    <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">14. الإدماج العصبي: التجميع الفضائي</h2>
-        <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. المحصلة الجبرية للرسائل:</h4>
-            العصبون المحرك يستقبل آلاف المشابك (تنبيهية وتثبيطية) في نفس اللحظة. يقوم العصبون بجمع <span class="latin-tech">PPSE</span> و <span class="latin-tech">PPSI</span> في منطقة القطعة الابتدائية (S.I)؛ فإذا كانت المحصلة الجبرية <span class="latin-tech">(&sum;)</span> تفوق العتبة، يرسل كمون عمل، وإذا كانت دون ذلك، يظل العصبون صامتاً.
-        </div>
-    </section>
-
-    <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">15. تأثير المخدرات ومحاكيات المبلغات</h2>
-        <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. المنافسة على المستقبلات الغشائية:</h4>
-            تمتاز بعض المخدرات ببنية تشبه المبلغات الطبيعية، فترتبط بالمستقبلات وتنشطها لفترات طويلة (مثل النيكوتين). هذا التنشيط غير الطبيعي يسبب خللاً في توازن العصبونات ويؤدي للإدمان نتيجة تعود المستقبلات على وجود المادة الخارجية.
-        </div>
-    </section>
-
-    <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">16. آلية عمل المورفين والمسكنات</h2>
-        <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. تثبيط رسائل الألم:</h4>
-            يرتبط المورفين بمستقبلات "الأنكفالين" في النخاع الشوكي، وهي مستقبلات قبل مشبكية تمنع تحرير مبلغ الألم (المادة P). هذا التدخل الكيميائي يقطع مسار السيالة العصبية المتجهة للمخ، مما يسبب غياب الشعور بالألم رغم وجود المسبب.
-        </div>
-    </section>
-
-    <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">17. سموم العقارب والخلل الشاردي</h2>
-        <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. شلل القنوات الفولطية:</h4>
-            تحتوي سموم بعض الكائنات على جزيئات تسد القنوات الفولطية للصوديوم أو البوتاسيوم. هذا الانسداد يمنع توليد كمونات العمل، مما يسبب شللاً عضلياً وتنفسياً سريعاً، حيث تتوقف العضلات عن تلقي الأوامر من الجهاز العصبي المركزي.
-        </div>
-    </section>
-
-    <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">18. مرخيات العضلات (الكورار)</h2>
-        <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. سد اللوحة المحركة:</h4>
-            يعمل الكورار ككابح لمستقبلات الأستيل كولين في المشابك العضلية. يرتبط بالمستقبل دون فتحه، مانعاً الأستيل كولين الطبيعي من العمل. النتيجة هي استرخاء عضلي كامل، وهو ما يُستخدم طبياً في العمليات الجراحية المعقدة لتسهيل عمل الجراح.
-        </div>
-    </section>
-
-    <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">19. تقنية التثبيت الغشائي (Patch-Clamp)</h2>
-        <div class="step-card">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. دراسة سلوك القناة الواحدة:</h4>
-            تسمح هذه التقنية المخبرية بعزل قناة غشائية واحدة ودراسة التيارات الشاردية المارة عبرها تحت ظروف تجريبية محددة. بفضلها تم فهم الفرق بين القنوات الفولطية والكيميائية، وكيف تتأثر بالأدوية والسموم على المستوى الجزيئي الدقيق.
-        </div>
-    </section>
-
-    <section>
-        <h2 style="color: var(--accent-blue); margin-bottom: 15px;">20. الخلاصة: الوحدة الوظيفية للجهاز العصبي</h2>
-        <div class="mechanism-box">
-            <h4 style="color: var(--accent-purple); margin-bottom: 8px;">أ. الترجمة من الكهرباء إلى الكيمياء وبالعكس:</h4>
-            الاتصال العصبي هو لغة مزدوجة؛ تبدأ كهربائية في الليف، تتحول لكيميائية في المشبك، ثم تعود كهربائية في العصبون الموالي بعد عملية الإدماج. هذا النظام المعقد يضمن معالجة أدق المعلومات الحسية والحركية، مما يمنح الإنسان القدرة على التفاعل الذكي والسريع مع محيطه.
+            <h3>ب. تطور الاعتماد العضوي والنفسي (تخريب المستقبلات وانخفاض الحساسية):</h3>
+            <ul>
+                <li><strong><span style="color: #3498db; font-weight: bold;">الآلية:</span></strong> كرد فعل دفاعي على الفيض الهائل والمتكرر للدوبامين، يستجيب الدماغ بتخفيض عدد المستقبلات الغشائية الخاصة به أو تقليل حساسيتها، كما تتوقف الخلايا عصبياً عن إنتاج وسائطها الطبيعية بصورة عادية.</li>
+                <li><strong><span style="color: #2ecc71; font-weight: bold;">النتيجة</span> و<span style="color: #f39c12; font-weight: bold;">الدور</span>:</strong> يدخل الشخص في حالة <span style="color: #e74c3c; font-weight: bold;">اعتماد جسدي ونفسي (إدمان)</span>؛ حيث يصبح غير قادر على الإحساس بالمتعة الطبيعية أو أداء نشاطاته اليومية بدون المخدر، ويحتاج دائماً إلى زيادة الجرعة للحصول على نفس التأثير (ظاهرة التحمل)، وفي حال انقطاعه تظهر عليه أعراض الانسحاب المؤلمة والخطيرة.</li>
+            </ul>
         </div>
     </section>
 
     <div class="tip-box">
         <span class="tip-title">💡 نصيحة تفوق:</span>
-        فهم الآليات الجزيئية للقنوات المبوبة (الفولطية والكيميائية) ومضخات الشوارد يسهل عليك جداً تحليل التمارين المعقدة الخاصة بتأثيرات السموم والمواد السامة على مستوى المشابك العصبية.
+        في الاتصال العصبي، تأثير الوسيط العصبي طبيعي، مؤقت وعكوس (يزول بزوال التنبيه)، بينما تأثير السموم والمخدرات دائم، مخرب أو مفرط يؤدي إلى تعطيل المستقبلات والإدمان!
     </div>
 
     <div class="ad-space">
@@ -448,6 +1058,167 @@
     </div>
 
 </div>
+
+<script>
+
+
+    function toggleTheme() {
+        const bodyElement = document.body;
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+
+        // تبديل الكلاس على جسم الصفحة
+        bodyElement.classList.toggle('light-theme');
+        const isLightTheme = bodyElement.classList.contains('light-theme');
+
+        // تحديث النصوص والأيقونات والمحفوظات
+        if (isLightTheme) {
+            if (themeIcon) themeIcon.textContent = '☀️';
+            if (themeText) themeText.textContent = 'الوضع النهاري';
+            localStorage.setItem('theme', 'light');
+        } else {
+            if (themeIcon) themeIcon.textContent = '🌙';
+            if (themeText) themeText.textContent = 'الوضع الليلي';
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+
+    /* ==========================================
+       2. عند تحميل الصفحة (تطبيق الثيم والكانفاس)
+       ========================================== */
+    document.addEventListener('DOMContentLoaded', () => {
+        const bodyElement = document.body;
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+
+        // استرجاع الثيم المحفوظ عند فتح الصفحة
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme === 'light') {
+            bodyElement.classList.add('light-theme');
+            if (themeIcon) themeIcon.textContent = '☀️';
+            if (themeText) themeText.textContent = 'الوضع النهاري';
+        } else {
+            bodyElement.classList.remove('light-theme');
+            if (themeIcon) themeIcon.textContent = '🌙';
+            if (themeText) themeText.textContent = 'الوضع الليلي';
+        }
+
+        /* ==========================================
+           3. أنيميشن خلفية الجسيمات (Canvas)
+           ========================================== */
+        const canvas = document.getElementById('cellCanvas');
+
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let particlesArray = [];
+            const numberOfParticles = 35;
+
+            function setCanvasSize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            setCanvasSize();
+
+            window.addEventListener('resize', () => {
+                setCanvasSize();
+                initParticles();
+            });
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 3.5 + 1.5; // زيادة الحجم قليلاً للوضوح
+                    this.speedX = (Math.random() - 0.5) * 0.6;
+                    this.speedY = (Math.random() - 0.5) * 0.6;
+                    this.opacity = Math.random() * 0.5 + 0.3;
+                }
+
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+
+                    if (this.x < 0 || this.x > canvas.width) {
+                        this.speedX = -this.speedX;
+                    }
+                    if (this.y < 0 || this.y > canvas.height) {
+                        this.speedY = -this.speedY;
+                    }
+                }
+
+                draw() {
+                    const isLight = bodyElement.classList.contains('light-theme');
+                    
+                    // في الوضع النهاري نستخدم ألوان أغمق مع شفافية أرقامها أعلى للوضوح
+                    ctx.fillStyle = isLight 
+                        ? `rgba(2, 132, 199, ${this.opacity * 1.2})`  /* أزرق داكن وواضح */
+                        : `rgba(248, 250, 252, ${this.opacity})`;     /* أبيض ناصع لليلي */
+
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            function initParticles() {
+                particlesArray = [];
+                for (let i = 0; i < numberOfParticles; i++) {
+                    particlesArray.push(new Particle());
+                }
+            }
+
+            function connectParticles() {
+                const maxDistance = 130;
+                const isLight = bodyElement.classList.contains('light-theme');
+
+                for (let a = 0; a < particlesArray.length; a++) {
+                    for (let b = a; b < particlesArray.length; b++) {
+                        const dx = particlesArray[a].x - particlesArray[b].x;
+                        const dy = particlesArray[a].y - particlesArray[b].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < maxDistance) {
+                            const opacityLevel = 1 - (distance / maxDistance);
+                            
+                            // زيادة تباين الخطوط الرابطة بين النقاط في النهاري
+                            ctx.strokeStyle = isLight 
+                                ? `rgba(14, 116, 144, ${opacityLevel * 0.35})` /* خطوط زرقاء داكنة هادئة */
+                                : `rgba(255, 255, 255, ${opacityLevel * 0.08})`;
+
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            function animateCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].update();
+                    particlesArray[i].draw();
+                }
+
+                connectParticles();
+                requestAnimationFrame(animateCanvas);
+            }
+
+            initParticles();
+            animateCanvas();
+        }
+    });
+
+
+
+
+
+</script>
 
 <script src="script.js"></script>
 
