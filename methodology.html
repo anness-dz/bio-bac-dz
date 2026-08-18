@@ -205,10 +205,10 @@
             background: rgba(56, 189, 248, 0.06);
         }
         .image-slot img {
-            max-width: 100%;
-            max-height: 250px;
+            width: 100%;             /* تجعل الصورة تعرض بكامل عرض الشاشة/الصندوق */
+            height: auto;            /* الارتفاع يتلقائياً حسب أبعاد الصورة الأصلية لكي لا تقص أبدًا */
+            max-width: 100%;         /* لضمان عدم خروج الصورة عن حدود الصندوق */
             border-radius: 10px;
-            object-fit: contain;
             display: block;
             margin: 0 auto;
         }
@@ -283,6 +283,27 @@
             .slide-footer { padding: 15px 20px; }
             .control-btn { padding: 10px 18px; font-size: 0.9rem; }
         }
+
+
+.image-slot .image-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: #fff;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(129, 140, 248, 0.15));
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    padding: 10px 18px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+}
+
+
+
     </style>
 </head>
 <body>
@@ -352,8 +373,9 @@
                             </li>
                         </ul>
                         <div class="image-slot">
-                            <img src="image10/curve-example.png" alt="مثال منحنى بياني">
-                            <span>📷 نموذج تطبيق منهجية (X و Y) على المنحنيات (image10)</span>
+                            <span class="image-title"> نموذج تطبيق منهجية (X و Y) على المنحنيات</span>
+                            <img src="image10/0.1.png" alt="مثال منحنى بياني">
+                            
                         </div>
                     </div>
                     <div class="exercise-box">
@@ -382,8 +404,8 @@
                             </li>
                         </ul>
                         <div class="image-slot">
-                            <img src="image10/table-example.png" alt="مثال جدول">
-                            <span>📷 تحليل الجداول بالمقارنة (image10)</span>
+                            <span class="image-title"> تحليل الجداول بالمقارنة</span>
+                            <img src="image10/0.2.png" alt="مثال جدول">
                         </div>
                     </div>
                     <div class="exercise-box">
