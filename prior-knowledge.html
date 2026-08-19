@@ -3,30 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موسوعة المكتسبات القبلية الشاملة </title>
+    <title>موسوعة المكتسبات القبلية الشاملة</title>
     <style>
         :root {
-            --bg-main: #030712;
-            --text-primary: #ffffff;
+            --bg-main: #070913;
+            --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
-            --card-bg: rgba(11, 17, 32, 0.92);
-            --card-border: rgba(99, 102, 241, 0.35);
-            --card-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
-            --accent: #6366f1;
-            --accent-glow: rgba(99, 102, 241, 0.5);
+            --card-bg: rgba(13, 19, 38, 0.85);
+            --card-border: rgba(56, 189, 248, 0.25);
+            --card-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(56, 189, 248, 0.05);
+            --accent: #0ea5e9;
+            --accent-secondary: #10b981;
+            --accent-glow: rgba(14, 165, 233, 0.4);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        /* تخصيص شريط التمرير (Scrollbar) بلون رمادي داكن وبنفسجي متناسق */
+        /* تخصيص شريط التمرير */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: rgba(3, 7, 18, 0.6);
+            background: rgba(7, 9, 19, 0.8);
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(99, 102, 241, 0.5);
+            background: rgba(14, 165, 233, 0.4);
             border-radius: 10px;
             transition: 0.3s;
         }
@@ -46,6 +47,36 @@
             padding: 20px;
             overflow-x: hidden;
             position: relative;
+        }
+
+        /* خلفية تفاعلية بضيّات حية لمنع الملل */
+        body::before, body::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            z-index: -2;
+            filter: blur(80px);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        body::before {
+            background: #10b981;
+            top: -100px;
+            right: -100px;
+            animation: floatBlob 10s ease-in-out infinite alternate;
+        }
+        body::after {
+            background: #0ea5e9;
+            bottom: -100px;
+            left: -100px;
+            animation: floatBlob 12s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes floatBlob {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 40px) scale(1.1); }
         }
 
         /* خلفية الجزيئات المتحركة */
@@ -74,9 +105,9 @@
             padding: 0 5px;
         }
         .back-home-badge {
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid rgba(99, 102, 241, 0.4);
-            color: #cbd5e1;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            color: #e2e8f0;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.95rem;
@@ -86,10 +117,10 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
         .back-home-badge:hover {
-            background: rgba(99, 102, 241, 0.15);
+            background: rgba(14, 165, 233, 0.15);
             border-color: var(--accent);
             color: #ffffff;
             transform: translateY(-2px);
@@ -102,7 +133,7 @@
             color: var(--text-secondary);
             font-size: 0.9rem;
             font-weight: 500;
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(15, 23, 42, 0.9);
             padding: 10px 18px;
             border-radius: 14px;
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -116,7 +147,7 @@
         }
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #6366f1, #38bdf8);
+            background: linear-gradient(90deg, #10b981, #0ea5e9);
             width: 25%;
             transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -134,7 +165,7 @@
         }
 
         .slide-header {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(56, 189, 248, 0.1));
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(16, 185, 129, 0.1));
             padding: 30px 40px;
             border-bottom: 1px solid var(--card-border);
             display: flex;
@@ -149,15 +180,16 @@
             gap: 15px;
         }
         .slide-tag {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(14, 165, 233, 0.15);
             border: 1px solid var(--accent);
-            color: #c7d2fe;
+            color: #38bdf8;
             padding: 6px 16px;
             border-radius: 30px;
             font-size: 0.85rem;
             font-weight: bold;
         }
 
+        /* تعديل مساحة المحتوى لتتكيّف ديناميكياً مع طول النص بدون فراغات ضخمة */
         .slide-content-area {
             padding: 40px;
             max-height: 600px;
@@ -177,7 +209,7 @@
         }
 
         .lead-text {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(14, 165, 233, 0.05);
             border-right: 4px solid var(--accent);
             padding: 18px 22px;
             border-radius: 0 14px 14px 0;
@@ -187,11 +219,16 @@
             line-height: 1.8;
         }
         .content-block {
-            background: rgba(15, 23, 42, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: rgba(11, 17, 32, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 16px;
             padding: 24px;
             margin-bottom: 25px;
+            transition: 0.3s;
+        }
+        .content-block:hover {
+            border-color: rgba(14, 165, 233, 0.3);
+            background: rgba(11, 17, 32, 0.9);
         }
         .content-block h3 {
             color: #38bdf8;
@@ -220,23 +257,23 @@
         }
         .emoji-list li::before {
             content: "•";
-            color: var(--accent);
+            color: var(--accent-secondary);
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             position: absolute;
             right: 0;
-            top: -2px;
+            top: -3px;
         }
 
         /* أماكن الصور المخصصة */
         .image-slot {
-            border: 2px dashed rgba(99, 102, 241, 0.4);
+            border: 2px dashed rgba(14, 165, 233, 0.3);
             padding: 20px;
             text-align: center;
             border-radius: 14px;
             margin-top: 18px;
-            background: rgba(99, 102, 241, 0.03);
-            color: #a5b4fc;
+            background: rgba(14, 165, 233, 0.02);
+            color: #7dd3fc;
             font-weight: 500;
             display: flex;
             flex-direction: column;
@@ -245,7 +282,7 @@
         }
         .image-slot:hover {
             border-color: var(--accent);
-            background: rgba(99, 102, 241, 0.06);
+            background: rgba(14, 165, 233, 0.05);
         }
         .image-slot span {
             font-size: 0.82rem;
@@ -259,10 +296,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(4, 7, 15, 0.6);
+            background: rgba(5, 7, 15, 0.7);
         }
         .control-btn {
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--accent), #0284c7);
             color: white;
             border: none;
             padding: 13px 32px;
@@ -270,7 +307,7 @@
             font-weight: bold;
             cursor: pointer;
             transition: 0.3s;
-            box-shadow: 0 4px 15px var(--accent-glow);
+            box-shadow: 0 4px 20px var(--accent-glow);
             font-size: 1.05rem;
             display: flex;
             align-items: center;
@@ -278,7 +315,8 @@
         }
         .control-btn:hover {
             transform: translateY(-2px);
-            background: #4f46e5;
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            box-shadow: 0 6px 25px rgba(14, 165, 233, 0.6);
         }
         .control-btn:disabled {
             background: #1e293b;
@@ -306,7 +344,7 @@
                 max-height: 500px;
             }
             .progress-track {
-                width: 90px; /* تصغير شريط التقدم ليناسب الهواتف */
+                width: 90px;
             }
             .top-navigation-bar {
                 flex-direction: column;
@@ -324,8 +362,6 @@
                 font-size: 0.95rem;
             }
         }
-
-
     </style>
 </head>
 <body>
@@ -426,6 +462,10 @@
                             <li><strong>المظهر البنيوي:</strong> تراكيب خيطية متكاثفة ومنظمة بدقة تظهر بوضوح داخل النواة خلال مراحل انقسام الخلية.</li>
                             <li><strong>الدور الوظيفي:</strong> تمثل الدعامة الأساسية التي تنقل الصفات الوراثية بانتظام من الخلية الأم إلى الخلايا البنت.</li>
                         </ul>
+                        <div class="image-slot" style="text-align: center;">
+                        
+                            <img src="image9/0.5.png" alt="الصبغييات" style="width: 100%; height: auto; display: block; border-radius: 8px; margin-top: 10px;">
+                        </div>
                     </div>
 
                     <div class="content-block">
@@ -449,6 +489,10 @@
                             <li><strong>التعريف الدقيق:</strong> عبارة عن تسلسل محدد ومعين من النيكليوتيدات على جزيء الـ ADN.</li>
                             <li><strong>الأهمية البيولوجية:</strong> تحمل الشيفرة الوراثية الخاصة بتصنيع بروتين معين، والذي ينعكس بدوره على ظهور صفة وراثية محددة.</li>
                         </ul>
+                        <div class="image-slot" style="text-align: center;">
+                        
+                            <img src="image9/0.6.png" alt="المورثات" style="width: 100%; height: auto; display: block; border-radius: 8px; margin-top: 10px;">
+                        </div>
                     </div>
 
                     <div class="content-block" style="margin-bottom: 0;">
