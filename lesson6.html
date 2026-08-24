@@ -6,7 +6,7 @@
     <title>الوحدة 6: آليات تحويل الطاقة الضوئية إلى طاقة كيميائية كامنة (التركيب الضوئي) - Bio-Bac-DZ</title>
     
     <style>
-        .box p, .box h1, .box h2, .box h3, .box h4, .box h5, .box h6, .box span {
+        .box p, .box h1, .box h3, .box h4, .box h5, .box h6 {
             background: transparent !important;
             background-color: transparent !important;
         }
@@ -28,9 +28,9 @@
             --accent-green: #10b981; 
             --accent-blue: #38bdf8;  
             --accent-purple: #a855f7;
+            --accent-orange: #f97316;
             --text-main: #f8fafc;     
             --heading-color: #ffffff; 
-            /* التدرج الأخضر المميز للعناوين في الوضع الليلي */
             --heading-bg: linear-gradient(90deg, rgba(16, 185, 129, 0.25) 0%, rgba(15, 23, 42, 0.4) 100%);
             --text-sub: #94a3b8;
             --border-glow: rgba(16, 185, 129, 0.35);
@@ -53,6 +53,30 @@
             overflow-x: hidden;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+
+        /* تنسيق شارة الرقم للعنوان - خلفية خضراء ساطعة وغير شفافة تتكيف مع التصميم */
+        .num-badge {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #34d399, #059669) !important;
+            color: #0f172a !important; /* لون الرقم أسود افتراضياً (في الوضع الليلي) */
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 800;
+            flex-shrink: 0;
+            box-shadow: 0 0 12px rgba(52, 211, 153, 0.5);
+            -webkit-print-color-adjust: exact;
+            transition: color 0.3s ease;
+        }
+
+        /* تحويل لون الرقم إلى أبيض في الوضع النهاري */
+        body.light-theme .num-badge {
+            color: #ffffff !important; /* لون الرقم أبيض في الوضع النهاري */
+        }
+
 
         #cellCanvas {
             position: fixed;
@@ -94,9 +118,14 @@
             66% { transform: translateY(30px) translateX(-40px) scale(0.9); }
         }
 
-        .container, .mega-container { 
+        .container, .mega-container, .top-navbar { 
             max-width: 950px; 
-            margin: auto; 
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        .container, .mega-container { 
             background: var(--card-bg); 
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
@@ -110,9 +139,8 @@
         }
 
         .top-navbar {
-            width: 100%;
-            max-width: 950px;
-            margin: 10px auto 15px auto;
+            margin-top: 10px;
+            margin-bottom: 15px;
             padding: 0;
             position: relative;
             z-index: 10;
@@ -173,15 +201,15 @@
             background: rgba(16, 185, 129, 0.15);
             border: 1px solid var(--accent-green);
             color: var(--accent-green);
-            padding: 10px 18px;
+            padding: 8px 14px;
             border-radius: 12px;
             cursor: pointer;
             font-family: inherit;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             transition: all 0.3s ease;
             box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
         }
@@ -259,7 +287,6 @@
             font-weight: 800;
         }
 
-        /* قالب العناوين بالتدرج الأخضر المميز */
         h2 { 
             display: flex;
             align-items: center;
@@ -276,11 +303,18 @@
             transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
-        h4 { 
-            color: var(--accent-green); 
-            margin-bottom: 8px; 
-            margin-top: 20px; 
-            font-size: 1.1rem; 
+        h4 {
+            color: #34d399; 
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-weight: bold;
+            padding: 10px 15px;
+            background-color: rgba(16, 185, 129, 0.08); 
+            border-right: 4px solid #10b981; 
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .keyword {
@@ -339,13 +373,12 @@
             border-top: 2px dashed var(--accent-green);
         }
 
-        /* --- الوضع النهاري مع الحفاظ على لمسة التدرج الأخضر الفاتح والجميل --- */
+        /* الوضع النهاري */
         body.light-theme {
             --bg-dark: #f8fafc;
             --card-bg: rgba(255, 255, 255, 0.95);
             --text-main: #0f172a;
             --heading-color: #0f172a; 
-            /* تدرج أخضر ناعم ومتناسق في الوضع النهاري */
             --heading-bg: linear-gradient(90deg, rgba(16, 185, 129, 0.18) 0%, rgba(241, 245, 249, 0.8) 100%);
         }
         
@@ -356,6 +389,12 @@
 
         body.light-theme h2 {
             border: 1px solid rgba(16, 185, 129, 0.35);
+        }
+
+        body.light-theme h4 {
+            color: #047857;
+            background-color: rgba(16, 185, 129, 0.08);
+            border-right: 4px solid #059669;
         }
 
         body.light-theme .top-nav-container {
@@ -379,14 +418,70 @@
 
         @media (max-width: 600px) { 
             body { padding: 0 5px 15px 5px; }
-            .container, .mega-container, .top-navbar { padding-left: 10px; padding-right: 10px; } 
-            .top-brand-logo { font-size: 1.1rem; gap: 10px; }
-            .top-logo-img { width: 38px; height: 38px; }
+            .container, .mega-container, .top-navbar { padding-left: 10px; padding-right: 10px; width: 100%; } 
+            .top-brand-logo { font-size: 1rem; gap: 8px; }
+            .top-logo-img { width: 34px; height: 34px; }
+            .theme-toggle-btn { padding: 6px 10px; font-size: 0.8rem; gap: 4px; }
             h1 { font-size: 1.35em; } 
             h2 { font-size: 1.05em; padding: 10px 12px; gap: 10px; }
+            h4 { font-size: 0.95rem; padding: 8px 12px; }
+            .num-badge { width: 28px; height: 28px; font-size: 0.8em; }
             .bottom-nav { flex-direction: column; }
             .nav-btn { justify-content: center; width: 100%; }
         }
+
+.calvin-card {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    margin: 25px auto;
+    padding: 15px;
+    background: transparent !important;
+    
+    /* زيادة سُمك الإطار إلى 2.5px */
+    border: 2.5px solid rgba(56, 189, 248, 0.6) !important;
+    border-radius: 16px !important;
+    
+    /* الإشعاع والتوهج الخفيف المتناسق مع سُمك الإطار */
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.3), 
+                inset 0 0 12px rgba(56, 189, 248, 0.15) !important;
+}
+
+
+        .calvin-title {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #38bdf8;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        /* 1. الوضع المظلم (الافتراضي): عرض الصورة بألوانها الأصلية الحقيقية دون أي دمج */
+        .adaptive-diag {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+            filter: none; /* إيقاف أي فلاتر للحفاظ على الألوان 100% */
+        }
+
+        /* 2. الوضع الفاتح (Light Mode): يعكس الخلفية السوداء إلى بيضاء مع حماية درجة الألوان */
+        body.light-mode .calvin-card,
+        [data-theme="light"] .calvin-card {
+            background: #ffffff;
+            border-color: rgba(56, 189, 248, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        body.light-mode .adaptive-diag,
+        [data-theme="light"] .adaptive-diag {
+            /* invert(1) يعكس الأسود لأبيض، و hue-rotate(180deg) يعيد الألوان الملونة لأصلها */
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+
     </style>
 
 
@@ -444,215 +539,519 @@
       <span>[ مساحة إعلانية علوية ]</span>
      </div>
 
-    <h2>1. بنية الصانعة الخضراء وتدرج الحجيرات الوظيفي</h2>
+
+
+
+        <!-- القسم الأول: تعريف التركيب الضوئي -->
+        <div class="box">
+            <h2><span class="num-badge">1</span> تعريف التركيب الضوئي</h2>
+            <p>
+                هو عملية حيويّة أساسية تتم من طرف <span style="color: var(--accent-green); font-weight: bold;">النباتات الخضراء وبعض أنواع البكتيريا</span>. يتم خلالها تحويل <span style="color: var(--accent-blue); font-weight: bold;">الطاقة الضوئية</span> بواسطة الصباغ اليخضورية إلى <span style="color: var(--accent-orange); font-weight: bold;">طاقة كيميائية كامنة</span> مخزنة في <span style="color: var(--accent-purple); font-weight: bold;">جزيئات المادة العضوية</span> (مثل السكريات)، وذلك انطلاقاً من مواد معدنية بسيطة تتمثل في غاز ثنائي أكسيد الكربون <span style="color: var(--accent-blue); font-weight: bold;">(CO₂)</span> وماء <span style="color: var(--accent-blue); font-weight: bold;">(H₂O)</span>، مع طرح غاز ثنائي الأكسجين <span style="color: var(--accent-green); font-weight: bold;">(O₂)</span> في الوسط.
+            </p>
+
+            <div class="equation">
+                6CO₂ + 6H₂O &nbsp;&nbsp;─── ( الضوء + اليخضور ) ───&gt;&nbsp;&nbsp; C₆H₁₂O₆ + 6O₂
+            </div>
+        </div>
+
     <div class="box">
-        <h4>أ. الغلاف المزدوج والفضاء بين الغشائي:</h4> 
-        تتميز <span class="keyword">الصانعة الخضراء</span> بكونها عضية خلوية ضخمة محاطة بغلاف يتكون من غشائين؛ خارجي يسمح بمرور الجزيئات الصغيرة وداخلي يتميز بنفاذية اختيارية عالية. يحصر هذان الغشاءان بينهما فضاءً ضيقاً يسمى <span class="keyword">الفضاء بين الغشائي</span>، ويعمل هذا الغلاف المزدوج كدرع حماية وكحاجز فيزيائي ينظم عمليات التبادل الطاقوي والمادي بين الصانعة وهيولى الخلية النباتية، مما يضمن استقلالية التفاعلات الحيوية بالداخل.
-        <h4>ب. نظام التيلاكويدات والتركيب الحجيري:</h4> 
-        يمتد الغشاء الداخلي ليشكل جملة من الأكياس المسطحة المتراصة فوق بعضها كقطع النقد تسمى <span class="keyword">التيلاكويدات</span>، والتي تنتظم في مجموعات تسمى <span class="keyword">الغرانا (Grana)</span>. هذا التركيب الفريد يوفر مساحة سطح هائلة مدمج فيها الأصباغ والبروتينات، مما يسمح باقتناص أكبر قدر ممكن من الفوتونات الضوئية، ويمثل تجويف التيلاكويد حجرة منفصلة كيميائياً تساهم في خلق تدرج البروتونات الضروري لتركيب الطاقة.
-        <h4>ج. الحشوة (الستروما) والوسط المائي:</h4> 
-        تملأ <span class="keyword">الحشوة</span> الفراغ الداخلي للصانعة، وهي عبارة عن سائل هلامي كثيف غني جداً بالإنزيمات النوعية (مثل <span class="keyword">الروبيسكو</span>) والـ DNA والريبوزومات الخاصة بالصانعة. توفر الحشوة الوسط المائي الملائم لحدوث التفاعلات الكيموحيوية التي لا تتطلب الضوء بشكل مباشر، حيث يتم فيها تثبيت الكربون وتحويله إلى سكريات أولية، كما تعمل كمخزن مؤقت لنواتج المرحلة الضوئية قبل استهلاكها في <span class="keyword">دورة كالفن</span>.
+        <h2><span class="num-badge">2</span> بنية الصانعة الخضراء وتدرج الحجيرات الوظيفي</h2>
+
+        <h4>أ. الغلاف المزدوج والفضاء بين الغشائي:</h4>
+        <p>تتميز <span class="keyword" style="color: #10b981;">الصانعة الخضراء</span> بكونها عضية خلوية ضخمة محاطة بغلاف يتكون من غشائين؛ خارجي يسمح بمرور الجزيئات الصغيرة وداخلي يتميز بنفاذية اختيارية عالية. يحصر هذان الغشاءان بينهما فضاءً ضيقاً يسمى <span class="keyword" style="color: #38bdf8;">الفضاء بين الغشائي</span>، ويعمل هذا الغلاف المزدوج كدرع حماية وكحاجز فيزيائي ينظم عمليات التبادل الطاقوي والمادي بين الصانعة وهيولى <span class="keyword" style="color: #a855f7;">الخلية النباتية</span>، مما يضمن استقلالية التفاعلات الحيوية بالداخل.</p>
+
+        <h4>ب. نظام التيلاكويدات والتركيب الحجيري:</h4>
+        <p>يمتد الغشاء الداخلي ليشكل جملة من الأكياس المسطحة المتراصة فوق بعضها كقطع النقد تسمى <span class="keyword" style="color: #34d399;">التيلاكويدات</span>، والتي تنتظم في مجموعات تسمى <span class="keyword" style="color: #f59e0b;">الغرانا (Grana)</span>. هذا التركيب الفريد يوفر مساحة سطح هائلة مدمج فيها <span class="keyword" style="color: #38bdf8;">الأصباغ والبروتينات</span>، مما يسمح باقتناص أكبر قدر ممكن من الفوتونات الضوئية، ويمثل تجويف التيلاكويد حجرة منفصلة كيميائياً تساهم في خلق <span class="keyword" style="color: #10b981;">تدرج البروتونات</span> الضروري لتركيب الطاقة.</p>
+
+        <h4>ج. الحشوة (الستروما) والوسط المائي:</h4>
+        <p>تملأ <span class="keyword" style="color: #10b981;">الحشوة</span> الفراغ الداخلي للصانعة، وهي عبارة عن سائل هلامي كثيف غني جداً بالإنزيمات النوعية (مثل <span class="keyword" style="color: #a855f7;">الروبيسكو</span>) والـ DNA والريبوزومات الخاصة بالصانعة. توفر الحشوة الوسط المائي الملائم لحدوث التفاعلات الكيموحيوية التي لا تتطلب الضوء بشكل مباشر، حيث يتم فيها تثبيت الكربون وتحويله إلى <span class="keyword" style="color: #38bdf8;">سكريات أولية</span>، كما تعمل كمخزن مؤقت لنواتج المرحلة الضوئية قبل استهلاكها في <span class="keyword" style="color: #f59e0b;">دورة كالفن</span>.</p>
     </div>
 
-    <h2>2. التركيب الجزيئي التخصصي لغشاء التيلاكويد</h2>
-    <div class="box">
-        <h4>أ. الأنظمة الضوئية والبروتينات المدمجة:</h4> 
-        غشاء التيلاكويد ليس مجرد حاجز دهني، بل هو فسيفساء بروتينية تضم <span class="keyword">الأنظمة الضوئية PS I و PS II</span> التي تعتبر القلب النابض للمرحلة الكيموضوئية. هذه الأنظمة عبارة عن معقدات ضخمة تتكون من بروتينات هيكلية وأصباغ يخضورية مرتبة بدقة فائقة، حيث تعمل هذه التشكيلة الجزيئية على استقبال الطاقة الضوئية وتحويلها إلى طاقة كهربائية في شكل إلكترونات مهيجة، مما يطلق شرارة التحولات الطاقوية.
-        <h4>ب. سلسلة نواقل الإلكترونات وتدرج الكمون:</h4> 
-        يحتوي الغشاء على سلسلة متكاملة من <span class="keyword">نواقل الإلكترونات</span> المرتبة حسب تدرج متزايد لكمون الأكسدة والإرجاع، مما يضمن تدفقاً تلقائياً ومستمراً للإلكترونات. هذه النواقل ليست مجرد جسور للعبور، بل إن بعضها يلعب دوراً مزدوجاً كونه ناقلاً للإلكترونات ومضخة للبروتونات في آن واحد، مستغلاً الطاقة المفقودة من الإلكترونات لنقل الشوارد عكس تدرج تركيزها.
-        <h4>ج. الكرية المذنبة (ATP Synthase):</h4> 
-        تعتبر <span class="keyword">الكرية المذنبة</span> البروتين الأكثر تعقيداً في غشاء التيلاكويد، حيث تتكون من جزء قاعدي مدمج في الغشاء يمثل قناة شاردية، ورأس بارز نحو الحشوة يمتلك نشاطاً إنزيمياً. تعمل هذه الكرية كمحرك جزيئي حقيقي، حيث تستخدم القوة المحركة البروتونية الناتجة عن تدفق البروتونات لتدوير أجزائها الداخلية، مما يوفر الطاقة الميكانيكية اللازمة لفسفرة الـ ADP وتحويله إلى الـ <span class="keyword">ATP</span> الغني بالروابط الطاقوية.
-    </div>
+        <div class="box">
+            <h2><span class="num-badge">3</span> التركيب الجزيئي لغشاء التيلاكويد</h2>
 
-    <h2>3. الخصائص الفيزيائية والكيميائية للأصباغ اليخضورية</h2>
-    <div class="box">
-        <h4>أ. أطياف الامتصاص والانتقائية الضوئية:</h4> 
-        تمتلك الأصباغ اليخضورية (يخضور أ، ب) قدرة فائقة على امتصاص الطاقة الضوئية في مناطق محددة من الطيف المرئي، خاصة في الأطوال الموجية الزرقاء والحمراء. هذا الامتصاص الانتقائي يعكس الطبيعة الكيميائية لجزيئة اليخضور التي تحتوي على حلقة بورفيرين مركزية بها ذرة مغنيسيوم، وهي المسؤولة عن اقتناص الفوتونات وتحويلها إلى طاقة كيميائية، بينما تعكس اللون الأخضر وهو ما يعطي النبات لونه المميز.
-        <h4>ب. طيف النشاط وكفاءة التركيب الضوئي:</h4> 
-        يمثل طيف النشاط كفاءة النبات في القيام بعملية التركيب الضوئي عند كل طول موجي، ويتم قياسه بمقدار الأكسجين المنطلق أو CO2 الممتص. يلاحظ وجود تطابق تام بين منحنى طيف الامتصاص ومنحنى طيف النشاط، مما يثبت بما لا يدع مجالاً للشك أن الأصباغ التي تمتص الضوء هي نفسها المسؤولة عن تحفيز التفاعلات الكيميائية.
-        <h4>ج. أصباغ الجزرين والأدوار المساعدة:</h4> 
-        بالإضافة لليخضور، توجد أصباغ مساعدة تسمى <span class="keyword">الكاروتينويدات (الجزرين)</span> التي تمتص الضوء في مناطق لا يغطيها اليخضور بشكل جيد، ثم تنقل هذه الطاقة إليه. تلعب هذه الأصباغ دوراً حيوياً في حماية اليخضور من الأكسدة الضوئية الناتجة عن شدة الإضاءة العالية، حيث تقوم بتصريف الطاقة الزائدة ومنع تشكل الجذور الحرة الضارة.
-    </div>
+            <h4>أ. الأنظمة الضوئية:</h4>
+            <ul>
+                <li><span style="color: var(--accent-orange); font-weight: bold;">PS II (P680):</span> مدمج في غشاء التيلاكويد.</li>
+                <li><span style="color: var(--accent-orange); font-weight: bold;">PS I (P700):</span> مدمج في غشاء التيلاكويد.</li>
+            </ul>
 
-    <h2>4. بنية وتخصص النظام الضوئي (Photosystem)</h2>
-    <div class="box">
-        <h4>أ. الأصباغ الهوائية (اللاقطة):</h4> 
-        تتوزع مئات الجزيئات من اليخضور والأصباغ المساعدة في الجزء المحيطي للنظام الضوئي، مشكلة ما يشبه الهوائي اللاقط للفوتونات. وظيفة هذه الأصباغ هي امتصاص الطاقة من الضوء والوصول إلى حالة التهيج، ثم نقل هذه الطاقة بسرعة هائلة من جزيئة إلى أخرى عن طريق الرنين الفيزيائي، حتى تصل كل الطاقة المجمعة إلى نقطة مركزية واحدة تسمى <span class="keyword">مركز التفاعل</span>.
-        <h4>ب. مركز التفاعل والزوج الخاص:</h4> 
-        يقع في قلب النظام الضوئي ويحتوي على زوج خاص من جزيئات اليخضور "أ" المرتبطة ببروتينات معينة تمنحها خصائص فريدة. عندما يستقبل هذا الزوج الطاقة المجمعة من الأصباغ اللاقطة، ترتفع طاقة إلكتروناته لدرجة تجعله يقذفها نحو <span class="keyword">مستقبل إلكترونات أولي</span>، متحولاً بذلك من حالة تهيج فيزيائية إلى تفاعل كيميائي حقيقي يسمى الأكسدة الضوئية.
-        <h4>ج. التنظيم الفراغي والكفاءة الطاقوية:</h4> 
-        لا تسبح الأصباغ بشكل عشوائي داخل النظام الضوئي، بل يتم تثبيتها بواسطة بروتينات هيكلية خاصة تضمن المسافة والزاوية المثالية بين كل جزيئة وأخرى. هذا التنظيم الفراغي الدقيق هو سر الكفاءة العالية في نقل الطاقة بالرنين، حيث يمنع ضياع الطاقة في شكل حرارة ويضمن وصول أكثر من 90% من الفوتونات الممتصة إلى مركز التفاعل.
-    </div>
+            <h4>ب. السلسلة التركيبية الضوئية (نواقل الإلكترونات):</h4>
+            <ul>
+                <li><span style="color: var(--accent-blue); font-weight: bold;">T₁ :</span> داخل الطبقة المضاعفة لغشاء التيلاكويد (متحرك).</li>
+                <li><span style="color: var(--accent-blue); font-weight: bold;">T₂ :</span> مدمج يخترق غشاء التيلاكويد.</li>
+                <li><span style="color: var(--accent-blue); font-weight: bold;">T₃ :</span> في تجويف التيلاكويد (السطح الداخلي للغشاء).</li>
+                <li><span style="color: var(--accent-purple); font-weight: bold;">T'₁ :</span> في الحشوة (على السطح الخارجي للغشاء).</li>
+                <li><span style="color: var(--accent-purple); font-weight: bold;">T'₂ :</span> مدمج على السطح الخارجي للغشاء (جهة الحشوة).</li>
+            </ul>
 
-    <h2>5. التحلل الضوئي للماء وانطلاق غاز الأكسجين</h2>
-    <div class="box">
-        <h4>أ. تجربة "روبن وكامن" ومصدر الأكسجين:</h4> 
-        لسنوات طويلة ساد اعتقاد خاطئ بأن الأكسجين المنطلق من النبات مصدره CO2، لكن <span class="keyword">تجربة روبن وكامن</span> باستخدام نظير الأكسجين المشع حسمت الجدل. عند تزويد النبات بماء مشع، انطلق أكسجين مشع، وعند تزويده بـ CO2 مشع، انطلق أكسجين عادي، مما أثبت أن الأكسجين الذي نتنفسه هو ناتج عن شطر جزيئات الماء داخل التيلاكويد.
-        <h4>ب. المعقد الإنزيمي المحلل للماء:</h4> 
-        تتم عملية شطر الماء بفضل معقد إنزيمي مرتبط بالنظام الضوئي الثاني (PS II) يحتوي على ذرات المنجنيز. يقوم هذا المعقد بانتزاع الإلكترونات من جزيئات الماء في تفاعل كيميائي دقيق، مما يؤدي لتفكك الماء إلى غاز أكسجين يطرح خارجاً، وإلكترونات تذهب لتعويض النقص في مركز التفاعل، وبروتونات تساهم في رفع تركيز الحامضية داخل تجويف التيلاكويد.
-        <div class="equation">2H₂O —→ O₂ + 4H⁺ + 4e⁻</div>
-        <h4>ج. العلاقة بين تحلل الماء وتدفق الإلكترونات:</h4> 
-        يمثل التحلل الضوئي للماء "المضخة المعوضة" التي تضمن عدم توقف السلسلة التركيبية الضوئية؛ فلولا تعويض الإلكترونات المفقودة من PS II، لتوقف النظام عن العمل بعد أول نبضة ضوئية. هذا الربط بين الضوء والماء يفسر لماذا يذبل النبات ويتوقف نموه عند العطش الشديد.
-    </div>
+            <h4>ج. الكرية المذنبة:</h4>
+            <ul>
+                <li><span style="color: var(--accent-green); font-weight: bold;">إنزيم ATP Synthase:</span> يخترق غشاء التيلاكويد (القاعدة F₀ في الغشاء، والرأس F₁ يتجه نحو الحشوة).</li>
+            </ul>
+        </div>
 
-    <h2>6. سلسلة انتقال الإلكترونات وتدرج كمون الأكسدة</h2>
-    <div class="box">
-        <h4>أ. انتقال الإلكترونات التلقائي:</h4> 
-        بمجرد انطلاق الإلكترونات من PS II، تبدأ رحلة عبر سلسلة من النواقل البروتينية المرتبة حسب تدرج متزايد في <span class="keyword">كمون الأكسدة والإرجاع</span>. هذا الترتيب يضمن أن الإلكترونات تنتقل تلقائياً من الناقل ذو الكمون المنخفض إلى الناقل ذو الكمون الأعلى، تماماً كتدفق الماء من المرتفعات إلى المنخفضات.
-        <h4>ب. الربط بين النظامين الضوئيين:</h4> 
-        تعمل هذه السلسلة كجسر واصل يربط بين PS II و PS I، حيث تستقبل جزيئات اليخضور في PS I الإلكترونات القادمة من السلسلة لتعويض ما فقدته هي الأخرى عند تعرضها للضوء. هذا التعاون يضمن بقاء تدفق الإلكترونات مستمراً كحلقة وصل واحدة تبدأ من الماء وتنتهي عند المستقبل النهائي.
-        <h4>ج. التغيرات الطاقوية أثناء النقل:</h4> 
-        خلال انتقال الإلكترونات عبر النواقل، تفقد جزءاً من طاقتها التي اكتسبتها من الضوء؛ هذه الطاقة لا تضيع سدى، بل يتم استغلالها من طرف نواقل معينة للقيام بعمل ميكانيكي وكيميائي، وهو السر في قدرة الخلية على بناء جزيئات الـ ATP لاحقاً.
-    </div>
+        <div class="box">
+            <h2><span class="num-badge">4</span> أطياف الامتصاص وأطياف النشاط للأصباغ اليخضورية</h2>
+            
+            <h4>أ. طيف الامتصاص (يخضور أ وب):</h4>
+            <p>
+                يمثل كمية الضوء الممتصة من طرف <span style="color: var(--accent-green); font-weight: bold;">يخضور (أ) ويخضور (ب)</span> حسب الأطوال الموجية. يمتص اليخضور الضوء بكفاءة عالية في منطقتي <span style="color: var(--accent-blue); font-weight: bold;">اللون الأزرق والأحمر</span>.
+            </p>
+            
+            <h4>ب. طيف النشاط للتركيب الضوئي:</h4>
+            <p>
+                يمثل شدة عملية التركيب الضوئي (المقاسة بطرح <span style="color: var(--accent-green); font-weight: bold;">O₂</span> أو امتصاص <span style="color: var(--accent-blue); font-weight: bold;">CO₂</span>) بدلالة الأطوال الموجية للضوء المستعمل.
+            </p>
+            
+            <h4>ج. الاستنتاج (العلاقة بين الطيفين):</h4>
+            <p>
+                يوجد <span style="color: var(--accent-orange); font-weight: bold;">تطابق</span> بين منحنى طيف الامتصاص لليخضور ومنحنى طيف النشاط، مما يدل على أن <span style="color: var(--accent-purple); font-weight: bold;">الأصباغ اليخضورية (أ وب)</span> هي المسؤولة الأساسية عن امتصاص الطاقة الضوئية المحفزة لتفاعلات التركيب الضوئي.
+            </p>
+        </div>
 
-    <h2>7. القوة المحركة البروتونية ونشوء تدرج الـ pH</h2>
-    <div class="box">
-        <h4>أ. آلية ضخ البروتونات:</h4> 
-        يعمل الناقل الرئيسي كأهم محطة طاقة في غشاء التيلاكويد، حيث يستغل الطاقة المتحررة من تدفق الإلكترونات ليقوم بضخ بروتونات H+ من الحشوة نحو تجويف التيلاكويد عكس تدرج تركيزها، مما يحول الطاقة الكيميائية للإلكترونات إلى طاقة وضع كهرومغناطيسية.
-        <h4>ب. تراكم الشوارد داخل التجويف:</h4> 
-        يتجمع في تجويف التيلاكويد عدد ضخم من البروتونات الناتجة من مصدرين أساسيين: التحلل الضوئي للماء وعملية الضخ. هذا التراكم يجعل تركيز البروتونات داخل التجويف أعلى بكثير من تركيزها في الحشوة، مما يخلق تدرجاً كيميائياً قوياً.
-        <h4>ج. قياس الحامضية والتدرج الكهربائي:</h4> 
-        يؤدي تراكم البروتونات إلى انخفاض قيمة الـ pH داخل التجويف (حامضية عالية) وارتفاعها في الحشوة (قاعدية نسبية). هذا الفرق في الـ pH يولد <span class="keyword">القوة المحركة البروتونية</span> التي تمثل المخزن الحقيقي للطاقة في المرحلة الضوئية.
-    </div>
+        <div class="box">
+            <h2><span class="num-badge">5</span> بنية وتخصص النظام الضوئي (Photosystem)</h2>
+            
+            <h4>أ. البنية الجزيئية والمعقد البروتيني للنظام الضوئي:</h4>
+            <p>
+                يُعتبر النظام الضوئي <span style="color: var(--accent-orange); font-weight: bold;">معقداً بروتينياً ضخماً</span> ومدمجاً في غشاء التيلاكويد، ويتكون بنيوياً من جزأين أساسيين:
+            </p>
+            <ul>
+                <li>
+                    <span style="color: var(--accent-green); font-weight: bold;">الأصباغ الهوائية:</span> تضم <span style="color: var(--accent-blue); font-weight: bold;">المئات من جزيئات يخضور أ ويخضور ب</span> بالإضافة إلى الأصباغ المساعدة مثل <span style="color: var(--accent-orange); font-weight: bold;">أشباه الجزرين</span>.
+                </li>
+                <li>
+                    <span style="color: var(--accent-purple); font-weight: bold;">مركز التفاعل:</span> يحتوي على <span style="color: var(--accent-orange); font-weight: bold;">الزوج الخاص من يخضور أ</span> والمرمز بـ <span style="color: var(--accent-orange); font-weight: bold;">P680</span> (في النظام الضوئي الثاني PS II) أو <span style="color: var(--accent-orange); font-weight: bold;">P700</span> (في النظام الضوئي الأول PS I).
+                </li>
+            </ul>
+            
+            <h4>ب. آلية انتقال الطاقة (ظاهرة الرنين):</h4>
+            <p>
+                جزيئات اليخضور المتجاورة. عند <span style="color: var(--accent-orange); font-weight: bold;">سقوط الضوء</span>، تمتص إحدى جزيئات الهوائي <span style="color: var(--accent-blue); font-weight: bold;">الفوتون</span> فتكتسب طاقة و<span style="color: var(--accent-green); font-weight: bold;">تتهيج</span>. وبدلاً من أن تتحرك هذه الجزيئة أو تفقد إلكتروناتها، تقوم بتمرير هذه الطاقة بطريقة <span style="color: var(--accent-purple); font-weight: bold;">عشوائية</span> إلى الجزيئة المجاورة لها، والتي تمررها بدورها للتي تليها. تُعرف هذه الآلية الفيزيائية بـ <span style="color: var(--accent-purple); font-weight: bold;">ظاهرة الرنين</span>. وتستمر هذه العملية حتى تتجمع كل الطاقة وتصل إلى نقطة الهدف وهي <span style="color: var(--accent-orange); font-weight: bold;">مركز التفاعل</span>. مع التأكيد على أن <span style="color: var(--accent-green); font-weight: bold;">الطاقة وحدها هي التي تنتقل</span> ولا يتم <span style="color: var(--accent-blue); font-weight: bold;">فقدان أي طاقة أو إلكترونات</span> في هذه المرحلة.
+            </p>
 
-    <h2>8. الفسفرة التاكسدية ودور الكرية المذنبة</h2>
-    <div class="box">
-        <h4>أ. خروج البروتونات عبر القناة:</h4> 
-        بما أن غشاء التيلاكويد غير نفوذ للبروتونات، فإن المنفذ الوحيد المتاح لها للعودة إلى الحشوة هو القناة الشاردية الموجودة في قاعدة الكرية المذنبة، حيث تندفع البروتونات بقوة هائلة محولة طاقة الوضع إلى طاقة حركية.
-        <h4>ب. آلية عمل إنزيم ATP Synthase:</h4> 
-        يحتوي رأس الكرية المذنبة على مواقع نشطة قادرة على ربط جزيئة ADP بجزيئة فوسفات Pi. عندما تدور أجزاء الكرية بفعل تدفق البروتونات، يتم تقريب المتفاعلات وضغطهما معاً لتشكيل رابطة غنية بالطاقة، منتجة بذلك جزيئة ATP.
-        <h4>ج. المعادلة الكيميائية الإجمالية للفسفرة الضوئية:</h4>
-        <div class="equation">ADP + Pi + 光 (Energy) —[ATP Synthase]—→ ATP + H₂O</div>
-        <h4>د. المردود الطاقوي للفسفرة:</h4> 
-        تعتبر هذه العملية ذات كفاءة عالية، حيث تنتج جزيئة <span class="keyword">ATP</span> واحدة مقابل كل عدد محدد من البروتونات العابرة، وتعتبر استمرارية هذه العملية كلياً على استمرارية الإضاءة.
-    </div>
+            <h4>ج. أكسدة مركز التفاعل والمعادلة الكيميائية:</h4>
+            <p>
+                بمجرد وصول كل الطاقة المتراكمة إلى الزوج الخاص لمركز التفاعل، يتهيج ويقذف إلكتروناً <span style="color: var(--accent-blue); font-weight: bold;">غنياً جداً بالطاقة</span> نحو <span style="color: var(--accent-orange); font-weight: bold;">ناقل الإلكترونات</span>، مما يؤدي إلى أكسدة مركز التفاعل وفق المعادلة التالية:
+            </p>
+            
+            <div class="equation">
+                <span style="color: var(--accent-orange); font-weight: bold;">P</span> + الضوء ───&gt; <span style="color: var(--accent-purple); font-weight: bold;">P*</span> &nbsp;&nbsp;&nbsp;&nbsp;ثم&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: var(--accent-purple); font-weight: bold;">P*</span> ───&gt; <span style="color: var(--accent-green); font-weight: bold;">P⁺</span> + <span style="color: var(--accent-blue); font-weight: bold;">e⁻</span>
+            </div>
+            
+            <div class="tip-box">
+                <span class="tip-title">ملاحظة توضيحية لرموز المعادلة:</span>
+                <ul>
+                    <li><span style="color: var(--accent-orange); font-weight: bold;">P</span>: يمثل الزوج الخاص لليخضور (مثل <span style="color: var(--accent-orange); font-weight: bold;">P680</span> أو <span style="color: var(--accent-orange); font-weight: bold;">P700</span>).</li>
+                    <li><span style="color: var(--accent-purple); font-weight: bold;">P*</span>: جزيئة اليخضور في حالة تهيج.</li>
+                    <li><span style="color: var(--accent-green); font-weight: bold;">P⁺</span>: جزيئة اليخضور في حالة أكسدة بعد فقدان الإلكترون.</li>
+                    <li><span style="color: var(--accent-blue); font-weight: bold;">e⁻</span>: الإلكترون المقذوف والغني بالطاقة.</li>
+                </ul>
+            </div>
+        </div>
 
-    <h2>9. إرجاع المستقبل النهائي وإنتاج الـ NADPH,H+</h2>
-    <div class="box">
-        <h4>أ. دور إنزيم NADP-Reductase:</h4> 
-        في نهاية سلسلة النواقل، تصل الإلكترونات إلى الناقل الأخير الذي يسلمها لإنزيم <span class="keyword">NADP-Reductase</span> الموجود على جهة الحشوة، ليقوم بدمج الإلكترونات مع بروتونات H+ وتثبيتها على مستقبل نهائي NADP+ محولاً إياه إلى NADPH,H+.
-        <h4>ب. المعادلة التفاعلية لإرجاع المستقبل النهائي:</h4>
-        <div class="equation">NADP⁺ + 2e⁻ + 2H⁺ —[NADP-Reductase]—→ NADPH + H⁺</div>
-        <h4>ج. أهمية نواتج المرحلة الضوئية:</h4> 
-        يعتبر NADPH,H+ حاملاً للهيدروجين ذو قوة اختزالية عالية، وهو يمثل مع الـ ATP <span class="keyword">الزوج الطاقوي</span> الضروري لعمل دورة كالفن وبناء السكريات.
-    </div>
+        <div class="box">
+            <h2><span class="num-badge">6</span> التحلل الضوئي للماء وانطلاق غاز الأكسجين</h2>
+            
+            <h4>أ. إثبات مصدر الأكسجين المنطلق (تجربة روبن):</h4>
+            <p>
+                أثبتت التشاركات التجريبية للعالم <span style="color: var(--accent-purple); font-weight: bold;">روبن (Ruben)</span> باستعمال النظير الثقيل والمشع للأكسجين (<span style="color: var(--accent-orange); font-weight: bold;">O18</span>) أن مصدر غاز الأكسجين (<span style="color: var(--accent-green); font-weight: bold;">O₂</span>) المنطلق أثناء عملية التركيب الضوئي هو <span style="color: var(--accent-blue); font-weight: bold;">الماء (H₂O)</span> وليس ثاني أكسيد الكربون (<span style="color: var(--accent-purple); font-weight: bold;">CO₂</span>).
+            </p>
+            
+            <h4>ب. آلية التحلل الضوئي للماء:</h4>
+            <p>
+                يتأكسد جزيء الماء داخل <span style="color: var(--accent-purple); font-weight: bold;">تجويف التيلاكويد</span> بتدخل معقد إنزيمي محفز مرتبط بـ <span style="color: var(--accent-orange); font-weight: bold;">النظام الضوئي الثاني (PS II)</span> وتحت تأثير الضوء، وفق المعادلة التالية:
+            </p>
+            
+            <div class="equation">
+                2H₂O ───&gt; O₂ + 4H⁺ + 4e⁻
+            </div>
+            
+            <h4>ج. مصير نواتج تحلل الماء:</h4>
+            <ul>
+                <li>
+                    <span style="color: var(--accent-orange); font-weight: bold;">الإلكترونات (4e⁻):</span> تستغل لـ <span style="color: var(--accent-orange); font-weight: bold;">إرجاع وتعويض الإلكترونات المفقودة</span> من مركز التفاعل المؤكسد (<span style="color: var(--accent-orange); font-weight: bold;">P680⁺</span>) للنظام الضوئي الثاني <span style="color: var(--accent-orange); font-weight: bold;">PS II</span>.
+                </li>
+                <li>
+                    <span style="color: var(--accent-purple); font-weight: bold;">البروتونات (4H⁺):</span> تتراكم داخل <span style="color: var(--accent-purple); font-weight: bold;">تجويف التيلاكويد</span> مساهمة في تشكيل <span style="color: var(--accent-purple); font-weight: bold;">تدرج تركيز البروتونات</span>.
+                </li>
+                <li>
+                    <span style="color: var(--accent-green); font-weight: bold;">غاز الأكسجين (O₂):</span> يطرح كناتج ثانوي لعملية التركيب الضوئي نحو <span style="color: var(--accent-green); font-weight: bold;">الوسط الخارجي</span> (أو الحشوة ثم الخروج عبر الثغور).
+                </li>
+            </ul>
 
-    <h2>10. تجربة أرنون والشروط التجريبية للفسفرة</h2>
-    <div class="box">
-        <h4>أ. التيلاكويدات المعزولة والوسط التجريبي:</h4> 
-        قام أرنون بعزل تيلاكويدات ووضعها في وسط يحتوي على ADP و Pi مع توفير الضوء، فسجل تركيب الـ ATP وانطلاق الأكسجين. أثبتت هذه التجربة أن التيلاكويد هو وحدة وظيفية مستقلة.
-        <h4>ب. إثبات الارتباط بين الضوء والفسفرة:</h4> 
-        أظهرت التجارب أن عملية فسفرة الـ ADP لا تحدث في الظلام، مما أكد أن الطاقة اللازمة لربط الفوسفات تأتي من الضوء عبر تدرج البروتونات (الفسفرة الضوئية).
-        <h4>ج. دور الكواشف الصبغية:</h4> 
-        استخدم العلماء كواشف ملونة (مثل كاشف هيل) تتغير بتغير حالة الأكسدة والإرجاع لتتبع مسار الإلكترونات في تجربة أرنون، مما سمح برسم المخطط الكامل لتدفق الطاقة داخل الغشاء.
-        <div class="equation">2H₂O + 2A —[Light]—→ 2AH₂ + O₂ (تجربة هيل لاختبار الأكسدة والإرجاع)</div>
-    </div>
+            <div class="tip-box">
+                <span class="tip-title">ملاحظة منهجية للبكالوريا:</span>
+                <ul>
+                    <li>الغاية الأساسية من التحلل الضوئي للماء ليست طرح <span style="color: var(--accent-green); font-weight: bold;">O₂</span>، بل توفير <span style="color: var(--accent-orange); font-weight: bold;">الإلكترونات (e⁻)</span> اللازمة لإعادة إرجاع <span style="color: var(--accent-orange); font-weight: bold;">P680⁺</span> المؤكسد ليعود إلى حالته الأصلية لاستقبال فوتونات جديدة.</li>
+                </ul>
+            </div>
+        </div>
 
-     <!-- العنوان الرئيسي باللون الأخضر -->
-   <h2 style="color: #22c55e;">11. المرحلة الكيميوحيوية: تثبيت الكربون (CO₂) ودورة كالفن وتصنيع السكريات</h2>
+        <div class="box">
+            <h2><span class="num-badge">7</span> سلسلة انتقال الإلكترونات وتدرج كمون الأكسدة والإرجاع</h2>
+            
+            <h4>أ. مفهوم كمون الأكسدة والإرجاع وكيفية عمله:</h4>
+            <p>
+                <span style="color: var(--accent-purple); font-weight: bold;">كمون الأكسدة والإرجاع (Redox Potential)</span> هو مقياس لمدى قدرة الجزيئة على كسب أو فقدان الإلكترونات. الجزيئة ذات الكمون المنخفض تكون <span style="color: var(--accent-orange); font-weight: bold;">مرجِعة قوية</span> (تميل لقذف الإلكترونات بسهولة)، بينما الجزيئة ذات الكمون المرتفع تكون <span style="color: var(--accent-green); font-weight: bold;">مؤكسِدة قوية</span> (تميل لجذب واكتساب الإلكترونات).
+            </p>
+            <p>
+                <strong>كيف يعمل الانتقال؟</strong> تنتقل الإلكترونات تلقائياً وبشكل تلقائي طاقوي من النواقل ذات <span style="color: var(--accent-orange); font-weight: bold;">كمون الأكسدة والإرجاع المنخفض</span> نحو النواقل ذات <span style="color: var(--accent-green); font-weight: bold;">كمون الأكسدة والإرجاع الأكثر ارتفاعاً</span>، متحررة من الطاقة تدريجياً أثناء هذا الانتقال.
+            </p>
 
-   <div class="box">
-       <!-- 1. العنوان الفرعي الأول -->
-       <h4 style="color: #16a34a; margin-top: 10px;">أ. تثبيت CO₂ وبداية التثبيت (أنزيم الروبيسكو):</h4>
-       <p>
-           تبدأ دورة كالفن في الحشوة بخطوة حاسمة وهي دمج غاز CO₂ الجوي مع سكر خماسي الكربون <span class="keyword">ريبولوز ثنائي الفوسفات (RuDP)</span> بوساطة أنزيم الروبيسكو، محولاً الكربون المعدني إلى كربون عضوي. ينتج عن ذلك مركب سداسي الكربون غير مستقر ينشطر سريعاً إلى جزيئتين من <span class="keyword">حمض الفوسفوغليسيريك (APG)</span>، وهو أول مركب كيميائي ثابت في دورة كالفن (نباتات C3).
-       </p>
+            <h4>ب. الترتيب والسلسلة التركيبية الضوئية:</h4>
+            <p>
+                تتكون السلسلة التركيبية الضوئية المدمجة في غشاء التيلاكويد من نواقل بروتينية مرتبة بـ <span style="color: var(--accent-purple); font-weight: bold;">تزايد كمون الأكسدة والإرجاع</span>:
+            </p>
+            <ul>
+                <li>
+                    <span style="color: var(--accent-green); font-weight: bold;">السلسلة الأولى (T1, T2, T3):</span> تنقل الإلكترونات المقذوفة من <span style="color: var(--accent-orange); font-weight: bold;">P680</span> المؤكسد نحو <span style="color: var(--accent-orange); font-weight: bold;">PS I</span> لتعويض إلكتروناته المفقودة.
+                </li>
+                <li>
+                    <span style="color: var(--accent-green); font-weight: bold;">السلسلة الثانية ('T1, 'T2):</span> تنقل الإلكترونات المقذوفة من <span style="color: var(--accent-orange); font-weight: bold;">P700</span> نحو المستقبل النهائي في الحشوة.
+                </li>
+            </ul>
+            
+            <h4>ج. دور الناقل T2 وضخ البروتونات:</h4>
+            <p>
+                أثناء مرور الإلكترونات عبر السلسلة الأولى بتدرج الكمون، تفقد جزءاً من طاقتها؛ يستغل الناقل <span style="color: var(--accent-orange); font-weight: bold;">T2</span> هذه الطاقة لـ <span style="color: var(--accent-blue); font-weight: bold;">ضخ البروتونات (H⁺)</span> من الحشوة ونقلها عكس تدرج التركيز إلى <span style="color: var(--accent-purple); font-weight: bold;">تجويف التيلاكويد</span>.
+            </p>
 
-       <!-- 2. العنوان الفرعي الثاني -->
-       <h4 style="color: #16a34a; margin-top: 15px;">ب.تنشيط الـ APG واستهلاك الطاقة (ATP و NADPH,H⁺):</h4>
-       <p>
-           يتم تنشيط حمض الـ APG بواسطة الفسفرة التنشيطية بفسفرته باستهلاك جزيئات الـ ATP الناتجة من المرحلة الضوئية. بعد ذلك، يُختزل بواسطة المستقبل المرجع <span class="keyword">NADPH,H⁺</span> الذي يقدم الإلكترونات والبروتونات ليتشكل سكر ثلاثي غني بالطاقة وهو <span class="keyword">فوسفو-غليسير ألدهيد (PGAL)</span>.
-       </p>
-
-       <!-- 3. العنوان الفرعي الثالث -->
-       <h4 style="color: #16a34a; margin-top: 15px;">ج. تجديد الـ RuDP وتصنيع النواتج العضوية النهائية:</h4>
-       <p>
-           تُستغل غالبية جزيئات الـ PGAL المتكونة في إعادة تجديد سكر الـ RuDP الخماسي لضمان استمرار الدورة باستهلاك الـ ATP، بينما تخرج جزيئتان من الـ PGAL (لكل 6 جزيئات CO₂ مثبتة) لتركيب جزيئة واحدة من سكر <span class="keyword">الغلوكوز (C₆H₁₂O₆)</span> الذي يُمثل اللبنة الأساسية لبناء النشاء والمواد العضوية الأخرى.
-       </p>
-
-       <!-- 4. المعادلة الإجمالية المدمجة للمرحلة الكيميوحيوية -->
-       <h4 style="color: #16a34a; margin-top: 20px;">د. المعادلات الكيميائية الشاملة:</h4>
-    
-       <p><strong>1. المعادلة الإجمالية الشاملة لدورة كالفن (تركيب جزيئة غلوكوز واحد):</strong></p>
-       <div class="equation">
-           6 CO₂ + 18 ATP + 12 (NADPH + H⁺) —[Rubisco / Stroma]—→ C₆H₁₂O₆ + 18 ADP + 18 Pi + 12 NADP⁺ + 6 H₂O
-       </div>
-
-       <div style="width: 100%; max-width: 800px; height: auto; margin: 25px auto; border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 16px; padding: 12px; background: rgba(11, 15, 25, 0.8); box-shadow: 0 0 15px rgba(56, 189, 248, 0.15); overflow: hidden;">
-    
-            <!-- عنوان الصورة أعلى الإطار -->
-            <div style="text-align: center; font-size: 1.1rem; font-weight: bold; color: #38bdf8; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
-         حلقة كالفن
+            <h4>د. إرجاع المستقبل النهائي للإلكترونات (+NADP):</h4>
+            <p>
+                تصل الإلكترونات الغنية بالطاقة في نهاية السلسلة الثانية إلى الناقل <span style="color: var(--accent-orange); font-weight: bold;">'T2</span>، حيث يتواجد بالصلة معه على وجه غشاء التيلاكويد الموجه للحشوة الإنزيم المرجع لـ <span style="color: var(--accent-purple); font-weight: bold;">المستقبل النهائي للإلكترونات</span> وهو مرافق الإنزيم <span style="color: var(--accent-blue); font-weight: bold;">+NADP</span> (<span style="color: var(--accent-blue); font-weight: bold;">نيكوتين أميد أدنين ثنائي النيوكليوتيد الفوسفات</span>)، فيتم إرجاعه وفق المعادلة التالية:
+            </p>
+            
+            <div class="equation">
+                NADP⁺ + 2e⁻ + 2H⁺(من الحشوة) ───&gt; NADPH,H⁺
             </div>
 
-            <!-- كود الصورة متكيف بالكامل مرتبط بمجلد image3 -->
-            <img src="image6/0.3.png" alt="عنوان الصورة" style="width: 100%; height: auto; border-radius: 10px; display: block;">
-       </div>
+            <div class="tip-box">
+                <span class="tip-title">ملاحظة توضيحية لربط الأفكار:</span>
+                <ul>
+                    <li>مصدر الإلكترونات التي ترجع <span style="color: var(--accent-orange); font-weight: bold;">P680</span> هو أكسدة <span style="color: var(--accent-blue); font-weight: bold;">الماء (H₂O)</span>.</li>
+                    <li>مصدر الإلكترونات التي ترجع <span style="color: var(--accent-orange); font-weight: bold;">P700</span> هي الإلكترونات القادمة من <span style="color: var(--accent-orange); font-weight: bold;">PS II</span> عبر النواقل <span style="color: var(--accent-green); font-weight: bold;">T1, T2, T3</span>.</li>
+                    <li>المستقبل النهائي للإلكترونات هو <span style="color: var(--accent-blue); font-weight: bold;">+NADP</span>، ويتواجد بجوار الناقل <span style="color: var(--accent-orange); font-weight: bold;">'T2</span> على الوجه الخارجي لغشاء التيلاكويد (جهة الحشوة).</li>
+                </ul>
+            </div>
+        </div>
 
+        <div class="box">
+            <h2><span class="num-badge">8</span> التوزيع المتباين للبروتونات ونشوء تدرج الـ pH</h2>
+            
+            <h4>أ. مصادر تراكم البروتونات داخل تجويف التيلاكويد:</h4>
+            <p>
+                يتراكم تركيز مرتفع من <span style="color: var(--accent-purple); font-weight: bold;">البروتونات (H⁺)</span> داخل تجويف التيلاكويد بفضل مصدرين أساسيين يعملان بالتزامن أثناء التعرض للضوء:
+            </p>
+            <ul>
+                <li>
+                    <span style="color: var(--accent-blue); font-weight: bold;">التحلل الضوئي للماء:</span> يتم أكسدة الماء داخل التجويف مما يحرر مباشرة <span style="color: var(--accent-purple); font-weight: bold;">بروتونات (H⁺)</span> تستقر في التجويف.
+                </li>
+                <li>
+                    <span style="color: var(--accent-orange); font-weight: bold;">عملية الضخ عبر الناقل T2:</span> ينقل الناقل <span style="color: var(--accent-orange); font-weight: bold;">T2</span> البروتونات من الحشوة ويضخها نحو تجويف التيلاكويد عكس تدرج التركيز باستغلال الطاقة المتحررة من تدفق الإلكترونات.
+                </li>
+            </ul>
 
-    </div>
+            <h4>ب. نشوء تدرج تركيز البروتونات (تدرج الـ pH):</h4>
+            <p>
+                نتيجة للتراكم المستمر للبروتونات داخل التجويف واستمرار استهلاكها في الحشوة (لإرجاع  ⁺NADP)، ينشأ <span style="color: var(--accent-purple); font-weight: bold;">توزع متباين (تدرج تركيز) للبروتونات</span> على جانبي غشاء التيلاكويد:
+            </p>
+            <ul>
+                <li>
+                    <span style="color: var(--accent-green); font-weight: bold;">داخل تجويف التيلاكويد:</span> تركيز مرتفع جداً للبروتونات (<span style="color: var(--accent-purple); font-weight: bold;">pH حامضي منخفض</span>).
+                </li>
+                <li>
+                    <span style="color: var(--accent-blue); font-weight: bold;">خارج التجويف (في الحشوة):</span> تركيز منخفض للبروتونات (<span style="color: var(--accent-purple); font-weight: bold;">pH قاعدي مرتفع نسبياً</span>).
+                </li>
+            </ul>
 
-    <h2>12. تجربة كالفن وتتبع مسار الكربون المشع ($C^{14}$)</h2>
-    <div class="box">
-        <h4>أ. تقنية الوسم المشع والزمن القصير:</h4> 
-        عرض كالفن طحلب "الكلوريلا" لـ CO2 مشع لفترات قصيرة جداً وقتلها فوراً بكحول مغلي لتوقيف التفاعلات وتجميد حالة الخلية وتتبع المركب الأول للإشعاع.
-        <h4>ب. النتائج: من APG إلى السكريات المعقدة:</h4> 
-        ظهر الإشعاع أولاً في <span class="keyword">APG</span> بعد ثانيتين، ثم في <span class="keyword">PGAL</span> بعد 5 ثوانٍ، وأخيراً في السكريات السداسية والنشاء بعد 30 ثانية، مثبتة أن البناء يتم تدريجياً عبر دورة كالفن.
-    </div>
+            <h4>ج. القوة المحركة البروتونية:</h4>
+            <p>
+                يولد هذا التباين الشديد في تركيز البروتونات وفي الشحنات الكهربائية طاقة كامنة تُعرف بـ <span style="color: var(--accent-purple); font-weight: bold;">القوة المحركة البروتونية</span>، حيث تميل البروتونات بشدة للخروج والعودة نحو الحشوة للوصول إلى حالة التوازن.
+            </p>
 
-    <h2>13. التكامل الوظيفي والتبعية المتبادلة بين التيلاكويد والحشوة</h2>
-    <div class="box">
-        <h4>أ. نواتج المرحلة الكيموضوئية شرط للمرحلة الكيموحيوية:</h4> 
-        يوفر التيلاكويد المركبات الوسيطية المتمثلة في <span class="keyword">ATP</span> و <span class="keyword">NADPH,H⁺</span>، والتي تُستهلك في الحشوة لإرجاع <span class="keyword">CO₂</span> وبناء المواد العضوية (الجلوكوز).
+            <div class="tip-box">
+                <span class="tip-title">ملاحظة توضيحية هامة:</span>
+                <ul>
+                    <li>غشاء التيلاكويد غير نفوذ للبروتونات (<span style="color: var(--accent-purple); font-weight: bold;">H⁺</span>)، مما يمنع تسربها التلقائي ويحفظ هذا التدرج لحين استغلاله عبر منفذ محدد.</li>
+                </ul>
+            </div>
+        </div>
 
-        <h4>ب. تجديد المركبات الوسيطية (دورة النواقل):</h4> 
-        ينتج عن استهلاك المركبات الوسيطية في الحشوة تشكل <span class="keyword">NADP⁺</span> و <span class="keyword">ADP + Pi</span>، والتي تعود إلى التيلاكويد لإعادة إرجاعها وفسفرتها في وجود الضوء والماء، مما يضمن استمرار عملية التركيب الضوئي.
-    </div>
+        <div class="box">
+            <h2><span class="num-badge">9</span> الفوسفورة الضوئية ودور الكرية المذنبة</h2>
+            
+            <h4>أ. بنية وتخصص الكرية المذنبة (F₀ - F₁):</h4>
+            <p>
+                تُعتبر الكرية المذنبة معقداً إنزيمياً مدمجاً في غشاء التيلاكويد، وتتكون بنيوياً ووظيفياً من جزأين رئيسيين:
+            </p>
+            <ul>
+                <li>
+                    <span style="color: var(--accent-orange); font-weight: bold;">الجزء F₀ (القناة الشاردية):</span> وهو الجزء المنغرس في غشاء التيلاكويد، يمثل <span style="color: var(--accent-orange); font-weight: bold;">قناة شاردية نفوذة للبروتونات</span> تسمح بمرور شوارد <span style="color: var(--accent-purple); font-weight: bold;">H⁺</span> المنهمرة وفق تدرج التركيز من التجويف نحو الحشوة.
+                </li>
+                <li>
+                    <span style="color: var(--accent-green); font-weight: bold;">الجزء F₁ (الرأس المحفز):</span> وهو الجزء الكروي البارز جهة الحشوة، ويمثل الإنزيم النشط <span style="color: var(--accent-green); font-weight: bold;">ATP سينتاز (ATP synthase)</span> ويمتلك مواقع تثبيت لـ <span style="color: var(--accent-blue); font-weight: bold;">ADP</span> و<span style="color: var(--accent-orange); font-weight: bold;">Pi</span>.
+                </li>
+            </ul>
 
-    <h2>14. تجربة إيمرسون وتعاون الأنظمة الضوئية (PS)</h2>
-    <div class="box">
-        <h4>أ. ظاهرة التعزيز لإيمرسون:</h4> 
-        اكتشف أن تعريض النبات لضوء 680 نانومتر و 700 نانومتر معاً يعطي معدلاً أكبر بكثير من مجموع معدليهما منفصلين، كدليل أول على تطلب اقتناص الضوء لنظامين.
-        <h4>ب. تدفق الإلكترونات "مخطط Z":</h4> 
-        يوضح كيف تكتسب الإلكترونات الطاقة مرتين (في PS II و PS I) لتمنحها القوة لإرجاع المستقبل النهائي الصعب (NADP+).
-    </div>
+            <h4>ب. آلية خروج البروتونات وتحفيز تركيب الـ ATP:</h4>
+            <p>
+                بما أن غشاء التيلاكويد غير نفوذ لشوارد البروتونات، فإن اندفاع شوارد <span style="color: var(--accent-purple); font-weight: bold;">H⁺</span> عبر الجزء <span style="color: var(--accent-orange); font-weight: bold;">F₀</span> محمولاً بالقوة المحركة البروتونية يولد طاقة حركية تُنشط الجزء <span style="color: var(--accent-green); font-weight: bold;">F₁</span> جهة الحشوة، فيحفز ربط (فسفرة) جزيئة <span style="color: var(--accent-blue); font-weight: bold;">ADP</span> بالمجموع الفوسفاتي <span style="color: var(--accent-orange); font-weight: bold;">Pi</span> لتشكيل جزيئة الـ <span style="color: var(--accent-green); font-weight: bold;">ATP</span>، وتُعرف هذه العملية بـ <span style="color: var(--accent-purple); font-weight: bold;">الفوسفورة الضوئية</span>.
+            </p>
+            
+            <h4>ج. المعادلة الكيميائية للفوسفورة الضوئية:</h4>
+            <p>
+                تتم عملية فسفرة الـ ADP بتدخل إنزيم ATP سينتاز وفق المعادلة التالية:
+            </p>
 
-    <h2>15. تأثير العوامل الخارجية (عوامل المردود الأقصى)</h2>
-    <div class="box">
-        <h4>أ. شدة الإضاءة ونقطة التشبع:</h4> 
-        يزداد معدل التركيب بزيادة الإضاءة حتى نقطة التشبع الضوئي حيث تشغل الأنظمة بالكامل، وبعدها قد تتلف الأصباغ إن زادت الإضاءة عن الحد.
-        <h4>ب. تركيز CO2 ودرجة الحرارة:</h4> 
-        باعتباره مادة خام منخفضة التركيز جوياً، فإن زيادته تسرع عمل الروبيسكو، بينما تتأثر المرحلة الكيموحيوية حرارياً نظراً لاعتمادها على الإنزيمات.
-    </div>
+            <div class="equation">
+                ADP + Pi + طاقة ───[ ATP Synthase ]───&gt; ATP + H₂O
+            </div>
 
-<h2>16. قياس تركيز APG و RuDP في الظلام وغياب CO₂</h2>
-<div class="box">
-    <h4 style="color: #c084fc !important;">أ. عند الانتقال إلى الظلام (تراكم APG ونفاد RuDP):</h4>
-    يؤدي انقطاع الضوء إلى توقف المرحلة الكيموضوئية وبالتالي <span class="keyword">توقف تشكّل ATP و NADPH,H⁺</span>، مما يسبب:
-    <br>• <b style="color: #f43f5e;">تراكم وارتفاع تركيز APG:</b> لاستمرار تشكّله من <span class="keyword">تثبيت CO₂</span> مع توقف <span class="keyword">إرجاعه واستهلاكه</span> لغياب المركبات الوسيطية.
-    <br>• <b style="color: #38bdf8;">انخفاض ونفاد تركيز RuDP:</b> لاستمرار <span class="keyword">استهلاكه في تثبيت CO₂</span> دون <span class="keyword">إعادة تجديده</span> لغياب ATP.
+            <div class="tip-box">
+                <span class="tip-title">ملاحظة منهجية للبكالوريا:</span>
+                <ul>
+                    <li>شرط تركيب الـ <span style="color: var(--accent-green); font-weight: bold;">ATP</span> هو وجود تدرج في تركيز البروتونات (<span style="color: var(--accent-purple); font-weight: bold;">pH التجويف أشد حامضية من pH الحشوة</span>)، سلامة  <span style="color: var(--accent-green); font-weight: bold;">الكرية المذنبة</span>، وتوفر <span style="color: var(--accent-blue); font-weight: bold;">ADP</span> و<span style="color: var(--accent-orange); font-weight: bold;">Pi</span>.</li>
+                </ul>
+            </div>
+        </div>
 
-    <h4 style="color: #c084fc !important;">ب. عند الانتقال إلى وسط خالٍ من CO₂ (تراكم RuDP ونفاد APG):</h4>
-    يؤدي غياب CO₂ إلى <span class="keyword">توقف تثبيته</span> في الحشوة، مع استمرارية المرحلة الكيموضوئية وتوفر الضوء، مما يسبب:
-    <br>• <b style="color: #38bdf8;">تراكم وارتفاع تركيز RuDP:</b> لاستمرار <span class="keyword">تجديده وتشكّله</span> بوجود المركبات الوسيطية (ATP) مع توقف <span class="keyword">استهلاكه لعدم وجود CO₂</span>.
-    <br>• <b style="color: #f43f5e;">انخفاض ونفاد تركيز APG:</b> لاستمرار <span class="keyword">إرجاعه واستهلاكه</span> بوجود الضوء دون <span class="keyword">تركيب جزيئات جديدة</span> منه.
+        <div class="box">
+            <h2><span class="num-badge">10</span> شروط ونواتج المرحلة الكيميوضوئية والمعادلة الإجمالية</h2>
+            
+            <h4>أ. شروط حدوث المرحلة الكيميوضوئية:</h4>
+            <p>
+                تتطلب المرحلة الكيميوضوئية المباشرة في غشاء التيلاكويد توفر أربعة شروط أساسية:
+            </p>
+            <ul>
+                <li>
+                    <span style="color: var(--accent-orange); font-weight: bold;">الضوء:</span> كمصدر للطاقة اللازمة لتهيج أصباغ الأنظمة الضوئية.
+                </li>
+                <li>
+                    <span style="color: var(--accent-blue); font-weight: bold;">الماء (H₂O):</span> كمتبرع ابتدائي بالإلكترونات (<span style="color: var(--accent-orange); font-weight: bold;">e⁻</span>) والبروتونات (<span style="color: var(--accent-purple); font-weight: bold;">H⁺</span>).
+                </li>
+                <li>
+                    <span style="color: var(--accent-purple); font-weight: bold;">المستقبل النهائي للإلكترونات (+NADP):</span> لستقبال الإلكترونات والبروتونات في نهاية السلسلة.
+                </li>
+                <li>
+                    <span style="color: var(--accent-green); font-weight: bold;">مكونات الفوسفورة (ADP + Pi):</span> لمصادرة الطاقة وتحويلها إلى مركب طاقوي.
+                </li>
+            </ul>
+
+            <h4>ب. نواتج المرحلة الكيميوضوئية:</h4>
+            <p>
+                تنتج عن هذه المرحلة ثلاث مخرجات أساسية:
+            </p>
+            <ul>
+                <li>
+                    <span style="color: var(--accent-green); font-weight: bold;">مركب طاقوي غني بالطاقة (ATP):</span> يُستغل في المرحلة الكيميوحيوية (حلقة كالفن).
+                </li>
+                <li>
+                    <span style="color: var(--accent-blue); font-weight: bold;">مرافق إنزيمي مُرجَع (NADPH,H⁺):</span> يُستغل كنواقل لإرجاع الكربون في الحشوة.
+                </li>
+                <li>
+                    <span style="color: var(--accent-orange); font-weight: bold;">غاز الأكسجين (O₂):</span> ناتج ثانوي يُطرح خارج الخلية النباتية.
+                </li>
+            </ul>
+
+            <h4>ج. المعادلة الإجمالية الموزونة للمرحلة الكيميوضوئية:</h4>
+            <p>
+                تُختصر التفاعلات المباشرة للمرحلة الكيميوضوئية بالمعادلة الموزونة التالية:
+            </p>
+
+            <div class="equation">
+                2<span style="color: var(--accent-blue); font-weight: bold;">H₂O</span> + 2<span style="color: var(--accent-purple); font-weight: bold;">NADP⁺</span> + n<span style="color: var(--accent-blue); font-weight: bold;">ADP</span> + n<span style="color: var(--accent-orange); font-weight: bold;">Pi</span> ───[ الضوء / اليخضور ]───&gt; <span style="color: var(--accent-orange); font-weight: bold;">O₂</span> + 2<span style="color: var(--accent-blue); font-weight: bold;">NADPH,H⁺</span> + n<span style="color: var(--accent-green); font-weight: bold;">ATP</span>
+            </div>
+
+        </div>
+
+        <div class="box">
+            <h2><span class="num-badge">11</span> تجربة كالفن وتتبع مسار الكربون المشع (C-14)</h2>
+
+            <h4>أ. تقنية الوسم المشع والزمن القصير:</h4>
+            <p>
+                عرض كالفن معلق طحلب "الكلوريلا" لـ <span style="color: var(--accent-purple); font-weight: bold;">6 جزيئات من CO₂ المشع (C-14)</span> لفترات زمنية قصيرة جداً، ثم قَتَل الطحالب فوراً بإسقاطها في كحول إيثيلي مغلي بهدف توقيف التفاعلات الإنزيمية وتجميد الحالة الكيميائية للخلية لتتبع أول مركب عضوي يدمج الإشعاع.
+            </p>
+
+            <h4>ب. النتائج: من APG إلى السكريات المعقدة:</h4>
+            <p>
+                أظهر التحليل الكروماتوغرافي الاستشعاعي ظهور الإشعاع بالترتيب التالي:
+            </p>
+            <ul>
+                <li><strong>بعد ثانيتين (2 ث):</strong> يظهر الإشعاع أولاً في <span style="color: var(--accent-blue); font-weight: bold;">12 جزيئة من APG</span>، مما يثبت أنه أول مركب عضوي ثابت يتشكل أثناء تثبيت الكربون.</li>
+                <li><strong>بعد 5 ثوانٍ (5 ث):</strong> يظهر الإشعاع في السكريات الثلاثية المُمشَّطة وهي <span style="color: var(--accent-purple); font-weight: bold;">12 جزيئة من PGAL</span> الناتجة عن تنشيط الـ APG.</li>
+                <li><strong>بعد 15 إلى 30 ثانية:</strong> يتوزع الإشعاع على <span style="color: var(--accent-orange); font-weight: bold;">6 جزيئات من RuDP</span> المعاد تجديدها، بالإضافة إلى ظهور <span style="color: var(--accent-green); font-weight: bold;">جزيئة واحدة من الغلوكوز (C₆H₁₂O₆)</span> والسكريات السداسية والنشاء، مما يثبت أن البناء الحيوي للمواد العضوية يتم بشكل تدريجي ومتسلسل عبر مراحل دورة كالفن.</li>
+            </ul>
+        </div>
+
+        <div class="box">
+            <h2><span class="num-badge">12</span> قياس تركيز APG و RuDP في الظلام وغياب CO₂</h2>
+
+            <h4>أ. عند الانتقال من الضوء إلى الظلام (تراكم APG ونفاد RuDP):</h4>
+            <p>
+                يؤدي انقطاع الضوء إلى توقف تفاعلات المرحلة الكيميوضوئية مباشرةً، وبالتالي <span style="color: var(--accent-orange); font-weight: bold;">توقف إنتاج ATP و NADPH,H⁺</span>، مما ينعكس على تركيز المركبين كما يلي:
+            </p>
+            <ul>
+                <li>
+                    <span style="color: var(--accent-purple); font-weight: bold;">تراكم وارتفاع تركيز APG (12 APG):</span> بسبب استمرار تشكّله من دمج <span style="color: var(--accent-purple); font-weight: bold;">6 CO₂</span> مع <span style="color: var(--accent-orange); font-weight: bold;">6 RuDP</span>، بالمقابل يتوقف <span style="color: var(--accent-blue); font-weight: bold;">تنشيطه واستغلاله</span> لغياب نواتج المرحلة الكيميوضوئية (<span style="color: var(--accent-green); font-weight: bold;">ATP</span> و<span style="color: var(--accent-blue); font-weight: bold;">NADPH,H⁺</span>).
+                </li>
+                <li>
+                    <span style="color: var(--accent-orange); font-weight: bold;">انخفاض ونفاد تركيز RuDP (6 RuDP):</span> بسبب استمرار <span style="color: var(--accent-purple); font-weight: bold;">استهلاكه في تثبيت CO₂</span>، مع توقف <span style="color: var(--accent-green); font-weight: bold;">إعادة تجديده من PGAL</span> لعدم توفر جزيئات الـ <span style="color: var(--accent-green); font-weight: bold;">ATP</span>.
+                </li>
+            </ul>
+
+            <h4>ب. عند الانتقال إلى وسط خالٍ من CO₂ (تراكم RuDP ونفاد APG):</h4>
+            <p>
+                يؤدي غياب ثاني أكسيد الكربون إلى <span style="color: var(--accent-purple); font-weight: bold;">توقف تفاعل التثبيت</span> بتدخل إنزيم الروبيسكو، مع استمرار المرحلة الكيميوضوئية بوجود الضوء وتوفر نواتجها، مما ينعكس على المركبين كالتالي:
+            </p>
+            <ul>
+                <li>
+                    <span style="color: var(--accent-orange); font-weight: bold;">تراكم وارتفاع تركيز RuDP (6 RuDP):</span> بسبب استمرار <span style="color: var(--accent-green); font-weight: bold;">تجديده من PGAL</span> لتأمين الـ <span style="color: var(--accent-green); font-weight: bold;">ATP</span>، مع توقف <span style="color: var(--accent-purple); font-weight: bold;">استهلاكه لعدم وجود غاز CO₂</span>.
+                </li>
+                <li>
+                    <span style="color: var(--accent-purple); font-weight: bold;">انخفاض ونفاد تركيز APG (12 APG):</span> بسبب استمرار <span style="color: var(--accent-blue); font-weight: bold;">تنشيطه وتحويله إلى PGAL</span> بوجود الضوء ونواتجه، مع توقف <span style="color: var(--accent-purple); font-weight: bold;">تشكّل جزيئات جديدة منه</span> لعدم توفر الـ <span style="color: var(--accent-purple); font-weight: bold;">CO₂</span>.
+                </li>
+            </ul>
+
+            <div class="tip-box">
+                <span class="tip-title">استنتاج كلاسيكي للبكالوريا:</span>
+                <ul>
+                    <li>تثبت هذه التجارب وجود <span style="color: var(--accent-green); font-weight: bold;">تكامل وظيفي وثيق</span> بين المرحلة الكيميوضوئية والمرحلة الكيميوحيوية؛ حيث تتوقف الثانية فور نفاد نواتج الأولى (<span style="color: var(--accent-green); font-weight: bold;">ATP</span> و<span style="color: var(--accent-blue); font-weight: bold;">NADPH,H⁺</span>)، وتتوقف الأولى عند عدم تجديد مستقبلا الشوارد والالكترونات (<span style="color: var(--accent-purple); font-weight: bold;">+NADP</span> و<span style="color: var(--accent-blue); font-weight: bold;">ADP + Pi</span>).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="box">
+            <h2><span class="num-badge">13</span> المرحلة الكيميوحيوية: تثبيت الكربون (CO₂) ودورة كالفن وتصنيع السكريات</h2>
+
+            <h4>أ. تثبيت CO₂ وتشكيل APG (إنزيم الروبيسكو):</h4>
+            <p>
+                تبدأ دورة كالفن في الحشوة (الستروما) بخطوة حاسمة وهي تثبيت <span style="color: var(--accent-purple); font-weight: bold;">6 جزيئات من CO₂</span> الجوي على <span style="color: var(--accent-orange); font-weight: bold;">6 جزيئات من سكر خماسي الكربون (RuDP)</span> بتحفيز من إنزيم <span style="color: var(--accent-green); font-weight: bold;">الروبيسكو (Rubisco)</span>. ينتج عن هذا الدمج مركب سداسي الكربون غير مستقر، ينشطر فوراً ليعطي <span style="color: var(--accent-blue); font-weight: bold;">12 جزيئة من حمض الفوسفوغليسيريك (12 APG)</span> ذو 3 كربون، وهو أول مركب عضوي ثابت في العملية.
+            </p>
+
+            <h4>ب. تنشيط الـ APG وتشكيل سكر ثلاثي (12 PGAL):</h4>
+            <p>
+                يتم تنشيط <span style="color: var(--accent-blue); font-weight: bold;">12 جزيئة من APG</span> باستهلاك نواتج المرحلة الكيميوضوئية؛ حيث تُفسفر بـ <span style="color: var(--accent-green); font-weight: bold;">12 جزيئة من ATP</span> لتتحول إلى 12 ADPG، ثم تتم دمج البروتونات والإلكترونات القادمة من <span style="color: var(--accent-blue); font-weight: bold;">12 جزيئة من المرافق الإنزيمي (12 NADPH,H⁺)</span> لتتحول في النهاية إلى <span style="color: var(--accent-purple); font-weight: bold;">12 جزيئة من سكر ثلاثي الفوسفات (12 PGAL)</span>.
+            </p>
+
+            <h4>ج. تجديد الـ RuDP وتصنيع المواد العضوية (الغلوكوز):</h4>
+            <p>
+                تُستغل <span style="color: var(--accent-purple); font-weight: bold;">10 جزيئات من PGAL</span> (ذات 3 كربون) في إعادة تجديد <span style="color: var(--accent-orange); font-weight: bold;">6 جزيئات من السكر الخماسي (6 RuDP)</span> باستهلاك <span style="color: var(--accent-green); font-weight: bold;">6 جزيئات إضافية من ATP</span> لضمان استمرار الدورة. بينما تُسحب <span style="color: var(--accent-purple); font-weight: bold;">جزيئتان متبقيتان من PGAL</span> للتركيب الحيوي لـ <span style="color: var(--accent-green); font-weight: bold;">جزيئة واحدة من سكر الغلوكوز (1 C₆H₁₂O₆)</span>.
+            </p>
+
+            <h4>د. المعادلة الإجمالية للمرحلة الكيميوحيوية (دورة كالفن):</h4>
+            <p>
+                لتثبيت 6 جزيئات من ثاني أكسيد الكربون وتركيب جزيئة واحدة من سكر الغلوكوز، تُختصر التفاعلات بالمعادلة الموزونة التالية:
+            </p>
+
+            <div class="equation">
+                6CO₂ + 18ATP + 12NADPH,H⁺ ───[ Rubisco / الحشوة ]───&gt; C₆H₁₂O₆ + 18ADP + 18Pi + 12NADP⁺ + 6H₂O
+            </div>
+
+            <div class="tip-box">
+                <span class="tip-title">ملاحظة توضيحية لحساب الحصيلة الطاقوية بالأرقام:</span>
+                <ul>
+                    <li>لتثبيت <span style="color: var(--accent-purple); font-weight: bold;">6 CO₂</span> وتصنيع <span style="color: var(--accent-green); font-weight: bold;">1 غلوكوز</span> يلزم: <span style="color: var(--accent-green); font-weight: bold;">18 ATP</span> (12 في مرحلة التنشيط + 6 في مرحلة التجديد) و<span style="color: var(--accent-blue); font-weight: bold;">12 NADPH,H⁺</span>.</li>
+                </ul>
+            </div>
+
+<div class="calvin-card">
+    <div class="calvin-title">دورة كالفن - حلقة تثبيت CO₂</div>
+    <img src="image6/0.3.png" alt="مخطط دورة كالفن" class="adaptive-diag" />
 </div>
 
-    <h2>17. المخطط التحصيلي النهائي لتحويل الطاقة الحيوية</h2>
-    <div class="box">
-        <h4>أ. التحول الطاقوي في الصانعة الخضراء:</h4>
-        تُعتبر <span class="keyword">الصانعة الخضراء</span> العضية المسؤولة عن تحويل الطاقة الضوئية إلى طاقة كيميائية كامنة مُخزنة في الروابط الكيميائية للمواد العضوية (مثل الجلوكوز والنشاء)، وذلك عبر مرحلتين متكاملتين:
-    
-        <br>• <b style="color: #38bdf8;">المرحلة الكيموضوئية (على مستوى التيلاكويد):</b> تحويل الطاقة الضوئية إلى طاقة كيميائية مخزنة في مركب <span class="keyword">ATP</span> ومركب <span class="keyword">NADPH,H⁺</span> مع انطلاق <span class="keyword">O₂</span> ناتج عن أكسدة الماء.
-    
-        <br>• <b style="color: #f97316;">المرحلة الكيموحيوية (على مستوى الحشوة):</b> استعمال الطاقة المخزنة في <span class="keyword">ATP</span> و <span class="keyword">NADPH,H⁺</span> لإرجاع <span class="keyword">CO₂</span> وبناء المادة العضوية.
-
-        <h4>ب. المعادلة الإجمالية لظاهرة التركيب الضوئي:</h4>
-        تتحدد آليتا التركيب الضوئي بالمعادلة الإجمالية الموزونة التالية:
-        <div class="equation">
-            6CO₂ + 12H₂O  — (ضوء / يخضور) ➔  C₆H₁₂O₆ + 6O₂ + 6H₂O
-        </div>
     </div>
+
+
+        <div class="box">
+            <h2><span class="num-badge">14</span> التكامل الوظيفي والتبعية المتبادلة بين التيلاكويد والحشوة</h2>
+
+            <h4>أ. نواتج المرحلة الكيميوضوئية شرط للمرحلة الكيميوحيوية:</h4>
+            <p>
+                يوفر غشاء التيلاكويد أثناء المرحلة الكيميوضوئية المركبات الطاقوية والناقلة المتمثلة في <span style="color: var(--accent-green); font-weight: bold;">18 ATP</span> و<span style="color: var(--accent-blue); font-weight: bold;">12 NADPH,H⁺</span>، والتي تُصَدَّر مباشرة نحو الحشوة (الستروما) لتستغل في <span style="color: var(--accent-purple); font-weight: bold;">تنشيط 12 جزيئة APG</span> وتجديد مستقبل الكربون <span style="color: var(--accent-orange); font-weight: bold;">6 RuDP</span> وبناء سكر الغلوكوز.
+            </p>
+
+            <h4>ب. إعادة تجديد المستقبلا وتدوير النواقل:</h4>
+            <p>
+                ينتج عن استهلاك المركبات الطاقوية في الحشوة تحرير النواتج غير المؤكسدة والمتمثلة في <span style="color: var(--accent-purple); font-weight: bold;">12 +NADP</span> و<span style="color: var(--accent-blue); font-weight: bold;">18 ADP + 18 Pi</span>. تُعاد هذه النواقل إلى غشاء التيلاكويد لتستقبل إلكترونات وبروتونات جديدة وتُفسفر مجدداً بوجود الضوء والماء، مما يضمن استمرارية الدورة والتركيب الضوئي.
+            </p>
+
+            <div class="tip-box">
+                <span class="tip-title">مفهوم التبعية المتبادلة للبكالوريا:</span>
+                <ul>
+                    <li>تتوقف المرحلة الكيميوحيوية في الظلام بسبب نفاد مخزون <span style="color: var(--accent-green); font-weight: bold;">ATP</span> و<span style="color: var(--accent-blue); font-weight: bold;">NADPH,H⁺</span>.</li>
+                    <li>تتوقف المرحلة الكيميوضوئية عند طول مدة غياب <span style="color: var(--accent-purple); font-weight: bold;">CO₂</span> بسبب عدم تجديد المستقبلا الخالية (<span style="color: var(--accent-purple); font-weight: bold;">+NADP</span> و<span style="color: var(--accent-blue); font-weight: bold;">ADP</span>) في الحشوة.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- القسم 15: العوامل الخارجية -->
+        <div class="box">
+            <h2><span class="num-badge">15</span> تأثير العوامل الخارجية على شدة التركيب الضوئي (فكرة تمرين)</h2>
+
+            <h4>أ. شدة الإضاءة ونقطة التشبع:</h4>
+            <p>
+                تُحدد الإضاءة معدل نشاط المرحلة الكيميوضوئية؛ حيث تزداد شدة التركيب الضوئي بزيادة الشدة الضوئية حتى الوصول إلى <span style="color: var(--accent-orange); font-weight: bold;">نقطة التشبع الضوئي</span> التي تصبح عندها جميع الأنظمة الضوئية (<span style="color: var(--accent-orange); font-weight: bold;">PS II</span> و<span style="color: var(--accent-orange); font-weight: bold;">PS I</span>) مشغولة ومُتهدجة بالكامل.
+            </p>
+
+            <h4>ب. تركيز CO₂ ودرجة الحرارة:</h4>
+            <p>
+                يُعتبر <span style="color: var(--accent-purple); font-weight: bold;">CO₂</span> المادة الخام المحفزة لإنزيم <span style="color: var(--accent-green); font-weight: bold;">الروبيسكو</span> في الحشوة؛ وزيادة تركيزه ترفع من معدل تشكل <span style="color: var(--accent-blue); font-weight: bold;">12 APG</span> وتصنيع السكريات. بينما تؤثر <span style="color: var(--accent-orange); font-weight: bold;">درجة الحرارة</span> بشكل مباشر على تفاعلات المرحلة الكيميوحيوية لأنها تفاعلات إنزيمية حيوية تتأثر بالمدى الحراري الأمثل لعمل إنزيم الروبيسكو وإنزيم ATP سينتاز.
+            </p>
+        </div>
+
+
+        <div class="box">
+            <h2><span class="num-badge">16</span> المخطط التحصيلي النهائي لتحويل الطاقة الحيوية</h2>
+
+            <h4>أ. التحول الطاقوي في الصانعة الخضراء:</h4>
+            <p>
+                تُعتبر <span style="color: var(--accent-green); font-weight: bold;">الصانعة الخضراء</span> العضية المسؤولة عن تحويل الطاقة الضوئية إلى طاقة كيميائية كامنة مُخزنة في الروابط الكيميائية للمواد العضوية (مثل الغلوكوز والنشاء)، وذلك عبر مرحلتين متكاملتين ومتبادلتين:
+            </p>
+            <ul>
+                <li>
+                    <span style="color: var(--accent-blue); font-weight: bold;">المرحلة الكيميوضوئية (على مستوى غشاء التيلاكويد):</span> أكسدة <span style="color: var(--accent-blue); font-weight: bold;">12 H₂O</span> وطرح <span style="color: var(--accent-orange); font-weight: bold;">6 O₂</span>، مع تحويل الطاقة الضوئية إلى طاقة كيميائية مؤقتة مخزنة في جزيئات <span style="color: var(--accent-green); font-weight: bold;">18 ATP</span> ومركبات مرجعة <span style="color: var(--accent-blue); font-weight: bold;">12 NADPH,H⁺</span>.
+                </li>
+                <li>
+                    <span style="color: var(--accent-orange); font-weight: bold;">المرحلة الكيميوحيوية (على مستوى الحشوة / الستروما):</span> استهلاك الطاقة المكتسبة في <span style="color: var(--accent-green); font-weight: bold;">18 ATP</span> و<span style="color: var(--accent-blue); font-weight: bold;">12 NADPH,H⁺</span> لتنشيط <span style="color: var(--accent-purple); font-weight: bold;">12 APG</span> وتثبيت <span style="color: var(--accent-purple); font-weight: bold;">6 CO₂</span> وبناء المادة العضوية (<span style="color: var(--accent-green); font-weight: bold;">C₆H₁₂O₆</span>).
+                </li>
+            </ul>
+
+            <h4>ب. المعادلات الإجمالية واشتقاق المعادلة العامة:</h4>
+            
+            <p><b>1. معادلة المرحلة الكيميوضوئية:</b></p>
+            <div class="equation">
+                12 <span style="color: var(--accent-blue); font-weight: bold;">H₂O</span> + 12 <span style="color: var(--accent-purple); font-weight: bold;">NADP⁺</span> + 18 <span style="color: var(--accent-blue); font-weight: bold;">ADP</span> + 18 <span style="color: var(--accent-orange); font-weight: bold;">Pi</span> ───[ ضوء / يخضور ]───&gt; 6 <span style="color: var(--accent-orange); font-weight: bold;">O₂</span> + 12 <span style="color: var(--accent-blue); font-weight: bold;">NADPH,H⁺</span> + 18 <span style="color: var(--accent-green); font-weight: bold;">ATP</span>
+            </div>
+
+            <p><b>2. معادلة المرحلة الكيميوحيوية (دورة كالفن):</b></p>
+            <div class="equation">
+                6 <span style="color: var(--accent-purple); font-weight: bold;">CO₂</span> + 18 <span style="color: var(--accent-green); font-weight: bold;">ATP</span> + 12 <span style="color: var(--accent-blue); font-weight: bold;">NADPH,H⁺</span> ───[ Rubisco / الحشوة ]───&gt; <span style="color: var(--accent-green); font-weight: bold;">C₆H₁₂O₆</span> + 18 <span style="color: var(--accent-blue); font-weight: bold;">ADP</span> + 18 <span style="color: var(--accent-orange); font-weight: bold;">Pi</span> + 12 <span style="color: var(--accent-purple); font-weight: bold;">NADP⁺</span> + 6 <span style="color: var(--accent-blue); font-weight: bold;">H₂O</span>
+            </div>
+
+            <p><b>3. جمع المعادلتين وتبسيط المركبات الوسيطية المشتركة:</b></p>
+            <p style="font-size: 0.9em; opacity: 0.85;">
+                اختزال الجزيئات الناتجة والمستهلكة بين الطرفين (<span style="color: var(--accent-purple); font-weight: bold;">12 +NADP</span>، <span style="color: var(--accent-blue); font-weight: bold;">18 ADP+Pi</span>، <span style="color: var(--accent-green); font-weight: bold;">18 ATP</span>، <span style="color: var(--accent-blue); font-weight: bold;">12 NADPH,H⁺</span>، واختزال <span style="color: var(--accent-blue); font-weight: bold;">6 H₂O</span> من الحشوة مع <span style="color: var(--accent-blue); font-weight: bold;">12 H₂O</span> في المتفاعلات).
+            </p>
+
+            <p><b>4. المعادلة الإجمالية النهائية الموزونة لظاهرة التركيب الضوئي:</b></p>
+            <div class="equation">
+                6 <span style="color: var(--accent-purple); font-weight: bold;">CO₂</span> + 12 <span style="color: var(--accent-blue); font-weight: bold;">H₂O</span> ───[ ضوء / يخضور ]───&gt; <span style="color: var(--accent-green); font-weight: bold;">C₆H₁₂O₆</span> + 6 <span style="color: var(--accent-orange); font-weight: bold;">O₂</span> + 6 <span style="color: var(--accent-blue); font-weight: bold;">H₂O</span>
+            </div>
+
+            <p><b>أو بالصيغة المختصرة (بعد تبسيط الماء):</b></p>
+            <div class="equation">
+                6 <span style="color: var(--accent-purple); font-weight: bold;">CO₂</span> + 6 <span style="color: var(--accent-blue); font-weight: bold;">H₂O</span> ───[ ضوء / يخضور ]───&gt; <span style="color: var(--accent-green); font-weight: bold;">C₆H₁₂O₆</span> + 6 <span style="color: var(--accent-orange); font-weight: bold;">O₂</span>
+            </div>
+
+            <div class="tip-box">
+                <span class="tip-title">خلاصة تحويل الطاقة:</span>
+                <ul>
+                    <li>تتحول الطاقة الضوئية إلى طاقة كيميائية مؤقتة (<span style="color: var(--accent-green); font-weight: bold;">ATP</span> و<span style="color: var(--accent-blue); font-weight: bold;">NADPH,H⁺</span>) في غشاء التيلاكويد، ثم تُحول وتُخزن نهائياً في صورة طاقة كيميائية كامنة في الروابط التكافؤية للجزيئات العضوية (<span style="color: var(--accent-green); font-weight: bold;">الغلوكوز</span>) في الحشوة.</li>
+                </ul>
+            </div>
+        </div>
 
     <div class="tip-box">
         <span class="tip-title">💡 نصيحة تفوق منهجية:</span>
