@@ -527,90 +527,578 @@ body {
     transition: color 0.4s ease;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   القائمة الدائرية للمشاركة - إصدار Glass
+   ========================================== */
+
 .share-wrapper {
     position: relative;
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 260px;
+    height: 260px;
 }
+
+
+/* ==========================================
+   زر المشاركة الرئيسي
+   ========================================== */
 
 .main-share-btn {
-    background: linear-gradient(135deg, #00f2fe, #4facfe);
-    border: none;
+    position: relative;
+    z-index: 20;
+
+    width: 120px;
+    height: 120px;
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 242, 254, 0.95),
+            rgba(79, 172, 254, 0.9)
+        );
+
     color: #0f172a;
-    padding: 10px 24px;
-    font-size: 0.95rem;
+
+    font-family: inherit;
+    font-size: 0.9rem;
     font-weight: 800;
-    border-radius: 30px;
+
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.35);
-    transition: all 0.3s ease;
-    font-family: 'Tajawal', sans-serif;
-}
 
-.main-share-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 242, 254, 0.55);
-}
-
-.share-popover {
-    display: none;
-    position: absolute;
-    bottom: 120%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--popover-bg);
-    border: 1px solid var(--popover-border);
-    backdrop-filter: blur(12px);
-    padding: 10px;
-    border-radius: 18px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    flex-direction: row;
-    gap: 8px;
-    z-index: 100;
-    white-space: nowrap;
-}
-
-.share-popover.active {
-    display: flex;
-    animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes popIn {
-    0% { opacity: 0; transform: translate(-50%, 10px) scale(0.9); }
-    100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
-}
-
-.pop-btn {
-    border: none;
-    color: #fff;
-    padding: 8px 12px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    border-radius: 12px;
-    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 5px;
-    transition: transform 0.2s ease;
-    font-family: 'Tajawal', sans-serif;
+    justify-content: center;
+    gap: 6px;
+    flex-direction: column;
+
+    box-shadow:
+        0 0 0 8px rgba(0, 242, 254, 0.05),
+        0 0 25px rgba(0, 242, 254, 0.35),
+        0 10px 35px rgba(0, 0, 0, 0.25),
+        inset 0 0 18px rgba(255, 255, 255, 0.3);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
-.pop-btn:hover { transform: scale(1.05); }
-.pop-btn.fb { background: #1877f2; }
-.pop-btn.ms { background: #0084ff; }
-.pop-btn.wa { background: #25d366; }
-.pop-btn.tg { background: #24a1de; }
-.pop-btn.cp { background: var(--card-border); color: var(--text-primary); }
+
+/* الحلقة الخارجية */
+
+.main-share-btn::before {
+    content: "";
+
+    position: absolute;
+    inset: -9px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(0, 242, 254, 0.35);
+
+    animation: shareRing 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+
+@keyframes shareRing {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.45;
+    }
+
+    50% {
+        transform: scale(1.06);
+        opacity: 0.9;
+    }
+}
+
+
+.main-share-btn:hover {
+    transform: scale(1.06);
+
+    box-shadow:
+        0 0 0 10px rgba(0, 242, 254, 0.06),
+        0 0 35px rgba(0, 242, 254, 0.6),
+        0 12px 40px rgba(0, 0, 0, 0.3),
+        inset 0 0 22px rgba(255, 255, 255, 0.35);
+}
+
+
+.main-share-btn:active {
+    transform: scale(0.94);
+}
+
+
+.main-share-btn i {
+    font-size: 1.4rem;
+
+    filter:
+        drop-shadow(
+            0 0 5px
+            rgba(255, 255, 255, 0.7)
+        );
+}
+
+
+/* ==========================================
+   حاوية الأزرار
+   ========================================== */
+
+.share-popover {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    pointer-events: none;
+}
+
+
+/* ==========================================
+   دوائر التطبيقات
+   ========================================== */
+
+.pop-btn {
+    position: absolute;
+
+    width: 58px;
+    height: 58px;
+
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #fff;
+
+    cursor: pointer;
+
+    opacity: 0;
+
+    transform:
+        translate(0, 0)
+        scale(0.2);
+
+    pointer-events: none;
+
+    overflow: visible;
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.2),
+        inset 0 0 12px rgba(255, 255, 255, 0.15);
+
+    transition:
+        transform 0.4s cubic-bezier(
+            0.175,
+            0.885,
+            0.32,
+            1.275
+        ),
+        opacity 0.25s ease,
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
+}
+
+
+/* لمعان داخلي */
+
+.pop-btn::before {
+    content: "";
+
+    position: absolute;
+
+    top: 4px;
+    left: 8px;
+
+    width: 18px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.3);
+
+    filter: blur(2px);
+
+    pointer-events: none;
+}
+
+
+/* ==========================================
+   الأيقونات
+   ========================================== */
+
+.pop-btn i {
+    position: relative;
+    z-index: 2;
+
+    font-size: 1.35rem;
+
+    filter:
+        drop-shadow(
+            0 2px 4px
+            rgba(0, 0, 0, 0.3)
+        );
+
+    transition:
+        transform 0.25s ease;
+}
+
+
+/* ==========================================
+   اسم التطبيق
+   ========================================== */
+
+.pop-btn span {
+    position: absolute;
+
+    top: 70px;
+    left: 50%;
+
+    transform: translateX(-50%) translateY(-4px);
+
+    white-space: nowrap;
+
+    padding: 5px 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+
+    background: rgba(15, 23, 42, 0.82);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    color: #fff;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.2);
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.pop-btn:hover span {
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+
+/* ==========================================
+   فتح القائمة
+   ========================================== */
+
+.share-popover.active .pop-btn {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+/* ==========================================
+   توزيع الدوائر
+   ========================================== */
+
+.share-popover.active .fb {
+    transform: translate(0, -100px) scale(1);
+}
+
+.share-popover.active .ms {
+    transform: translate(87px, -50px) scale(1);
+}
+
+.share-popover.active .wa {
+    transform: translate(87px, 50px) scale(1);
+}
+
+.share-popover.active .tg {
+    transform: translate(0, 100px) scale(1);
+}
+
+.share-popover.active .tk {
+    transform: translate(-87px, 50px) scale(1);
+}
+
+.share-popover.active .cp {
+    transform: translate(-87px, -50px) scale(1);
+}
+
+
+/* ==========================================
+   Hover - ثابت في مكانه
+   ========================================== */
+
+.share-popover.active .fb:hover {
+    transform: translate(0, -100px) scale(1.12) !important;
+}
+
+.share-popover.active .ms:hover {
+    transform: translate(87px, -50px) scale(1.12) !important;
+}
+
+.share-popover.active .wa:hover {
+    transform: translate(87px, 50px) scale(1.12) !important;
+}
+
+.share-popover.active .tg:hover {
+    transform: translate(0, 100px) scale(1.12) !important;
+}
+
+.share-popover.active .tk:hover {
+    transform: translate(-87px, 50px) scale(1.12) !important;
+}
+
+.share-popover.active .cp:hover {
+    transform: translate(-87px, -50px) scale(1.12) !important;
+}
+
+
+.pop-btn:hover {
+    filter: brightness(1.15);
+
+    box-shadow:
+        0 0 18px rgba(255, 255, 255, 0.18),
+        0 10px 25px rgba(0, 0, 0, 0.35),
+        inset 0 0 14px rgba(255, 255, 255, 0.2);
+}
+
+
+.pop-btn:hover i {
+    transform: scale(1.08);
+}
+
+
+/* ==========================================
+   ألوان التطبيقات
+   ========================================== */
+
+.pop-btn.fb {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(24, 119, 242, 0.95),
+            rgba(24, 119, 242, 0.65)
+        );
+
+    box-shadow:
+        0 0 16px rgba(24, 119, 242, 0.4);
+}
+
+
+.pop-btn.ms {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0, 132, 255, 0.95),
+            rgba(0, 132, 255, 0.65)
+        );
+
+    box-shadow:
+        0 0 16px rgba(0, 132, 255, 0.4);
+}
+
+
+.pop-btn.wa {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(37, 211, 102, 0.95),
+            rgba(37, 211, 102, 0.65)
+        );
+
+    box-shadow:
+        0 0 16px rgba(37, 211, 102, 0.4);
+}
+
+
+.pop-btn.tg {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(36, 161, 222, 0.95),
+            rgba(36, 161, 222, 0.65)
+        );
+
+    box-shadow:
+        0 0 16px rgba(36, 161, 222, 0.4);
+}
+
+
+.pop-btn.tk {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0, 0, 0, 0.98),
+            rgba(35, 35, 35, 0.8)
+        );
+
+    color: #fff;
+
+    box-shadow:
+        0 0 16px rgba(255, 255, 255, 0.15);
+}
+
+
+.pop-btn.cp {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(100, 116, 139, 0.95),
+            rgba(71, 85, 105, 0.7)
+        );
+
+    color: #fff;
+
+    box-shadow:
+        0 0 16px rgba(100, 116, 139, 0.4);
+}
+
+
+/* ==========================================
+   رسالة النسخ
+   ========================================== */
 
 .toast-msg {
     display: block;
+
     margin-top: 12px;
+
     font-size: 0.85rem;
+    font-weight: 600;
+
     color: #00ff88;
+
     opacity: 0;
-    transition: opacity 0.4s ease;
+
+    transition: opacity 0.3s ease;
 }
 
-.toast-msg.show { opacity: 1; }
+
+.toast-msg.show {
+    opacity: 1;
+}
+
+
+/* ==========================================
+   الهاتف
+   ========================================== */
+
+@media (max-width: 600px) {
+
+    .share-wrapper {
+        width: 230px;
+        height: 230px;
+    }
+
+    .main-share-btn {
+        width: 100px;
+        height: 100px;
+
+        font-size: 0.8rem;
+    }
+
+    .pop-btn {
+        width: 52px;
+        height: 52px;
+    }
+
+
+    /* توزيع الهاتف */
+
+    .share-popover.active .fb {
+        transform: translate(0, -88px) scale(1);
+    }
+
+    .share-popover.active .ms {
+        transform: translate(76px, -44px) scale(1);
+    }
+
+    .share-popover.active .wa {
+        transform: translate(76px, 44px) scale(1);
+    }
+
+    .share-popover.active .tg {
+        transform: translate(0, 88px) scale(1);
+    }
+
+    .share-popover.active .tk {
+        transform: translate(-76px, 44px) scale(1);
+    }
+
+    .share-popover.active .cp {
+        transform: translate(-76px, -44px) scale(1);
+    }
+
+
+    /* Hover الهاتف */
+
+    .share-popover.active .fb:hover {
+        transform: translate(0, -88px) scale(1.1) !important;
+    }
+
+    .share-popover.active .ms:hover {
+        transform: translate(76px, -44px) scale(1.1) !important;
+    }
+
+    .share-popover.active .wa:hover {
+        transform: translate(76px, 44px) scale(1.1) !important;
+    }
+
+    .share-popover.active .tg:hover {
+        transform: translate(0, 88px) scale(1.1) !important;
+    }
+
+    .share-popover.active .tk:hover {
+        transform: translate(-76px, 44px) scale(1.1) !important;
+    }
+
+    .share-popover.active .cp:hover {
+        transform: translate(-76px, -44px) scale(1.1) !important;
+    }
+}
+
+
+
+
 
 /* =========================================================
    6. تنسيقات الفوتر الذكية (Footer Responsive Styles) - زجاجي وشفاف
@@ -673,6 +1161,8 @@ body.light .legal-box {
     color: var(--text-secondary);
     margin: 0;
 }
+
+
 
 /* =========================================================
    7. التجاوب مع الشاشات (Media Queries)
@@ -1069,87 +1559,138 @@ body.light .legal-box {
 
 
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <div class="bio-organic-counter">
     <div class="bio-scene">
-        
+
         <div class="countdown-header">
             <span class="pulse-icon">⏳</span>
             <h2>العد التنازلي لشهادة البكالوريا 🍃</h2>
         </div>
-        
+
         <div class="bio-nodes-container">
+
             <!-- الأيام -->
-            <div class="bio-node" onclick="showInfo('days')">
-                <svg class="bio-circle-svg" viewBox="0 0 100 100">
+            <button type="button" class="bio-node" onclick="showInfo('days')">
+                <svg class="bio-circle-svg" viewBox="0 0 100 100" aria-hidden="true">
                     <circle class="bio-circle-bg" cx="50" cy="50" r="42"></circle>
                     <circle class="bio-circle-progress days-progress" id="days-circle" cx="50" cy="50" r="42"></circle>
                 </svg>
-                <div class="bio-number">
+                <span class="bio-number">
                     <span id="days">00</span>
                     <small>يوم</small>
-                </div>
-            </div>
-            
+                </span>
+            </button>
+
             <!-- الساعات -->
-            <div class="bio-node" onclick="showInfo('hours')">
-                <svg class="bio-circle-svg" viewBox="0 0 100 100">
+            <button type="button" class="bio-node" onclick="showInfo('hours')">
+                <svg class="bio-circle-svg" viewBox="0 0 100 100" aria-hidden="true">
                     <circle class="bio-circle-bg" cx="50" cy="50" r="42"></circle>
                     <circle class="bio-circle-progress hours-progress" id="hours-circle" cx="50" cy="50" r="42"></circle>
                 </svg>
-                <div class="bio-number">
+                <span class="bio-number">
                     <span id="hours">00</span>
                     <small>ساعة</small>
-                </div>
-            </div>
-            
+                </span>
+            </button>
+
             <!-- الدقائق -->
-            <div class="bio-node" onclick="showInfo('minutes')">
-                <svg class="bio-circle-svg" viewBox="0 0 100 100">
+            <button type="button" class="bio-node" onclick="showInfo('minutes')">
+                <svg class="bio-circle-svg" viewBox="0 0 100 100" aria-hidden="true">
                     <circle class="bio-circle-bg" cx="50" cy="50" r="42"></circle>
                     <circle class="bio-circle-progress minutes-progress" id="minutes-circle" cx="50" cy="50" r="42"></circle>
                 </svg>
-                <div class="bio-number">
+                <span class="bio-number">
                     <span id="minutes">00</span>
                     <small>دقيقة</small>
-                </div>
-            </div>
-            
+                </span>
+            </button>
+
             <!-- الثواني -->
-            <div class="bio-node" onclick="showInfo('seconds')">
-                <svg class="bio-circle-svg" viewBox="0 0 100 100">
+            <button type="button" class="bio-node" onclick="showInfo('seconds')">
+                <svg class="bio-circle-svg" viewBox="0 0 100 100" aria-hidden="true">
                     <circle class="bio-circle-bg" cx="50" cy="50" r="42"></circle>
                     <circle class="bio-circle-progress seconds-progress" id="seconds-circle" cx="50" cy="50" r="42"></circle>
                 </svg>
-                <div class="bio-number">
+                <span class="bio-number">
                     <span id="seconds">00</span>
                     <small>ثانية</small>
-                </div>
-            </div>
-        </div>
-
-        <div id="bio-tooltip" class="bio-tooltip">اضغط على أي دائرة لرؤية التفاصيل ✨</div>
-
-        <p id="bio-quote" class="bio-quote">جاري جلب العبارة التحفيزية...</p>
-
-        <!-- زر المشاركة المنبثق -->
-        <div class="share-wrapper">
-            <button class="main-share-btn" onclick="toggleShareMenu()">
-                <span>✨ مشاركة العبارة</span>
+                </span>
             </button>
 
-            <div id="share-menu" class="share-popover">
-                <button class="pop-btn fb" onclick="shareTo('facebook')"><i>📘</i> فيسبوك</button>
-                <button class="pop-btn ms" onclick="shareTo('messenger')"><i>⚡</i> ماسينجر</button>
-                <button class="pop-btn wa" onclick="shareTo('whatsapp')"><i>🟢</i> واتساب</button>
-                <button class="pop-btn tg" onclick="shareTo('telegram')"><i>✈️</i> تلغرام</button>
-                <button class="pop-btn cp" onclick="shareTo('copy')"><i>📋</i> نسخ النص</button>
+        </div>
+
+        <div id="bio-tooltip" class="bio-tooltip">
+            اضغط على أي دائرة لرؤية التفاصيل ✨
+        </div>
+
+        <p id="bio-quote" class="bio-quote">
+            جاري جلب العبارة التحفيزية...
+        </p>
+
+        <!-- زر المشاركة -->
+        <div class="share-wrapper">
+
+            <button
+                type="button"
+                class="main-share-btn"
+                onclick="toggleShareMenu()"
+                aria-controls="share-menu"
+                aria-expanded="false">
+                <span>
+                    <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
+                    مشاركة العبارة
+                </span>
+            </button>
+
+            <div id="share-menu" class="share-popover" hidden>
+
+                <!-- Facebook -->
+                <button type="button" class="pop-btn fb" onclick="shareTo('facebook')">
+                    <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+                    <span>فيسبوك</span>
+                </button>
+
+                <!-- Messenger -->
+                <button type="button" class="pop-btn ms" onclick="shareTo('messenger')">
+                    <i class="fa-brands fa-facebook-messenger" aria-hidden="true"></i>
+                    <span>ماسنجر</span>
+                </button>
+
+                <!-- WhatsApp -->
+                <button type="button" class="pop-btn wa" onclick="shareTo('whatsapp')">
+                    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                    <span>واتساب</span>
+                </button>
+
+                <!-- Telegram -->
+                <button type="button" class="pop-btn tg" onclick="shareTo('telegram')">
+                    <i class="fa-brands fa-telegram" aria-hidden="true"></i>
+                    <span>تلغرام</span>
+                </button>
+
+                <!-- TikTok -->
+                <button type="button" class="pop-btn tk" onclick="shareTo('tiktok')">
+                    <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
+                    <span>TikTok</span>
+                </button>
+
+                <!-- نسخ -->
+                <button type="button" class="pop-btn cp" onclick="shareTo('copy')">
+                    <i class="fa-regular fa-copy" aria-hidden="true"></i>
+                    <span>نسخ النص</span>
+                </button>
+
             </div>
         </div>
 
-        <span id="toast-msg" class="toast-msg">تم نسخ العبارة والرابط بنجاح! 📋</span>
+        <span id="toast-msg" class="toast-msg" role="status" aria-live="polite">
+            تم نسخ العبارة والرابط بنجاح! 📋
+        </span>
 
     </div>
 </div>
+
 
 
 
@@ -1309,174 +1850,580 @@ body.light .legal-box {
             animate();
         }
 
-        // ==========================================
-        // B. العد التنازلي للباكالوريا (Bac Countdown)
-        // ==========================================
-        const bacDate = new Date(2027, 5, 14, 8, 0, 0).getTime();
-        let currentDaysLeft = 0;
-        let prevSec = -1;
 
-        function updateSingleNode(circleClass, numId, exactValue, maxVal, displayNum) {
-            const circle = document.querySelector(circleClass);
-            const numSpan = document.getElementById(numId);
-            if (!circle) return;
 
-            const percent = Math.max(0, Math.min(100, (exactValue / maxVal) * 100));
-            let color, glow;
 
-            if (percent >= 80) {
-                color = "#00f2fe"; glow = "rgba(0, 242, 254, 0.75)";
-            } else if (percent >= 50) {
-                color = "#00ff88"; glow = "rgba(0, 255, 136, 0.75)";
-            } else if (percent >= 20) {
-                color = "#ffdd00"; glow = "rgba(255, 221, 0, 0.75)";
-            } else {
-                color = "#ff5252"; glow = "rgba(255, 82, 82, 0.85)";
-            }
 
-            const radius = circle.r.baseVal.value;
-            const circumference = 2 * Math.PI * radius;
-            const offset = circumference - (percent / 100 * circumference);
 
-            circle.style.strokeDashoffset = offset;
+// ==========================================
+// B. العد التنازلي للباكالوريا
+// ==========================================
 
-            if (numSpan) {
-                numSpan.innerText = displayNum < 10 ? '0' + displayNum : displayNum;
-                numSpan.style.color = color;
-            }
+const bacDate = new Date(2027, 5, 14, 8, 0, 0).getTime();
+let currentDaysLeft = 0;
+let prevSec = -1;
 
-            circle.style.stroke = color;
-            circle.style.filter = `drop-shadow(0 0 10px ${glow})`;
+
+// ==========================================
+// تحديث الدوائر
+// ==========================================
+
+function updateSingleNode(circleClass, numId, exactValue, maxVal, displayNum) {
+
+    const circle = document.querySelector(circleClass);
+    const numSpan = document.getElementById(numId);
+
+    if (!circle || !maxVal) return;
+
+    const percent = Math.max(
+        0,
+        Math.min(100, (exactValue / maxVal) * 100)
+    );
+
+    let color;
+    let glow;
+
+    if (percent >= 80) {
+        color = "#00f2fe";
+        glow = "rgba(0, 242, 254, 0.75)";
+    } else if (percent >= 50) {
+        color = "#00ff88";
+        glow = "rgba(0, 255, 136, 0.75)";
+    } else if (percent >= 20) {
+        color = "#ffdd00";
+        glow = "rgba(255, 221, 0, 0.75)";
+    } else {
+        color = "#ff5252";
+        glow = "rgba(255, 82, 82, 0.85)";
+    }
+
+    const radius = circle.r.baseVal.value;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - ((percent / 100) * circumference);
+
+    circle.style.strokeDasharray = circumference;
+    circle.style.strokeDashoffset = offset;
+    circle.style.stroke = color;
+    circle.style.filter = `drop-shadow(0 0 10px ${glow})`;
+
+    if (numSpan) {
+        numSpan.innerText =
+            displayNum < 10 ? "0" + displayNum : displayNum;
+
+        numSpan.style.color = color;
+    }
+}
+
+
+// ==========================================
+// تأثير وميض الثواني
+// ==========================================
+
+function triggerCyberFlash(circleId) {
+
+    const el = document.getElementById(circleId);
+
+    if (!el) return;
+
+    el.classList.add("cyber-pulse-effect");
+
+    setTimeout(() => {
+        el.classList.remove("cyber-pulse-effect");
+    }, 180);
+}
+
+
+// ==========================================
+// العبارة التحفيزية
+// ==========================================
+
+function updateQuote(daysLeft) {
+
+    const quoteElement = document.getElementById("bio-quote");
+
+    if (!quoteElement) return;
+
+    if (daysLeft > 180) {
+
+        quoteElement.innerText =
+            "🌿 البدايات القوية تصنع النهايات المذهلة.. نظّم وقتك واثبت!";
+
+    } else if (daysLeft > 90) {
+
+        quoteElement.innerText =
+            "📚 استمراريتك اليوم هي التي ستجعلك تبتسم يوم النتائج!";
+
+    } else if (daysLeft > 30) {
+
+        quoteElement.innerText =
+            "🌾 اقترب الموعد! ضاعف تركيزك ولا تدع الدقائق تضيع سدى.";
+
+    } else if (daysLeft > 0) {
+
+        quoteElement.innerText =
+            "🍂 الشوط الأخير! ضع كل طاقتك هنا، المجد ينتظرك يا بطل!";
+
+    } else {
+
+        quoteElement.innerText =
+            "🎓 حان وقت حصاد التعب! توكلوا على الله وبالتوفيق لكم جميعاً.";
+    }
+}
+
+
+// ==========================================
+// معلومات الدوائر
+// ==========================================
+
+function showInfo(type) {
+
+    const tooltip = document.getElementById("bio-tooltip");
+
+    if (!tooltip) return;
+
+    if (type === "days") {
+
+        const weeks = Math.floor(currentDaysLeft / 7);
+
+        tooltip.innerHTML =
+            `📅 متبقي حوالي <b>${weeks} أسبوعاً</b> على الامتحان!`;
+
+    } else if (type === "hours") {
+
+        tooltip.innerHTML =
+            "⏳ استغل ساعتك الحالية في ملخص أو حل تمرين!";
+
+    } else if (type === "minutes") {
+
+        tooltip.innerHTML =
+            "⚡ كل دقيقة هي استثمار في معدلك النهائي.";
+
+    } else {
+
+        tooltip.innerHTML =
+            "🔥 الثواني تمضي.. اصنع أثرك الآن!";
+    }
+}
+
+
+
+// ==========================================
+// قائمة المشاركة الدائرية
+// ==========================================
+
+function toggleShareMenu() {
+
+    const menu = document.getElementById("share-menu");
+    const button = document.querySelector(".main-share-btn");
+
+    if (!menu) return;
+
+    const isOpen = menu.classList.contains("active");
+
+    if (isOpen) {
+
+        menu.classList.remove("active");
+        menu.hidden = true;
+
+        if (button) {
+            button.setAttribute("aria-expanded", "false");
         }
 
-        function triggerCyberFlash(circleId) {
-            const el = document.getElementById(circleId);
-            if (!el) return;
-            el.classList.add('cyber-pulse-effect');
-            setTimeout(() => el.classList.remove('cyber-pulse-effect'), 180);
-        }
+    } else {
 
-        function updateQuote(daysLeft) {
-            const quoteElement = document.getElementById('bio-quote');
-            if (!quoteElement) return;
+        menu.hidden = false;
 
-            if (daysLeft > 180) {
-                quoteElement.innerText = "🌿 البدايات القوية تصنع النهايات المذهلة.. نظّم وقتك واثبت!";
-            } else if (daysLeft > 90) {
-                quoteElement.innerText = "📚 استمراريتك اليوم هي التي ستجعلك تبتسم يوم النتائج!";
-            } else if (daysLeft > 30) {
-                quoteElement.innerText = "🌾 اقترب الموعد! ضاعف تركيزك ولا تدع الدقائق تضيع سدى.";
-            } else if (daysLeft > 0) {
-                quoteElement.innerText = "🍂 الشوط الأخير! ضع كل طاقتك هنا، المجد ينتظرك يا بطل!";
-            } else {
-                quoteElement.innerText = "🎓 حان وقت حصاد التعب! توكلوا على الله وبالتوفيق لكم جميعاً.";
-            }
-        }
-
-        function showInfo(type) {
-            const tooltip = document.getElementById('bio-tooltip');
-            if (!tooltip) return;
-            if (type === 'days') {
-                const weeks = Math.floor(currentDaysLeft / 7);
-                tooltip.innerHTML = `📅 متبقي حوالي <b>${weeks} أسبوعاً</b> على الامتحان!`;
-            } else if (type === 'hours') {
-                tooltip.innerHTML = `⏳ استغل ساعتك الحالية في ملخص أو حل تمرين!`;
-            } else if (type === 'minutes') {
-                tooltip.innerHTML = `⚡ كل دقيقة هي استثمار في معدلك النهائي.`;
-            } else {
-                tooltip.innerHTML = `🔥 الثواني تمضي.. اصنع أثرك الآن!`;
-            }
-        }
-
-        function toggleShareMenu() {
-            const menu = document.getElementById('share-menu');
-            if (menu) menu.classList.toggle('active');
-        }
-
-        document.addEventListener('click', function(e) {
-            const wrapper = document.querySelector('.share-wrapper');
-            const menu = document.getElementById('share-menu');
-            if (wrapper && menu && !wrapper.contains(e.target)) {
-                menu.classList.remove('active');
-            }
+        // السماح للمتصفح بإظهار الحركة
+        requestAnimationFrame(() => {
+            menu.classList.add("active");
         });
 
-        function shareTo(platform) {
-            const quoteEl = document.getElementById('bio-quote');
-            const quoteText = quoteEl ? quoteEl.innerText : "";
-            const siteUrl = window.location.href;
-            const fullMessage = `${quoteText}\n\nتابع العد التنازلي للبكالوريا عبر bio-bac-dz:\n${siteUrl}`;
+        if (button) {
+            button.setAttribute("aria-expanded", "true");
+        }
+    }
+}
 
-            const encodedText = encodeURIComponent(fullMessage);
-            const encodedUrl = encodeURIComponent(siteUrl);
 
-            if (platform === 'facebook') {
-                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`, '_blank');
-            } else if (platform === 'messenger') {
-                window.open(`fb-messenger://share/?link=${encodedUrl}`, '_blank') || 
-                window.open(`https://www.facebook.com/dialog/send?link=${encodedUrl}&app_id=291494419055276&redirect_uri=${encodedUrl}`, '_blank');
-            } else if (platform === 'whatsapp') {
-                window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
-            } else if (platform === 'telegram') {
-                window.open(`https://t.me/share/url?url=${encodedUrl}&text=${encodeURIComponent(quoteText)}`, '_blank');
-            } else if (platform === 'copy') {
-                navigator.clipboard.writeText(fullMessage).then(() => {
-                    showToast("تم نسخ العبارة ورابط الموقع بنجاح! 📋");
-                });
-            }
-            
-            const menu = document.getElementById('share-menu');
-            if (menu) menu.classList.remove('active');
+// ==========================================
+// الحصول على العبارة والرابط
+// ==========================================
+
+function getShareContent() {
+
+    const quoteElement = document.getElementById("bio-quote");
+
+    const quote = quoteElement
+        ? quoteElement.innerText.trim()
+        : "";
+
+    const url = window.location.href;
+
+    return {
+        quote: quote,
+        url: url,
+        text: `${quote}\n\n${url}`
+    };
+}
+
+
+// ==========================================
+// المشاركة
+// ==========================================
+
+async function shareTo(platform) {
+
+    const content = getShareContent();
+
+    if (!content.quote) {
+        showShareToast("لا توجد عبارة للمشاركة");
+        return;
+    }
+
+
+    // ==========================
+    // نسخ
+    // ==========================
+
+    if (platform === "copy") {
+
+        await copyShareContent(content.text);
+        return;
+    }
+
+
+    // ==========================
+    // WhatsApp
+    // ==========================
+
+    if (platform === "whatsapp") {
+
+        const url =
+            "https://wa.me/?text=" +
+            encodeURIComponent(content.text);
+
+        window.open(url, "_blank");
+        return;
+    }
+
+
+    // ==========================
+    // Telegram
+    // ==========================
+
+    if (platform === "telegram") {
+
+        const url =
+            "https://t.me/share/url" +
+            "?url=" + encodeURIComponent(content.url) +
+            "&text=" + encodeURIComponent(content.quote);
+
+        window.open(url, "_blank");
+        return;
+    }
+
+
+
+// ==========================
+// Facebook
+// ==========================
+
+if (platform === "facebook") {
+
+    const shareUrl =
+        "https://www.facebook.com/sharer/sharer.php?u=" +
+        encodeURIComponent(content.url);
+
+    window.open(
+        shareUrl,
+        "facebookShare",
+        "width=700,height=600,resizable=yes,scrollbars=yes"
+    );
+
+    return;
+}
+
+    // ==========================
+    // Messenger
+    // ==========================
+
+    if (platform === "messenger") {
+
+        // نسخ المحتوى أولًا لأن المشاركة المباشرة
+        // تحتاج إعداد Facebook App خاصًا.
+
+        await copyShareContent(content.text);
+
+        showShareToast(
+            "تم نسخ العبارة والرابط — يمكنك لصقه في ماسنجر"
+        );
+
+        return;
+    }
+
+
+    // ==========================
+    // TikTok
+    // ==========================
+
+    if (platform === "tiktok") {
+
+        await copyShareContent(content.text);
+
+        showShareToast(
+            "تم نسخ العبارة والرابط — يمكنك لصقه في TikTok"
+        );
+
+        return;
+    }
+}
+
+
+// ==========================================
+// نسخ العبارة + الرابط
+// ==========================================
+
+async function copyShareContent(text) {
+
+    try {
+
+        await navigator.clipboard.writeText(text);
+
+        showShareToast(
+            "تم نسخ العبارة والرابط بنجاح! 📋"
+        );
+
+    } catch (error) {
+
+        const textarea =
+            document.createElement("textarea");
+
+        textarea.value = text;
+
+        textarea.style.position = "fixed";
+        textarea.style.left = "-9999px";
+
+        document.body.appendChild(textarea);
+
+        textarea.focus();
+        textarea.select();
+
+        try {
+            document.execCommand("copy");
+
+            showShareToast(
+                "تم نسخ العبارة والرابط بنجاح! 📋"
+            );
+
+        } catch (copyError) {
+
+            showShareToast(
+                "تعذر نسخ النص"
+            );
         }
 
-        function showToast(msg) {
-            const toast = document.getElementById('toast-msg');
-            if (!toast) return;
-            toast.innerText = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
+        textarea.remove();
+    }
+}
+
+
+// ==========================================
+// رسالة التأكيد
+// ==========================================
+
+function showShareToast(message) {
+
+    const toast =
+        document.getElementById("toast-msg");
+
+    if (!toast) return;
+
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    clearTimeout(window.shareToastTimer);
+
+    window.shareToastTimer =
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        }, 2500);
+}
+
+
+// ==========================================
+// إغلاق القائمة عند الضغط خارجها
+// ==========================================
+
+document.addEventListener("click", function(event) {
+
+    const wrapper =
+        document.querySelector(".share-wrapper");
+
+    const menu =
+        document.getElementById("share-menu");
+
+    const button =
+        document.querySelector(".main-share-btn");
+
+    if (!wrapper || !menu) return;
+
+    if (!wrapper.contains(event.target)) {
+
+        menu.classList.remove("active");
+        menu.hidden = true;
+
+        if (button) {
+            button.setAttribute(
+                "aria-expanded",
+                "false"
+            );
         }
+    }
+});
 
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const difference = bacDate - now;
 
-            if (difference > 0) {
-                const totalSeconds = difference / 1000;
-                const totalMinutes = totalSeconds / 60;
-                const totalHours = totalMinutes / 60;
-                const totalDays = totalHours / 24;
+// ==========================================
+// تحديث العد التنازلي
+// ==========================================
 
-                const exactSeconds = totalSeconds % 60;
-                const exactMinutes = totalMinutes % 60;
-                const exactHours = totalHours % 24;
-                const exactDays = totalDays % 365;
+function updateCountdown() {
 
-                const displaySeconds = Math.floor(exactSeconds);
-                const displayMinutes = Math.floor(exactMinutes);
-                const displayHours = Math.floor(exactHours);
-                const displayDays = Math.floor(totalDays);
+    const now = Date.now();
+    const difference = bacDate - now;
 
-                currentDaysLeft = displayDays;
 
-                if (prevSec !== -1 && prevSec !== displaySeconds) {
-                    if (displaySeconds === 59 || displaySeconds === 0) {
-                        triggerCyberFlash('seconds-circle');
-                    }
-                }
-                prevSec = displaySeconds;
+    // انتهى العد
+    if (difference <= 0) {
 
-                updateSingleNode('.seconds-progress', 'seconds', exactSeconds, 60, displaySeconds);
-                updateSingleNode('.minutes-progress', 'minutes', exactMinutes, 60, displayMinutes);
-                updateSingleNode('.hours-progress', 'hours', exactHours, 24, displayHours);
-                updateSingleNode('.days-progress', 'days', exactDays, 365, displayDays);
+        currentDaysLeft = 0;
 
-                updateQuote(displayDays);
-            }
-        }
+        updateQuote(0);
 
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
+        updateSingleNode(
+            ".seconds-progress",
+            "seconds",
+            0,
+            60,
+            0
+        );
+
+        updateSingleNode(
+            ".minutes-progress",
+            "minutes",
+            0,
+            60,
+            0
+        );
+
+        updateSingleNode(
+            ".hours-progress",
+            "hours",
+            0,
+            24,
+            0
+        );
+
+        updateSingleNode(
+            ".days-progress",
+            "days",
+            0,
+            365,
+            0
+        );
+
+        return;
+    }
+
+
+    const totalSeconds = difference / 1000;
+
+    const totalMinutes = totalSeconds / 60;
+    const totalHours = totalMinutes / 60;
+    const totalDays = totalHours / 24;
+
+
+    const exactSeconds = totalSeconds % 60;
+    const exactMinutes = totalMinutes % 60;
+    const exactHours = totalHours % 24;
+
+
+    const displaySeconds = Math.floor(exactSeconds);
+    const displayMinutes = Math.floor(exactMinutes);
+    const displayHours = Math.floor(exactHours);
+    const displayDays = Math.floor(totalDays);
+
+
+    currentDaysLeft = displayDays;
+
+
+    // وميض عند انتقال الدقيقة
+    if (
+        prevSec !== -1 &&
+        prevSec !== displaySeconds &&
+        (
+            displaySeconds === 59 ||
+            displaySeconds === 0
+        )
+    ) {
+        triggerCyberFlash("seconds-circle");
+    }
+
+    prevSec = displaySeconds;
+
+
+    updateSingleNode(
+        ".seconds-progress",
+        "seconds",
+        exactSeconds,
+        60,
+        displaySeconds
+    );
+
+    updateSingleNode(
+        ".minutes-progress",
+        "minutes",
+        exactMinutes,
+        60,
+        displayMinutes
+    );
+
+    updateSingleNode(
+        ".hours-progress",
+        "hours",
+        exactHours,
+        24,
+        displayHours
+    );
+
+
+    // دائرة الأيام
+    // نستخدم الجزء المتبقي من السنة
+    const daysInYear = 365;
+    const daysProgress = displayDays % daysInYear;
+
+    updateSingleNode(
+        ".days-progress",
+        "days",
+        daysProgress,
+        daysInYear,
+        displayDays
+    );
+
+
+    updateQuote(displayDays);
+}
+
+
+// ==========================================
+// بدء العد
+// ==========================================
+
+updateCountdown();
+
+setInterval(updateCountdown, 1000);
+
 
         // ==========================================
         // C. التحكم بالوضع الليلي / النهاري (Theme)
@@ -1522,7 +2469,7 @@ function toggleTheme() {
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-72KM3WGRYW');
+        gtag('config', '');
     </script>
 
 <script src="script.js"></script>
