@@ -4,309 +4,1125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الوحدة 7: آليات تحويل الطاقة الكيميائية الكامنة في الجزيئات العضوية إلى طاقة قابلة للاستعمال (التنفس والتخمر) </title>
-    <style>
+
+<style>
+
+/* =========================================================
+   المتغيرات
+========================================================= */
+
+:root {
+    --bg-dark: #0b0f19;
+    --card-bg: rgba(21, 30, 49, 0.86);
+
+    --accent-blue: #38bdf8;
+    --accent-purple: #a855f7;
+    --accent-orange: #f97316;
+
+    --text-main: #f8fafc;
+    --text-sub: #94a3b8;
+
+    --title-gradient:
+        linear-gradient(
+            135deg,
+            #f97316 0%,
+            #fb923c 45%,
+            #fcd34d 100%
+        );
+}
+
+
+/* =========================================================
+   الوضع النهاري
+========================================================= */
+
+body.light-theme {
+    --bg-dark: #eef6fb;
+    --card-bg: rgba(255, 255, 255, 0.9);
+
+    --accent-blue: #0284c7;
+    --accent-purple: #7c3aed;
+    --accent-orange: #ea580c;
+
+    --text-main: #172033;
+    --text-sub: #475569;
+
+    --title-gradient:
+        linear-gradient(
+            135deg,
+            #ea580c 0%,
+            #f97316 45%,
+            #f59e0b 100%
+        );
+}
+
+
+/* =========================================================
+   إعادة الضبط
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family:
+        'Cairo',
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        Roboto,
+        sans-serif;
+
+    background: var(--bg-dark);
+    color: var(--text-main);
+
+    line-height: 2.1;
+    min-height: 100vh;
+
+    padding: 20px;
+
+    position: relative;
+    overflow-x: hidden;
+
+    transition:
+        background-color 0.35s ease,
+        color 0.35s ease;
+}
+
+
+/* =========================================================
+   Canvas
+========================================================= */
+
+#cellCanvas {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 0;
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   الخلفية المتحركة
+========================================================= */
+
+.bg-animation {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+
+    border-radius: 50%;
+    filter: blur(15px);
+    opacity: 0.3;
+
+    animation:
+        floatParticle 18s infinite ease-in-out;
+}
+
+.particle:nth-child(1) {
+    width: 180px;
+    height: 180px;
+
+    background: var(--accent-orange);
+
+    top: 10%;
+    left: 10%;
+
+    animation-duration: 20s;
+}
+
+.particle:nth-child(2) {
+    width: 250px;
+    height: 250px;
+
+    background: var(--accent-purple);
+
+    top: 60%;
+    right: 5%;
+
+    animation-duration: 25s;
+    animation-delay: -5s;
+}
+
+.particle:nth-child(3) {
+    width: 140px;
+    height: 140px;
+
+    background: var(--accent-blue);
+
+    top: 40%;
+    left: 70%;
+
+    animation-duration: 16s;
+    animation-delay: -2s;
+}
+
+.particle:nth-child(4) {
+    width: 200px;
+    height: 200px;
+
+    background: var(--accent-orange);
+
+    bottom: 5%;
+    left: 20%;
+
+    animation-duration: 22s;
+    animation-delay: -8s;
+}
+
+@keyframes floatParticle {
+
+    0%,
+    100% {
+        transform:
+            translate(0, 0)
+            scale(1);
+    }
+
+    33% {
+        transform:
+            translate(30px, -50px)
+            scale(1.1);
+    }
+
+    66% {
+        transform:
+            translate(-40px, 30px)
+            scale(0.9);
+    }
+}
+
+
+/* =========================================================
+   الغلاف
+========================================================= */
+
+.main-wrapper {
+    position: relative;
+    z-index: 2;
+}
+
+
+/* =========================================================
+   الشريط العلوي
+========================================================= */
+
+.top-navbar {
+    position: relative;
+    z-index: 10;
+
+    width: 100%;
+    max-width: 950px;
+
+    margin: 0 auto 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(7, 12, 23, 0.96),
+            rgba(15, 23, 42, 0.92)
+        );
+
+    border:
+        1px solid
+        rgba(249, 115, 22, 0.24);
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 8px 28px rgba(0, 0, 0, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.035);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    transition:
+        background 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.top-nav-container {
+    width: 100%;
+    min-height: 68px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 18px;
+    padding: 10px 17px;
+
+    direction: rtl;
+}
+
+
+/* =========================================================
+   الشعار
+========================================================= */
+
+.top-brand-logo {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 12px;
+    direction: rtl;
+
+    text-decoration: none;
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+.top-brand-logo:hover {
+    opacity: 0.98;
+}
+
+.top-logo-img {
+    display: block;
+
+    width: 52px;
+    height: 52px;
+
+    object-fit: contain;
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    transform: rotate(4deg);
+
+    filter:
+        drop-shadow(
+            0 0 5px
+            rgba(249, 115, 22, 0.28)
+        );
+
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+}
+
+.top-brand-logo:hover .top-logo-img {
+    transform:
+        rotate(6deg)
+        scale(1.08);
+
+    filter:
+        drop-shadow(
+            0 0 9px
+            rgba(249, 115, 22, 0.5)
+        );
+}
+
+
+/* =========================================================
+   اسم الموقع
+========================================================= */
+
+.top-brand-name {
+    display: inline-block;
+
+    font-size: 1.3rem;
+    font-weight: 900;
+
+    letter-spacing: 0.2px;
+
+    background:
+        var(--title-gradient);
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+    white-space: nowrap;
+    line-height: 1.3;
+
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+}
+
+.top-brand-logo:hover .top-brand-name {
+    transform: scale(1.08);
+
+    filter:
+        drop-shadow(
+            0 0 5px
+            rgba(249, 115, 22, 0.35)
+        );
+}
+
+
+/* =========================================================
+   زر الوضع
+========================================================= */
+
+.theme-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    min-height: 43px;
+    padding: 9px 15px;
+
+    background:
+        rgba(255, 255, 255, 0.045);
+
+    color: #f8fafc;
+
+    border:
+        1px solid
+        rgba(56, 189, 248, 0.25);
+
+    border-radius: 11px;
+
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.theme-toggle-btn:hover {
+    transform: translateY(-2px);
+
+    background:
+        rgba(56, 189, 248, 0.09);
+
+    border-color:
+        rgba(56, 189, 248, 0.55);
+
+    box-shadow:
+        0 5px 18px
+        rgba(56, 189, 248, 0.13);
+}
+
+
+/* =========================================================
+   الوضع النهاري للشريط
+========================================================= */
+
+body.light-theme .top-navbar {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.97),
+            rgba(248, 250, 252, 0.92)
+        );
+
+    border-color:
+        rgba(234, 88, 12, 0.2);
+
+    box-shadow:
+        0 8px 28px
+        rgba(15, 23, 42, 0.09);
+}
+
+body.light-theme .theme-toggle-btn {
+    background:
+        rgba(2, 132, 199, 0.045);
+
+    color:
+        #172033;
+
+    border-color:
+        rgba(2, 132, 199, 0.22);
+}
+
+
+/* =========================================================
+   الحاوية الرئيسية
+========================================================= */
+
+.mega-container {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    max-width: 950px;
+
+    margin: 0 auto;
+    padding: 30px;
+
+    background:
+        var(--card-bg);
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border:
+        1px solid
+        rgba(249, 115, 22, 0.55);
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 10px 40px
+        rgba(0, 0, 0, 0.4);
+
+    transition:
+        background 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+body.light-theme .mega-container {
+    border-color:
+        rgba(234, 88, 12, 0.3);
+
+    box-shadow:
+        0 10px 35px
+        rgba(15, 23, 42, 0.11);
+}
+
+
+/* =========================================================
+   التنقل
+========================================================= */
+
+.top-nav {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+}
+
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 10px 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(249, 115, 22, 0.15),
+            rgba(168, 85, 247, 0.15)
+        );
+
+    color:
+        var(--accent-orange);
+
+    text-decoration: none;
+
+    border:
+        1px solid
+        var(--accent-orange);
+
+    border-radius: 12px;
+
+    font-weight: bold;
+    font-size: 0.95rem;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+
+    background:
+        var(--accent-orange);
+
+    color: #fff;
+
+    box-shadow:
+        0 0 20px
+        rgba(249, 115, 22, 0.35);
+}
+
+
+/* =========================================================
+   صورة رأس الوحدة
+========================================================= */
+
+.header-image-container {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 20px auto;
+    padding: 0;
+
+    background: transparent;
+
+    border:
+        2px solid
+        rgba(249, 115, 22, 0.65);
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 0 15px
+        rgba(249, 115, 22, 0.3);
+
+    transition:
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.header-image-container img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    max-height: none;
+
+    object-fit: contain;
+    object-position: center;
+
+    margin: 0;
+    padding: 0;
+
+    border-radius: 0;
+}
+
+body.light-theme .header-image-container {
+    background:
+        rgba(255, 255, 255, 0.78);
+
+    border-color:
+        rgba(234, 88, 12, 0.4);
+
+    box-shadow:
+        0 6px 25px
+        rgba(15, 23, 42, 0.1);
+}
+
+
+/* =========================================================
+   صورة الوحدة
+========================================================= */
+
+.unit-hero-img {
+    display: block;
+
+    width: 100%;
+    height: 280px;
+
+    object-fit: cover;
+    object-position: center;
+
+    margin: 0 auto;
+
+    border-radius: 12px;
+}
+
+
+/* =========================================================
+   العنوان الرئيسي
+========================================================= */
+
+h1 {
+    text-align: center;
+
+    background:
+        var(--title-gradient);
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+    font-size:
+        calc(1.6em + 0.8vw);
+
+    font-weight: 800;
+
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+
+    border-bottom:
+        2px dashed
+        var(--accent-orange);
+}
+
+
+/* =========================================================
+   العناوين الفرعية h2
+========================================================= */
+
+h2 {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(249, 115, 22, 0.10),
+            transparent
+        );
+
+    color:
+        var(--text-main);
+
+    padding: 12px 18px;
+
+    margin-top: 45px;
+    margin-bottom: 20px;
+
+    /* الإطار البرتقالي */
+    border: 1px solid var(--accent-orange);
+
+    border-radius: 8px;
+
+    font-size:
+        calc(1.1em + 0.4vw);
+}
 
 
 
-        .box p, .box h1, .box h2, .box h3, .box h4, .box h5, .box h6, .box span {
-            background: transparent !important;
-            background-color: transparent !important;
-        }
 
-        /* 2. الصندوق الزجاجي الداكن الداعم للخلفية المتحركة */
-        .box {
-            background: rgba(15, 23, 42, 0.65) !important;
-            backdrop-filter: blur(10px) !important;
-            -webkit-backdrop-filter: blur(10px) !important;
-            border: 1px solid rgba(56, 189, 248, 0.25) !important;
-            border-radius: 16px !important;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
-            padding: 20px !important;
-            margin-bottom: 25px !important;
-        }
+/* =========================================================
+   رقم العنوان
+========================================================= */
 
+.num-badge {
+    display: inline-flex;
 
+    align-items: center;
+    justify-content: center;
 
+    flex-shrink: 0;
 
-        
-        :root {
-            --bg-dark: #0b0f19;
-            --card-bg: rgba(21, 30, 49, 0.85);
-            --accent-blue: #38bdf8;
-            --accent-purple: #a855f7;
-            --accent-orange: #f97316;
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
-            --border-glow: rgba(249, 115, 22, 0.35);
-        }
+    width: 32px;
+    height: 32px;
 
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-        }
+    background:
+        linear-gradient(
+            135deg,
+            rgba(249, 115, 22, 0.95),
+            rgba(251, 146, 60, 0.82),
+            rgba(252, 211, 77, 0.68)
+        );
 
-        body { 
-            font-family: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background-color: var(--bg-dark); 
-            line-height: 2.1; 
-            padding: 20px; 
-            color: var(--text-main);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
+    color:
+        #000000;
 
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
-        }
+    border:
+        1px solid
+        rgba(249, 115, 22, 0.45);
 
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(15px);
-            opacity: 0.3;
-            animation: floatParticle 18s infinite ease-in-out;
-        }
+    border-radius: 8px;
 
-        .particle:nth-child(1) { width: 180px; height: 180px; background: var(--accent-orange); top: 10%; left: 10%; animation-duration: 20s; }
-        .particle:nth-child(2) { width: 250px; height: 250px; background: var(--accent-purple); top: 60%; right: 5%; animation-duration: 25s; animation-delay: -5s; }
-        .particle:nth-child(3) { width: 140px; height: 140px; background: var(--accent-blue); top: 40%; left: 70%; animation-duration: 16s; animation-delay: -2s; }
-        .particle:nth-child(4) { width: 200px; height: 200px; background: var(--accent-orange); bottom: 5%; left: 20%; animation-duration: 22s; animation-delay: -8s; }
+    font-size: 0.9em;
+    font-weight: 900;
 
-        @keyframes floatParticle {
-            0%, 100% { transform: translateY(0) translateX(0) scale(1); }
-            33% { transform: translateY(-50px) translateX(30px) scale(1.1); }
-            66% { transform: translateY(30px) translateX(-40px) scale(0.9); }
-        }
-
-        .mega-container { 
-            max-width: 950px; 
-            margin: auto; 
-            background: var(--card-bg); 
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 30px; 
-            border-radius: 24px; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
-            border: 1px solid var(--accent-orange);
-            position: relative;
-            z-index: 1;
-        }
-
-        .top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .nav-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 18px;
-            background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(168, 85, 247, 0.15));
-            color: var(--accent-orange);
-            text-decoration: none;
-            border-radius: 12px;
-            border: 1px solid var(--accent-orange);
-            font-weight: bold;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
-
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            background: var(--accent-orange);
-            color: var(--bg-dark);
-            box-shadow: 0 0 20px rgba(249, 115, 22, 0.4);
-        }
+    box-shadow:
+        0 0 8px
+        rgba(249, 115, 22, 0.12);
+}
 
 
-        .header-image-container {
-           width: 100%;
-           max-width: 900px; /* يمكنك تعديل الحد الأقصى للعرَض حسب رغبتك */
-           margin: 20px auto;
-           padding: 12px;
-           background: rgba(15, 23, 42, 0.6); /* خلفية داكنة تناسب تصميم موقعك */
-           border: 2px solid rgba(249, 115, 22, 0.4); /* إطار متناسق مع ألوان الوحدة */
-           border-radius: 16px;
-           box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-           box-sizing: border-box;
-           overflow: hidden;
-        }
+/* رقم العنوان في النهاري */
 
-        .header-image-container {
-           width: 100%;
-           max-width: 900px;
-           margin: 20px auto;
-           padding: 12px;
-           background: rgba(15, 23, 42, 0.7); /* خلفية داكنة */
-           border: 2px solid #f97316; /* لون الإطار البرتقالي الأساسي */
-           border-radius: 16px;
-           box-sizing: border-box;
-           overflow: hidden;
-    
-           /* 🌟 بداية تأثير الإضاءة 🌟 */
-           /* الظل الخارجي المضيء */
-           box-shadow: 0 0 15px rgba(249, 115, 22, 0.5), 
-                0 0 30px rgba(249, 115, 22, 0.3);
-    
-            /* إضافة انتقال ناعم عند التحويم (اختياري) */
-             transition: box-shadow 0.3s ease-in-out;
-        }
+body.light-theme .num-badge {
+    color: #ffffff;
+}
 
-        /* تأثير عند تحريك الماوس فوق الإطار ليصبح أكثر سطوعاً (اختياري) */
-        .header-image-container:hover {
-           box-shadow: 0 0 20px rgba(249, 115, 22, 0.7), 
-                0 0 40px rgba(249, 115, 22, 0.5);
-        }
 
-        .header-image-container  {
+ /* =========================================================
+    العناوين الصغيرة h4
+ ========================================================= */
 
-           width: 100%;        /* ملء عرض الإطار بالكامل */
-           height: 100%;       /* ملء ارتفاع الإطار بالكامل */
-    
-           object-fit: cover;  /* يجعل الصورة تغطي المساحة بالكامل ويقص الزائد */
-           object-position: center; /* يجبر القص أن يكون من منتصف الصورة بالضبط */
+h4 {
+    position: relative;
 
-           border-radius: 12px;
-        }
-        
-        .unit-hero-img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            border-radius: 12px;
-            display: block;
-            margin: 0 auto;
-        }
+    color:
+        var(--accent-orange);
 
-        h1 { 
-            text-align: center; 
-            background: linear-gradient(135deg, var(--accent-orange), #fcd34d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: calc(1.6em + 0.8vw); 
-            padding-bottom: 15px; 
-            margin-bottom: 30px; 
-            border-bottom: 2px dashed var(--accent-orange);
-            font-weight: 800;
-        }
+    margin-top: 20px;
+    margin-bottom: 8px;
 
-        h2 { 
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: linear-gradient(90deg, rgba(249, 115, 22, 0.12) 0%, rgba(15, 23, 42, 0.2) 100%); 
-            color: #ffffff; 
-            padding: 12px 18px; 
-            border-radius: 14px; 
-            margin-top: 45px; 
-            margin-bottom: 20px;
-            font-size: calc(1.1em + 0.4vw); 
-            box-shadow: inset 0 0 10px rgba(249, 115, 22, 0.05);
-            border: 1px solid rgba(249, 115, 22, 0.3);
-        }
+    padding-right: 12px;
 
-        .num-badge {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, var(--accent-orange), #ea580c);
-            color: #ffffff;
-            border-radius: 8px;
-            font-size: 0.9em;
-            font-weight: 800;
-            flex-shrink: 0;
-            box-shadow: 0 0 12px rgba(249, 115, 22, 0.4);
-        }
+    font-size: 1.1rem;
+}
 
-        h4 { 
-            color: #fb923c; 
-            margin-bottom: 8px; 
-            margin-top: 20px; 
-            font-size: 1.1rem; 
-        }
+h4::before {
+    content: "";
 
-        /* تعديل خلفية النصوص لتصبح داكنة ومريحة للعين */
-        .box { 
-            background: rgba(15, 23, 42, 0.75); 
-            border: 1px solid rgba(249, 115, 22, 0.3); 
-            border-radius: 12px; 
-            padding: 22px; 
-            margin-bottom: 20px; 
-            line-height: 1.8; 
-            color: #cbd5e1;
-            text-align: justify;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
+    position: absolute;
 
-        .keyword {
-            color: #ef4444;
-            font-weight: bold;
-        }
+    right: 0;
+    top: 10%;
 
-        .chemical-eq {
-            font-size: 1.3rem; /* تكبير حجم الخط */
-            color: #e879f9; /* لون أرجواني فاتح وجميل */
-            font-weight: bold;
-            text-align: center;
-            margin: 15px 0;
-            padding: 10px;
-            background: rgba(168, 85, 247, 0.1); /* خلفية شفافة خفيفة */
-            border: 1px dashed rgba(168, 85, 247, 0.3); /* إطار منقط متناسق */
-            border-radius: 10px;
-            direction: ltr; /* لضمان ظهور المعادلات الكيميائية والرموز بالاتجاه الصحيح */
-        }
+    width: 4px;
+    height: 80%;
 
-        /* الإطارات الإعلانية بلون برتقالي */
-        .ad-space {
-            border: 2px dashed var(--accent-orange);
-            border-radius: 12px;
-            text-align: center;
-            padding: 20px;
-            margin: 25px 0;
-            background: rgba(249, 115, 22, 0.05);
-            color: var(--accent-orange);
-            font-weight: bold;
-        }
+    background:
+        var(--accent-orange);
 
-        .bottom-nav {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px dashed var(--accent-orange);
-        }
+    border-radius: 4px;
+}
 
-        @media (max-width: 600px) { 
-            body { padding: 8px 5px; }
-            .mega-container { padding: 16px; border-radius: 16px; } 
-            h1 { font-size: 1.35em; } 
-            h2 { font-size: 1.05em; padding: 10px 12px; gap: 10px; }
-            .num-badge { width: 26px; height: 26px; font-size: 0.8em; }
-            .unit-hero-img { height: 180px; border-radius: 12px; }
-            .bottom-nav { flex-direction: column; }
-            .nav-btn { justify-content: center; width: 100%; }
-        }
-    </style>
+/* =========================================================
+   BOX — الوضع الليلي
+========================================================= */
+
+.box {
+    width: 100%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #111c34 0%,
+            #0d1422 55%,
+            #0a101b 100%
+        ) !important;
+
+    color:
+        #d5dde8;
+
+    border:
+        1px solid
+        #f97316 !important;
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    margin-bottom: 25px;
+
+    line-height: 1.8;
+
+    text-align: justify;
+
+    box-shadow:
+        0 6px 20px
+        rgba(0, 0, 0, 0.35);
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+/* النصوص داخل الصندوق */
+
+.box p,
+.box span,
+.box h3,
+.box h4,
+.box h5,
+.box h6 {
+    background:
+        transparent !important;
+}
+
+
+/* =========================================================
+   BOX — الوضع النهاري
+========================================================= */
+
+body.light-theme .box {
+    background:
+        #ffffff !important;
+
+    color:
+        #1e293b;
+
+    border:
+        1px solid
+        #ea580c !important;
+
+    box-shadow:
+        0 6px 20px
+        rgba(15, 23, 42, 0.08);
+}
+
+
+/* =========================================================
+   الكلمات المهمة
+========================================================= */
+
+.keyword {
+    color:
+        #ef4444;
+
+    font-weight:
+        700;
+}
+
+
+/* =========================================================
+   المعادلات
+========================================================= */
+
+.chemical-eq {
+    font-size: 1.3rem;
+
+    color:
+        #d946ef;
+
+    font-weight:
+        bold;
+
+    text-align: center;
+
+    margin: 15px 0;
+    padding: 10px;
+
+    background:
+        rgba(168, 85, 247, 0.1);
+
+    border:
+        1px dashed
+        rgba(168, 85, 247, 0.3);
+
+    border-radius: 10px;
+
+    direction: ltr;
+
+    overflow-x: auto;
+}
+
+
+/* =========================================================
+   الإعلانات
+========================================================= */
+
+.ad-space {
+    border:
+        2px dashed
+        var(--accent-orange);
+
+    border-radius: 12px;
+
+    text-align: center;
+
+    padding: 20px;
+
+    margin: 25px 0;
+
+    background:
+        rgba(249, 115, 22, 0.05);
+
+    color:
+        var(--accent-orange);
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   التنقل السفلي
+========================================================= */
+
+.bottom-nav {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-top: 40px;
+    padding-top: 20px;
+
+    border-top:
+        2px dashed
+        var(--accent-orange);
+}
+
+
+/* =========================================================
+   الهاتف
+========================================================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 8px 5px;
+    }
+
+    .top-navbar {
+        margin-bottom: 14px;
+        border-radius: 14px;
+    }
+
+    .top-nav-container {
+        min-height: 60px;
+
+        padding: 8px 11px;
+
+        gap: 8px;
+    }
+
+    .top-logo-img {
+        width: 45px;
+        height: 45px;
+    }
+
+    .top-brand-logo {
+        gap: 9px;
+    }
+
+    .top-brand-name {
+        font-size: 1.08rem;
+        font-weight: 900;
+    }
+
+    .theme-toggle-btn {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+    }
+
+    .mega-container {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    h1 {
+        font-size: 1.35em;
+    }
+
+    h2 {
+        font-size: 1.05em;
+        padding: 10px 12px;
+        gap: 10px;
+    }
+
+    h2::before {
+        width: 3px;
+        height: 26px;
+    }
+
+    .num-badge {
+        width: 26px;
+        height: 26px;
+        font-size: 0.8em;
+    }
+
+    h4 {
+        font-size: 1rem;
+    }
+
+    .unit-hero-img {
+        height: 180px;
+    }
+
+    .header-image-container {
+        padding: 0;
+        border-radius: 13px;
+    }
+
+    .header-image-container img {
+        max-height: none;
+        border-radius: 0;
+    }
+
+    .box {
+        padding: 16px;
+        text-align: right;
+    }
+
+    .chemical-eq {
+        font-size: 1.1rem;
+    }
+
+    .bottom-nav {
+        flex-direction: column;
+    }
+
+    .nav-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+/* =========================================================
+   تقليل الحركة
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+    }
+}
+
+</style>
 
 <link rel="stylesheet" href="style.css">
     
 </head>
 <body>
+
+    <canvas id="cellCanvas"></canvas>
+
+    <div class="main-wrapper">
+        <header class="top-navbar">
+            <div class="top-nav-container">
+                <a href="index.html" class="top-brand-logo">
+                    <img src="favicon.png" alt="شعار" class="top-logo-img" onerror="this.onerror=null; this.src='favicon.ico';">
+                    <span class="top-brand-name">bio-bac-dz</span>
+                </a>
+
+                <button class="theme-toggle-btn" onclick="toggleTheme()">
+                    <span id="theme-icon">🌙</span>
+                    <span id="theme-text">الوضع الليلي</span>
+                </button>
+            </div>
+        </header>
 
 <div class="bg-animation">
     <div class="particle"></div>
@@ -534,6 +1350,162 @@
     </div>
 
 </div>
+
+<script>
+
+    function toggleTheme() {
+        const bodyElement = document.body;
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+
+        // تبديل الكلاس على جسم الصفحة
+        bodyElement.classList.toggle('light-theme');
+        const isLightTheme = bodyElement.classList.contains('light-theme');
+
+        // تحديث النصوص والأيقونات والمحفوظات
+        if (isLightTheme) {
+            if (themeIcon) themeIcon.textContent = '☀️';
+            if (themeText) themeText.textContent = 'الوضع النهاري';
+            localStorage.setItem('theme', 'light');
+        } else {
+            if (themeIcon) themeIcon.textContent = '🌙';
+            if (themeText) themeText.textContent = 'الوضع الليلي';
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+
+    /* ==========================================
+       2. عند تحميل الصفحة (تطبيق الثيم والكانفاس)
+       ========================================== */
+    document.addEventListener('DOMContentLoaded', () => {
+        const bodyElement = document.body;
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+
+        // استرجاع الثيم المحفوظ عند فتح الصفحة
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme === 'light') {
+            bodyElement.classList.add('light-theme');
+            if (themeIcon) themeIcon.textContent = '☀️';
+            if (themeText) themeText.textContent = 'الوضع النهاري';
+        } else {
+            bodyElement.classList.remove('light-theme');
+            if (themeIcon) themeIcon.textContent = '🌙';
+            if (themeText) themeText.textContent = 'الوضع الليلي';
+        }
+
+        /* ==========================================
+           3. أنيميشن خلفية الجسيمات (Canvas)
+           ========================================== */
+        const canvas = document.getElementById('cellCanvas');
+
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let particlesArray = [];
+            const numberOfParticles = 35;
+
+            function setCanvasSize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            setCanvasSize();
+
+            window.addEventListener('resize', () => {
+                setCanvasSize();
+                initParticles();
+            });
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 3.5 + 1.5; // زيادة الحجم قليلاً للوضوح
+                    this.speedX = (Math.random() - 0.5) * 0.6;
+                    this.speedY = (Math.random() - 0.5) * 0.6;
+                    this.opacity = Math.random() * 0.5 + 0.3;
+                }
+
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+
+                    if (this.x < 0 || this.x > canvas.width) {
+                        this.speedX = -this.speedX;
+                    }
+                    if (this.y < 0 || this.y > canvas.height) {
+                        this.speedY = -this.speedY;
+                    }
+                }
+
+                draw() {
+                    const isLight = bodyElement.classList.contains('light-theme');
+                    
+                    // في الوضع النهاري نستخدم ألوان أغمق مع شفافية أرقامها أعلى للوضوح
+                    ctx.fillStyle = isLight 
+                        ? `rgba(2, 132, 199, ${this.opacity * 1.2})`  /* أزرق داكن وواضح */
+                        : `rgba(248, 250, 252, ${this.opacity})`;     /* أبيض ناصع لليلي */
+
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            function initParticles() {
+                particlesArray = [];
+                for (let i = 0; i < numberOfParticles; i++) {
+                    particlesArray.push(new Particle());
+                }
+            }
+
+            function connectParticles() {
+                const maxDistance = 130;
+                const isLight = bodyElement.classList.contains('light-theme');
+
+                for (let a = 0; a < particlesArray.length; a++) {
+                    for (let b = a; b < particlesArray.length; b++) {
+                        const dx = particlesArray[a].x - particlesArray[b].x;
+                        const dy = particlesArray[a].y - particlesArray[b].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < maxDistance) {
+                            const opacityLevel = 1 - (distance / maxDistance);
+                            
+                            // زيادة تباين الخطوط الرابطة بين النقاط في النهاري
+                            ctx.strokeStyle = isLight 
+                                ? `rgba(14, 116, 144, ${opacityLevel * 0.35})` /* خطوط زرقاء داكنة هادئة */
+                                : `rgba(255, 255, 255, ${opacityLevel * 0.08})`;
+
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            function animateCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].update();
+                    particlesArray[i].draw();
+                }
+
+                connectParticles();
+                requestAnimationFrame(animateCanvas);
+            }
+
+            initParticles();
+            animateCanvas();
+        }
+    });
+
+</script>
 
 <script src="script.js"></script>
 
