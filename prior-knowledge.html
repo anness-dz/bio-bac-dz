@@ -4,48 +4,41 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>موسوعة المكتسبات القبلية الشاملة</title>
+<title>محطات الاكتشاف: مغامرة داخل الخلية والوراثة</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
 <style>
 
 /* =========================================================
-   PREMIUM DESIGN SYSTEM
+   VISUAL IDENTITY — "محطات الاكتشاف"
+   A living, wobbly, neon-drenched cell world: every block
+   is a membrane, not a card. Loud, warm, curious, alive.
 ========================================================= */
 
+/* هذه المتغيرات (variables) هي لوحة الألوان الأساسية للتصميم.
+   إذا أردت تغيير لون معيّن في كل الصفحة دفعة واحدة، غيّره من هنا فقط. */
 :root {
-    --bg: #020711;
-    --bg-2: #06101d;
+    --bg: #1a0e33;
+    --bg-2: #241147;
+    --panel: #2b1454;
+    --panel-2: #331863;
 
-    --surface: rgba(8, 17, 30, .94);
-    --surface-2: rgba(12, 25, 42, .82);
-    --surface-3: rgba(17, 34, 55, .9);
+    --white: #fdf7ff;
+    --soft: #d3c2f0;
+    --muted: #9a86c4;
 
-    --text: #f8fafc;
-    --text-2: #b4c2d3;
-    --muted: #718096;
+    --pink: #ff4fa3;
+    --lime: #b9ff4d;
+    --cyan: #3fe8d4;
+    --yellow: #ffcf3f;
+    --violet: #b98bff;
 
-    --blue: #0ea5e9;
-    --blue-light: #38bdf8;
-    --blue-dark: #0369a1;
-
-    --green: #10b981;
-    --green-light: #34d399;
-
-    --line: rgba(148,163,184,.11);
-    --line-blue: rgba(56,189,248,.22);
-
-    --glow: rgba(14,165,233,.13);
-
-    --r-xl: 26px;
-    --r-lg: 18px;
-    --r-md: 13px;
-    --r-sm: 10px;
-
-    --sidebar: 292px;
-
-    --shadow:
-        0 35px 100px rgba(0,0,0,.52),
-        0 0 70px rgba(14,165,233,.035);
+    --line: rgba(255,255,255,.12);
+    --ease: cubic-bezier(.34,1.56,.64,1);
+    --ease-soft: cubic-bezier(.22,1,.36,1);
 }
 
 
@@ -53,136 +46,68 @@
    RESET
 ========================================================= */
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-html {
-    scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
     min-height: 100vh;
-    color: var(--text);
-
-    font-family:
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-    background:
-        radial-gradient(
-            circle at 82% 0%,
-            rgba(14,165,233,.10),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 8% 100%,
-            rgba(16,185,129,.045),
-            transparent 24%
-        ),
-        linear-gradient(
-            145deg,
-            var(--bg),
-            var(--bg-2)
-        );
-
+    color: var(--white);
+    font-family: "Tajawal", "Tahoma", sans-serif;
+    background: var(--bg);
     overflow-x: hidden;
 }
 
 
-/* =========================================================
-   PREMIUM BACKGROUND
-========================================================= */
+/* الفقاعات العائمة في الخلفية — مجرد زينة بصرية (خلف كل شيء وغير قابلة للنقر)
+   تعطي إحساس أنك داخل طبق مزرعة أحياء. تتحرك ببطء عبر خاصية animation بالأسفل. */
 
-body::before {
-    content: "";
-
+.blob-field {
     position: fixed;
     inset: 0;
-
-    background-image:
-        linear-gradient(
-            rgba(56,189,248,.018) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(56,189,248,.018) 1px,
-            transparent 1px
-        );
-
-    background-size: 72px 72px;
-
     pointer-events: none;
-    z-index: -3;
+    z-index: -5;
+    overflow: hidden;
 }
 
-body::after {
-    content: "";
+.blob-field span {
+    position: absolute;
+    border-radius: 63% 37% 54% 46% / 43% 41% 59% 57%;
+    filter: blur(2px);
+    opacity: .16;
+    animation: drift 26s ease-in-out infinite;
+}
 
-    position: fixed;
+.blob-field span:nth-child(1) {
+    width: 340px; height: 340px; top: -80px; right: -60px;
+    background: var(--pink); animation-duration: 22s;
+}
 
-    width: 620px;
-    height: 620px;
+.blob-field span:nth-child(2) {
+    width: 260px; height: 260px; bottom: -60px; left: -40px;
+    background: var(--cyan); animation-duration: 30s; animation-delay: -6s;
+}
 
-    right: -360px;
-    top: -390px;
+.blob-field span:nth-child(3) {
+    width: 200px; height: 200px; top: 40%; right: 8%;
+    background: var(--lime); animation-duration: 24s; animation-delay: -12s;
+}
 
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(14,165,233,.12),
-            transparent 67%
-        );
-
-    filter: blur(25px);
-
-    pointer-events: none;
-    z-index: -2;
+@keyframes drift {
+    0%, 100% { transform: translate(0,0) rotate(0deg) scale(1); }
+    33% { transform: translate(20px,-25px) rotate(8deg) scale(1.06); }
+    66% { transform: translate(-15px,15px) rotate(-6deg) scale(.97); }
 }
 
 
 /* =========================================================
-   SCROLLBAR
-========================================================= */
-
-::-webkit-scrollbar {
-    width: 7px;
-    height: 7px;
-}
-
-::-webkit-scrollbar-track {
-    background: rgba(255,255,255,.025);
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(56,189,248,.24);
-    border-radius: 20px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(56,189,248,.45);
-}
-
-
-/* =========================================================
-   WRAPPER
+   APP
 ========================================================= */
 
 .presentation-wrapper {
-    width: min(1460px, calc(100% - 42px));
-
+    width: min(1460px, calc(100% - 48px));
     margin: auto;
-
-    padding:
-        24px 0 42px;
+    padding: 22px 0 40px;
 }
 
 
@@ -191,161 +116,95 @@ body::after {
 ========================================================= */
 
 .top-navigation-bar {
-    min-height: 66px;
-
-    display: grid;
-
-    grid-template-columns:
-        auto
-        minmax(220px,1fr)
-        auto
-        auto;
-
+    min-height: 60px;
+    display: flex;
     align-items: center;
-
     gap: 12px;
-
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
-.back-home-badge,
-.fullscreen-btn {
-    min-height: 45px;
-
+.back-home-badge {
+    height: 48px;
     display: inline-flex;
-
     align-items: center;
-    justify-content: center;
-
     gap: 8px;
-
-    padding: 10px 15px;
-
-    color: #dbeafe;
-
-    background:
-        rgba(7,16,29,.82);
-
-    border:
-        1px solid var(--line);
-
-    border-radius:
-        var(--r-sm);
-
+    padding: 0 18px;
+    color: var(--white);
     text-decoration: none;
-
-    font-size: .86rem;
+    background: var(--panel);
+    border: 2px solid var(--line);
+    border-radius: 999px;
     font-weight: 700;
-
-    cursor: pointer;
-
-    transition:
-        .22s ease;
+    font-size: .85rem;
+    transition: .25s var(--ease);
 }
 
-.back-home-badge:hover,
-.fullscreen-btn:hover {
-    background:
-        rgba(14,165,233,.08);
-
-    border-color:
-        var(--line-blue);
-
-    transform:
-        translateY(-1px);
+.back-home-badge:hover {
+    border-color: var(--pink);
+    transform: translateY(-2px) rotate(-1deg);
 }
 
 .page-heading {
+    flex: 1;
     min-width: 0;
+    padding: 0 8px;
+    text-align: center;
 }
 
 .page-heading h1 {
-    color: #edf7ff;
-
-    font-size: 1.03rem;
-    font-weight: 760;
-
-    white-space: nowrap;
     overflow: hidden;
+    background: linear-gradient(90deg, var(--pink), var(--yellow), var(--cyan));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-family: "Lalezar", "Tajawal", sans-serif;
+    font-size: clamp(1.15rem, 2.3vw, 1.7rem);
+    white-space: nowrap;
     text-overflow: ellipsis;
+    letter-spacing: .5px;
 }
 
 .page-heading span {
     display: block;
-
-    margin-top: 3px;
-
+    margin-top: 4px;
     color: var(--muted);
-
-    font-size: .72rem;
+    font-size: .74rem;
+    font-weight: 500;
 }
 
-
-/* =========================================================
-   PROGRESS
-========================================================= */
-
 .progress-indicator {
-    min-height: 45px;
-
+    height: 48px;
     display: flex;
-
     align-items: center;
-
-    gap: 10px;
-
-    padding: 8px 12px;
-
-    background:
-        rgba(7,16,29,.82);
-
-    border:
-        1px solid var(--line);
-
-    border-radius:
-        var(--r-sm);
+    gap: 11px;
+    padding: 0 15px;
+    border: 2px solid var(--line);
+    border-radius: 999px;
+    background: var(--panel);
 }
 
 .progress-text {
-    min-width: 40px;
-
-    color: #dceeff;
-
+    min-width: 34px;
+    color: var(--yellow);
     font-size: .78rem;
     font-weight: 800;
-
-    text-align: center;
 }
 
 .progress-track {
-    width: 140px;
-    height: 5px;
-
+    width: 110px;
+    height: 8px;
     overflow: hidden;
-
-    background:
-        rgba(255,255,255,.065);
-
-    border-radius: 20px;
+    background: rgba(255,255,255,.1);
+    border-radius: 10px;
 }
 
 .progress-bar {
     width: 0;
     height: 100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            var(--green),
-            var(--blue)
-        );
-
-    border-radius: inherit;
-
-    transition:
-        width .4s cubic-bezier(.22,.61,.36,1);
+    background: linear-gradient(90deg, var(--pink), var(--yellow), var(--lime), var(--cyan));
+    border-radius: 10px;
+    transition: width .5s var(--ease-soft);
 }
-
 
 /* =========================================================
    MOBILE SELECTOR
@@ -353,47 +212,31 @@ body::after {
 
 .mobile-slide-selector {
     display: none;
-
     width: 100%;
-
+    min-height: 54px;
     align-items: center;
     justify-content: space-between;
-
-    gap: 12px;
-
+    padding: 0 18px;
     margin-bottom: 10px;
-
-    padding: 12px 14px;
-
-    color: #dcecff;
-
-    background:
-        rgba(7,16,29,.92);
-
-    border:
-        1px solid var(--line);
-
-    border-radius:
-        var(--r-md);
-
+    color: var(--white);
+    background: var(--panel);
+    border: 2px solid var(--line);
+    border-radius: 20px;
     cursor: pointer;
 }
 
 .mobile-slide-selector span {
     min-width: 0;
-
     overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
-
-    font-size: .81rem;
+    text-overflow: ellipsis;
+    font-size: .82rem;
     font-weight: 700;
 }
 
 .mobile-slide-selector small {
-    flex-shrink: 0;
-
-    color: var(--muted);
+    color: var(--yellow);
+    font-size: .72rem;
 }
 
 
@@ -403,279 +246,90 @@ body::after {
 
 .presentation-layout {
     display: grid;
-
-    grid-template-columns:
-        var(--sidebar)
-        minmax(0,1fr);
-
-    gap: 17px;
-
-    align-items: start;
+    grid-template-columns: 78px minmax(0, 1fr);
+    gap: 22px;
+    align-items: stretch;
 }
 
 
-/* =========================================================
-   SIDEBAR
-========================================================= */
+/* شريط التنقل الجانبي (يظهر في الحاسوب فقط، وعلى الهاتف يتحول إلى قائمة منسدلة).
+   كل دائرة فيه ترمز إلى شريحة/محطة، ويتم إنشاؤها تلقائياً بواسطة الجافاسكربت بالأسفل. */
 
 .slide-sidebar {
     position: sticky;
-    top: 18px;
-
-    overflow: hidden;
-
-    padding: 15px;
-
-    background:
-        linear-gradient(
-            155deg,
-            rgba(9,20,35,.94),
-            rgba(5,14,26,.91)
-        );
-
-    border:
-        1px solid var(--line);
-
-    border-radius:
-        var(--r-xl);
-
-    box-shadow:
-        0 22px 70px rgba(0,0,0,.30);
-
-    backdrop-filter:
-        blur(22px);
-
-    -webkit-backdrop-filter:
-        blur(22px);
-}
-
-.slide-sidebar::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    right: 22px;
-    left: 22px;
-
-    height: 1px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(56,189,248,.45),
-            transparent
-        );
-}
-
-.sidebar-header {
+    top: 22px;
+    height: calc(100vh - 44px);
+    min-height: 430px;
     display: flex;
-
     align-items: center;
-    justify-content: space-between;
-
-    padding:
-        6px 4px 14px;
-
-    border-bottom:
-        1px solid var(--line);
+    justify-content: center;
+    padding: 10px 0;
 }
 
-.sidebar-header strong {
-    color: #e8f3ff;
-
-    font-size: .9rem;
-}
-
-.sidebar-header span {
-    color: var(--muted);
-
-    font-size: .68rem;
-}
+.sidebar-header { display: none; }
 
 .slide-list {
     display: flex;
-
     flex-direction: column;
-
-    gap: 6px;
-
-    padding-top: 12px;
+    gap: 20px;
 }
 
 .slide-nav-item {
     position: relative;
-
-    width: 100%;
-
-    display: grid;
-
-    grid-template-columns:
-        38px
-        minmax(0,1fr);
-
+    width: 46px;
+    height: 46px;
+    display: flex;
     align-items: center;
-
-    gap: 10px;
-
-    padding: 10px 9px;
-
-    color: var(--text-2);
-
-    background: transparent;
-
-    border:
-        1px solid transparent;
-
-    border-radius:
-        13px;
-
-    text-align: right;
-
+    justify-content: center;
+    color: var(--muted);
+    background: var(--panel);
+    border: 2px solid var(--line);
+    border-radius: 63% 37% 54% 46% / 43% 41% 59% 57%;
     cursor: pointer;
-
-    transition:
-        background .22s ease,
-        border-color .22s ease,
-        transform .22s ease;
+    transition: .35s var(--ease);
 }
 
+.slide-nav-item:nth-child(1) { --dot: var(--pink); }
+.slide-nav-item:nth-child(2) { --dot: var(--cyan); }
+.slide-nav-item:nth-child(3) { --dot: var(--yellow); }
+.slide-nav-item:nth-child(4) { --dot: var(--lime); }
+
 .slide-nav-item:hover {
-    background:
-        rgba(56,189,248,.045);
-
-    border-color:
-        rgba(56,189,248,.09);
-
-    transform:
-        translateX(-2px);
+    color: var(--white);
+    border-color: var(--dot, var(--pink));
+    transform: scale(1.1) rotate(-4deg);
 }
 
 .slide-nav-item.active {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(14,165,233,.13),
-            rgba(16,185,129,.045)
-        );
-
-    border-color:
-        rgba(56,189,248,.19);
-
-    color: white;
-
-    box-shadow:
-        inset -3px 0 0 var(--blue);
+    color: var(--bg);
+    background: var(--dot, var(--pink));
+    border-color: var(--dot, var(--pink));
+    box-shadow: 0 0 0 6px rgba(255,255,255,.06), 0 0 26px var(--dot, var(--pink));
+    transform: scale(1.18) rotate(0deg);
 }
 
 .slide-number {
-    width: 38px;
-    height: 38px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    color: #7f91a7;
-
-    background:
-        rgba(255,255,255,.035);
-
-    border:
-        1px solid rgba(255,255,255,.06);
-
-    border-radius:
-        11px;
-
-    font-size: .74rem;
-    font-weight: 850;
-
-    transition:
-        .22s ease;
+    width: auto; height: auto; display: block;
+    color: inherit; background: none; border: 0;
+    font-family: "Lalezar", sans-serif;
+    font-size: .85rem;
 }
 
-.slide-nav-item.active .slide-number {
-    color: white;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--blue),
-            var(--blue-dark)
-        );
-
-    border-color:
-        transparent;
-
-    box-shadow:
-        0 6px 18px rgba(14,165,233,.18);
-}
-
-.slide-nav-title {
-    min-width: 0;
-
-    font-size: .78rem;
-    font-weight: 650;
-
-    line-height: 1.5;
-}
+.slide-nav-title { display: none; }
 
 
 /* =========================================================
-   MAIN CONTAINER
+   MAIN STAGE — the big membrane
 ========================================================= */
 
 .slide-container {
     position: relative;
-
     min-width: 0;
-
     overflow: hidden;
-
-    background:
-        var(--surface);
-
-    border:
-        1px solid var(--line);
-
-    border-radius:
-        var(--r-xl);
-
-    box-shadow:
-        var(--shadow);
-
-    backdrop-filter:
-        blur(20px);
-
-    -webkit-backdrop-filter:
-        blur(20px);
-}
-
-.slide-container::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    right: 0;
-    left: 0;
-
-    height: 2px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            var(--green) 25%,
-            var(--blue) 68%,
-            transparent
-        );
-
-    opacity: .9;
-
-    z-index: 2;
+    background: var(--panel);
+    border: 2px solid var(--line);
+    border-radius: 46px 20px 46px 20px;
+    box-shadow: 0 35px 90px rgba(10,3,25,.55);
 }
 
 
@@ -685,356 +339,208 @@ body::after {
 
 .slide-header {
     position: relative;
-
-    min-height: 92px;
-
+    min-height: 128px;
     display: flex;
-
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
-
-    gap: 20px;
-
-    padding:
-        21px 28px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(14,165,233,.07),
-            rgba(16,185,129,.025)
-        );
-
-    border-bottom:
-        1px solid var(--line);
+    gap: 25px;
+    padding: 28px 36px;
+    background: linear-gradient(180deg, rgba(255,255,255,.05), transparent);
+    border-bottom: 2px dashed var(--line);
 }
 
-.slide-header::after {
-    content: "";
-
+.slide-header::before {
+    content: attr(data-number);
     position: absolute;
-
-    right: 28px;
-    bottom: -1px;
-
-    width: 90px;
-    height: 1px;
-
-    background:
-        var(--blue);
+    left: 24px;
+    bottom: -26px;
+    color: rgba(255,255,255,.045);
+    font-family: "Lalezar", sans-serif;
+    font-size: 9.5rem;
+    line-height: 1;
+    pointer-events: none;
 }
 
 .slide-header h2 {
-    min-width: 0;
-
-    color: white;
-
-    font-size:
-        clamp(1.18rem,2vw,1.52rem);
-
-    line-height: 1.5;
-
-    font-weight: 780;
+    position: relative;
+    z-index: 1;
+    max-width: 850px;
+    color: var(--white);
+    font-family: "Lalezar", "Tajawal", sans-serif;
+    font-size: clamp(1.3rem, 2.4vw, 1.95rem);
+    line-height: 1.55;
+    font-weight: 400;
 }
 
 .slide-tag {
+    position: relative;
+    z-index: 2;
     flex-shrink: 0;
-
-    padding:
-        7px 11px;
-
-    color:
-        var(--blue-light);
-
-    background:
-        rgba(14,165,233,.07);
-
-    border:
-        1px solid rgba(56,189,248,.19);
-
-    border-radius:
-        var(--r-sm);
-
-    font-size: .73rem;
-    font-weight: 750;
-
-    white-space: nowrap;
+    padding: 8px 16px;
+    color: var(--bg);
+    border: 0;
+    border-radius: 999px;
+    background: var(--yellow);
+    font-size: .72rem;
+    font-weight: 800;
 }
 
 
 /* =========================================================
-   CONTENT
+   CONTENT AREA
 ========================================================= */
 
 .slide-content-area {
-    min-height: 500px;
-
-    max-height:
-        calc(100vh - 215px);
-
+    min-height: 520px;
+    max-height: calc(100vh - 250px);
     overflow-y: auto;
-
-    padding:
-        30px;
-
-    overscroll-behavior:
-        contain;
-
-    scrollbar-gutter:
-        stable;
+    padding: 32px 36px;
+    scrollbar-gutter: stable;
+    overscroll-behavior: contain;
 }
 
-.slide {
-    display: none;
-}
+.slide { display: none; }
 
 .slide.active {
     display: block;
-
-    animation:
-        slideEnter .34s cubic-bezier(.22,.61,.36,1) both;
+    animation: sceneIn .55s var(--ease-soft) both;
 }
 
-@keyframes slideEnter {
-    from {
-        opacity: 0;
-        transform:
-            translateY(10px)
-            scale(.996);
-    }
-
-    to {
-        opacity: 1;
-        transform:
-            translateY(0)
-            scale(1);
-    }
+@keyframes sceneIn {
+    from { opacity: 0; transform: translateY(18px) scale(.99); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 
 /* =========================================================
-   LEAD
+   LEAD TEXT — the "mission brief" bubble
 ========================================================= */
 
 .lead-text {
     position: relative;
-
-    margin-bottom: 20px;
-
-    padding:
-        18px 20px;
-
-    color: #e4edf7;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(14,165,233,.025),
-            rgba(14,165,233,.075)
-        );
-
-    border-right:
-        3px solid var(--blue);
-
-    border-radius:
-        0 14px 14px 0;
-
+    margin-bottom: 26px;
+    padding: 22px 26px;
+    color: var(--white);
+    background: linear-gradient(100deg, rgba(255,79,163,.16), rgba(63,232,212,.10));
+    border: 2px solid var(--line);
+    border-radius: 26px 8px 26px 8px;
     font-size: 1rem;
-
-    line-height: 1.95;
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.025);
+    line-height: 2;
 }
+
+.lead-text strong { color: var(--yellow); }
 
 
 /* =========================================================
-   CONTENT BLOCK
+   CONTENT BLOCKS — each one is an organelle
 ========================================================= */
 
 .content-block {
     position: relative;
-
-    margin-bottom: 18px;
-
-    padding: 21px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(15,29,48,.78),
-            rgba(10,22,38,.72)
-        );
-
-    border:
-        1px solid rgba(148,163,184,.075);
-
-    border-radius:
-        var(--r-lg);
-
-    box-shadow:
-        0 9px 35px rgba(0,0,0,.075);
-
-    transition:
-        border-color .22s ease,
-        background .22s ease,
-        transform .22s ease;
+    margin-bottom: 22px;
+    padding: 24px 26px;
+    background: var(--panel-2);
+    border: 2px solid var(--accent, var(--pink));
+    border-radius: 34px 12px 34px 12px;
+    transition: .3s var(--ease-soft);
 }
 
 .content-block:hover {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(18,36,58,.86),
-            rgba(11,25,42,.8)
-        );
-
-    border-color:
-        rgba(56,189,248,.14);
-
-    transform:
-        translateY(-1px);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px -10px var(--accent, var(--pink));
 }
 
 .content-block h3 {
     display: flex;
-
     align-items: center;
-
-    gap: 9px;
-
-    margin-bottom: 11px;
-
-    color:
-        var(--blue-light);
-
-    font-size: 1.08rem;
-
+    gap: 10px;
+    margin-bottom: 12px;
+    color: var(--accent, var(--pink));
+    font-family: "Lalezar", "Tajawal", sans-serif;
+    font-size: 1.15rem;
     line-height: 1.6;
+    font-weight: 400;
 }
 
 .content-block p,
 .content-block li {
-    color:
-        var(--text-2);
-
-    font-size:
-        .96rem;
-
-    line-height:
-        1.95;
+    color: var(--soft);
+    font-size: .95rem;
+    line-height: 1.95;
 }
+
+.content-block strong { color: var(--white); }
+
+/* هذه الأصناف (classes) تلوّن كل بطاقة محتوى بلون مختلف حسب موضوعها
+   (مثلاً: الخلية النباتية = أخضر ليموني، الحيوانية = وردي...).
+   لتغيير لون بطاقة معينة في الـ HTML، فقط بدّل اسم الصنف block-xxx الموجود عليها. */
+.block-pink   { --accent: var(--pink); }
+.block-lime   { --accent: var(--lime); }
+.block-cyan   { --accent: var(--cyan); }
+.block-yellow { --accent: var(--yellow); }
+.block-violet { --accent: var(--violet); }
 
 
 /* =========================================================
    LISTS
 ========================================================= */
 
-.emoji-list {
-    list-style: none;
-
-    margin-top: 10px;
-}
+.emoji-list { list-style: none; margin-top: 12px; }
 
 .emoji-list li {
     position: relative;
-
-    padding-right: 23px;
-
-    margin-bottom: 9px;
+    padding-right: 22px;
+    margin-bottom: 11px;
 }
 
 .emoji-list li::before {
-    content: "•";
-
+    content: "";
     position: absolute;
-
-    right: 0;
-    top: 0;
-
-    color:
-        var(--green-light);
-
-    font-size:
-        1.18rem;
-
-    font-weight:
-        900;
+    right: 2px;
+    top: .68em;
+    width: 8px;
+    height: 8px;
+    background: var(--accent, var(--pink));
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(45deg);
 }
 
-.emoji-list li:last-child {
-    margin-bottom: 0;
-}
+.emoji-list li:last-child { margin-bottom: 0; }
 
 
 /* =========================================================
-   IMAGES
+   IMAGES — porthole into the microscope
 ========================================================= */
 
 .image-slot {
     position: relative;
-
-    margin-top: 18px;
-
-    padding: 8px;
-
+    margin-top: 22px;
+    padding: 14px;
+    background: var(--bg-2);
+    border: 2px dashed var(--accent, var(--line));
+    border-radius: 28px;
     overflow: hidden;
-
-    text-align: center;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(2,8,23,.58),
-            rgba(8,20,35,.68)
-        );
-
-    border:
-        1px solid rgba(56,189,248,.105);
-
-    border-radius:
-        var(--r-md);
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.025);
 }
 
 .image-slot img {
+    display: block;
     width: 100%;
     height: auto;
-
-    display: block;
-
-    margin: auto;
-
-    border-radius: 8px;
-
+    border-radius: 18px;
     cursor: zoom-in;
-
-    transition:
-        transform .35s ease,
-        filter .35s ease;
+    transition: transform .5s var(--ease-soft), filter .5s ease;
 }
 
 .image-slot img:hover {
-    transform:
-        scale(1.012);
-
-    filter:
-        brightness(1.035);
+    transform: scale(1.02) rotate(-.4deg);
 }
 
 .image-error {
     display: none;
-
-    padding:
-        30px 15px;
-
-    color:
-        var(--muted);
-
-    font-size:
-        .87rem;
+    padding: 30px;
+    color: var(--muted);
+    text-align: center;
+    font-size: .82rem;
 }
 
 
@@ -1043,110 +549,43 @@ body::after {
 ========================================================= */
 
 .slide-footer {
-    min-height: 78px;
-
+    min-height: 88px;
     display: grid;
-
-    grid-template-columns:
-        1fr
-        auto
-        1fr;
-
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-
-    gap: 15px;
-
-    padding:
-        15px 20px;
-
-    background:
-        rgba(3,8,18,.74);
-
-    border-top:
-        1px solid var(--line);
+    gap: 18px;
+    padding: 16px 30px;
+    background: var(--bg-2);
+    border-top: 2px dashed var(--line);
 }
 
 .control-btn {
-    min-width: 125px;
-
+    min-width: 130px;
+    height: 48px;
     display: inline-flex;
-
     align-items: center;
     justify-content: center;
-
     gap: 8px;
-
-    padding:
-        11px 18px;
-
-    color: white;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--blue),
-            var(--blue-dark)
-        );
-
-    border:
-        1px solid rgba(125,211,252,.14);
-
-    border-radius:
-        var(--r-sm);
-
-    box-shadow:
-        0 7px 22px rgba(14,165,233,.13);
-
-    font-size: .89rem;
-    font-weight: 750;
-
+    color: var(--white);
+    background: var(--panel);
+    border: 2px solid var(--line);
+    border-radius: 999px;
+    font-size: .82rem;
+    font-weight: 800;
     cursor: pointer;
-
-    transition:
-        transform .22s ease,
-        box-shadow .22s ease,
-        opacity .22s ease;
-}
-
-.slide-footer .control-btn:first-child {
-    justify-self: start;
-}
-
-.slide-footer .control-btn:last-child {
-    justify-self: end;
+    transition: .3s var(--ease);
 }
 
 .control-btn:hover:not(:disabled) {
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 11px 28px rgba(14,165,233,.22);
+    background: linear-gradient(90deg, var(--pink), var(--violet));
+    border-color: transparent;
+    transform: translateY(-3px) rotate(-1deg);
 }
 
-.control-btn:active:not(:disabled) {
-    transform:
-        translateY(0);
-}
+.control-btn:disabled { opacity: .3; cursor: not-allowed; }
 
-.control-btn:disabled {
-    color: #64748b;
-
-    background:
-        #141d2c;
-
-    border-color:
-        rgba(255,255,255,.035);
-
-    box-shadow:
-        none;
-
-    cursor:
-        not-allowed;
-
-    opacity:
-        .68;
-}
+.slide-footer .control-btn:first-child { justify-self: start; }
+.slide-footer .control-btn:last-child { justify-self: end; }
 
 
 /* =========================================================
@@ -1155,51 +594,26 @@ body::after {
 
 .slide-dots {
     display: flex;
-
     align-items: center;
     justify-content: center;
-
-    gap: 7px;
+    gap: 9px;
 }
 
 .slide-dot {
-    width: 7px;
-    height: 7px;
-
+    width: 9px;
+    height: 9px;
     padding: 0;
-
-    background:
-        #334155;
-
-    border:
-        none;
-
-    border-radius:
-        20px;
-
-    cursor:
-        pointer;
-
-    transition:
-        width .24s ease,
-        background .24s ease,
-        transform .24s ease;
-}
-
-.slide-dot:hover {
-    transform:
-        scale(1.2);
+    border: 0;
+    border-radius: 50%;
+    background: var(--line);
+    cursor: pointer;
+    transition: .35s var(--ease);
 }
 
 .slide-dot.active {
-    width: 26px;
-
-    background:
-        linear-gradient(
-            90deg,
-            var(--green),
-            var(--blue)
-        );
+    width: 30px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--pink), var(--yellow));
 }
 
 
@@ -1209,103 +623,42 @@ body::after {
 
 .image-lightbox {
     position: fixed;
-
     inset: 0;
-
     z-index: 1000;
-
     display: none;
-
     align-items: center;
     justify-content: center;
-
-    padding: 28px;
-
-    background:
-        rgba(1,5,14,.95);
-
-    backdrop-filter:
-        blur(15px);
-
-    -webkit-backdrop-filter:
-        blur(15px);
+    padding: 20px;
+    background: rgba(10,3,25,.95);
 }
 
-.image-lightbox.active {
-    display: flex;
+.image-lightbox.active { display: flex; animation: fadeIn .25s ease both; }
 
-    animation:
-        lightboxIn .2s ease both;
-}
-
-@keyframes lightboxIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 .lightbox-image {
-    max-width:
-        min(1200px,94vw);
-
-    max-height:
-        88vh;
-
-    object-fit:
-        contain;
-
-    border-radius:
-        10px;
-
-    box-shadow:
-        0 35px 110px rgba(0,0,0,.75);
+    max-width: 95vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 24px;
+    box-shadow: 0 40px 120px rgba(0,0,0,.8);
 }
 
 .lightbox-close {
     position: fixed;
-
-    top: 19px;
-    left: 19px;
-
-    width: 45px;
-    height: 45px;
-
+    top: 18px;
+    left: 18px;
+    width: 46px;
+    height: 46px;
     display: flex;
-
     align-items: center;
     justify-content: center;
-
-    color: white;
-
-    background:
-        rgba(15,23,42,.92);
-
-    border:
-        1px solid rgba(255,255,255,.12);
-
-    border-radius:
-        12px;
-
-    font-size:
-        1.4rem;
-
-    cursor:
-        pointer;
-
-    transition:
-        .2s ease;
-}
-
-.lightbox-close:hover {
-    background:
-        rgba(14,165,233,.13);
-
-    border-color:
-        rgba(56,189,248,.25);
+    color: var(--bg);
+    background: var(--yellow);
+    border: 0;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
 }
 
 
@@ -1315,11 +668,8 @@ body::after {
 
 button:focus-visible,
 a:focus-visible {
-    outline:
-        2px solid var(--blue-light);
-
-    outline-offset:
-        3px;
+    outline: 3px solid var(--cyan);
+    outline-offset: 3px;
 }
 
 
@@ -1327,347 +677,140 @@ a:focus-visible {
    TABLET
 ========================================================= */
 
-@media (max-width: 1080px) {
-
-    :root {
-        --sidebar: 235px;
-    }
-
-    .presentation-wrapper {
-        width:
-            min(100% - 24px,1100px);
-    }
-
-    .top-navigation-bar {
-        grid-template-columns:
-            auto
-            1fr
-            auto;
-    }
-
-    .fullscreen-btn {
-        display: none;
-    }
-
-    .slide-content-area {
-        padding:
-            24px;
-    }
+@media (max-width: 900px) {
+    .presentation-wrapper { width: calc(100% - 28px); }
+    .presentation-layout { grid-template-columns: 56px minmax(0,1fr); gap: 12px; }
+    .slide-header { padding: 24px; }
+    .slide-content-area { padding: 26px; }
+    .progress-track { width: 85px; }
 }
 
 
 /* =========================================================
-   MOBILE
+   PHONE
 ========================================================= */
 
-@media (max-width: 760px) {
+@media (max-width: 700px) {
 
-    body {
-        background:
-            radial-gradient(
-                circle at 90% 0%,
-                rgba(14,165,233,.075),
-                transparent 30%
-            ),
-            linear-gradient(
-                145deg,
-                var(--bg),
-                var(--bg-2)
-            );
-    }
-
-    .presentation-wrapper {
-        width:
-            calc(100% - 18px);
-
-        padding:
-            10px 0 25px;
-    }
+    .presentation-wrapper { width: 100%; padding: 0 0 18px; }
 
     .top-navigation-bar {
-        grid-template-columns:
-            1fr 1fr;
-
-        gap: 7px;
-
-        margin-bottom:
-            9px;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 12px;
+        margin: 0;
     }
 
-    .page-heading {
-        grid-column:
-            1 / -1;
+    .page-heading { padding: 4px 8px 8px; }
+    .page-heading h1 { font-size: 1.05rem; }
+    .page-heading span { font-size: .65rem; }
 
-        grid-row:
-            1;
-
-        text-align:
-            center;
-
-        order:
-            -1;
-
-        padding:
-            3px 0 6px;
+    .back-home-badge {
+        width: 100%; height: 44px; justify-content: center; font-size: .72rem;
     }
 
-    .page-heading h1 {
-        font-size:
-            .94rem;
-    }
+    .progress-indicator { height: 42px; justify-content: center; }
+    .progress-track { width: 110px; }
 
-    .page-heading span {
-        font-size:
-            .67rem;
-    }
+    .mobile-slide-selector { display: flex; width: calc(100% - 20px); margin: 0 10px 8px; }
 
-    .back-home-badge,
-    .fullscreen-btn {
-        width:
-            100%;
-
-        font-size:
-            .75rem;
-
-        padding:
-            9px 8px;
-    }
-
-    .fullscreen-btn {
-        display:
-            inline-flex;
-    }
-
-    .progress-indicator {
-        grid-column:
-            1 / -1;
-
-        justify-content:
-            center;
-    }
-
-    .progress-track {
-        width:
-            105px;
-    }
-
-    .mobile-slide-selector {
-        display:
-            flex;
-    }
-
-    .presentation-layout {
-        display:
-            block;
-    }
+    .presentation-layout { display: block; }
 
     .slide-sidebar {
-        position:
-            static;
-
-        display:
-            none;
-
-        margin-bottom:
-            10px;
-
-        border-radius:
-            var(--r-lg);
+        position: fixed; top: 0; right: 0; z-index: 900;
+        width: min(86vw, 330px); height: 100dvh; min-height: 0;
+        display: none; padding: 78px 18px 20px;
+        background: var(--bg-2);
+        border-left: 2px solid var(--line);
+        box-shadow: -20px 0 70px rgba(0,0,0,.5);
+        align-items: flex-start; justify-content: flex-start;
+        overflow-y: auto;
     }
 
-    .slide-sidebar.open {
-        display:
-            block;
+    .slide-sidebar.open { display: flex; animation: drawerIn .3s var(--ease-soft) both; }
 
-        animation:
-            sidebarOpen .25s ease both;
+    @keyframes drawerIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+    .sidebar-header {
+        display: flex; width: 100%; padding: 0 0 14px; margin-bottom: 10px;
+        border-bottom: 2px dashed var(--line);
+        font-family: "Lalezar", sans-serif;
+        color: var(--yellow);
     }
 
-    @keyframes sidebarOpen {
-        from {
-            opacity: 0;
-            transform: translateY(-5px);
-        }
+    .slide-list { width: 100%; gap: 10px; }
 
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .slide-nav-item {
+        width: 100%; height: 52px; display: grid;
+        grid-template-columns: 42px 1fr; gap: 10px;
+        border-radius: 20px; justify-content: stretch;
+    }
+
+    .slide-number {
+        width: 34px; height: 34px; display: flex;
+        align-items: center; justify-content: center;
+        border: 2px solid var(--line); border-radius: 50%;
+    }
+
+    .slide-nav-title {
+        display: block; overflow: hidden; white-space: nowrap;
+        text-overflow: ellipsis; font-size: .76rem; text-align: right;
     }
 
     .slide-container {
-        border-radius:
-            18px;
+        border-radius: 0; box-shadow: none;
     }
 
-    .slide-header {
-        min-height:
-            auto;
+    .slide-header { min-height: 138px; display: block; padding: 24px 18px 20px; }
+    .slide-header::before { left: 8px; bottom: -14px; font-size: 7rem; }
+    .slide-header h2 { position: relative; z-index: 2; font-size: 1.2rem; line-height: 1.55; }
+    .slide-tag { display: inline-block; margin-top: 12px; font-size: .65rem; }
 
-        padding:
-            17px;
+    .slide-content-area { min-height: 0; max-height: none; padding: 18px 12px 25px; overflow: visible; }
 
-        align-items:
-            flex-start;
+    .slide.active { animation: phoneIn .45s var(--ease-soft) both; }
+    @keyframes phoneIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        flex-direction:
-            column;
+    .lead-text { margin-bottom: 15px; padding: 18px 17px; font-size: .88rem; line-height: 1.9; }
 
-        gap:
-            9px;
-    }
+    .content-block { margin-bottom: 14px; padding: 18px 18px; border-radius: 24px 10px 24px 10px; }
+    .content-block h3 { margin-bottom: 9px; font-size: .98rem; }
+    .content-block p, .content-block li { font-size: .84rem; line-height: 1.9; }
 
-    .slide-header h2 {
-        font-size:
-            1.12rem;
-    }
-
-    .slide-tag {
-        font-size:
-            .69rem;
-    }
-
-    .slide-content-area {
-        max-height:
-            none;
-
-        min-height:
-            400px;
-
-        padding:
-            16px 12px;
-    }
-
-    .lead-text {
-        padding:
-            14px 15px;
-
-        font-size:
-            .89rem;
-
-        line-height:
-            1.9;
-    }
-
-    .content-block {
-        padding:
-            16px;
-
-        margin-bottom:
-            12px;
-
-        border-radius:
-            14px;
-    }
-
-    .content-block h3 {
-        font-size:
-            .97rem;
-    }
-
-    .content-block p,
-    .content-block li {
-        font-size:
-            .87rem;
-
-        line-height:
-            1.9;
-    }
+    .image-slot { margin-top: 17px; padding: 8px; border-radius: 20px; }
+    .image-slot img { border-radius: 14px; }
 
     .slide-footer {
-        grid-template-columns:
-            1fr 1fr;
-
-        gap:
-            8px;
-
-        padding:
-            12px;
+        min-height: 112px; grid-template-columns: 1fr 1fr; gap: 8px;
+        padding: 10px 12px 13px;
     }
 
     .slide-footer .control-btn:first-child,
-    .slide-footer .control-btn:last-child {
-        justify-self:
-            stretch;
-    }
+    .slide-footer .control-btn:last-child { justify-self: stretch; width: 100%; }
 
-    .slide-dots {
-        grid-column:
-            1 / -1;
+    .slide-dots { grid-column: 1 / -1; grid-row: 1; margin-bottom: 2px; }
 
-        grid-row:
-            1;
+    .control-btn { min-width: 0; height: 46px; font-size: .78rem; }
 
-        margin-bottom:
-            3px;
-    }
+    .image-lightbox { padding: 8px; }
+    .lightbox-image { max-width: 97vw; max-height: 84vh; }
+    .lightbox-close { top: 10px; left: 10px; }
 
-    .control-btn {
-        min-width:
-            0;
-
-        padding:
-            10px 12px;
-
-        font-size:
-            .81rem;
-    }
-
-    .image-slot {
-        padding:
-            5px;
-    }
-
-    .image-lightbox {
-        padding:
-            10px;
-    }
-
-    .lightbox-image {
-        max-width:
-            96vw;
-
-        max-height:
-            84vh;
-    }
-
-    .lightbox-close {
-        top:
-            11px;
-
-        left:
-            11px;
-    }
+    .blob-field span { opacity: .1; }
 }
 
 
 /* =========================================================
-   SMALL PHONES
+   VERY SMALL PHONES
 ========================================================= */
 
-@media (max-width: 400px) {
-
-    .back-home-badge,
-    .fullscreen-btn {
-        font-size:
-            .69rem;
-    }
-
-    .progress-track {
-        width:
-            80px;
-    }
-
-    .slide-header h2 {
-        font-size:
-            1.03rem;
-    }
-
-    .content-block p,
-    .content-block li {
-        font-size:
-            .83rem;
-    }
+@media (max-width: 380px) {
+    .page-heading h1 { font-size: .9rem; }
+    .slide-header h2 { font-size: 1.08rem; }
+    .content-block p, .content-block li { font-size: .81rem; }
+    .lead-text { font-size: .84rem; }
 }
 
 
@@ -1676,23 +819,11 @@ a:focus-visible {
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-
-    html {
-        scroll-behavior:
-            auto;
-    }
-
-    *,
-    *::before,
-    *::after {
-        animation-duration:
-            .01ms !important;
-
-        animation-iteration-count:
-            1 !important;
-
-        transition-duration:
-            .01ms !important;
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
     }
 }
 
@@ -1702,682 +833,252 @@ a:focus-visible {
 
 <body>
 
+<!-- الفقاعات الزخرفية في الخلفية (لا تحتوي محتوى، فقط للجمالية) -->
+<div class="blob-field" aria-hidden="true">
+    <span></span><span></span><span></span>
+</div>
+
+<!-- الحاوية الرئيسية لكل العرض -->
 <div class="presentation-wrapper">
 
 
-    <!-- =====================================================
-         TOP BAR
-    ====================================================== -->
-
     <div class="top-navigation-bar">
 
-        <a
-            href="index.html"
-            class="back-home-badge"
-        >
-            <span>🏠</span>
+        <a href="index.html" class="back-home-badge">
+            <span>←</span>
             العودة إلى الصفحة الرئيسية
         </a>
 
-
         <div class="page-heading">
-
-            <h1>
-                موسوعة المكتسبات القبلية الشاملة
-            </h1>
-
-            <span>
-                مراجعة منظمة للمكتسبات الأساسية
-            </span>
-
+            <h1>محطات الاكتشاف</h1>
+            <span>رحلة مرحة داخل الخلية والوراثة</span>
         </div>
-
 
         <div class="progress-indicator">
-
-            <span
-                class="progress-text"
-                id="progress-text"
-            >
-                25%
-            </span>
-
+            <span class="progress-text" id="progress-text">25%</span>
             <div class="progress-track">
-
-                <div
-                    class="progress-bar"
-                    id="progress-fill"
-                ></div>
-
+                <div class="progress-bar" id="progress-fill"></div>
             </div>
-
         </div>
-
-
-        <button
-            class="fullscreen-btn"
-            id="fullscreen-btn"
-            type="button"
-        >
-            <span>⛶</span>
-            ملء الشاشة
-        </button>
 
     </div>
 
 
-    <!-- =====================================================
-         MOBILE SELECTOR
-    ====================================================== -->
-
-    <button
-        class="mobile-slide-selector"
-        id="mobile-slide-selector"
-        type="button"
-        aria-expanded="false"
-    >
-
-        <span id="mobile-current-title">
-            الشريحة الحالية
-        </span>
-
-        <small>
-            عرض الشرائح ☰
-        </small>
-
+    <button class="mobile-slide-selector" id="mobile-slide-selector" type="button" aria-expanded="false">
+        <span id="mobile-current-title">المحطة الحالية</span>
+        <small>الخريطة ☰</small>
     </button>
 
 
-    <!-- =====================================================
-         PRESENTATION
-    ====================================================== -->
-
     <div class="presentation-layout">
 
-
-        <!-- =================================================
-             SIDEBAR
-        ================================================== -->
-
-        <aside
-            class="slide-sidebar"
-            id="slide-sidebar"
-        >
-
+        <!-- الشريط الجانبي / قائمة "خريطة المحطات": يُملأ تلقائياً بالجافاسكربت -->
+        <aside class="slide-sidebar" id="slide-sidebar">
             <div class="sidebar-header">
-
-                <strong>
-                    فهرس المكتسبات
-                </strong>
-
-                <span id="sidebar-count">
-                    4 شرائح
-                </span>
-
+                <strong>خريطة المحطات</strong>
+                <span>٤ محطات</span>
             </div>
-
-            <div
-                class="slide-list"
-                id="slide-list"
-            ></div>
-
+            <div class="slide-list" id="slide-list"></div>
         </aside>
 
 
-        <!-- =================================================
-             MAIN
-        ================================================== -->
-
         <main class="slide-container">
 
-
-            <header class="slide-header">
-
-                <h2 id="slide-title">
-                    الخلية الحيوانية، النباتية، وبدائية النواة
-                </h2>
-
-                <span
-                    class="slide-tag"
-                    id="slide-badge"
-                    aria-live="polite"
-                >
-                    الشريحة 1 من 4
-                </span>
-
+            <header class="slide-header" id="slide-header">
+                <h2 id="slide-title">الخلية الحيوانية، النباتية، وبدائية النواة</h2>
+                <span class="slide-tag" id="slide-badge" aria-live="polite">المحطة 1 من 4</span>
             </header>
 
 
-            <div
-                class="slide-content-area"
-                id="content-area"
-            >
+            <div class="slide-content-area" id="content-area">
 
 
-                <!-- =================================================
-                     SLIDE 1
-                ================================================== -->
-
-                <div
-                    class="slide active"
-                    data-title="1. الخلية الحيوانية، النباتية، وبدائية النواة مع عضياتها"
-                >
+                <!-- الشريحة (المحطة) 1: أضف كل محتواها هنا. class="active" تعني أنها تظهر أولاً عند فتح الصفحة -->
+                <div class="slide active" data-title="1. الخلية الحيوانية، النباتية، وبدائية النواة مع عضياتها">
 
                     <div class="lead-text">
                         <strong>تعريف الخلية:</strong> هي وحدة البناء والوظيفة الأساسية في الكائنات الحية؛ حيث يتدرج التنظيم الحيوي من الكائن الحي ثم الأجهزة فالأعضاء فالأنسجة وصولاً إلى الخلايا، لنتناول إثر ذلك الخصائص البنيوية المميزة لكل من الخلايا النباتية، والحيوانية، والمشتركة، فضلاً عن الخلايا بدائية النواة.
                     </div>
 
-
-                    <div class="content-block">
-
-                        <h3>
-                            أ. العضيات التي تميز الخلية النباتية
-                        </h3>
-
-                        <p>
-                            تنفرد الخلية النباتية بوجود تراكيب تعطيها الصلابة والقدرة على صنع الغذاء:
-                        </p>
-
+                    <div class="content-block block-lime">
+                        <h3>أ. العضيات التي تميز الخلية النباتية</h3>
+                        <p>تنفرد الخلية النباتية بوجود تراكيب تعطيها الصلابة والقدرة على صنع الغذاء:</p>
                         <ul class="emoji-list">
-
-                            <li>
-                                <strong>الجدار الهيكلي (السليلوزي):</strong> غلاف خارجي سميك وصلب يحيط بالغشاء الهيولي ليحمي الخلية ويمنحها شكلاً ثابتاً.
-                            </li>
-
-                            <li>
-                                <strong>الفجوة العصارية الضخمة:</strong> كيس مركزي كبير يملأ معظم حجم الخلية ويخزن الماء والمغذيات.
-                            </li>
-
-                            <li>
-                                <strong>الصانعات الخضراء:</strong> عضيات مسؤولة عن التقاط طاقة الشمس وإجراء التركيب الضوئي.
-                            </li>
-
+                            <li><strong>الجدار الهيكلي (السليلوزي):</strong> غلاف خارجي سميك وصلب يحيط بالغشاء الهيولي ليحمي الخلية ويمنحها شكلاً ثابتاً.</li>
+                            <li><strong>الفجوة العصارية الضخمة:</strong> كيس مركزي كبير يملأ معظم حجم الخلية ويخزن الماء والمغذيات.</li>
+                            <li><strong>الصانعات الخضراء:</strong> عضيات مسؤولة عن التقاط طاقة الشمس وإجراء التركيب الضوئي.</li>
                         </ul>
-
                     </div>
 
-
-                    <div class="content-block">
-
-                        <h3>
-                            ب. العضيات التي تميز الخلية الحيوانية
-                        </h3>
-
-                        <p>
-                            تتميز الخلية الحيوانية بمرونتها وغياب الجدار الصلب:
-                        </p>
-
+                    <div class="content-block block-pink">
+                        <h3>ب. العضيات التي تميز الخلية الحيوانية</h3>
+                        <p>تتميز الخلية الحيوانية بمرونتها وغياب الجدار الصلب:</p>
                         <ul class="emoji-list">
-
-                            <li>
-                                <strong>الغشاء الهيولي المرن:</strong> غشاء رقيق ومرن يحيط بالهيولى ويسمح بتغير شكل الخلية وحركتها وتنظيم التبادل.
-                            </li>
-
-                            <li>
-                                <strong>الجسيمات المركزية (Centrioles):</strong> تساعد في تنظيم وتوجيه خيوط المغزل أثناء انقسام الخلية الحيوانية.
-                            </li>
-
-                            <li>
-                                <strong>الجسيمات الحالة (Lysosomes):</strong> حويصلات غنية بالأنزيمات الهاضمة لتنظيف الخلية وتحليل الفضلات.
-                            </li>
-
+                            <li><strong>الغشاء الهيولي المرن:</strong> غشاء رقيق ومرن يحيط بالهيولى ويسمح بتغير شكل الخلية وحركتها وتنظيم التبادل.</li>
+                            <li><strong>الجسيمات المركزية (Centrioles):</strong> تساعد في تنظيم وتوجيه خيوط المغزل أثناء انقسام الخلية الحيوانية.</li>
+                            <li><strong>الجسيمات الحالة (Lysosomes):</strong> حويصلات غنية بالأنزيمات الهاضمة لتنظيف الخلية وتحليل الفضلات.</li>
                         </ul>
-
                     </div>
 
-
-                    <div class="content-block">
-
-                        <h3>
-                            ج. العضيات المشتركة بين الخلية النباتية والحيوانية (الحقيقية)
-                        </h3>
-
-                        <p>
-                            عضيات أساسية تتواجد في نوعي الخلايا للقيام بالوظائف الحيوية:
-                        </p>
-
+                    <div class="content-block block-cyan">
+                        <h3>ج. العضيات المشتركة بين الخلية النباتية والحيوانية (الحقيقية)</h3>
+                        <p>عضيات أساسية تتواجد في نوعي الخلايا للقيام بالوظائف الحيوية:</p>
                         <ul class="emoji-list">
-
-                            <li>
-                                <strong>الشبكة الهيولية الداخلية المحببة (REG):</strong> مغطاة بالريبوزومات وتعتبر مصنع تركيب البروتينات.
-                            </li>
-
-                            <li>
-                                <strong>الشبكة الهيولية الداخلية الملساء (REL):</strong> تخلو من الريبوزومات وتركب الدهون وتزيل السموم.
-                            </li>
-
-                            <li>
-                                <strong>جهاز جولجي:</strong> محطة الاستقبال وتعديل وتغليف البروتينات.
-                            </li>
-
-                            <li>
-                                <strong>الميتوكوندريا:</strong> بيت الطاقة ومقر التنفس الخلوي وإنتاج (ATP).
-                            </li>
-
-                            <li>
-                                <strong>الريبوزومات الحرة:</strong> حبيبات مسؤولة مباشرة عن تصنيع البروتينات داخل الهيولى.
-                            </li>
-
+                            <li><strong>الشبكة الهيولية الداخلية المحببة (REG):</strong> مغطاة بالريبوزومات وتعتبر مصنع تركيب البروتينات.</li>
+                            <li><strong>الشبكة الهيولية الداخلية الملساء (REL):</strong> تخلو من الريبوزومات وتركب الدهون وتزيل السموم.</li>
+                            <li><strong>جهاز جولجي:</strong> محطة الاستقبال وتعديل وتغليف البروتينات.</li>
+                            <li><strong>الميتوكوندريا:</strong> بيت الطاقة ومقر التنفس الخلوي وإنتاج (ATP).</li>
+                            <li><strong>الريبوزومات الحرة:</strong> حبيبات مسؤولة مباشرة عن تصنيع البروتينات داخل الهيولى.</li>
                         </ul>
-
 
                         <div class="image-slot">
-
-                            <img
-                                src="image9/good.png"
-                                alt="مقارنة الخلايا"
-                                class="zoomable-image"
-                            >
-
-                            <div class="image-error">
-                                تعذر تحميل الصورة.
-                            </div>
-
+                            <img src="image9/good.png" alt="مقارنة الخلايا" class="zoomable-image">
+                            <div class="image-error">تعذر تحميل الصورة.</div>
                         </div>
-
                     </div>
 
-
-                    <div
-                        class="content-block"
-                        style="margin-bottom: 0;"
-                    >
-
-                        <h3>
-                            د. الخلية بدائية النواة (مثل البكتيريا)
-                        </h3>
-
-                        <p>
-                            خلايا بسيطة جداً تخلو من النواة الحقيقية ومن العضيات المغلفة:
-                        </p>
-
+                    <div class="content-block block-yellow" style="margin-bottom: 0;">
+                        <h3>د. الخلية بدائية النواة (مثل البكتيريا)</h3>
+                        <p>خلايا بسيطة جداً تخلو من النواة الحقيقية ومن العضيات المغلفة:</p>
                         <ul class="emoji-list">
-
-                            <li>
-                                <strong>الصبغي البكتيري (ADN حلقي حر):</strong> توجد المادة الوراثية مباشرة في الهيولى بدون غلاف نووي.
-                            </li>
-
-                            <li>
-                                <strong>الريبوزومات البدائية:</strong> الوحيدة الموجودة لتركيب البروتينات.
-                            </li>
-
-                            <li>
-                                <strong>الجدار الخارجي:</strong> غلاف بكتيري يمنح الحماية.
-                            </li>
-
+                            <li><strong>الصبغي البكتيري (ADN حلقي حر):</strong> توجد المادة الوراثية مباشرة في الهيولى بدون غلاف نووي.</li>
+                            <li><strong>الريبوزومات البدائية:</strong> الوحيدة الموجودة لتركيب البروتينات.</li>
+                            <li><strong>الجدار الخارجي:</strong> غلاف بكتيري يمنح الحماية.</li>
                         </ul>
 
-
                         <div class="image-slot">
-
-                            <img
-                                src="image9/bacteria.png"
-                                alt="رسم تخطيطي لخلية بكتيرية"
-                                class="zoomable-image"
-                            >
-
-                            <div class="image-error">
-                                تعذر تحميل الصورة.
-                            </div>
-
+                            <img src="image9/bacteria.png" alt="رسم تخطيطي لخلية بكتيرية" class="zoomable-image">
+                            <div class="image-error">تعذر تحميل الصورة.</div>
                         </div>
-
                     </div>
 
                 </div>
 
 
-                <!-- =================================================
-                     SLIDE 2
-                ================================================== -->
-
-                <div
-                    class="slide"
-                    data-title="2. مقر ووحدة المعلومة الوراثية"
-                >
+                <!-- الشريحة (المحطة) 2: أي شريحة جديدة تُبنى بنفس الطريقة (بدون class="active") -->
+                <div class="slide" data-title="2. مقر ووحدة المعلومة الوراثية">
 
                     <div class="lead-text">
-
                         <strong>المعلومة الوراثية:</strong> تتوضع المادة الوراثية المسؤولة عن نقل الصفات في نواة الخلية على شكل صبغيات مكونة من جزيء الـ ADN، وتحمل وحدات مسؤولة عن ظهور الصفات تُدعى المورثات والأليلات.
-
                     </div>
 
-
-                    <div class="content-block">
-
-                        <h3>
-                            🧬 أ. الصبغيات (الكروموسومات)
-                        </h3>
-
-                        <p>
-                            تُعرّف بأنها الهياكل الحاملة للبرنامج الوراثي للكائن الحي:
-                        </p>
-
+                    <div class="content-block block-violet">
+                        <h3>أ. الصبغيات (الكروموسومات)</h3>
+                        <p>تُعرّف بأنها الهياكل الحاملة للبرنامج الوراثي للكائن الحي:</p>
                         <ul class="emoji-list">
-
-                            <li>
-                                <strong>المظهر البنيوي:</strong> تراكيب خيطية متكاثفة ومنظمة بدقة تظهر بوضوح داخل النواة خلال مراحل انقسام الخلية.
-                            </li>
-
-                            <li>
-                                <strong>الدور الوظيفي:</strong> تمثل الدعامة الأساسية التي تنقل الصفات الوراثية بانتظام من الخلية الأم إلى الخلايا البنت.
-                            </li>
-
+                            <li><strong>المظهر البنيوي:</strong> تراكيب خيطية متكاثفة ومنظمة بدقة تظهر بوضوح داخل النواة خلال مراحل انقسام الخلية.</li>
+                            <li><strong>الدور الوظيفي:</strong> تمثل الدعامة الأساسية التي تنقل الصفات الوراثية بانتظام من الخلية الأم إلى الخلايا البنت.</li>
                         </ul>
-
 
                         <div class="image-slot">
-
-                            <img
-                                src="image9/0.5.png"
-                                alt="الصبغييات"
-                                class="zoomable-image"
-                            >
-
-                            <div class="image-error">
-                                تعذر تحميل الصورة.
-                            </div>
-
+                            <img src="image9/0.5.png" alt="الصبغييات" class="zoomable-image">
+                            <div class="image-error">تعذر تحميل الصورة.</div>
                         </div>
-
                     </div>
 
-
-                    <div class="content-block">
-
-                        <h3>
-                            ب. جزيء الـ ADN (الحمض النووي الريبي منقوص الأكسجين)
-                        </h3>
-
-                        <p>
-                            هو الجزيء الكيميائي المسؤول عن تخزين ونقل المعلومة الوراثية:
-                        </p>
-
+                    <div class="content-block block-cyan">
+                        <h3>ب. جزيء الـ ADN (الحمض النووي الريبي منقوص الأكسجين)</h3>
+                        <p>هو الجزيء الكيميائي المسؤول عن تخزين ونقل المعلومة الوراثية:</p>
                         <ul class="emoji-list">
-
-                            <li>
-                                <strong>البنية الفراغية:</strong> يتألف من سلسلتين متلتفتين على شكل حلزون مزدوج متعاكس الاتجاه.
-                            </li>
-
-                            <li>
-                                <strong>الوحدة البنائية (النيكليوتيدة):</strong> تتكون كل سلسلة من تتابع وحدات صغرى تدعى النيكليوتيدات، والتي تتألف من (حمض الفوسفوريك + سكر خماسي + قاعدة أزوتية من بين الأربع: A, T, G, C).
-                            </li>
-
-                            <li>
-                                <strong>مبدأ التكامل:</strong> ترتبط القواعد الأزوتية فيما بينها وفق قواعد تكامل محددة (A مع T) و(G مع C) لضمان استقرار ونقل الشفرة بدقة.
-                            </li>
-
+                            <li><strong>البنية الفراغية:</strong> يتألف من سلسلتين متلتفتين على شكل حلزون مزدوج متعاكس الاتجاه.</li>
+                            <li><strong>الوحدة البنائية (النيكليوتيدة):</strong> تتكون كل سلسلة من تتابع وحدات صغرى تدعى النيكليوتيدات، والتي تتألف من (حمض الفوسفوريك + سكر خماسي + قاعدة أزوتية من بين الأربع: A, T, G, C).</li>
+                            <li><strong>مبدأ التكامل:</strong> ترتبط القواعد الأزوتية فيما بينها وفق قواعد تكامل محددة (A مع T) و(G مع C) لضمان استقرار ونقل الشفرة بدقة.</li>
                         </ul>
-
 
                         <div class="image-slot">
-
-                            [مكان الصورة: مخطط تفصيلي لبنية الـ ADN والنيكليوتيدات والتكامل]
-
-                            <img
-                                src="image9/dna-structure.png"
-                                alt="بنية جزيء ADN"
-                                class="zoomable-image"
-                            >
-
-                            <div class="image-error">
-                                تعذر تحميل الصورة.
-                            </div>
-
+                            <img src="image9/dna-structure.png" alt="بنية جزيء ADN" class="zoomable-image">
+                            <div class="image-error">تعذر تحميل الصورة.</div>
                         </div>
-
                     </div>
 
-
-                    <div class="content-block">
-
-                        <h3>
-                            📜 ج. المورثة (الجين)
-                        </h3>
-
-                        <p>
-                            هي الوحدة الوظيفية للمعلومة الوراثية:
-                        </p>
-
+                    <div class="content-block block-pink">
+                        <h3>ج. المورثة (الجين)</h3>
+                        <p>هي الوحدة الوظيفية للمعلومة الوراثية:</p>
                         <ul class="emoji-list">
-
-                            <li>
-                                <strong>التعريف الدقيق:</strong> عبارة عن تسلسل محدد ومعين من النيكليوتيدات على جزيء الـ ADN.
-                            </li>
-
-                            <li>
-                                <strong>الأهمية البيولوجية:</strong> تحمل الشيفرة الوراثية الخاصة بتصنيع بروتين معين، والذي ينعكس بدوره على ظهور صفة وراثية محددة.
-                            </li>
-
+                            <li><strong>التعريف الدقيق:</strong> عبارة عن تسلسل محدد ومعين من النيكليوتيدات على جزيء الـ ADN.</li>
+                            <li><strong>الأهمية البيولوجية:</strong> تحمل الشيفرة الوراثية الخاصة بتصنيع بروتين معين، والذي ينعكس بدوره على ظهور صفة وراثية محددة.</li>
                         </ul>
-
 
                         <div class="image-slot">
-
-                            <img
-                                src="image9/0.6.png"
-                                alt="المورثات"
-                                class="zoomable-image"
-                            >
-
-                            <div class="image-error">
-                                تعذر تحميل الصورة.
-                            </div>
-
+                            <img src="image9/0.6.png" alt="المورثات" class="zoomable-image">
+                            <div class="image-error">تعذر تحميل الصورة.</div>
                         </div>
-
                     </div>
 
-
-                    <div
-                        class="content-block"
-                        style="margin-bottom: 0;"
-                    >
-
-                        <h3>
-                            🔀 د. الأليل
-                        </h3>
-
-                        <p>
-                            هو أحد الأشكال الممكنة والمتباينة لنفس المورثة:
-                        </p>
-
+                    <div class="content-block block-yellow" style="margin-bottom: 0;">
+                        <h3>د. الأليل</h3>
+                        <p>هو أحد الأشكال الممكنة والمتباينة لنفس المورثة:</p>
                         <ul class="emoji-list">
-
-                            <li>
-                                <strong>المفهوم العلمي:</strong> تفرّع أو نسخة بديلة لذات المورثة على مستوى التسلسل النيكليوتيدي.
-                            </li>
-
-                            <li>
-                                <strong>النتيجة الظاهرة:</strong> الاختلاف الطفيف في ترتيب النيكليوتيدات بين الأليلات هو السبب الأساسي لتنوع الصفات وتعدد الأنماط الظاهرة بين الكائنات الحية.
-                            </li>
-
+                            <li><strong>المفهوم العلمي:</strong> تفرّع أو نسخة بديلة لذات المورثة على مستوى التسلسل النيكليوتيدي.</li>
+                            <li><strong>النتيجة الظاهرة:</strong> الاختلاف الطفيف في ترتيب النيكليوتيدات بين الأليلات هو السبب الأساسي لتنوع الصفات وتعدد الأنماط الظاهرة بين الكائنات الحية.</li>
                         </ul>
-
                     </div>
 
                 </div>
 
 
-                <!-- =================================================
-                     SLIDE 3
-                ================================================== -->
-
-                <div
-                    class="slide"
-                    data-title="3. النمط الوراثي والنمط الظاهري"
-                >
+                <!-- SLIDE 3 -->
+                <div class="slide" data-title="3. النمط الوراثي والنمط الظاهري">
 
                     <div class="lead-text">
-
                         <strong>التعبير العضوي:</strong> ترجمة الشفرات الوراثية الكامنة إلى صفات مرئية ووظيفية في الكائن الحي.
-
                     </div>
 
-
-                    <div class="content-block">
-
-                        <h3>
-                            أ. النمط الوراثي (Genotype)
-                        </h3>
-
-                        <p>
-                            هو مجموع المورثات والأليلات التي يمتلكها الفرد في خلاياه، ويمثل المخطط البنائي أو الشيفرة الكامنة داخل جزيئات الـ ADN والتي تحدد الإمكانيات البيولوجية للفرد.
-                        </p>
-
+                    <div class="content-block block-cyan">
+                        <h3>أ. النمط الوراثي (Genotype)</h3>
+                        <p>هو مجموع المورثات والأليلات التي يمتلكها الفرد في خلاياه، ويمثل المخطط البنائي أو الشيفرة الكامنة داخل جزيئات الـ ADN والتي تحدد الإمكانيات البيولوجية للفرد.</p>
                     </div>
 
-
-                    <div
-                        class="content-block"
-                        style="margin-bottom: 0;"
-                    >
-
-                        <h3>
-                            ب. النمط الظاهري (Phenotype)
-                        </h3>
-
-                        <p>
-                            هو مجموع الصفات المرئية أو القابلة للقياس الناتجة عن تعبير النمط الوراثي وتأثير العوامل البيئية.
-                        </p>
-
-                        <p>
-                            <strong>يظهر على ثلاثة مستويات أساسية:</strong>
-                        </p>
-
+                    <div class="content-block block-pink" style="margin-bottom: 0;">
+                        <h3>ب. النمط الظاهري (Phenotype)</h3>
+                        <p>هو مجموع الصفات المرئية أو القابلة للقياس الناتجة عن تعبير النمط الوراثي وتأثير العوامل البيئية.</p>
+                        <p><strong>يظهر على ثلاثة مستويات أساسية:</strong></p>
                         <ul class="emoji-list">
-
-                            <li>
-                                <strong>المستوى العضوي:</strong> الصفات المرئية الظاهرة للعيان (مثل لون العينين، شكل الزهرة، أو الطول).
-                            </li>
-
-                            <li>
-                                <strong>المستوى الخلوي:</strong> الصفات المجهرية للخلية (مثل شكل خلايا الدم أو بنيتها).
-                            </li>
-
-                            <li>
-                                <strong>المستوى الجزيئي:</strong> طبيعة ونوع البروتينات المركبة داخل الخلية (مثل نوع الخضاب الدموي أو الأنزيمات).
-                            </li>
-
+                            <li><strong>المستوى العضوي:</strong> الصفات المرئية الظاهرة للعيان (مثل لون العينين، شكل الزهرة، أو الطول).</li>
+                            <li><strong>المستوى الخلوي:</strong> الصفات المجهرية للخلية (مثل شكل خلايا الدم أو بنيتها).</li>
+                            <li><strong>المستوى الجزيئي:</strong> طبيعة ونوع البروتينات المركبة داخل الخلية (مثل نوع الخضاب الدموي أو الأنزيمات).</li>
                         </ul>
-
                         <p style="margin-top: 15px;">
-
                             <strong>القاعدة الأساسية:</strong>
-
-                            <span style="color: #38bdf8;">
-                                النمط الظاهري = النمط الوراثي + تأثير العوامل البيئية.
-                            </span>
-
+                            <span style="color: var(--yellow); font-weight: 700;">النمط الظاهري = النمط الوراثي + تأثير العوامل البيئية.</span>
                         </p>
-
 
                         <div class="image-slot">
-
-                            <img
-                                src="image9/phenotype.png"
-                                alt="مستويات النمط الظاهري والوراثي"
-                                class="zoomable-image"
-                            >
-
-                            <div class="image-error">
-                                تعذر تحميل الصورة.
-                            </div>
-
+                            <img src="image9/phenotype.png" alt="مستويات النمط الظاهري والوراثي" class="zoomable-image">
+                            <div class="image-error">تعذر تحميل الصورة.</div>
                         </div>
-
                     </div>
 
                 </div>
 
 
-                <!-- =================================================
-                     SLIDE 4
-                ================================================== -->
-
-                <div
-                    class="slide"
-                    data-title="4. الطفرات (Mutations)"
-                >
+                <!-- SLIDE 4 -->
+                <div class="slide" data-title="4. الطفرات (Mutations)">
 
                     <div class="lead-text">
-
                         <strong>التغير الوراثي:</strong> التغيرات المفاجئة في الشيفرة الوراثية وتأثيراتها البنيوية والوظائفية.
-
                     </div>
 
-
-                    <div
-                        class="content-block"
-                        style="margin-bottom: 12px;"
-                    >
-
-                        <h3 style="margin-bottom: 5px;">
-                            أ. تعريف الطفرة
-                        </h3>
-
-                        <p style="margin: 0;">
-                            هي تغيرات فجائية، عشوائية، وثابتة في تتابع النيكليوتيدات (القواعد الأزوتية) لجزيء الـ ADN.
-                        </p>
-
+                    <div class="content-block block-yellow" style="margin-bottom: 16px;">
+                        <h3 style="margin-bottom: 5px;">أ. تعريف الطفرة</h3>
+                        <p style="margin: 0;">هي تغيرات فجائية، عشوائية، وثابتة في تتابع النيكليوتيدات (القواعد الأزوتية) لجزيء الـ ADN.</p>
                     </div>
 
-
-                    <div
-                        class="content-block"
-                        style="margin-bottom: 12px;"
-                    >
-
-                        <h3 style="margin-bottom: 5px;">
-                            ب. الأنواع الجزيئية للطفرات
-                        </h3>
-
-                        <ul
-                            class="emoji-list"
-                            style="margin: 0; padding-right: 20px;"
-                        >
-
-                            <li>
-                                <strong>طفرة الاستبدال:</strong> استبدال قاعدة أزوتية بأخرى (صامتة أو تؤثر على حمض أميني).
-                            </li>
-
-                            <li>
-                                <strong>طفرة الحذف:</strong> ضياع قاعدة أو مقطع، مما يؤدي لاختلال إطار القراءة وإنتاج بروتين غير وظيفي.
-                            </li>
-
-                            <li>
-                                <strong>طفرة الإضافة (الإدراج):</strong> إدخال قاعدة جديدة وتماثل الحذف في تأثيرها المدمر على إطار القراءة.
-                            </li>
-
+                    <div class="content-block block-pink" style="margin-bottom: 16px;">
+                        <h3 style="margin-bottom: 5px;">ب. الأنواع الجزيئية للطفرات</h3>
+                        <ul class="emoji-list" style="margin: 0; padding-right: 20px;">
+                            <li><strong>طفرة الاستبدال:</strong> استبدال قاعدة أزوتية بأخرى (صامتة أو تؤثر على حمض أميني).</li>
+                            <li><strong>طفرة الحذف:</strong> ضياع قاعدة أو مقطع، مما يؤدي لاختلال إطار القراءة وإنتاج بروتين غير وظيفي.</li>
+                            <li><strong>طفرة الإضافة (الإدراج):</strong> إدخال قاعدة جديدة وتماثل الحذف في تأثيرها المدمر على إطار القراءة.</li>
                         </ul>
-
                     </div>
 
-
-                    <div
-                        class="content-block"
-                        style="margin-bottom: 0;"
-                    >
-
-                        <h3 style="margin-bottom: 5px;">
-                            ج. تأثيرات وأهمية الطفرات
-                        </h3>
-
-                        <ul
-                            class="emoji-list"
-                            style="margin: 0; padding-right: 20px;"
-                        >
-
-                            <li>
-                                <strong>المصدر الرئيسي للتنوع:</strong> المسبب الأساسي لتنوع الكائنات الحية وتطورها.
-                            </li>
-
-                            <li>
-                                <strong>طبيعة التأثير:</strong> قد تكون ضارة، محايدة، أو مفيدة تزيد من قدرة التكيف.
-                            </li>
-
+                    <div class="content-block block-lime" style="margin-bottom: 0;">
+                        <h3 style="margin-bottom: 5px;">ج. تأثيرات وأهمية الطفرات</h3>
+                        <ul class="emoji-list" style="margin: 0; padding-right: 20px;">
+                            <li><strong>المصدر الرئيسي للتنوع:</strong> المسبب الأساسي لتنوع الكائنات الحية وتطورها.</li>
+                            <li><strong>طبيعة التأثير:</strong> قد تكون ضارة، محايدة، أو مفيدة تزيد من قدرة التكيف.</li>
                         </ul>
-
                     </div>
 
                 </div>
@@ -2385,37 +1086,10 @@ a:focus-visible {
             </div>
 
 
-            <!-- =====================================================
-                 FOOTER
-            ====================================================== -->
-
             <footer class="slide-footer">
-
-                <button
-                    class="control-btn"
-                    id="prev-btn"
-                    type="button"
-                    disabled
-                >
-                    ← السابق
-                </button>
-
-
-                <div
-                    class="slide-dots"
-                    id="slide-dots"
-                    aria-label="التنقل بين الشرائح"
-                ></div>
-
-
-                <button
-                    class="control-btn"
-                    id="next-btn"
-                    type="button"
-                >
-                    التالي →
-                </button>
-
+                <button class="control-btn" id="prev-btn" type="button" disabled>← المحطة السابقة</button>
+                <div class="slide-dots" id="slide-dots" aria-label="التنقل بين المحطات"></div>
+                <button class="control-btn" id="next-btn" type="button">المحطة التالية →</button>
             </footer>
 
         </main>
@@ -2425,34 +1099,9 @@ a:focus-visible {
 </div>
 
 
-<!-- =========================================================
-     LIGHTBOX
-========================================================== -->
-
-<div
-    class="image-lightbox"
-    id="image-lightbox"
-    role="dialog"
-    aria-modal="true"
-    aria-label="عرض الصورة"
->
-
-    <button
-        class="lightbox-close"
-        id="lightbox-close"
-        type="button"
-        aria-label="إغلاق"
-    >
-        ×
-    </button>
-
-    <img
-        class="lightbox-image"
-        id="lightbox-image"
-        src=""
-        alt=""
-    >
-
+<div class="image-lightbox" id="image-lightbox" role="dialog" aria-modal="true" aria-label="عرض الصورة">
+    <button class="lightbox-close" id="lightbox-close" type="button" aria-label="إغلاق">×</button>
+    <img class="lightbox-image" id="lightbox-image" src="" alt="">
 </div>
 
 
@@ -2462,884 +1111,238 @@ a:focus-visible {
 
     "use strict";
 
-
-    /* =========================================================
-       ELEMENTS
-    ========================================================= */
-
-    const slides =
-        Array.from(
-            document.querySelectorAll(".slide")
-        );
-
-    const titleElement =
-        document.getElementById("slide-title");
-
-    const badgeElement =
-        document.getElementById("slide-badge");
-
-    const progressFill =
-        document.getElementById("progress-fill");
-
-    const progressText =
-        document.getElementById("progress-text");
-
-    const prevBtn =
-        document.getElementById("prev-btn");
-
-    const nextBtn =
-        document.getElementById("next-btn");
-
-    const slideDots =
-        document.getElementById("slide-dots");
-
-    const slideList =
-        document.getElementById("slide-list");
-
-    const contentArea =
-        document.getElementById("content-area");
-
-    const fullscreenBtn =
-        document.getElementById("fullscreen-btn");
-
-    const sidebar =
-        document.getElementById("slide-sidebar");
-
-    const mobileSelector =
-        document.getElementById("mobile-slide-selector");
-
-    const mobileCurrentTitle =
-        document.getElementById("mobile-current-title");
-
-    const lightbox =
-        document.getElementById("image-lightbox");
-
-    const lightboxImage =
-        document.getElementById("lightbox-image");
-
-    const lightboxClose =
-        document.getElementById("lightbox-close");
-
-
-    /* =========================================================
-       CONSTANTS
-    ========================================================= */
-
-    const STORAGE_KEY =
-        "mousouaa-current-slide";
-
-    const reducedMotion =
-        window.matchMedia(
-            "(prefers-reduced-motion: reduce)"
-        );
-
-
-    /* =========================================================
-       SAFE STORAGE
-    ========================================================= */
-
-    function readSavedSlide() {
-
-        try {
-
-            const value =
-                Number(
-                    localStorage.getItem(
-                        STORAGE_KEY
-                    )
-                );
-
-            if (
-                Number.isInteger(value) &&
-                value >= 0 &&
-                value < slides.length
-            ) {
-
-                return value;
-
-            }
-
-        } catch (error) {
-
-            console.warn(
-                "تعذر قراءة التقدم المحفوظ.",
-                error
-            );
-
-        }
-
-        return 0;
-    }
-
-
-    function saveSlide(index) {
-
-        try {
-
-            localStorage.setItem(
-                STORAGE_KEY,
-                String(index)
-            );
-
-        } catch (error) {
-
-            console.warn(
-                "تعذر حفظ التقدم.",
-                error
-            );
-
-        }
-
-    }
-
-
-    let currentIndex =
-        readSavedSlide();
-
-
-    /* =========================================================
-       CREATE NAVIGATION
-    ========================================================= */
-
-    slides.forEach(
-        (slide, index) => {
-
-            const title =
-                slide.dataset.title ||
-                `الشريحة ${index + 1}`;
-
-
-            /* SIDEBAR ITEM */
-
-            const item =
-                document.createElement("button");
-
-            item.type =
-                "button";
-
-            item.className =
-                "slide-nav-item";
-
-            item.dataset.index =
-                String(index);
-
-            item.setAttribute(
-                "aria-label",
-                `الانتقال إلى ${title}`
-            );
-
-            item.innerHTML = `
-
-                <span class="slide-number">
-                    ${index + 1}
-                </span>
-
-                <span class="slide-nav-title">
-                    ${title}
-                </span>
-
-            `;
-
-            item.addEventListener(
-                "click",
-                () => {
-
-                    goToSlide(
-                        index,
-                        true
-                    );
-
-                    closeMobileSidebar();
-
-                }
-            );
-
-            slideList.appendChild(item);
-
-
-            /* DOT */
-
-            const dot =
-                document.createElement("button");
-
-            dot.type =
-                "button";
-
-            dot.className =
-                "slide-dot";
-
-            dot.setAttribute(
-                "aria-label",
-                `الانتقال إلى الشريحة ${index + 1}`
-            );
-
-            dot.addEventListener(
-                "click",
-                () => {
-
-                    goToSlide(
-                        index,
-                        true
-                    );
-
-                }
-            );
-
-            slideDots.appendChild(dot);
-
-        }
-    );
-
-
-    const sidebarItems =
-        Array.from(
-            document.querySelectorAll(
-                ".slide-nav-item"
-            )
-        );
-
-
-    const dots =
-        Array.from(
-            document.querySelectorAll(
-                ".slide-dot"
-            )
-        );
-
-
-    /* =========================================================
-       UPDATE UI
-    ========================================================= */
-
-    function updatePresentation(
-        shouldScroll = true
-    ) {
-
-        slides.forEach(
-            (slide, index) => {
-
-                slide.classList.toggle(
-                    "active",
-                    index === currentIndex
-                );
-
-            }
-        );
-
-
-        const currentSlide =
-            slides[currentIndex];
-
-
-        const title =
-            currentSlide.dataset.title ||
-            `الشريحة ${currentIndex + 1}`;
-
-
-        titleElement.textContent =
-            title;
-
-
-        badgeElement.textContent =
-            `الشريحة ${currentIndex + 1} من ${slides.length}`;
-
-
-        mobileCurrentTitle.textContent =
-            title;
-
-
-        const progress =
-            Math.round(
-                (
-                    (currentIndex + 1) /
-                    slides.length
-                ) * 100
-            );
-
-
-        progressFill.style.width =
-            `${progress}%`;
-
-
-        progressText.textContent =
-            `${progress}%`;
-
-
-        prevBtn.disabled =
-            currentIndex === 0;
-
-
-        nextBtn.textContent =
-            currentIndex === slides.length - 1
-                ? "إنهاء المراجعة ✓"
-                : "التالي →";
-
-
-        dots.forEach(
-            (dot, index) => {
-
-                const active =
-                    index === currentIndex;
-
-                dot.classList.toggle(
-                    "active",
-                    active
-                );
-
-                dot.setAttribute(
-                    "aria-current",
-                    active
-                        ? "true"
-                        : "false"
-                );
-
-            }
-        );
-
-
-        sidebarItems.forEach(
-            (item, index) => {
-
-                const active =
-                    index === currentIndex;
-
-                item.classList.toggle(
-                    "active",
-                    active
-                );
-
-                item.setAttribute(
-                    "aria-current",
-                    active
-                        ? "true"
-                        : "false"
-                );
-
-            }
-        );
-
-
-        saveSlide(
-            currentIndex
-        );
-
-
-        document.title =
-            `موسوعة المكتسبات القبلية الشاملة — ${currentIndex + 1}/${slides.length}`;
-
+    /* هنا نلتقط كل عناصر الصفحة التي سنتحكم بها (الشرائح، الأزرار، شريط التقدم...) */
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const titleElement = document.getElementById("slide-title");
+    const badgeElement = document.getElementById("slide-badge");
+    const progressFill = document.getElementById("progress-fill");
+    const progressText = document.getElementById("progress-text");
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const slideDots = document.getElementById("slide-dots");
+    const slideList = document.getElementById("slide-list");
+    const contentArea = document.getElementById("content-area");
+    const sidebar = document.getElementById("slide-sidebar");
+    const mobileSelector = document.getElementById("mobile-slide-selector");
+    const mobileCurrentTitle = document.getElementById("mobile-current-title");
+    const slideHeader = document.getElementById("slide-header");
+    const lightbox = document.getElementById("image-lightbox");
+    const lightboxImage = document.getElementById("lightbox-image");
+    const lightboxClose = document.getElementById("lightbox-close");
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    /* رقم الشريحة الحالية (تبدأ من صفر) — يُحفظ فقط في الذاكرة أثناء الجلسة
+       (لا نستخدم localStorage حتى يعمل الملف بدون مشاكل داخل أي متصفح) */
+    let currentIndex = 0;
+
+    /* هذه الحلقة تُنشئ تلقائياً: دائرة لكل شريحة في الشريط الجانبي،
+       ونقطة (dot) لكل شريحة في أسفل الصفحة — حسب عدد الشرائح الموجودة في الـ HTML */
+    slides.forEach((slide, index) => {
+
+        const title = slide.dataset.title || `المحطة ${index + 1}`;
+
+        const item = document.createElement("button");
+        item.type = "button";
+        item.className = "slide-nav-item";
+        item.dataset.index = String(index);
+        item.setAttribute("aria-label", `الانتقال إلى ${title}`);
+        item.innerHTML = `
+            <span class="slide-number">${index + 1}</span>
+            <span class="slide-nav-title">${title}</span>
+        `;
+        item.addEventListener("click", () => {
+            goToSlide(index, true);
+            closeMobileSidebar();
+        });
+        slideList.appendChild(item);
+
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "slide-dot";
+        dot.setAttribute("aria-label", `الانتقال إلى المحطة ${index + 1}`);
+        dot.addEventListener("click", () => { goToSlide(index, true); });
+        slideDots.appendChild(dot);
+
+    });
+
+    const sidebarItems = Array.from(document.querySelectorAll(".slide-nav-item"));
+    const dots = Array.from(document.querySelectorAll(".slide-dot"));
+
+    /* هذه الدالة هي "قلب" العرض: تُستدعى في كل مرة نغيّر فيها الشريحة،
+       وتتكفل بإظهار الشريحة الصحيحة وتحديث العنوان وشريط التقدم والأزرار والنقاط */
+    function updatePresentation(shouldScroll = true) {
+
+        slides.forEach((slide, index) => {
+            slide.classList.toggle("active", index === currentIndex);
+        });
+
+        const currentSlide = slides[currentIndex];
+        const title = currentSlide.dataset.title || `المحطة ${currentIndex + 1}`;
+
+        titleElement.textContent = title;
+        badgeElement.textContent = `المحطة ${currentIndex + 1} من ${slides.length}`;
+        mobileCurrentTitle.textContent = title;
+        slideHeader.dataset.number = String(currentIndex + 1);
+
+        const progress = Math.round(((currentIndex + 1) / slides.length) * 100);
+        progressFill.style.width = `${progress}%`;
+        progressText.textContent = `${progress}%`;
+
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.textContent = currentIndex === slides.length - 1
+            ? "إنهاء المراجعة ✓"
+            : "المحطة التالية →";
+
+        dots.forEach((dot, index) => {
+            const active = index === currentIndex;
+            dot.classList.toggle("active", active);
+            dot.setAttribute("aria-current", active ? "true" : "false");
+        });
+
+        sidebarItems.forEach((item, index) => {
+            const active = index === currentIndex;
+            item.classList.toggle("active", active);
+            item.setAttribute("aria-current", active ? "true" : "false");
+        });
+
+        document.title = `محطات الاكتشاف — ${currentIndex + 1}/${slides.length}`;
 
         if (shouldScroll) {
-
             contentArea.scrollTo({
-
                 top: 0,
-
-                behavior:
-                    reducedMotion.matches
-                        ? "auto"
-                        : "smooth"
-
+                behavior: reducedMotion.matches ? "auto" : "smooth"
             });
-
         }
 
     }
 
+    /* الانتقال المباشر إلى رقم شريحة معيّن (تُستخدم عند الضغط على دائرة أو نقطة) */
+    function goToSlide(index, shouldScroll = true) {
+        if (index < 0 || index >= slides.length) return;
+        currentIndex = index;
+        updatePresentation(shouldScroll);
+    }
 
-    /* =========================================================
-       NAVIGATION
-    ========================================================= */
-
-    function goToSlide(
-        index,
-        shouldScroll = true
-    ) {
-
-        if (
-            index < 0 ||
-            index >= slides.length
-        ) {
-
+    /* الانتقال خطوة واحدة (تالي أو سابق)، وإذا وصلنا لآخر شريحة نعود للصفحة الرئيسية */
+    function moveSlide(direction) {
+        const nextIndex = currentIndex + direction;
+        if (nextIndex < 0) return;
+        if (nextIndex >= slides.length) {
+            window.location.href = "index.html";
             return;
-
         }
-
-        currentIndex =
-            index;
-
-        updatePresentation(
-            shouldScroll
-        );
-
+        goToSlide(nextIndex, true);
     }
 
+    prevBtn.addEventListener("click", () => moveSlide(-1));
+    nextBtn.addEventListener("click", () => moveSlide(1));
 
-    function moveSlide(
-        direction
-    ) {
+    /* التحكم عبر لوحة المفاتيح: الأسهم للتنقل، Home/End للذهاب لأول/آخر شريحة، Escape لإغلاق القائمة */
+    document.addEventListener("keydown", (event) => {
 
-        const nextIndex =
-            currentIndex + direction;
+        if (event.target.closest("input, textarea, select")) return;
 
-
-        if (nextIndex < 0) {
-
+        if (lightbox.classList.contains("active")) {
+            if (event.key === "Escape") closeLightbox();
             return;
-
         }
 
-
-        if (
-            nextIndex >= slides.length
-        ) {
-
-            window.location.href =
-                "index.html";
-
-            return;
-
+        switch (event.key) {
+            case "ArrowRight":
+            case "ArrowDown":
+                event.preventDefault();
+                moveSlide(1);
+                break;
+            case "ArrowLeft":
+            case "ArrowUp":
+                event.preventDefault();
+                moveSlide(-1);
+                break;
+            case "Home":
+                event.preventDefault();
+                goToSlide(0, true);
+                break;
+            case "End":
+                event.preventDefault();
+                goToSlide(slides.length - 1, true);
+                break;
+            case "Escape":
+                closeMobileSidebar();
+                break;
         }
 
-
-        goToSlide(
-            nextIndex,
-            true
-        );
-
-    }
-
-
-    prevBtn.addEventListener(
-        "click",
-        () => moveSlide(-1)
-    );
-
-
-    nextBtn.addEventListener(
-        "click",
-        () => moveSlide(1)
-    );
-
-
-    /* =========================================================
-       KEYBOARD
-    ========================================================= */
-
-    document.addEventListener(
-        "keydown",
-        (event) => {
-
-            if (
-                event.target.closest(
-                    "input, textarea, select"
-                )
-            ) {
-
-                return;
-
-            }
-
-
-            if (
-                lightbox.classList.contains(
-                    "active"
-                )
-            ) {
-
-                if (
-                    event.key === "Escape"
-                ) {
-
-                    closeLightbox();
-
-                }
-
-                return;
-
-            }
-
-
-            switch (event.key) {
-
-                case "ArrowRight":
-                case "ArrowDown":
-
-                    event.preventDefault();
-
-                    moveSlide(1);
-
-                    break;
-
-
-                case "ArrowLeft":
-                case "ArrowUp":
-
-                    event.preventDefault();
-
-                    moveSlide(-1);
-
-                    break;
-
-
-                case "Home":
-
-                    event.preventDefault();
-
-                    goToSlide(
-                        0,
-                        true
-                    );
-
-                    break;
-
-
-                case "End":
-
-                    event.preventDefault();
-
-                    goToSlide(
-                        slides.length - 1,
-                        true
-                    );
-
-                    break;
-
-
-                case "Escape":
-
-                    closeMobileSidebar();
-
-                    break;
-
-            }
-
-        }
-    );
-
-
-    /* =========================================================
-       FULLSCREEN
-    ========================================================= */
-
-    function updateFullscreenButton() {
-
-        if (
-            document.fullscreenElement
-        ) {
-
-            fullscreenBtn.innerHTML =
-                "<span>⛶</span> الخروج من ملء الشاشة";
-
-        } else {
-
-            fullscreenBtn.innerHTML =
-                "<span>⛶</span> ملء الشاشة";
-
-        }
-
-    }
-
-
-    fullscreenBtn.addEventListener(
-        "click",
-        async () => {
-
-            try {
-
-                if (
-                    !document.fullscreenElement
-                ) {
-
-                    await document.documentElement
-                        .requestFullscreen();
-
-                } else {
-
-                    await document.exitFullscreen();
-
-                }
-
-            } catch (error) {
-
-                console.warn(
-                    "Fullscreen is not available.",
-                    error
-                );
-
-            }
-
-        }
-    );
-
-
-    document.addEventListener(
-        "fullscreenchange",
-        updateFullscreenButton
-    );
-
-
-    /* =========================================================
-       MOBILE SIDEBAR
-    ========================================================= */
-
-    mobileSelector.addEventListener(
-        "click",
-        () => {
-
-            const isOpen =
-                sidebar.classList.toggle(
-                    "open"
-                );
-
-
-            mobileSelector.setAttribute(
-                "aria-expanded",
-                String(isOpen)
-            );
-
-        }
-    );
-
+    });
+
+    /* فتح/إغلاق قائمة "الخريطة" المنسدلة الخاصة بالهاتف عند الضغط عليها */
+    mobileSelector.addEventListener("click", () => {
+        const isOpen = sidebar.classList.toggle("open");
+        mobileSelector.setAttribute("aria-expanded", String(isOpen));
+    });
 
     function closeMobileSidebar() {
-
-        sidebar.classList.remove(
-            "open"
-        );
-
-        mobileSelector.setAttribute(
-            "aria-expanded",
-            "false"
-        );
-
+        sidebar.classList.remove("open");
+        mobileSelector.setAttribute("aria-expanded", "false");
     }
 
-
-    /* =========================================================
-       LIGHTBOX
-    ========================================================= */
-
-    function openLightbox(
-        image
-    ) {
-
-        if (
-            image.naturalWidth === 0
-        ) {
-
-            return;
-
-        }
-
-
-        lightboxImage.src =
-            image.currentSrc ||
-            image.src;
-
-        lightboxImage.alt =
-            image.alt || "";
-
-
-        lightbox.classList.add(
-            "active"
-        );
-
-
-        document.body.style.overflow =
-            "hidden";
-
-
+    /* تكبير الصورة في نافذة منبثقة (lightbox) عند الضغط عليها */
+    function openLightbox(image) {
+        if (image.naturalWidth === 0) return;
+        lightboxImage.src = image.currentSrc || image.src;
+        lightboxImage.alt = image.alt || "";
+        lightbox.classList.add("active");
+        document.body.style.overflow = "hidden";
         lightboxClose.focus();
-
     }
-
 
     function closeLightbox() {
-
-        lightbox.classList.remove(
-            "active"
-        );
-
-        lightboxImage.removeAttribute(
-            "src"
-        );
-
-        document.body.style.overflow =
-            "";
-
+        lightbox.classList.remove("active");
+        lightboxImage.removeAttribute("src");
+        document.body.style.overflow = "";
     }
 
+    document.querySelectorAll(".zoomable-image").forEach((image) => {
+        image.addEventListener("click", () => { openLightbox(image); });
+    });
 
-    document
-        .querySelectorAll(
-            ".zoomable-image"
-        )
-        .forEach(
-            (image) => {
+    lightboxClose.addEventListener("click", closeLightbox);
 
-                image.addEventListener(
-                    "click",
-                    () => {
+    lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) closeLightbox();
+    });
 
-                        openLightbox(
-                            image
-                        );
+    document.querySelectorAll(".image-slot img").forEach((image) => {
+        image.addEventListener("error", () => {
+            image.style.display = "none";
+            const errorBox = image.parentElement.querySelector(".image-error");
+            if (errorBox) errorBox.style.display = "block";
+        });
+    });
 
-                    }
-                );
-
-            }
-        );
-
-
-    lightboxClose.addEventListener(
-        "click",
-        closeLightbox
-    );
-
-
-    lightbox.addEventListener(
-        "click",
-        (event) => {
-
-            if (
-                event.target ===
-                lightbox
-            ) {
-
-                closeLightbox();
-
-            }
-
-        }
-    );
-
-
-    /* =========================================================
-       IMAGE ERROR HANDLING
-    ========================================================= */
-
-    document
-        .querySelectorAll(
-            ".image-slot img"
-        )
-        .forEach(
-            (image) => {
-
-                image.addEventListener(
-                    "error",
-                    () => {
-
-                        image.style.display =
-                            "none";
-
-
-                        const errorBox =
-                            image.parentElement
-                                .querySelector(
-                                    ".image-error"
-                                );
-
-
-                        if (errorBox) {
-
-                            errorBox.style.display =
-                                "block";
-
-                        }
-
-                    }
-                );
-
-            }
-        );
-
-
-    /* =========================================================
-       TOUCH SWIPE
-    ========================================================= */
-
+    /* التمرير باللمس على الهاتف: سحب لليمين/لليسار ينقلك بين الشرائح
+       (نتحقق أن السحب أفقي بشكل واضح حتى لا يتعارض مع التمرير العمودي العادي) */
     let touchStartX = 0;
     let touchStartY = 0;
+    let touchStarted = false;
 
+    contentArea.addEventListener("touchstart", (event) => {
+        const touch = event.changedTouches[0];
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+        touchStarted = true;
+    }, { passive: true });
 
-    contentArea.addEventListener(
-        "touchstart",
-        (event) => {
+    contentArea.addEventListener("touchend", (event) => {
+        if (!touchStarted) return;
+        touchStarted = false;
+        const touch = event.changedTouches[0];
+        const deltaX = touch.clientX - touchStartX;
+        const deltaY = touch.clientY - touchStartY;
+        if (Math.abs(deltaX) < 60 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+        if (deltaX < 0) moveSlide(1); else moveSlide(-1);
+    }, { passive: true });
 
-            const touch =
-                event.changedTouches[0];
-
-            touchStartX =
-                touch.clientX;
-
-            touchStartY =
-                touch.clientY;
-
-        },
-        {
-            passive: true
-        }
-    );
-
-
-    contentArea.addEventListener(
-        "touchend",
-        (event) => {
-
-            const touch =
-                event.changedTouches[0];
-
-
-            const deltaX =
-                touch.clientX -
-                touchStartX;
-
-
-            const deltaY =
-                touch.clientY -
-                touchStartY;
-
-
-            if (
-                Math.abs(deltaX) < 55 ||
-                Math.abs(deltaX) <= Math.abs(deltaY)
-            ) {
-
-                return;
-
-            }
-
-
-            /*
-               RTL:
-               السحب لليسار = التالي
-               السحب لليمين = السابق
-            */
-
-            if (deltaX < 0) {
-
-                moveSlide(1);
-
-            } else {
-
-                moveSlide(-1);
-
-            }
-
-        },
-        {
-            passive: true
-        }
-    );
-
-
-    /* =========================================================
-       INITIALIZE
-    ========================================================= */
-
-    updateFullscreenButton();
-
+    /* تشغيل العرض لأول مرة عند فتح الصفحة، بدون تمرير (scroll) لأننا في الأعلى أصلاً */
     updatePresentation(false);
 
 })();
