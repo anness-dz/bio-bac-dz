@@ -2699,7 +2699,7 @@ async function downloadTopicZIP(pages, streamKey, edition, topic, button) {
 
   var oldText = button ? button.textContent : "";
   if (button) {
-    button.textContent = "جاري الضغط...";
+    button.textContent = "جاري التحميل 0/" + pages.length;
     button.disabled = true;
   }
 
@@ -2708,30 +2708,52 @@ async function downloadTopicZIP(pages, streamKey, edition, topic, button) {
     var archiveName = safeFileName((ARCHIVE[streamKey] ? ARCHIVE[streamKey].label : "") + "_" + edition.label + "_" + topic.title);
     var imgFolder = zip.folder(archiveName);
 
-    for (var i = 0; i < pages.length; i++) {
-      if (button) {
-        button.textContent = "تجميع " + (i + 1) + "/" + pages.length;
-      }
+    var total = pages.length;
+    var completed = 0;
 
-      var page = pages[i];
-      var response = await fetch(page.src);
-      
-      if (!response.ok) {
-        throw new Error("تعذر جلب الصفحة رقم " + page.number);
-      }
+    /* جلب كل الصفحات بالتوازي بدل التسلسل الواحد تلو الآخر — هذا هو أكبر مصدر للبطء سابقاً */
+    var fetched = await Promise.all(
+      pages.map(async function(page){
 
-      var blob = await response.blob();
-      var ext = page.src.split('.').pop().split('?')[0] || "jpg";
-      var fileName = "Page_" + String(page.number).padStart(2, "0") + "." + ext;
+        var response = await fetch(page.src);
 
-      imgFolder.file(fileName, blob);
-    }
+        if (!response.ok) {
+          throw new Error("تعذر جلب الصفحة رقم " + page.number);
+        }
+
+        var blob = await response.blob();
+
+        completed++;
+
+        if (button) {
+          button.textContent = "جاري التحميل " + completed + "/" + total;
+        }
+
+        return { page: page, blob: blob };
+
+      })
+    );
 
     if (button) {
       button.textContent = "جاري إنشاء الملف...";
     }
 
-    var content = await zip.generateAsync({ type: "blob" });
+    fetched.forEach(function(item){
+
+      var ext = item.page.src.split('.').pop().split('?')[0] || "jpg";
+      var fileName = "Page_" + String(item.page.number).padStart(2, "0") + "." + ext;
+
+      imgFolder.file(fileName, item.blob);
+
+    });
+
+    /* الصور مضغوطة أصلاً (jpg/png/webp)، فاستخدام STORE بدل DEFLATE
+       يتجنب إعادة ضغطها من جديد ويجعل إنشاء الملف أسرع بكثير */
+    var content = await zip.generateAsync({
+      type: "blob",
+      compression: "STORE"
+    });
+
     saveAs(content, archiveName + ".zip");
 
     showDownloadStatus("تم تنزيل " + topic.title + " كملف ZIP بنجاح ✓");
@@ -4855,6 +4877,7 @@ ringFg.style.strokeDasharray=
     timerMiniCard.style.bottom=
       "auto";
 
+
   }
 
 
@@ -5529,6 +5552,7 @@ function finishTimer(){
   startBtn.hidden=false;
   pauseBtn.hidden=true;
   resumeBtn.hidden=true;
+
 
 }
 
