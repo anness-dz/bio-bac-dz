@@ -1602,7 +1602,7 @@ var topicImageCache=new Map();
    اختبار صورة واحدة
 ========================================================= */
 
-function probeImage(src){
+function probeImage(src,timeoutMs){
 
   return new Promise(function(resolve){
 
@@ -1619,7 +1619,7 @@ function probeImage(src){
 
       resolve(false);
 
-    },7000);
+    },timeoutMs||3000);
 
 
     img.onload=function(){
@@ -1661,6 +1661,10 @@ function probeImage(src){
    العثور على امتداد صفحة
 ========================================================= */
 
+/* يتذكر الامتداد الذي نجح آخر مرة لكل مجلد، حتى لا يُعاد التخمين من الصفر لكل صفحة */
+var folderExtHint=new Map();
+
+
 async function findPage(folder,number){
 
   var padded=
@@ -1672,6 +1676,32 @@ async function findPage(folder,number){
   ];
 
 
+  /* محاولة سريعة أولاً بالامتداد المعروف سلفًا لهذا المجلد (من صفحة سابقة ناجحة) */
+  var hint=folderExtHint.get(folder);
+
+  if(hint){
+
+    for(var n0=0;n0<names.length;n0++){
+
+      var quickSrc=
+        folder+
+        names[n0]+
+        "."+
+        hint;
+
+
+      if(await probeImage(quickSrc,3000)){
+        return quickSrc;
+      }
+
+    }
+
+  }
+
+
+  /* بناء كل الاحتمالات مع الحفاظ على ترتيب الأولوية الأصلي */
+  var candidates=[];
+
   for(var n=0;n<names.length;n++){
 
     for(
@@ -1680,16 +1710,43 @@ async function findPage(folder,number){
       e++
     ){
 
-      var src=
+      candidates.push(
         folder+
         names[n]+
         "."+
-        PAGE_EXTENSIONS[e];
+        PAGE_EXTENSIONS[e]
+      );
+
+    }
+
+  }
 
 
-      if(await probeImage(src)){
-        return src;
-      }
+  /* فحص كل الاحتمالات بالتوازي بدل التسلسل الواحد تلو الآخر */
+  var results=
+    await Promise.all(
+      candidates.map(function(src){
+
+        return probeImage(src,3000).then(function(ok){
+
+          return ok ? src : null;
+
+        });
+
+      })
+    );
+
+
+  for(var i=0;i<results.length;i++){
+
+    if(results[i]){
+
+      var foundExt=
+        results[i].split(".").pop();
+
+      folderExtHint.set(folder,foundExt);
+
+      return results[i];
 
     }
 
