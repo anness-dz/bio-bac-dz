@@ -1447,7 +1447,7 @@ a{
 var START_YEAR = 2026;
 var END_YEAR = 2008;
 
-var MAX_TOPIC_PAGES = 15;
+var MAX_TOPIC_PAGES = 12;
 
 var PAGE_EXTENSIONS = [
   "jpg",
@@ -1829,6 +1829,48 @@ async function loadTopicImages(folder){
 
 
   return pages;
+
+}
+
+
+/* =========================================================
+   تحميل الصفحة الأولى فقط (سريع)
+   تُستخدم لعرض المصغّرة بسرعة دون فحص كل الصفحات المحتملة.
+   الفحص الكامل (loadTopicImages) يتم لاحقًا فقط عند
+   الضغط على "عرض" أو "تحميل".
+========================================================= */
+
+var firstPageCache=new Map();
+
+
+async function loadFirstPage(folder){
+
+  /* إن كانت النتيجة الكاملة محفوظة مسبقًا، استخدمها مباشرة */
+
+  if(topicImageCache.has(folder)){
+
+    var cached=
+      topicImageCache.get(folder);
+
+    return cached.length ? cached[0] : null;
+
+  }
+
+
+  if(firstPageCache.has(folder)){
+    return firstPageCache.get(folder);
+  }
+
+
+  var src=
+    await findPage(folder,1);
+
+  var result=
+    src ? {number:1,src:src} : null;
+
+  firstPageCache.set(folder,result);
+
+  return result;
 
 }
 
@@ -2864,16 +2906,22 @@ function renderTopicCard(
     تحميل الصفحات.
   */
 
-  loadTopicImages(
+  /*
+    تحميل الصفحة الأولى فقط للعرض السريع.
+    باقي الصفحات تُفحص لاحقًا فقط عند الحاجة الفعلية
+    (عرض أو تحميل)، لا عند بناء القائمة.
+  */
+
+  loadFirstPage(
     topic.folder
   )
   .then(
-    function(pages){
+    function(firstPage){
 
       slot.innerHTML="";
 
 
-      if(!pages.length){
+      if(!firstPage){
 
         slot.appendChild(
           placeholderEl(
@@ -2894,7 +2942,7 @@ function renderTopicCard(
         document.createElement("img");
 
 
-      img.src=pages[0].src;
+      img.src=firstPage.src;
 
       img.alt=
         topic.title+
@@ -2908,7 +2956,8 @@ function renderTopicCard(
 
 
       /*
-        تفعيل تحميل ملف الضغط ZIP المباشر.
+        تفعيل تحميل ملف الضغط ZIP.
+        الفحص الكامل لكل الصفحات يتم فقط عند الضغط فعليًا.
       */
 
       dl.removeAttribute(
@@ -2920,12 +2969,53 @@ function renderTopicCard(
         "click",
         function(){
 
-          downloadTopicZIP(
-            pages,
-            streamKey,
-            edition,
-            topic,
-            dl
+          if(dl.dataset.busy)
+            return;
+
+          dl.dataset.busy="1";
+
+          var originalLabel=
+            dl.textContent;
+
+          dl.textContent=
+            "...جارٍ التحضير";
+
+
+          loadTopicImages(
+            topic.folder
+          )
+          .then(
+            function(pages){
+
+              downloadTopicZIP(
+                pages,
+                streamKey,
+                edition,
+                topic,
+                dl
+              );
+
+            }
+          )
+          .catch(
+            function(error){
+
+              console.error(
+                "ZIP loading error:",
+                error
+              );
+
+            }
+          )
+          .finally(
+            function(){
+
+              dl.textContent=
+                originalLabel;
+
+              delete dl.dataset.busy;
+
+            }
           );
 
         }
@@ -2934,6 +3024,7 @@ function renderTopicCard(
 
       /*
         تفعيل العرض.
+        الفحص الكامل لكل الصفحات يتم فقط عند الضغط فعليًا.
       */
 
       viewBtn.removeAttribute(
@@ -2945,12 +3036,53 @@ function renderTopicCard(
         "click",
         function(){
 
-          openViewer(
-            topic.folder,
-            edition,
-            topic,
-            fk,
-            pages
+          if(viewBtn.dataset.busy)
+            return;
+
+          viewBtn.dataset.busy="1";
+
+          var originalLabel=
+            viewBtn.textContent;
+
+          viewBtn.textContent=
+            "...جارٍ الفتح";
+
+
+          loadTopicImages(
+            topic.folder
+          )
+          .then(
+            function(pages){
+
+              openViewer(
+                topic.folder,
+                edition,
+                topic,
+                fk,
+                pages
+              );
+
+            }
+          )
+          .catch(
+            function(error){
+
+              console.error(
+                "Viewer loading error:",
+                error
+              );
+
+            }
+          )
+          .finally(
+            function(){
+
+              viewBtn.textContent=
+                originalLabel;
+
+              delete viewBtn.dataset.busy;
+
+            }
           );
 
         }
