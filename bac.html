@@ -1661,118 +1661,39 @@ function probeImage(src){
    العثور على امتداد صفحة
 ========================================================= */
 
-async function findPage(folder,number){
-
-  var padded=
-    String(number).padStart(2,"0");
-
-  var names=[
-    padded,
-    String(number)
-  ];
-
-
-  for(var n=0;n<names.length;n++){
-
-    for(
-      var e=0;
-      e<PAGE_EXTENSIONS.length;
-      e++
-    ){
-
-      var src=
-        folder+
-        names[n]+
-        "."+
-        PAGE_EXTENSIONS[e];
-
-
-      if(await probeImage(src)){
-        return src;
-      }
-
-    }
-
-  }
-
-
-  return null;
-
-}
-
-
-/* =========================================================
-   تحميل صفحات الموضوع
-========================================================= */
-
-async function loadTopicImages(folder){
-
-  if(topicImageCache.has(folder)){
+// استبدال دالتي findPage و loadTopicImages بهذا الكود المباشر والسريع
+async function loadTopicImages(folder) {
+  if (topicImageCache.has(folder)) {
     return topicImageCache.get(folder);
   }
 
+  var pages = [];
+  var checks = [];
 
-  var pages=[];
-  var missingInRow=0;
+  // فحص 12 صفحة بالتوازي دفعة واحدة دون انتظار تسلسلي
+  for (var number = 1; number <= MAX_TOPIC_PAGES; number++) {
+    (function(num) {
+      var padded = String(num).padStart(2, "0");
+      var src = folder + padded + ".jpg"; // مسار مباشر وموحد
 
-
-  for(
-    var number=1;
-    number<=MAX_TOPIC_PAGES;
-    number++
-  ){
-
-    var src=
-      await findPage(
-        folder,
-        number
-      );
-
-
-    if(src){
-
-      pages.push({
-
-        number:number,
-        src:src
-
+      var p = probeImage(src).then(function(exists) {
+        if (exists) {
+          pages.push({ number: num, src: src });
+        }
       });
-
-      missingInRow=0;
-
-    }else{
-
-      missingInRow++;
-
-      if(
-        pages.length>0 &&
-        missingInRow>=2
-      ){
-
-        break;
-
-      }
-
-    }
-
+      checks.push(p);
+    })(number);
   }
 
+  await Promise.all(checks);
 
-  pages.sort(function(a,b){
-
-    return a.number-b.number;
-
+  // ترتيب الصفحات حسب الرقم
+  pages.sort(function(a, b) {
+    return a.number - b.number;
   });
 
-
-  topicImageCache.set(
-    folder,
-    pages
-  );
-
-
+  topicImageCache.set(folder, pages);
   return pages;
-
 }
 
 
