@@ -1602,7 +1602,7 @@ var topicImageCache=new Map();
    اختبار صورة واحدة
 ========================================================= */
 
-function probeImage(src,timeoutMs){
+function probeImage(src){
 
   return new Promise(function(resolve){
 
@@ -1619,7 +1619,7 @@ function probeImage(src,timeoutMs){
 
       resolve(false);
 
-    },timeoutMs||3000);
+    },7000);
 
 
     img.onload=function(){
@@ -1661,10 +1661,6 @@ function probeImage(src,timeoutMs){
    العثور على امتداد صفحة
 ========================================================= */
 
-/* يتذكر الامتداد الذي نجح آخر مرة لكل مجلد، حتى لا يُعاد التخمين من الصفر لكل صفحة */
-var folderExtHint=new Map();
-
-
 async function findPage(folder,number){
 
   var padded=
@@ -1676,32 +1672,6 @@ async function findPage(folder,number){
   ];
 
 
-  /* محاولة سريعة أولاً بالامتداد المعروف سلفًا لهذا المجلد (من صفحة سابقة ناجحة) */
-  var hint=folderExtHint.get(folder);
-
-  if(hint){
-
-    for(var n0=0;n0<names.length;n0++){
-
-      var quickSrc=
-        folder+
-        names[n0]+
-        "."+
-        hint;
-
-
-      if(await probeImage(quickSrc,3000)){
-        return quickSrc;
-      }
-
-    }
-
-  }
-
-
-  /* بناء كل الاحتمالات مع الحفاظ على ترتيب الأولوية الأصلي */
-  var candidates=[];
-
   for(var n=0;n<names.length;n++){
 
     for(
@@ -1710,43 +1680,16 @@ async function findPage(folder,number){
       e++
     ){
 
-      candidates.push(
+      var src=
         folder+
         names[n]+
         "."+
-        PAGE_EXTENSIONS[e]
-      );
-
-    }
-
-  }
+        PAGE_EXTENSIONS[e];
 
 
-  /* فحص كل الاحتمالات بالتوازي بدل التسلسل الواحد تلو الآخر */
-  var results=
-    await Promise.all(
-      candidates.map(function(src){
-
-        return probeImage(src,3000).then(function(ok){
-
-          return ok ? src : null;
-
-        });
-
-      })
-    );
-
-
-  for(var i=0;i<results.length;i++){
-
-    if(results[i]){
-
-      var foundExt=
-        results[i].split(".").pop();
-
-      folderExtHint.set(folder,foundExt);
-
-      return results[i];
+      if(await probeImage(src)){
+        return src;
+      }
 
     }
 
@@ -1829,48 +1772,6 @@ async function loadTopicImages(folder){
 
 
   return pages;
-
-}
-
-
-/* =========================================================
-   تحميل الصفحة الأولى فقط (سريع)
-   تُستخدم لعرض المصغّرة بسرعة دون فحص كل الصفحات المحتملة.
-   الفحص الكامل (loadTopicImages) يتم لاحقًا فقط عند
-   الضغط على "عرض" أو "تحميل".
-========================================================= */
-
-var firstPageCache=new Map();
-
-
-async function loadFirstPage(folder){
-
-  /* إن كانت النتيجة الكاملة محفوظة مسبقًا، استخدمها مباشرة */
-
-  if(topicImageCache.has(folder)){
-
-    var cached=
-      topicImageCache.get(folder);
-
-    return cached.length ? cached[0] : null;
-
-  }
-
-
-  if(firstPageCache.has(folder)){
-    return firstPageCache.get(folder);
-  }
-
-
-  var src=
-    await findPage(folder,1);
-
-  var result=
-    src ? {number:1,src:src} : null;
-
-  firstPageCache.set(folder,result);
-
-  return result;
 
 }
 
@@ -2699,7 +2600,7 @@ async function downloadTopicZIP(pages, streamKey, edition, topic, button) {
 
   var oldText = button ? button.textContent : "";
   if (button) {
-    button.textContent = "جاري التحميل 0/" + pages.length;
+    button.textContent = "جاري الضغط...";
     button.disabled = true;
   }
 
@@ -2708,52 +2609,30 @@ async function downloadTopicZIP(pages, streamKey, edition, topic, button) {
     var archiveName = safeFileName((ARCHIVE[streamKey] ? ARCHIVE[streamKey].label : "") + "_" + edition.label + "_" + topic.title);
     var imgFolder = zip.folder(archiveName);
 
-    var total = pages.length;
-    var completed = 0;
+    for (var i = 0; i < pages.length; i++) {
+      if (button) {
+        button.textContent = "تجميع " + (i + 1) + "/" + pages.length;
+      }
 
-    /* جلب كل الصفحات بالتوازي بدل التسلسل الواحد تلو الآخر — هذا هو أكبر مصدر للبطء سابقاً */
-    var fetched = await Promise.all(
-      pages.map(async function(page){
+      var page = pages[i];
+      var response = await fetch(page.src);
+      
+      if (!response.ok) {
+        throw new Error("تعذر جلب الصفحة رقم " + page.number);
+      }
 
-        var response = await fetch(page.src);
+      var blob = await response.blob();
+      var ext = page.src.split('.').pop().split('?')[0] || "jpg";
+      var fileName = "Page_" + String(page.number).padStart(2, "0") + "." + ext;
 
-        if (!response.ok) {
-          throw new Error("تعذر جلب الصفحة رقم " + page.number);
-        }
-
-        var blob = await response.blob();
-
-        completed++;
-
-        if (button) {
-          button.textContent = "جاري التحميل " + completed + "/" + total;
-        }
-
-        return { page: page, blob: blob };
-
-      })
-    );
+      imgFolder.file(fileName, blob);
+    }
 
     if (button) {
       button.textContent = "جاري إنشاء الملف...";
     }
 
-    fetched.forEach(function(item){
-
-      var ext = item.page.src.split('.').pop().split('?')[0] || "jpg";
-      var fileName = "Page_" + String(item.page.number).padStart(2, "0") + "." + ext;
-
-      imgFolder.file(fileName, item.blob);
-
-    });
-
-    /* الصور مضغوطة أصلاً (jpg/png/webp)، فاستخدام STORE بدل DEFLATE
-       يتجنب إعادة ضغطها من جديد ويجعل إنشاء الملف أسرع بكثير */
-    var content = await zip.generateAsync({
-      type: "blob",
-      compression: "STORE"
-    });
-
+    var content = await zip.generateAsync({ type: "blob" });
     saveAs(content, archiveName + ".zip");
 
     showDownloadStatus("تم تنزيل " + topic.title + " كملف ZIP بنجاح ✓");
@@ -2928,22 +2807,16 @@ function renderTopicCard(
     تحميل الصفحات.
   */
 
-  /*
-    تحميل الصفحة الأولى فقط للعرض السريع.
-    باقي الصفحات تُفحص لاحقًا فقط عند الحاجة الفعلية
-    (عرض أو تحميل)، لا عند بناء القائمة.
-  */
-
-  loadFirstPage(
+  loadTopicImages(
     topic.folder
   )
   .then(
-    function(firstPage){
+    function(pages){
 
       slot.innerHTML="";
 
 
-      if(!firstPage){
+      if(!pages.length){
 
         slot.appendChild(
           placeholderEl(
@@ -2964,7 +2837,7 @@ function renderTopicCard(
         document.createElement("img");
 
 
-      img.src=firstPage.src;
+      img.src=pages[0].src;
 
       img.alt=
         topic.title+
@@ -2978,8 +2851,7 @@ function renderTopicCard(
 
 
       /*
-        تفعيل تحميل ملف الضغط ZIP.
-        الفحص الكامل لكل الصفحات يتم فقط عند الضغط فعليًا.
+        تفعيل تحميل ملف الضغط ZIP المباشر.
       */
 
       dl.removeAttribute(
@@ -2991,53 +2863,12 @@ function renderTopicCard(
         "click",
         function(){
 
-          if(dl.dataset.busy)
-            return;
-
-          dl.dataset.busy="1";
-
-          var originalLabel=
-            dl.textContent;
-
-          dl.textContent=
-            "...جارٍ التحضير";
-
-
-          loadTopicImages(
-            topic.folder
-          )
-          .then(
-            function(pages){
-
-              downloadTopicZIP(
-                pages,
-                streamKey,
-                edition,
-                topic,
-                dl
-              );
-
-            }
-          )
-          .catch(
-            function(error){
-
-              console.error(
-                "ZIP loading error:",
-                error
-              );
-
-            }
-          )
-          .finally(
-            function(){
-
-              dl.textContent=
-                originalLabel;
-
-              delete dl.dataset.busy;
-
-            }
+          downloadTopicZIP(
+            pages,
+            streamKey,
+            edition,
+            topic,
+            dl
           );
 
         }
@@ -3046,7 +2877,6 @@ function renderTopicCard(
 
       /*
         تفعيل العرض.
-        الفحص الكامل لكل الصفحات يتم فقط عند الضغط فعليًا.
       */
 
       viewBtn.removeAttribute(
@@ -3058,53 +2888,12 @@ function renderTopicCard(
         "click",
         function(){
 
-          if(viewBtn.dataset.busy)
-            return;
-
-          viewBtn.dataset.busy="1";
-
-          var originalLabel=
-            viewBtn.textContent;
-
-          viewBtn.textContent=
-            "...جارٍ الفتح";
-
-
-          loadTopicImages(
-            topic.folder
-          )
-          .then(
-            function(pages){
-
-              openViewer(
-                topic.folder,
-                edition,
-                topic,
-                fk,
-                pages
-              );
-
-            }
-          )
-          .catch(
-            function(error){
-
-              console.error(
-                "Viewer loading error:",
-                error
-              );
-
-            }
-          )
-          .finally(
-            function(){
-
-              viewBtn.textContent=
-                originalLabel;
-
-              delete viewBtn.dataset.busy;
-
-            }
+          openViewer(
+            topic.folder,
+            edition,
+            topic,
+            fk,
+            pages
           );
 
         }
@@ -4877,7 +4666,6 @@ ringFg.style.strokeDasharray=
     timerMiniCard.style.bottom=
       "auto";
 
-
   }
 
 
@@ -5552,7 +5340,6 @@ function finishTimer(){
   startBtn.hidden=false;
   pauseBtn.hidden=true;
   resumeBtn.hidden=true;
-
 
 }
 
