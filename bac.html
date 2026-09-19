@@ -1154,7 +1154,9 @@ a{
   inset:0;
   width:100%;
   height:100%;
-  touch-action:none;
+  /* السماح بالتمرير العمودي الطبيعي فوق الصفحة عندما لا توجد أداة رسم مفعّلة؛
+     يتم تبديلها إلى none أثناء الرسم فقط عبر جافاسكريبت */
+  touch-action:pan-y;
 }
 
 .viewer-page-number{
@@ -1247,6 +1249,9 @@ a{
     box-sizing:border-box;
     -webkit-overflow-scrolling:touch;
     scrollbar-width:none;
+    /* تلميح بصري بأن الشريط قابل للتمرير أفقيًا */
+    -webkit-mask-image:linear-gradient(to right,transparent 0,#000 20px,#000 calc(100% - 20px),transparent 100%);
+    mask-image:linear-gradient(to right,transparent 0,#000 20px,#000 calc(100% - 20px),transparent 100%);
   }
 
   .viewer-toolbar::-webkit-scrollbar{
@@ -1267,6 +1272,45 @@ a{
     flex:0 0 auto;
     display:flex;
     gap:5px;
+  }
+
+}
+
+
+/* =========================================================
+   الشريط العلوي — هاتف
+========================================================= */
+
+@media (max-width:600px){
+
+  .topbar{
+    padding:.5rem .75rem;
+    gap:.4rem;
+  }
+
+  .brand .logo,
+  .brand .logo-fallback{
+    width:28px;
+    height:28px;
+    border-radius:8px;
+  }
+
+  .brand-name{
+    font-size:.95rem;
+  }
+
+  .brand-tagline{
+    font-size:.6rem;
+  }
+
+  .topbar-controls{
+    gap:.35rem;
+  }
+
+  .topbar-controls .btn{
+    padding:.35rem .6rem;
+    font-size:.74rem;
+    gap:.25rem;
   }
 
 }
@@ -3358,6 +3402,50 @@ function openViewer(
   subjectViewer=viewer;
 
 
+  /* تلميح تمرير الشريط في الهاتف: هزّة خفيفة تلقائية عند الفتح
+     لإعلام المستخدم أن بإمكانه تمرير الشريط لرؤية بقية الأدوات */
+  if(
+    window.innerWidth<=600
+  ){
+
+    setTimeout(
+      function(){
+
+        if(
+          toolbar.scrollWidth<=
+          toolbar.clientWidth
+        ){
+          return;
+        }
+
+        toolbar.scrollBy(
+          {
+            left:34,
+            behavior:"smooth"
+          }
+        );
+
+        setTimeout(
+          function(){
+
+            toolbar.scrollBy(
+              {
+                left:-34,
+                behavior:"smooth"
+              }
+            );
+
+          },
+          420
+        );
+
+      },
+      550
+    );
+
+  }
+
+
   /* =======================================================
      بيانات الصفحات
   ======================================================= */
@@ -3376,6 +3464,27 @@ function openViewer(
   var drawingMode=null;
   var drawing=false;
   var drawingPage=0;
+
+
+  /* تفعيل/تعطيل تمرير الإصبع فوق الصفحة حسب وجود أداة رسم نشطة،
+     حتى يبقى التصفح والتكبير بحركة الأصابع سهلين عندما لا يرسم المستخدم */
+  function updateCanvasTouchAction(){
+
+    var mode=
+      drawingMode
+      ? "none"
+      : "pan-y";
+
+    pageCanvases.forEach(
+      function(c){
+
+        if(c)
+          c.style.touchAction=mode;
+
+      }
+    );
+
+  }
 
 
   /* =======================================================
@@ -4034,6 +4143,8 @@ function openViewer(
         drawingMode==="marker"
       );
 
+      updateCanvasTouchAction();
+
     }
   );
 
@@ -4072,6 +4183,8 @@ function openViewer(
         drawingMode==="pen"
       );
 
+      updateCanvasTouchAction();
+
     }
   );
 
@@ -4109,6 +4222,8 @@ function openViewer(
         "show",
         drawingMode==="eraser"
       );
+
+      updateCanvasTouchAction();
 
     }
   );
@@ -4440,6 +4555,168 @@ function openViewer(
     {
       passive:false
     }
+  );
+
+
+  /* =======================================================
+     تكبير/تصغير بحركة الإصبعين (Pinch-to-zoom) في الهاتف،
+     بدل الاجبار على استعمال زر التكبير فقط
+  ======================================================= */
+
+  var pinchPointers={};
+  var pinchStartDist=0;
+  var pinchStartZoom=1;
+
+
+  function pinchDistance(){
+
+    var ids=
+      Object.keys(pinchPointers);
+
+
+    if(ids.length<2)
+      return 0;
+
+
+    var p1=
+      pinchPointers[ids[0]];
+
+    var p2=
+      pinchPointers[ids[1]];
+
+
+    var dx=
+      p1.x-p2.x;
+
+    var dy=
+      p1.y-p2.y;
+
+
+    return Math.sqrt(
+      dx*dx+dy*dy
+    );
+
+  }
+
+
+  area.addEventListener(
+    "pointerdown",
+    function(e){
+
+      if(
+        e.pointerType!=="touch" ||
+        drawingMode
+      ){
+        return;
+      }
+
+
+      pinchPointers[e.pointerId]=
+        {
+          x:e.clientX,
+          y:e.clientY
+        };
+
+
+      if(
+        Object.keys(pinchPointers).length===2
+      ){
+
+        pinchStartDist=
+          pinchDistance();
+
+        pinchStartZoom=zoom;
+
+      }
+
+    }
+  );
+
+
+  area.addEventListener(
+    "pointermove",
+    function(e){
+
+      if(!(e.pointerId in pinchPointers))
+        return;
+
+
+      pinchPointers[e.pointerId]=
+        {
+          x:e.clientX,
+          y:e.clientY
+        };
+
+
+      var count=
+        Object.keys(pinchPointers).length;
+
+
+      if(
+        count===2 &&
+        pinchStartDist>0
+      ){
+
+        e.preventDefault();
+
+
+        var ratio=
+          pinchDistance()/
+          pinchStartDist;
+
+
+        zoom=
+          Math.round(
+            Math.max(
+              .5,
+              Math.min(
+                3,
+                pinchStartZoom*ratio
+              )
+            )*100
+          )/100;
+
+
+        applyZoom();
+
+      }
+
+    },
+    {
+      passive:false
+    }
+  );
+
+
+  function endPinchPointer(e){
+
+    delete pinchPointers[e.pointerId];
+
+
+    if(
+      Object.keys(pinchPointers).length<2
+    ){
+
+      pinchStartDist=0;
+
+    }
+
+  }
+
+
+  area.addEventListener(
+    "pointerup",
+    endPinchPointer
+  );
+
+  area.addEventListener(
+    "pointercancel",
+    endPinchPointer
+  );
+
+  area.addEventListener(
+    "pointerleave",
+    endPinchPointer
   );
 
 
