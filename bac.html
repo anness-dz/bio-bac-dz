@@ -513,6 +513,120 @@ a{
 
 
 /* =========================================================
+   تحميل الموضوع — تصميم مميز
+========================================================= */
+
+.topic-loading{
+  width:100%;
+  height:100%;
+  min-height:150px;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:.7rem;
+  color:var(--ink-soft);
+  background:
+    radial-gradient(circle at 50% 35%,
+      rgba(255,255,255,.75),
+      transparent 45%),
+    linear-gradient(135deg,
+      var(--bg-soft),
+      var(--card));
+}
+
+.topic-loading::before{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:-55%;
+  width:38%;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.55),
+    transparent
+  );
+  transform:skewX(-18deg);
+  animation:topicLoadingShine 1.5s ease-in-out infinite;
+}
+
+.topic-loading-icon{
+  position:relative;
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  border:4px solid var(--line);
+  border-top-color:var(--navy);
+  border-right-color:var(--seal);
+  animation:topicLoadingSpin .85s linear infinite;
+  box-shadow:0 0 0 7px rgba(255,255,255,.12);
+}
+
+.topic-loading-icon::after{
+  content:"";
+  position:absolute;
+  inset:9px;
+  border-radius:50%;
+  border:2px dashed var(--navy);
+  opacity:.35;
+  animation:topicLoadingSpin 1.8s linear infinite reverse;
+}
+
+.topic-loading-title{
+  position:relative;
+  font-size:.78rem;
+  font-weight:800;
+  color:var(--navy-strong);
+}
+
+.topic-loading-dots{
+  position:relative;
+  display:flex;
+  gap:4px;
+  direction:ltr;
+}
+
+.topic-loading-dots span{
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--seal);
+  animation:topicLoadingDot 1s infinite ease-in-out;
+}
+
+.topic-loading-dots span:nth-child(2){
+  animation-delay:.15s;
+}
+
+.topic-loading-dots span:nth-child(3){
+  animation-delay:.3s;
+}
+
+@keyframes topicLoadingSpin{
+  to{ transform:rotate(360deg); }
+}
+
+@keyframes topicLoadingShine{
+  0%{ left:-55%; }
+  100%{ left:125%; }
+}
+
+@keyframes topicLoadingDot{
+  0%,60%,100%{
+    transform:translateY(0);
+    opacity:.35;
+  }
+  30%{
+    transform:translateY(-4px);
+    opacity:1;
+  }
+}
+
+/* =========================================================
    العناصر البديلة
 ========================================================= */
 
@@ -2591,10 +2705,8 @@ function renderTopicCard(
       idx
     );
 
-
   var isFav=
     !!state.favorites[fk];
-
 
   var card=
     document.createElement("article");
@@ -2606,18 +2718,15 @@ function renderTopicCard(
     isFav ? "true" : "false"
   );
 
-
   var head=
     document.createElement("div");
 
   head.className="topic-head";
 
-
   var title=
     document.createElement("span");
 
   title.className="topic-title";
-
 
   title.textContent=
     topic.title+
@@ -2626,7 +2735,6 @@ function renderTopicCard(
       ? " — "+edition.label
       : ""
     );
-
 
   var seal=
     document.createElement("button");
@@ -2639,55 +2747,76 @@ function renderTopicCard(
     ? "★"
     : "☆";
 
-
   seal.title="إضافة للمفضلة";
-
 
   seal.addEventListener(
     "click",
     function(){
 
-      if(
-        state.favorites[fk]
-      ){
-
+      if(state.favorites[fk]){
         delete state.favorites[fk];
-
       }else{
-
         state.favorites[fk]=true;
-
       }
-
 
       render();
 
     }
   );
 
-
   head.appendChild(title);
   head.appendChild(seal);
-
 
   var slot=
     document.createElement("div");
 
   slot.className="image-slot";
 
+  /*
+    شاشة تحميل مميزة تظهر أثناء البحث
+    عن صفحات الموضوع.
+  */
 
-  slot.appendChild(
-    placeholderEl(
-      "جاري البحث عن الصفحات..."
-    )
-  );
+  var loading=
+    document.createElement("div");
 
+  loading.className="topic-loading";
+
+  var loadingIcon=
+    document.createElement("div");
+
+  loadingIcon.className="topic-loading-icon";
+
+  var loadingTitle=
+    document.createElement("div");
+
+  loadingTitle.className="topic-loading-title";
+  loadingTitle.textContent="جاري تحميل الموضوع";
+
+  var loadingDots=
+    document.createElement("div");
+
+  loadingDots.className="topic-loading-dots";
+
+  for(var d=0; d<3; d++){
+
+    var dot=
+      document.createElement("span");
+
+    loadingDots.appendChild(dot);
+
+  }
+
+  loading.appendChild(loadingIcon);
+  loading.appendChild(loadingTitle);
+  loading.appendChild(loadingDots);
+
+  slot.appendChild(loading);
 
   var foot=
     document.createElement("div");
 
   foot.className="topic-foot";
-
 
   var viewBtn=
     document.createElement("button");
@@ -2699,7 +2828,6 @@ function renderTopicCard(
     "aria-disabled",
     "true"
   );
-
 
   var dl=
     document.createElement("button");
@@ -2708,18 +2836,6 @@ function renderTopicCard(
   dl.className="dl-btn";
   dl.textContent="تحميل";
   dl.setAttribute(
-    "aria-disabled",
-    "true"
-  );
-
-
-  var viewBtn=
-    document.createElement("button");
-
-  viewBtn.type="button";
-  viewBtn.className="dl-btn";
-  viewBtn.textContent="عرض";
-  viewBtn.setAttribute(
     "aria-disabled",
     "true"
   );
@@ -2736,7 +2852,6 @@ function renderTopicCard(
 
       slot.innerHTML="";
 
-
       if(!pages.length){
 
         slot.appendChild(
@@ -2746,9 +2861,7 @@ function renderTopicCard(
         );
 
         return;
-
       }
-
 
       /*
         الصورة الأولى.
@@ -2756,7 +2869,6 @@ function renderTopicCard(
 
       var img=
         document.createElement("img");
-
 
       img.src=pages[0].src;
 
@@ -2767,9 +2879,7 @@ function renderTopicCard(
 
       img.loading="lazy";
 
-
       slot.appendChild(img);
-
 
       /*
         تفعيل تحميل ملف الضغط ZIP المباشر.
@@ -2778,7 +2888,6 @@ function renderTopicCard(
       dl.removeAttribute(
         "aria-disabled"
       );
-
 
       dl.addEventListener(
         "click",
@@ -2795,7 +2904,6 @@ function renderTopicCard(
         }
       );
 
-
       /*
         تفعيل العرض.
       */
@@ -2803,7 +2911,6 @@ function renderTopicCard(
       viewBtn.removeAttribute(
         "aria-disabled"
       );
-
 
       viewBtn.addEventListener(
         "click",
@@ -2841,7 +2948,6 @@ function renderTopicCard(
     }
   );
 
-
   foot.appendChild(viewBtn);
   foot.appendChild(dl);
 
@@ -2849,11 +2955,9 @@ function renderTopicCard(
   card.appendChild(slot);
   card.appendChild(foot);
 
-
   return card;
 
 }
-
 
 /* =========================================================
    العنصر البديل
