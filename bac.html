@@ -1112,7 +1112,8 @@ a{
   position:relative;
   display:block;
   padding:20px 20px 0;
-  touch-action:auto;
+  touch-action:pan-y;
+  -webkit-overflow-scrolling:touch;
 }
 
 .viewer-scale-wrap{
@@ -1227,6 +1228,49 @@ a{
   font-weight:700;
   text-align:center;
 }
+
+/* =========================================================
+   هاتف
+========================================================= */
+
+@media (max-width:600px){
+
+  .viewer-toolbar{
+    width:100%;
+    max-width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    display:flex;
+    flex-wrap:nowrap;
+    gap:6px;
+    padding:7px;
+    box-sizing:border-box;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+
+  .viewer-toolbar::-webkit-scrollbar{
+    display:none;
+  }
+
+  .viewer-toolbar button{
+    flex:0 0 auto;
+    width:38px;
+    min-width:38px;
+    height:38px;
+    padding:0;
+    font-size:15px;
+    border-radius:10px;
+  }
+
+  .viewer-toolbar .tool-group{
+    flex:0 0 auto;
+    display:flex;
+    gap:5px;
+  }
+
+}
+
 
 </style>
 </head>
