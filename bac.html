@@ -1112,7 +1112,9 @@ a{
   position:relative;
   display:block;
   padding:20px 20px 0;
-  touch-action:pan-y;
+  /* السماح بالتمرير الأفقي (يمين/يسار) والعمودي معًا بإصبع واحد،
+     خصوصًا عند التكبير حيث تتجاوز الصفحة عرض الشاشة */
+  touch-action:pan-x pan-y;
   -webkit-overflow-scrolling:touch;
 }
 
@@ -1154,9 +1156,8 @@ a{
   inset:0;
   width:100%;
   height:100%;
-  /* السماح بالتمرير العمودي الطبيعي فوق الصفحة عندما لا توجد أداة رسم مفعّلة؛
-     يتم تبديلها إلى none أثناء الرسم فقط عبر جافاسكريبت */
-  touch-action:pan-y;
+  /* نفس منطق التمرير الحر أعلاه، مع تعطيله إلى none أثناء الرسم فقط عبر جافاسكريبت */
+  touch-action:pan-x pan-y;
 }
 
 .viewer-page-number{
@@ -1801,10 +1802,10 @@ var topicImageCache=new Map();
 
 
 /* =========================================================
-   اختبار صورة واحدة
+   اختبار صورة واحدة (بمحاولة واحدة فقط)
 ========================================================= */
 
-function probeImage(src){
+function probeImageOnce(src,timeoutMs){
 
   return new Promise(function(resolve){
 
@@ -1819,9 +1820,10 @@ function probeImage(src){
 
       finished=true;
 
-      resolve(false);
+      // انتهت المهلة دون نجاح أو فشل صريح: على الأرجح اتصال ضعيف/بطيء
+      resolve("timeout");
 
-    },7000);
+    },timeoutMs);
 
 
     img.onload=function(){
@@ -1833,7 +1835,7 @@ function probeImage(src){
 
       clearTimeout(timeout);
 
-      resolve(true);
+      resolve("ok");
 
     };
 
@@ -1847,7 +1849,8 @@ function probeImage(src){
 
       clearTimeout(timeout);
 
-      resolve(false);
+      // فشل حقيقي وسريع (الملف غير موجود فعلاً) — لا داعي لإعادة المحاولة
+      resolve("error");
 
     };
 
@@ -1855,6 +1858,64 @@ function probeImage(src){
     img.src=src;
 
   });
+
+}
+
+
+function bacDelay(ms){
+
+  return new Promise(function(resolve){
+
+    setTimeout(resolve,ms);
+
+  });
+
+}
+
+
+/* =========================================================
+   اختبار صورة واحدة (مع إعادة محاولة عند الاتصال الضعيف)
+========================================================= */
+
+async function probeImage(src){
+
+  // المحاولة الأولى بمهلة معتدلة
+  var result=
+    await probeImageOnce(src,7000);
+
+  if(result==="ok")
+    return true;
+
+  if(result==="error")
+    return false;
+
+
+  // النتيجة "timeout": الاتصال ضعيف على الأرجح،
+  // نعيد المحاولة بدل الاستسلام فورًا والتوقف عن التحميل
+  for(
+    var attempt=1;
+    attempt<=2;
+    attempt++
+  ){
+
+    await bacDelay(600*attempt);
+
+    result=
+      await probeImageOnce(
+        src,
+        9000+(attempt*3000)
+      );
+
+    if(result==="ok")
+      return true;
+
+    if(result==="error")
+      return false;
+
+  }
+
+
+  return false;
 
 }
 
@@ -2052,6 +2113,44 @@ document
 });
 
 
+/* =========================================================
+   ربط زر الرجوع في الهاتف (الزر/الإيماءة الأصلية للنظام)
+   بخطوات التطبيق الداخلية بدل الخروج من الصفحة كاملة
+========================================================= */
+
+var bacIgnorePopstate=false;
+
+
+function bacPushLevel(){
+
+  try{
+
+    history.pushState(
+      {bacLevel:true},
+      "",
+      ""
+    );
+
+  }catch(e){}
+
+}
+
+
+function bacConsumeLevel(){
+
+  // يُستدعى بعد إجراء يدوي (ضغط زر داخل التطبيق) أدى نفس أثر
+  // خطوة رجوع، حتى يبقى سجل المتصفح الحقيقي متزامنًا مع حالة التطبيق
+  bacIgnorePopstate=true;
+
+  try{
+
+    history.back();
+
+  }catch(e){}
+
+}
+
+
 function openStream(key){
 
   state.stream=key;
@@ -2070,6 +2169,8 @@ function openStream(key){
 
   render();
 
+  bacPushLevel();
+
 }
 
 
@@ -2078,53 +2179,72 @@ function goHome(){
 }
 
 
+/* الخطوة المنطقية الواحدة للرجوع، تُستخدم من زر الرجوع الداخلي
+   ومن زر/إيماءة الرجوع الأصلية في الهاتف على حد سواء */
+function legacyBackStep(){
+
+  // 1. إلغاء تفعيل وضع المفضلة إن كان مفعلاً
+  if(state.favOnly){
+
+    state.favOnly=false;
+
+    favToggle.classList.remove("on");
+
+    render();
+
+    return true;
+
+  }
+
+  // 2. العودة من عرض مواضيع سنة معينة إلى قائمة السنوات
+  if(state.view==="year"){
+
+    state.view="years";
+
+    render();
+
+    return true;
+
+  }
+
+  // 3. العودة من قائمة السنوات إلى شاشة اختيار الشعب
+  if(state.view==="years"){
+
+    state.stream=null;
+    state.view="streams";
+
+    hero.hidden=false;
+    board.hidden=true;
+
+    favToggle.hidden=true;
+    backBtn.hidden=true;
+    homeBtn.hidden=true;
+
+    return true;
+
+  }
+
+  return false;
+
+}
+
+
 backBtn.addEventListener(
   "click",
   function(){
 
-    // 1. إلغاء تفعيل وضع المفضلة إن كان مفعلاً
-    if(state.favOnly){
+    var stepped=legacyBackStep();
 
-      state.favOnly=false;
+    if(stepped){
 
-      favToggle.classList.remove("on");
+      bacConsumeLevel();
 
-      render();
+    }else{
 
-      return;
-
-    }
-
-    // 2. العودة من عرض مواضيع سنة معينة إلى قائمة السنوات
-    if(state.view==="year"){
-
-      state.view="years";
-
-      render();
-
-      return;
+      // 4. الانتقال إلى الرئيسية في أي حالة أخرى
+      goHome();
 
     }
-
-    // 3. العودة من قائمة السنوات إلى شاشة اختيار الشعب
-    if(state.view==="years"){
-
-      state.stream=null;
-      state.view="streams";
-
-      hero.hidden=false;
-      board.hidden=true;
-
-      favToggle.hidden=true;
-      backBtn.hidden=true;
-      homeBtn.hidden=true;
-
-      return;
-
-    }
-
-    // 4. الانتقال إلى الرئيسية في أي حالة أخرى
-    goHome();
 
   }
 );
@@ -2149,6 +2269,47 @@ favToggle.addEventListener(
     );
 
     render();
+
+    if(state.favOnly){
+
+      bacPushLevel();
+
+    }else{
+
+      bacConsumeLevel();
+
+    }
+
+  }
+);
+
+
+/* عند ضغط زر/إيماءة الرجوع الأصلية في الهاتف: أغلق عارض الموضوع
+   إن كان مفتوحًا، وإلا نفّذ نفس خطوة الرجوع الداخلية للتطبيق،
+   بدل الخروج من الصفحة بأكملها */
+window.addEventListener(
+  "popstate",
+  function(){
+
+    if(bacIgnorePopstate){
+
+      bacIgnorePopstate=false;
+
+      return;
+
+    }
+
+    if(subjectViewer){
+
+      // تم استهلاك خطوة السجل بالفعل بشكل طبيعي عبر زر الرجوع،
+      // لذلك نغلق العارض فقط دون لمس السجل مجددًا
+      closeAnyViewer(true);
+
+      return;
+
+    }
+
+    legacyBackStep();
 
   }
 );
@@ -2489,6 +2650,8 @@ function renderEditionsList(key){
           state.view="year";
 
           render();
+
+          bacPushLevel();
 
         }
       );
@@ -3089,6 +3252,10 @@ function placeholderEl(text){
 
 var subjectViewer=null;
 
+// دالة التنظيف الخاصة بالعارض المفتوح حاليًا (حفظ الرسم وإيقاف الساعة)،
+// تُستدعى من closeAnyViewer بغض النظر عن مصدر الإغلاق
+var activeViewerCleanup=null;
+
 
 function openViewer(
   folder,
@@ -3098,7 +3265,12 @@ function openViewer(
   cachedPages
 ){
 
-  closeAnyViewer();
+  // إغلاق أي عارض سابق دون لمس السجل هنا: سيُدفع مستوى جديد بعد قليل
+  // لفتح هذا العارض فقط إن لم يكن هناك عارض مفتوح أصلاً (حالة الاستبدال
+  // النادرة تُعيد استخدام نفس المستوى الحالي دون مضاعفته)
+  var hadOpenViewer=!!subjectViewer;
+
+  closeAnyViewer(true);
 
 
   var viewer=
@@ -3401,6 +3573,15 @@ function openViewer(
 
   subjectViewer=viewer;
 
+  // فتح العارض يُعتبر مستوى تنقّل جديد، حتى يُغلقه زر/إيماءة
+  // الرجوع الأصلية في الهاتف بدل الخروج من الصفحة بأكملها
+  // (لا حاجة لدفع مستوى إضافي في حالة الاستبدال النادرة)
+  if(!hadOpenViewer){
+
+    bacPushLevel();
+
+  }
+
 
   /* تلميح تمرير الشريط في الهاتف: هزّة خفيفة تلقائية عند الفتح
      لإعلام المستخدم أن بإمكانه تمرير الشريط لرؤية بقية الأدوات */
@@ -3473,7 +3654,7 @@ function openViewer(
     var mode=
       drawingMode
       ? "none"
-      : "pan-y";
+      : "pan-x pan-y";
 
     pageCanvases.forEach(
       function(c){
@@ -4771,6 +4952,13 @@ function openViewer(
 
   function closeViewer(){
 
+    closeAnyViewer();
+
+  }
+
+
+  activeViewerCleanup=function(){
+
     pageCanvases.forEach(
       function(canvas,index){
 
@@ -4786,16 +4974,7 @@ function openViewer(
       viewerClockInterval
     );
 
-
-    if(subjectViewer===viewer){
-
-      subjectViewer.remove();
-
-      subjectViewer=null;
-
-    }
-
-  }
+  };
 
 
   closeBtn.addEventListener(
@@ -4838,12 +5017,30 @@ function openViewer(
    إغلاق أي عارض
 ========================================================= */
 
-function closeAnyViewer(){
+function closeAnyViewer(skipHistory){
 
   if(subjectViewer){
 
+    if(activeViewerCleanup){
+
+      try{
+
+        activeViewerCleanup();
+
+      }catch(e){}
+
+      activeViewerCleanup=null;
+
+    }
+
     subjectViewer.remove();
     subjectViewer=null;
+
+    if(!skipHistory){
+
+      bacConsumeLevel();
+
+    }
 
   }
 
