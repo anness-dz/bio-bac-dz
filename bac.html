@@ -6,6 +6,15 @@
 
 <title>bio-bac-dz | أرشيف بكالوريا علوم الطبيعة والحياة</title>
 
+<meta name="description" content="أرشيف مجاني لمواضيع بكالوريا علوم الطبيعة والحياة والرياضيات لكل السنوات، مع إمكانية المشاهدة المباشرة والتحميل والتأشير على الصفحات.">
+<meta name="theme-color" id="themeColorMeta" content="#10161F">
+
+<meta property="og:title" content="bio-bac-dz | أرشيف بكالوريا علوم الطبيعة والحياة">
+<meta property="og:description" content="أرشيف مجاني لمواضيع بكالوريا علوم الطبيعة والحياة والرياضيات لكل السنوات.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="favicon.png">
+
+<link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" href="favicon.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -350,6 +359,32 @@ a{
 .breadcrumb .current{
   color:var(--ink-soft);
   font-weight:600;
+}
+
+.year-search-wrap{
+  margin-bottom:.7rem;
+}
+
+.year-search-input{
+  width:100%;
+  box-sizing:border-box;
+  padding:.6rem .9rem;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--ink);
+  font-family:inherit;
+  font-size:.85rem;
+  outline:none;
+  transition:.15s ease;
+}
+
+.year-search-input::placeholder{
+  color:var(--ink-soft);
+}
+
+.year-search-input:focus{
+  border-color:var(--navy);
 }
 
 .edition-list{
@@ -2009,6 +2044,47 @@ async function loadTopicImages(folder, forceRefresh) {
 
 
 /* =========================================================
+   حفظ المفضلة بشكل دائم
+========================================================= */
+
+var FAVORITES_STORAGE_KEY="bioBac-favorites";
+
+
+function loadFavorites(){
+
+  try{
+
+    var raw=
+      localStorage.getItem(
+        FAVORITES_STORAGE_KEY
+      );
+
+    return raw ? JSON.parse(raw) : {};
+
+  }catch(e){
+
+    return {};
+
+  }
+
+}
+
+
+function saveFavorites(){
+
+  try{
+
+    localStorage.setItem(
+      FAVORITES_STORAGE_KEY,
+      JSON.stringify(state.favorites)
+    );
+
+  }catch(e){}
+
+}
+
+
+/* =========================================================
    الحالة
 ========================================================= */
 
@@ -2024,7 +2100,7 @@ var state={
 
   favOnly:false,
 
-  favorites:{}
+  favorites:loadFavorites()
 
 };
 
@@ -2117,6 +2193,21 @@ function applyTheme(){
     state.theme==="dark"
     ? "☀️ وضع نهاري"
     : "🌙 وضع ليلي";
+
+
+  var themeColorMeta=
+    el("themeColorMeta");
+
+  if(themeColorMeta){
+
+    themeColorMeta.setAttribute(
+      "content",
+      state.theme==="dark"
+      ? "#10161F"
+      : "#F1E7D2"
+    );
+
+  }
 
 }
 
@@ -2608,6 +2699,30 @@ function renderEditionsList(key){
   list.className="edition-list";
 
 
+  var searchWrap=
+    document.createElement("div");
+
+  searchWrap.className="year-search-wrap";
+
+
+  var searchInput=
+    document.createElement("input");
+
+  searchInput.type="search";
+  searchInput.className="year-search-input";
+  searchInput.placeholder="ابحث عن سنة… مثال: 2021";
+  searchInput.setAttribute(
+    "inputmode",
+    "numeric"
+  );
+  searchInput.setAttribute(
+    "aria-label",
+    "البحث عن سنة"
+  );
+
+  searchWrap.appendChild(searchInput);
+
+
   editions.forEach(
     function(ed){
 
@@ -2711,7 +2826,44 @@ function renderEditionsList(key){
   );
 
 
+  boardContent.appendChild(searchWrap);
   boardContent.appendChild(list);
+
+
+  searchInput.addEventListener(
+    "input",
+    function(){
+
+      var q=
+        searchInput.value
+        .trim();
+
+      var rows=
+        list.querySelectorAll(
+          ".edition-row"
+        );
+
+      rows.forEach(
+        function(row){
+
+          var yearText=
+            row.querySelector(
+              ".year-num"
+            )
+            .textContent;
+
+          var match=
+            !q ||
+            yearText.indexOf(q)!==-1;
+
+          row.style.display=
+            match ? "" : "none";
+
+        }
+      );
+
+    }
+  );
 
 }
 
@@ -2989,6 +3141,48 @@ async function downloadTopicZIP(pages, streamKey, edition, topic, button) {
    بطاقة الموضوع
 ========================================================= */
 
+/* =========================================================
+   تأجيل تحميل صفحات الموضوع حتى تظهر بطاقته فعليًا على الشاشة
+   (بدل فحص كل الصفحات المحتملة لكل المواضيع فور تصييرها)
+========================================================= */
+
+var topicCardObserver=
+  (typeof IntersectionObserver!=="undefined")
+  ? new IntersectionObserver(
+      function(entries){
+
+        entries.forEach(
+          function(entry){
+
+            if(entry.isIntersecting){
+
+              topicCardObserver.unobserve(
+                entry.target
+              );
+
+              if(
+                typeof entry.target._loadTopic===
+                "function"
+              ){
+
+                entry.target._loadTopic();
+                entry.target._loadTopic=null;
+
+              }
+
+            }
+
+          }
+        );
+
+      },
+      {
+        rootMargin:"250px 0px"
+      }
+    )
+  : null;
+
+
 function renderTopicCard(
   streamKey,
   edition,
@@ -3057,6 +3251,8 @@ function renderTopicCard(
       }else{
         state.favorites[fk]=true;
       }
+
+      saveFavorites();
 
       render();
 
@@ -3266,7 +3462,22 @@ function renderTopicCard(
   }
 
 
-  attemptLoadTopic(false);
+  if(topicCardObserver){
+
+    card._loadTopic=
+      function(){
+
+        attemptLoadTopic(false);
+
+      };
+
+    topicCardObserver.observe(card);
+
+  }else{
+
+    attemptLoadTopic(false);
+
+  }
 
   foot.appendChild(viewBtn);
   foot.appendChild(dl);
@@ -6202,6 +6413,33 @@ addTimeBtn.addEventListener(
 ========================================================= */
 
 paintTimer();
+
+
+/* =========================================================
+   تسجيل Service Worker لدعم العمل بلا اتصال
+========================================================= */
+
+if("serviceWorker" in navigator){
+
+  window.addEventListener(
+    "load",
+    function(){
+
+      navigator.serviceWorker
+        .register("./sw.js")
+        .catch(function(err){
+
+          console.warn(
+            "SW registration failed:",
+            err
+          );
+
+        });
+
+    }
+  );
+
+}
 
 })();
 
