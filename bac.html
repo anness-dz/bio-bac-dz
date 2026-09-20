@@ -1180,6 +1180,52 @@ a{
   font-family:'Cairo',sans-serif;
 }
 
+.viewer-retry-btn{
+  margin-top:14px;
+  padding:.55rem 1.4rem;
+  border-radius:9px;
+  border:1px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  font-family:inherit;
+  font-size:.85rem;
+  cursor:pointer;
+  transition:.15s ease;
+}
+
+.viewer-retry-btn:hover:not(:disabled){
+  background:rgba(255,255,255,.18);
+  transform:translateY(-1px);
+}
+
+.viewer-retry-btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+.placeholder-retry-btn{
+  margin-top:.35rem;
+  padding:.35rem 1rem;
+  border-radius:7px;
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--navy-strong);
+  font-family:inherit;
+  font-size:.72rem;
+  cursor:pointer;
+  transition:.15s ease;
+}
+
+.placeholder-retry-btn:hover:not(:disabled){
+  border-color:var(--navy);
+  transform:translateY(-1px);
+}
+
+.placeholder-retry-btn:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
 @media(max-width:700px){
 
   .viewer-toolbar{
@@ -1925,8 +1971,10 @@ async function probeImage(src){
 ========================================================= */
 
 // استبدال دالتي findPage و loadTopicImages بهذا الكود المباشر والسريع
-async function loadTopicImages(folder) {
-  if (topicImageCache.has(folder)) {
+// المعامل forceRefresh يتجاوز الذاكرة المؤقتة، ويُستخدم عند ضغط
+// المستخدم على "إعادة المحاولة" بعد فشل ناتج عن اتصال ضعيف
+async function loadTopicImages(folder, forceRefresh) {
+  if (!forceRefresh && topicImageCache.has(folder)) {
     return topicImageCache.get(folder);
   }
 
@@ -3092,112 +3140,133 @@ function renderTopicCard(
   );
 
   /*
-    تحميل الصفحات.
+    تحميل الصفحات، مع إمكانية إعادة المحاولة عند الفشل
+    (خصوصًا في حال ضعف الاتصال بالإنترنت).
   */
 
-  loadTopicImages(
-    topic.folder
-  )
-  .then(
-    function(pages){
+  function showTopicLoadFailure(message){
 
-      slot.innerHTML="";
+    slot.innerHTML="";
 
-      if(!pages.length){
+    slot.appendChild(
+      placeholderEl(
+        message,
+        function(){
 
-        slot.appendChild(
-          placeholderEl(
-            "لم تُضَف صفحات لهذا الموضوع"
-          )
+          attemptLoadTopic(true);
+
+        }
+      )
+    );
+
+  }
+
+
+  function attemptLoadTopic(forceRefresh){
+
+    loadTopicImages(
+      topic.folder,
+      forceRefresh
+    )
+    .then(
+      function(pages){
+
+        slot.innerHTML="";
+
+        if(!pages.length){
+
+          showTopicLoadFailure(
+            "تعذّر العثور على صفحات هذا الموضوع، قد تكون المشكلة في اتصالك بالإنترنت"
+          );
+
+          return;
+        }
+
+        /*
+          الصورة الأولى.
+        */
+
+        var img=
+          document.createElement("img");
+
+        img.src=pages[0].src;
+
+        img.alt=
+          topic.title+
+          " "+
+          edition.label;
+
+        img.loading="lazy";
+
+        slot.appendChild(img);
+
+        /*
+          تفعيل تحميل ملف الضغط ZIP المباشر.
+        */
+
+        dl.removeAttribute(
+          "aria-disabled"
         );
 
-        return;
+        dl.addEventListener(
+          "click",
+          function(){
+
+            downloadTopicZIP(
+              pages,
+              streamKey,
+              edition,
+              topic,
+              dl
+            );
+
+          }
+        );
+
+        /*
+          تفعيل العرض.
+        */
+
+        viewBtn.removeAttribute(
+          "aria-disabled"
+        );
+
+        viewBtn.addEventListener(
+          "click",
+          function(){
+
+            openViewer(
+              topic.folder,
+              edition,
+              topic,
+              fk,
+              pages
+            );
+
+          }
+        );
+
       }
+    )
+    .catch(
+      function(error){
 
-      /*
-        الصورة الأولى.
-      */
+        console.error(
+          "Topic loading error:",
+          error
+        );
 
-      var img=
-        document.createElement("img");
+        showTopicLoadFailure(
+          "تعذّر تحميل صفحات هذا الموضوع، قد تكون المشكلة في اتصالك بالإنترنت"
+        );
 
-      img.src=pages[0].src;
+      }
+    );
 
-      img.alt=
-        topic.title+
-        " "+
-        edition.label;
+  }
 
-      img.loading="lazy";
 
-      slot.appendChild(img);
-
-      /*
-        تفعيل تحميل ملف الضغط ZIP المباشر.
-      */
-
-      dl.removeAttribute(
-        "aria-disabled"
-      );
-
-      dl.addEventListener(
-        "click",
-        function(){
-
-          downloadTopicZIP(
-            pages,
-            streamKey,
-            edition,
-            topic,
-            dl
-          );
-
-        }
-      );
-
-      /*
-        تفعيل العرض.
-      */
-
-      viewBtn.removeAttribute(
-        "aria-disabled"
-      );
-
-      viewBtn.addEventListener(
-        "click",
-        function(){
-
-          openViewer(
-            topic.folder,
-            edition,
-            topic,
-            fk,
-            pages
-          );
-
-        }
-      );
-
-    }
-  )
-  .catch(
-    function(error){
-
-      console.error(
-        "Topic loading error:",
-        error
-      );
-
-      slot.innerHTML="";
-
-      slot.appendChild(
-        placeholderEl(
-          "حدث خطأ أثناء البحث عن الصور"
-        )
-      );
-
-    }
-  );
+  attemptLoadTopic(false);
 
   foot.appendChild(viewBtn);
   foot.appendChild(dl);
@@ -3214,7 +3283,7 @@ function renderTopicCard(
    العنصر البديل
 ========================================================= */
 
-function placeholderEl(text){
+function placeholderEl(text,retryFn){
 
   var p=
     document.createElement("div");
@@ -3239,6 +3308,33 @@ function placeholderEl(text){
 
   p.appendChild(icon);
   p.appendChild(label);
+
+
+  if(retryFn){
+
+    var retryBtn=
+      document.createElement("button");
+
+    retryBtn.type="button";
+    retryBtn.className="placeholder-retry-btn";
+    retryBtn.textContent="إعادة المحاولة";
+
+    retryBtn.addEventListener(
+      "click",
+      function(){
+
+        retryBtn.disabled=true;
+        retryBtn.textContent=
+          "جارٍ إعادة المحاولة...";
+
+        retryFn();
+
+      }
+    );
+
+    p.appendChild(retryBtn);
+
+  }
 
 
   return p;
@@ -3679,10 +3775,47 @@ function openViewer(
 
     if(!pages.length){
 
-      pagesStack.innerHTML=
-        "<div class='viewer-loading'>"+
-        "لم يتم العثور على صفحات لهذا الموضوع"+
-        "</div>";
+      pagesStack.innerHTML="";
+
+      var errBox=
+        document.createElement("div");
+
+      errBox.className="viewer-loading";
+
+
+      var errMsg=
+        document.createElement("div");
+
+      errMsg.textContent=
+        "تعذّر تحميل صفحات هذا الموضوع، قد تكون المشكلة في اتصالك بالإنترنت";
+
+      errBox.appendChild(errMsg);
+
+
+      var retryBtn=
+        document.createElement("button");
+
+      retryBtn.type="button";
+      retryBtn.className="viewer-retry-btn";
+      retryBtn.textContent="إعادة المحاولة";
+
+      retryBtn.addEventListener(
+        "click",
+        function(){
+
+          retryBtn.disabled=true;
+          retryBtn.textContent=
+            "جارٍ إعادة المحاولة...";
+
+          loadTopicImages(folder,true)
+            .then(buildPages);
+
+        }
+      );
+
+      errBox.appendChild(retryBtn);
+
+      pagesStack.appendChild(errBox);
 
       return;
 
