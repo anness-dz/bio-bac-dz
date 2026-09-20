@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>bio-bac-dz | أرشيف بكالوريا علوم الطبيعة والحياة</title>
 
@@ -1741,7 +1741,7 @@ var PAGE_EXTENSIONS = [
 ];
 
 var MARKER_OPACITY = 0.16;
-var PEN_OPACITY = 0.55;
+var PEN_OPACITY = 1;
 
 
 /* =========================================================
@@ -3953,6 +3953,13 @@ function openViewer(
   var drawing=false;
   var drawingPage=0;
 
+  // طبقة مؤقتة تُرسم عليها الضربة الجارية بلون كامل الوضوح،
+  // ثم تُدمج دفعة واحدة بالشفافية المطلوبة عند رفع الإصبع،
+  // لتفادي تغميق نقاط التقاطع عند الرسم البطيء
+  var strokeOverlayCanvas=null;
+  var strokeOverlayCtx=null;
+  var activeStrokeMode=null;
+
 
   /* تفعيل/تعطيل تمرير الإصبع فوق الصفحة حسب وجود أداة رسم نشطة،
      حتى يبقى التصفح والتكبير بحركة الأصابع سهلين عندما لا يرسم المستخدم */
@@ -4353,6 +4360,7 @@ function openViewer(
 
     drawing=true;
     drawingPage=index;
+    activeStrokeMode=drawingMode;
 
 
     try{
@@ -4367,10 +4375,6 @@ function openViewer(
     snapshot(index);
 
 
-    var ctx=
-      pageContexts[index];
-
-
     var p=
       getPoint(
         e,
@@ -4378,17 +4382,88 @@ function openViewer(
       );
 
 
-    ctx.beginPath();
+    if(
+      activeStrokeMode==="marker" ||
+      activeStrokeMode==="pen"
+    ){
 
-    ctx.moveTo(
-      p.x,
-      p.y
-    );
+      strokeOverlayCanvas=
+        document.createElement(
+          "canvas"
+        );
+
+      strokeOverlayCanvas.width=
+        canvas.width;
+
+      strokeOverlayCanvas.height=
+        canvas.height;
+
+      strokeOverlayCanvas.style.position=
+        "absolute";
+
+      strokeOverlayCanvas.style.inset=
+        "0";
+
+      strokeOverlayCanvas.style.width=
+        "100%";
+
+      strokeOverlayCanvas.style.height=
+        "100%";
+
+      strokeOverlayCanvas.style.pointerEvents=
+        "none";
+
+      strokeOverlayCanvas.style.opacity=
+        activeStrokeMode==="marker"
+        ? MARKER_OPACITY
+        : PEN_OPACITY;
+
+      canvas.parentNode.appendChild(
+        strokeOverlayCanvas
+      );
+
+      strokeOverlayCtx=
+        strokeOverlayCanvas.getContext(
+          "2d"
+        );
+
+      strokeOverlayCtx.lineCap="round";
+      strokeOverlayCtx.lineJoin="round";
+
+      strokeOverlayCtx.strokeStyle=
+        selectedColor;
+
+      strokeOverlayCtx.lineWidth=
+        activeStrokeMode==="marker"
+        ? penSize*4
+        : penSize;
+
+      strokeOverlayCtx.beginPath();
+
+      strokeOverlayCtx.moveTo(
+        p.x,
+        p.y
+      );
+
+    }else{
+
+      var ctx=
+        pageContexts[index];
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        p.x,
+        p.y
+      );
+
+    }
 
   }
 
 
-  /* تعديل دالة الرسم لمنع تراكم وتغميق الألوان الشفافة */
+  /* رسم الضربة الجارية على طبقة مؤقتة بلون كامل لتفادي
+     تراكم وتغميق الألوان الشفافة عند التحريك البطيء */
   function draw(e){
 
     if(
@@ -4420,45 +4495,34 @@ function openViewer(
       );
 
 
-    ctx.lineCap="round";
-    ctx.lineJoin="round";
-
-
     if(
-      drawingMode==="marker"
+      activeStrokeMode==="marker" ||
+      activeStrokeMode==="pen"
     ){
 
-      ctx.globalCompositeOperation=
-        "source-over";
+      if(!strokeOverlayCtx)
+        return;
 
-      ctx.strokeStyle=
-        hexToRgba(
-          selectedColor,
-          MARKER_OPACITY
-        );
+      strokeOverlayCtx.lineTo(
+        p.x,
+        p.y
+      );
 
-      ctx.lineWidth=
-        penSize*4;
+      strokeOverlayCtx.stroke();
+
+      strokeOverlayCtx.beginPath();
+
+      strokeOverlayCtx.moveTo(
+        p.x,
+        p.y
+      );
 
     }else if(
-      drawingMode==="pen"
+      activeStrokeMode==="eraser"
     ){
 
-      ctx.globalCompositeOperation=
-        "source-over";
-
-      ctx.strokeStyle=
-        hexToRgba(
-          selectedColor,
-          PEN_OPACITY
-        );
-
-      ctx.lineWidth=
-        penSize;
-
-    }else if(
-      drawingMode==="eraser"
-    ){
+      ctx.lineCap="round";
+      ctx.lineJoin="round";
 
       ctx.globalCompositeOperation=
         "destination-out";
@@ -4466,22 +4530,21 @@ function openViewer(
       ctx.lineWidth=
         penSize*4;
 
+      ctx.lineTo(
+        p.x,
+        p.y
+      );
+
+      ctx.stroke();
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        p.x,
+        p.y
+      );
+
     }
-
-
-    ctx.lineTo(
-      p.x,
-      p.y
-    );
-
-    ctx.stroke();
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-      p.x,
-      p.y
-    );
 
   }
 
@@ -4499,12 +4562,43 @@ function openViewer(
       pageContexts[drawingPage];
 
 
-    if(ctx){
+    if(
+      ctx &&
+      strokeOverlayCanvas
+    ){
+
+      // دمج الضربة الكاملة دفعة واحدة بالشفافية المطلوبة،
+      // حتى لا تتغمّق نقاط التقاطع الداخلية للضربة نفسها
+      ctx.globalCompositeOperation=
+        "source-over";
+
+      ctx.globalAlpha=
+        activeStrokeMode==="marker"
+        ? MARKER_OPACITY
+        : PEN_OPACITY;
+
+      ctx.drawImage(
+        strokeOverlayCanvas,
+        0,
+        0
+      );
+
+      ctx.globalAlpha=1;
+
+      strokeOverlayCanvas.remove();
+
+      strokeOverlayCanvas=null;
+      strokeOverlayCtx=null;
+
+    }else if(ctx){
 
       ctx.globalCompositeOperation=
         "source-over";
 
     }
+
+
+    activeStrokeMode=null;
 
 
     savePageDrawing(
@@ -5006,6 +5100,22 @@ function openViewer(
 
     updateScaleHeight();
 
+    updateAreaTouchAction();
+
+  }
+
+
+  /* عند التكبير فوق 100% نسلّم التحكم بالتمرير بإصبع واحد
+     بالكامل لجافاسكريبت (حركة حرة بكل الاتجاهات معًا، وليست
+     محصورة بمحور واحد كما يفعل تمرير المتصفح الافتراضي أحيانًا)،
+     وعند العودة لـ100% أو أقل نُبقي التمرير الطبيعي للمتصفح */
+  function updateAreaTouchAction(){
+
+    area.style.touchAction=
+      zoom>1
+      ? "none"
+      : "pan-x pan-y";
+
   }
 
 
@@ -5084,13 +5194,14 @@ function openViewer(
 
 
   /* =======================================================
-     تكبير/تصغير بحركة الإصبعين (Pinch-to-zoom) في الهاتف،
-     بدل الاجبار على استعمال زر التكبير فقط
+     تكبير/تصغير بحركة الإصبعين (Pinch-to-zoom)، وتحريك حر
+     بكل الاتجاهات بإصبع واحد عند التكبير (Pan)، في الهاتف
   ======================================================= */
 
   var pinchPointers={};
   var pinchStartDist=0;
   var pinchStartZoom=1;
+  var panRef=null;
 
 
   function pinchDistance(){
@@ -5124,6 +5235,34 @@ function openViewer(
   }
 
 
+  function resetPanRef(){
+
+    var ids=
+      Object.keys(pinchPointers);
+
+
+    if(ids.length===1){
+
+      var p=
+        pinchPointers[ids[0]];
+
+      panRef=
+        {
+          x:p.x,
+          y:p.y,
+          scrollLeft:area.scrollLeft,
+          scrollTop:area.scrollTop
+        };
+
+    }else{
+
+      panRef=null;
+
+    }
+
+  }
+
+
   area.addEventListener(
     "pointerdown",
     function(e){
@@ -5151,6 +5290,12 @@ function openViewer(
           pinchDistance();
 
         pinchStartZoom=zoom;
+
+        panRef=null;
+
+      }else{
+
+        resetPanRef();
 
       }
 
@@ -5204,6 +5349,28 @@ function openViewer(
 
         applyZoom();
 
+      }else if(
+        count===1 &&
+        zoom>1 &&
+        panRef
+      ){
+
+        e.preventDefault();
+
+
+        var dx=
+          e.clientX-panRef.x;
+
+        var dy=
+          e.clientY-panRef.y;
+
+
+        area.scrollLeft=
+          panRef.scrollLeft-dx;
+
+        area.scrollTop=
+          panRef.scrollTop-dy;
+
       }
 
     },
@@ -5225,6 +5392,9 @@ function openViewer(
       pinchStartDist=0;
 
     }
+
+
+    resetPanRef();
 
   }
 
