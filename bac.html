@@ -778,7 +778,7 @@ a{
 }
 
 .floating-timer.running::before{
-  opacity:.65;
+  opacity:.7;
   animation:auraSpin 5s linear infinite;
 }
 
@@ -865,8 +865,7 @@ a{
   box-shadow:
     0 12px 26px var(--shadow),
     inset 0 1.5px 0 rgba(255,255,255,.28),
-    inset 0 -6px 10px rgba(0,0,0,.18),
-    0 0 0 3px var(--amber);
+    inset 0 -6px 10px rgba(0,0,0,.18);
 }
 
 .timer-fab:active{
@@ -1126,6 +1125,7 @@ a{
   display:flex;
   flex-direction:column;
   overflow:hidden;
+  overscroll-behavior:contain;
 }
 
 .viewer-toolbar{
@@ -1141,6 +1141,7 @@ a{
   box-shadow:0 4px 15px rgba(0,0,0,.3);
   z-index:5;
   position:relative;
+  flex-shrink:0;
 }
 
 .viewer-toolbar button{
@@ -1255,6 +1256,9 @@ a{
      خصوصًا عند التكبير حيث تتجاوز الصفحة عرض الشاشة */
   touch-action:pan-x pan-y;
   -webkit-overflow-scrolling:touch;
+  /* منع انتقال التمرير إلى الصفحة الخلفية، حتى يبقى شريط
+     الأدوات ثابتًا تمامًا في الأعلى ولا يهتز شريط عنوان المتصفح */
+  overscroll-behavior:contain;
 }
 
 .viewer-scale-wrap{
@@ -1266,6 +1270,7 @@ a{
   width:min(100%,1100px);
   margin:0 auto;
   transform-origin:top center;
+  will-change:transform;
 }
 
 /* تعديل توحيد عرض الصفحات */
@@ -3693,6 +3698,12 @@ function openViewer(
   closeAnyViewer(true);
 
 
+  // منع تمرير الصفحة الخلفية بالكامل أثناء فتح العارض، حتى لا
+  // يتحرك شريط عنوان المتصفح في الهاتف ويُزيح شريط الأدوات
+  document.body.style.overflow=
+    "hidden";
+
+
   var viewer=
     document.createElement("div");
 
@@ -5318,6 +5329,20 @@ function openViewer(
   var pinchStartZoom=1;
   var panRef=null;
 
+  // تجميع تحديثات السحب ضمن requestAnimationFrame لحركة أسلس
+  var panRafPending=false;
+  var pendingPanLeft=0;
+  var pendingPanTop=0;
+
+  function flushPan(){
+
+    panRafPending=false;
+
+    area.scrollLeft=pendingPanLeft;
+    area.scrollTop=pendingPanTop;
+
+  }
+
 
   function pinchDistance(){
 
@@ -5502,11 +5527,25 @@ function openViewer(
           e.clientY-panRef.y;
 
 
-        area.scrollLeft=
+        // نجمّع التحديثات ضمن إطار رسم واحد بدل كتابة scrollLeft/Top
+        // مع كل حدث لمس (قد يصل تكرارها لمعدل أعلى من التحديث المرئي)،
+        // فتصبح الحركة أكثر سلاسة على الهاتف بدل التقطّع
+        pendingPanLeft=
           panRef.scrollLeft-dx;
 
-        area.scrollTop=
+        pendingPanTop=
           panRef.scrollTop-dy;
+
+
+        if(!panRafPending){
+
+          panRafPending=true;
+
+          requestAnimationFrame(
+            flushPan
+          );
+
+        }
 
       }
 
@@ -5651,6 +5690,9 @@ function closeAnyViewer(skipHistory){
 
     subjectViewer.remove();
     subjectViewer=null;
+
+    document.body.style.overflow=
+      "";
 
     if(!skipHistory){
 
