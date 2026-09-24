@@ -1100,6 +1100,67 @@ body.light-theme .box {
     }
 }
 
+
+
+
+
+
+
+
+
+.calvin-card {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    margin: 25px auto;
+    padding: 15px;
+    background: transparent !important;
+    
+    /* الإطار الأخضر الساطع بسُمك 2.5px */
+    border: 2.5px solid rgb(255, 183, 16) !important;
+    border-radius: 16px !important;
+    
+    /* إشعاع وتوهج أخضر ساطع */
+    box-shadow: 0 0 22px rgba(255, 183, 59, 0.805), 
+                inset 0 0 12px rgba(255, 188, 3, 0.782) !important;
+}
+
+/* العنوان باللون الأخضر الساطع */
+.calvin-title {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffa60c; /* أخضر ساطع */
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgb(255, 174, 13);
+}
+
+        /* 1. الوضع المظلم (الافتراضي): عرض الصورة بألوانها الأصلية الحقيقية دون أي دمج */
+        .adaptive-diag {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+            filter: none; /* إيقاف أي فلاتر للحفاظ على الألوان 100% */
+        }
+
+        /* 2. الوضع الفاتح (Light Mode): يعكس الخلفية السوداء إلى بيضاء مع حماية درجة الألوان */
+        body.light-mode .calvin-card,
+        [data-theme="light"] .calvin-card {
+            background: #ffffff;
+            border-color: rgba(56, 189, 248, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        body.light-mode .adaptive-diag,
+        [data-theme="light"] .adaptive-diag {
+            /* invert(1) يعكس الأسود لأبيض، و hue-rotate(180deg) يعيد الألوان الملونة لأصلها */
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+
+
 </style>
 
 <link rel="stylesheet" href="style.css">
@@ -1170,6 +1231,11 @@ body.light-theme .box {
         <h4>ج. المادة الأساسية كمركز للأيض الكربوني:</h4> 
         تحتوي المادة الأساسية على كافة العناصر الضرورية لإتمام أكسدة الكربون، بما في ذلك إنزيمات <span class="keyword">دورة كريبس</span>، والـ DNA الميتوكندري، والريبوزومات. هذا يعني أن الميتوكندريا تمتلك نوعاً من الاستقلالية الوراثية والوظيفية، حيث يمكنها تصنيع بعض بروتيناتها الخاصة وتضاعف نفسها عند حاجة الخلية لمزيد من الطاقة، مما يجعلها القلب النابض للتمثيل الغذائي الطاقوي.
     </div>
+
+            <div class="calvin-card">
+                <div class="calvin-title">رسم تخطيطي لبنية النظام الضوئي و تخصصه الوظيفي</div>
+                <img src="image7/0.1.png" alt="رسم تخطيطي لبنية النظام الضوئي و تخصصه الوظيفي" class="adaptive-diag" />
+            </div>
 
     <h2><span class="num-badge">3</span>مرحلة التحلل السكري (Glycolyse) في الهيولى</h2>
     <div class="box">
