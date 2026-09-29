@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>bio-bac-dz | أرشيف بكالوريا علوم الطبيعة والحياة</title>
+<title>bio-bac-dz | أرشيف بكالوريا تجريبية علوم الطبيعة والحياة</title>
 
-<meta name="description" content="أرشيف مجاني لمواضيع بكالوريا علوم الطبيعة والحياة والرياضيات لكل السنوات، مع إمكانية المشاهدة المباشرة والتحميل والتأشير على الصفحات.">
-<meta name="theme-color" id="themeColorMeta" content="#10161F">
+<meta name="description" content="أرشيف مجاني لمقترحات بكالوريا تجريبية في علوم الطبيعة والحياة والرياضيات، مع إمكانية المشاهدة المباشرة والتحميل والتأشير على الصفحات.">
+<meta name="theme-color" id="themeColorMeta" content="#0B1020">
 
 <meta property="og:title" content="bio-bac-dz | أرشيف بكالوريا علوم الطبيعة والحياة">
-<meta property="og:description" content="أرشيف مجاني لمواضيع بكالوريا علوم الطبيعة والحياة والرياضيات لكل السنوات.">
+<meta property="og:description" content="أرشيف مجاني لمقترحات بكالوريا تجريبية في علوم الطبيعة والحياة والرياضيات.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="favicon.png">
 
@@ -18,7 +18,7 @@
 <link rel="icon" type="image/png" href="favicon.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 
 <!-- مكتبات ضغط وحفظ ملفات ZIP -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -31,37 +31,37 @@
 ========================================================= */
 
 :root[data-theme="light"]{
-  --bg:#F1E7D2;
-  --bg-soft:#E6D7B8;
-  --ink:#20293A;
-  --ink-soft:#5C6675;
-  --navy:#24344E;
-  --navy-strong:#152238;
-  --seal:#A8402F;
-  --seal-soft:#EAD0C0;
-  --card:#FBF5E6;
-  --line:rgba(32,41,58,.20);
-  --shadow:rgba(32,41,58,.18);
-  --amber:#B4842A;
-  --green:#3F8F5F;
-  --aura-gold:#F2C230;
+  --bg:#F3F6FB;
+  --bg-soft:#E4EAF7;
+  --ink:#1B2333;
+  --ink-soft:#5B6478;
+  --navy:#4338CA;
+  --navy-strong:#2E2A8C;
+  --seal:#0D9488;
+  --seal-soft:#D3F2ED;
+  --card:#FFFFFF;
+  --line:rgba(27,35,51,.14);
+  --shadow:rgba(43,53,99,.14);
+  --amber:#D97706;
+  --green:#16A34A;
+  --aura-gold:#F59E0B;
 }
 
 :root[data-theme="dark"]{
-  --bg:#10161F;
-  --bg-soft:#182230;
-  --ink:#F3EFE4;
-  --ink-soft:#AEB6C2;
-  --navy:#6F94CE;
-  --navy-strong:#BBD0F0;
-  --seal:#E08669;
-  --seal-soft:#3B271F;
-  --card:#182230;
-  --line:rgba(243,239,228,.16);
+  --bg:#0B1020;
+  --bg-soft:#141B31;
+  --ink:#E9ECF7;
+  --ink-soft:#A6ADC8;
+  --navy:#9498F5;
+  --navy-strong:#C7CBFB;
+  --seal:#2DD4CE;
+  --seal-soft:#123634;
+  --card:#141B31;
+  --line:rgba(233,236,247,.14);
   --shadow:rgba(0,0,0,.55);
-  --amber:#D6A94F;
-  --green:#5FBF83;
-  --aura-gold:#FFD24C;
+  --amber:#F2B84B;
+  --green:#4ADE80;
+  --aura-gold:#FFD666;
 }
 
 *{
@@ -75,13 +75,13 @@ body{
 }
 
 body{
-  background:var(--bg);
-  background-image:
-    linear-gradient(var(--line) 1px,transparent 1px),
-    linear-gradient(90deg,var(--line) 1px,transparent 1px);
-  background-size:34px 34px;
+  background:
+    radial-gradient(circle at 12% 8%,var(--seal-soft) 0%,transparent 42%),
+    radial-gradient(circle at 88% 92%,var(--bg-soft) 0%,transparent 55%),
+    var(--bg);
+  background-attachment:fixed;
   color:var(--ink);
-  font-family:'Cairo',sans-serif;
+  font-family:'Tajawal',sans-serif;
   min-height:100vh;
   transition:.35s ease;
 }
@@ -89,7 +89,7 @@ body{
 h1,
 h2,
 h3{
-  font-family:'Amiri',serif;
+  font-family:'Reem Kufi',sans-serif;
   margin:0;
   color:var(--ink);
 }
@@ -155,7 +155,7 @@ a{
 }
 
 .brand-name{
-  font-family:'Amiri',serif;
+  font-family:'Reem Kufi',sans-serif;
   font-weight:700;
   font-size:1.08rem;
   color:var(--navy-strong);
@@ -258,20 +258,16 @@ a{
   background:var(--card);
   color:var(--ink);
   border:1px solid var(--line);
-  border-radius:4px 18px 18px 18px;
+  border-radius:22px;
   padding:2.3rem 1.4rem 1.6rem;
   text-align:right;
-  box-shadow:0 12px 30px var(--shadow);
-  transform:rotate(-1.4deg);
+  box-shadow:0 14px 34px var(--shadow);
   transition:.25s ease;
 }
 
-.stream-card:nth-of-type(2){
-  transform:rotate(1.4deg);
-}
-
 .stream-card:hover{
-  transform:rotate(0deg) translateY(-7px);
+  transform:translateY(-7px);
+  border-color:var(--navy);
 }
 
 .stream-tab{
@@ -281,7 +277,7 @@ a{
   background:var(--navy);
   color:#fff;
   padding:.3rem 1rem;
-  border-radius:8px 8px 0 0;
+  border-radius:10px 10px 3px 3px;
   font-size:.76rem;
   font-weight:700;
 }
@@ -289,7 +285,7 @@ a{
 .glyph-badge{
   width:58px;
   height:58px;
-  border-radius:16px;
+  border-radius:18px;
   background:linear-gradient(135deg,var(--navy),var(--seal));
   display:flex;
   align-items:center;
@@ -298,6 +294,7 @@ a{
   color:#fff;
   margin-inline-start:auto;
   margin-bottom:.9rem;
+  box-shadow:0 8px 18px var(--shadow);
 }
 
 .stream-card h3{
@@ -367,10 +364,14 @@ a{
 
 .year-search-wrap{
   margin-bottom:.7rem;
+  display:flex;
+  gap:.5rem;
+  flex-wrap:wrap;
 }
 
 .year-search-input{
-  width:100%;
+  flex:1 1 180px;
+  min-width:0;
   box-sizing:border-box;
   padding:.6rem .9rem;
   border-radius:10px;
@@ -381,6 +382,11 @@ a{
   font-size:.85rem;
   outline:none;
   transition:.15s ease;
+}
+
+.random-pick-btn{
+  flex:0 0 auto;
+  white-space:nowrap;
 }
 
 .year-search-input::placeholder{
@@ -420,31 +426,14 @@ a{
   display:flex;
   align-items:center;
   gap:.7rem;
+  flex-wrap:wrap;
 }
 
 .year-num{
-  font-family:'Amiri',serif;
-  font-weight:700;
-  font-size:1.2rem;
-  min-width:48px;
-}
-
-.tag-chip{
-  font-size:.72rem;
-  font-weight:700;
-  padding:.25rem .65rem;
-  border-radius:20px;
-  background:var(--bg-soft);
-  color:var(--ink-soft);
-}
-
-.edition-row.exceptional{
-  border-color:var(--seal);
-}
-
-.edition-row.exceptional .tag-chip{
-  background:var(--seal-soft);
-  color:var(--seal);
+  font-family:'Reem Kufi',sans-serif;
+  font-weight:600;
+  font-size:.98rem;
+  color:var(--ink);
 }
 
 .edition-row .right{
@@ -485,7 +474,7 @@ a{
   background:var(--bg);
   border:1px solid var(--line);
   border-top:4px solid var(--navy);
-  border-radius:4px 10px 10px 10px;
+  border-radius:14px;
   padding:.85rem;
 }
 
@@ -821,7 +810,6 @@ a{
     line-height: 2.25;
   }
 }
-
 
 /* =========================================================
    المؤقت
@@ -1503,7 +1491,7 @@ a{
   color:#fff;
   text-align:center;
   padding:40px;
-  font-family:'Cairo',sans-serif;
+  font-family:'Tajawal',sans-serif;
 }
 
 .viewer-retry-btn{
@@ -1740,8 +1728,8 @@ a{
   </h1>
 
   <p class="sub">
-    مواضيع الاختبارات السابقة في مادة علوم الطبيعة والحياة،
-    مرتّبة سنة بسنة، لشعبتَي علوم تجريبية ورياضيات.
+    مقترحات بكالوريا تجريبية في مادة علوم الطبيعة والحياة،
+    مرقّمة ومرتّبة لشعبتَي علوم تجريبية ورياضيات.
   </p>
 
   <div class="stream-grid">
@@ -1764,8 +1752,8 @@ a{
         مواضيع علوم الطبيعة والحياة الخاصة بالشعبة التجريبية.
       </p>
 
-      <span class="range">
-        من 2008 إلى 2026
+      <span class="range" data-count-for="experimental">
+        عدة مقترحات تجريبية
       </span>
 
       <span class="go">
@@ -1793,8 +1781,8 @@ a{
         مواضيع علوم الطبيعة والحياة الخاصة بشعبة الرياضيات.
       </p>
 
-      <span class="range">
-        من 2008 إلى 2026
+      <span class="range" data-count-for="math">
+        عدة مقترحات تجريبية
       </span>
 
       <span class="go">
@@ -2078,10 +2066,16 @@ a{
    الإعدادات
 ========================================================= */
 
-var START_YEAR = 2026;
-var END_YEAR = 2008;
+/* عدد "بكالوريا تجريبية مقترح" لكل شعبة — رقم بسيط لكل شعبة
+   بدل نطاق سنوات، لأن الشعبتين لن يكون لهما بالضرورة نفس العدد.
+   لإضافة/حذف مقترحات: غيّر الرقم هنا فقط، ثم أنشئ/احذف مجلدات
+   TopicN المطابقة داخل image-bac2 كما هو موضح في تذييل الصفحة */
+var PROPOSAL_COUNTS = {
+  experimental: 25,
+  math: 20
+};
 
-var MAX_TOPIC_PAGES = 12;
+var MAX_TOPIC_PAGES = 15;
 
 var PAGE_EXTENSIONS = [
   "jpg",
@@ -2114,22 +2108,19 @@ function getStreamFolder(stream){
 
 
 /* =========================================================
-   إنشاء المسارات
+   إنشاء مسارات مواضيع مقترح معيّن
+   البنية: image-bac2/{الشعبة}/Topic{رقم المقترح}/{1 أو 2}/
 ========================================================= */
 
-function makeSession(stream,year,folderName){
+function buildProposalTopics(stream,proposalNumber){
 
   var streamFolder=getStreamFolder(stream);
 
-  var actualFolder=
-    folderName ||
-    ("bac"+year);
-
   var baseFolder=
-    "image-bac/" +
-    actualFolder +
-    "/" +
+    "image-bac2/" +
     streamFolder +
+    "/Topic" +
+    proposalNumber +
     "/";
 
   return [
@@ -2150,61 +2141,23 @@ function makeSession(stream,year,folderName){
 
 
 /* =========================================================
-   السنوات
+   المقترحات
 ========================================================= */
 
 function buildEditions(stream){
 
-  var list = [];
+  var count=
+    PROPOSAL_COUNTS[stream] || 0;
 
-  for(
-    var y = START_YEAR;
-    y >= END_YEAR;
-    y--
-  ){
+  var list=[];
 
-    // إضافة الدورة العادية
+  for(var i=1; i<=count; i++){
+
     list.push({
-      id: "y" + y,
-      year: y,
-      tag: "",
-      label: "" + y,
-      topics: makeSession(
-        stream,
-        y,
-        "bac" + y
-      )
+      id:"p"+i
     });
 
-    // إضافة دورة 2016 الثانية لعلوم تجريبية فقط بقالب عادي
-    if(y === 2016 && stream === "experimental"){
-      list.push({
-        id: "y2016-ex",
-        year: 2016,
-        tag: "",
-        label: "2016",
-        topics: makeSession(
-          stream,
-          2016,
-          "bac2016°"
-        )
-      });
-    }
-
   }
-
-  // إضافة دورة 2017 الثانية وتحديدها كـ "استثنائية"
-  list.push({
-    id: "y2017-ex",
-    year: 2017,
-    tag: "استثنائية",
-    label: "2017 (الاستثنائية)",
-    topics: makeSession(
-      stream,
-      2017,
-      "bac2017°"
-    )
-  });
 
   return list;
 
@@ -2224,6 +2177,57 @@ var ARCHIVE = {
   }
 
 };
+
+
+/* =========================================================
+   ترقيم كل مقترح وبناء مسارات صوره
+========================================================= */
+
+function assignProposalLabels(stream,editions){
+
+  editions.forEach(function(ed,i){
+
+    ed.proposalNumber=i+1;
+    ed.label=
+      "بكالوريا تجريبية مقترح "+
+      ed.proposalNumber;
+
+    ed.topics=
+      buildProposalTopics(
+        stream,
+        ed.proposalNumber
+      );
+
+  });
+
+}
+
+Object.keys(ARCHIVE).forEach(function(key){
+
+  assignProposalLabels(
+    key,
+    ARCHIVE[key].editions
+  );
+
+});
+
+
+document
+  .querySelectorAll("[data-count-for]")
+  .forEach(function(span){
+
+    var key=
+      span.getAttribute("data-count-for");
+
+    if(ARCHIVE[key]){
+
+      span.textContent=
+        ARCHIVE[key].editions.length+
+        " بكالوريا تجريبية مقترحة";
+
+    }
+
+  });
 
 /* =========================================================
    ذاكرة الصفحات
@@ -2352,44 +2356,225 @@ async function probeImage(src){
 
 
 /* =========================================================
-   العثور على امتداد صفحة
+   تحميل صفحات الموضوع بسرعة:
+   1) الصفحة الأولى تُختبر وحدها وتُعرض فورًا (onFirst)
+   2) بقية الصفحات تُكتشف بطلبات HEAD خفيفة (بدون تنزيل الصور)
+      وبالتوازي، مع الرجوع إلى اختبار الصورة إن لم يتوفر HEAD
+   3) عدد الصفحات المكتشف يُحفظ في sessionStorage فلا يُعاد فحصه
 ========================================================= */
 
-// استبدال دالتي findPage و loadTopicImages بهذا الكود المباشر والسريع
-// المعامل forceRefresh يتجاوز الذاكرة المؤقتة، ويُستخدم عند ضغط
-// المستخدم على "إعادة المحاولة" بعد فشل ناتج عن اتصال ضعيف
-async function loadTopicImages(folder, forceRefresh) {
-  if (!forceRefresh && topicImageCache.has(folder)) {
-    return topicImageCache.get(folder);
+function pageSrc(folder,num){
+
+  return folder+String(num).padStart(2,"0")+".jpg";
+
+}
+
+
+function readPageCountCache(folder){
+
+  try{
+
+    var v=sessionStorage.getItem("bacPages:"+folder);
+
+    return v===null ? null : parseInt(v,10);
+
+  }catch(e){
+
+    return null;
+
   }
 
-  var pages = [];
-  var checks = [];
+}
 
-  // فحص 12 صفحة بالتوازي دفعة واحدة دون انتظار تسلسلي
-  for (var number = 1; number <= MAX_TOPIC_PAGES; number++) {
-    (function(num) {
-      var padded = String(num).padStart(2, "0");
-      var src = folder + padded + ".jpg"; // مسار مباشر وموحد
 
-      var p = probeImage(src).then(function(exists) {
-        if (exists) {
-          pages.push({ number: num, src: src });
-        }
-      });
-      checks.push(p);
+function writePageCountCache(folder,count){
+
+  try{
+
+    sessionStorage.setItem("bacPages:"+folder,String(count));
+
+  }catch(e){}
+
+}
+
+
+// يعيد true/false، أو يرمي خطأ إن لم يكن HEAD متاحًا
+async function headExists(src){
+
+  var controller=new AbortController();
+
+  var t=setTimeout(function(){
+    controller.abort();
+  },6000);
+
+  try{
+
+    var res=await fetch(src,{
+      method:"HEAD",
+      signal:controller.signal
+    });
+
+    return res.ok;
+
+  }finally{
+
+    clearTimeout(t);
+
+  }
+
+}
+
+
+async function pageExists(src){
+
+  try{
+
+    return await headExists(src);
+
+  }catch(e){
+
+    return await probeImage(src);
+
+  }
+
+}
+
+
+// عدد المواضيع التي ما زالت تنتظر صفحتها الأولى
+var pendingFirstPages=0;
+
+// تحميل بقية الصفحات في الخلفية، ولا يبدأ إلا بعد أن تظهر الصفحة
+// الأولى لكل المواضيع المعروضة، حتى لا يزاحمها في سرعة الإنترنت
+function preloadRemainingPages(pages){
+
+  if(pendingFirstPages>0){
+
+    setTimeout(function(){
+      preloadRemainingPages(pages);
+    },400);
+
+    return;
+
+  }
+
+  var queue=pages.slice(1);
+
+  function next(){
+
+    var p=queue.shift();
+
+    if(!p) return;
+
+    var im=new Image();
+
+    im.onload=im.onerror=next;
+
+    im.src=p.src;
+
+  }
+
+  next();
+
+}
+
+
+async function loadTopicImages(folder, forceRefresh, onFirst) {
+
+  if (!forceRefresh && topicImageCache.has(folder)) {
+
+    var cached=topicImageCache.get(folder);
+
+    if(cached.length && onFirst) onFirst(cached[0]);
+
+    return cached;
+
+  }
+
+  // الصفحة الأولى وحدها أولًا
+  var firstSrc=pageSrc(folder,1);
+
+  pendingFirstPages++;
+
+  var firstOk;
+
+  try{
+
+    firstOk=await probeImage(firstSrc);
+
+  }finally{
+
+    pendingFirstPages--;
+
+  }
+
+  if(!firstOk){
+
+    topicImageCache.set(folder,[]);
+
+    return [];
+
+  }
+
+  var first={number:1,src:firstSrc};
+
+  if(onFirst) onFirst(first);
+
+  var pages=[first];
+
+  // عدد الصفحات معروف مسبقًا في هذه الجلسة
+  var known=forceRefresh ? null : readPageCountCache(folder);
+
+  if(known && known>1){
+
+    for(var k=2;k<=known;k++){
+
+      pages.push({number:k,src:pageSrc(folder,k)});
+
+    }
+
+    topicImageCache.set(folder,pages);
+
+    preloadRemainingPages(pages);
+
+    return pages;
+
+  }
+
+  // اكتشاف بقية الصفحات بالتوازي
+  var checks=[];
+
+  for (var number=2; number<=MAX_TOPIC_PAGES; number++) {
+
+    (function(num){
+
+      var src=pageSrc(folder,num);
+
+      checks.push(
+        pageExists(src).then(function(exists){
+
+          if(exists) pages.push({number:num,src:src});
+
+        })
+      );
+
     })(number);
+
   }
 
   await Promise.all(checks);
 
-  // ترتيب الصفحات حسب الرقم
-  pages.sort(function(a, b) {
-    return a.number - b.number;
+  pages.sort(function(a,b){
+    return a.number-b.number;
   });
 
-  topicImageCache.set(folder, pages);
+  writePageCountCache(folder,pages.length);
+
+  topicImageCache.set(folder,pages);
+
+  preloadRemainingPages(pages);
+
   return pages;
+
 }
 
 
@@ -2430,6 +2615,114 @@ function saveFavorites(){
     );
 
   }catch(e){}
+
+}
+
+
+/* =========================================================
+   عدد مرات فتح كل بكالوريا تجريبية مقترحة
+   (تُستخدم لترجيح أداة "اختيار عشوائي" نحو المقترحات
+   الأقل فتحًا، بنسبة أكبر بقليل لا مطلقة)
+========================================================= */
+
+var OPEN_COUNTS_STORAGE_KEY="bioBac-openCounts";
+
+
+function loadOpenCounts(){
+
+  try{
+
+    var raw=
+      localStorage.getItem(
+        OPEN_COUNTS_STORAGE_KEY
+      );
+
+    return raw ? JSON.parse(raw) : {};
+
+  }catch(e){
+
+    return {};
+
+  }
+
+}
+
+
+function saveOpenCounts(){
+
+  try{
+
+    localStorage.setItem(
+      OPEN_COUNTS_STORAGE_KEY,
+      JSON.stringify(openCounts)
+    );
+
+  }catch(e){}
+
+}
+
+
+var openCounts=loadOpenCounts();
+
+
+function openCountKey(stream,editionId){
+
+  return stream+"-"+editionId;
+
+}
+
+
+function registerEditionOpen(stream,editionId){
+
+  var k=
+    openCountKey(stream,editionId);
+
+  openCounts[k]=
+    (openCounts[k] || 0)+1;
+
+  saveOpenCounts();
+
+}
+
+
+/* اختيار عنصر عشوائي من قائمة مع ترجيح خفيف نحو العناصر
+   الأقل فتحًا: كل زيادة في عدد الفتحات تُنقص وزن الاحتمال
+   قليلاً بدل استبعاده، حتى يبقى الاختيار عشوائيًا فعليًا */
+function pickWeightedRandomEdition(stream,editions){
+
+  var weights=
+    editions.map(function(ed){
+
+      var opens=
+        openCounts[
+          openCountKey(stream,ed.id)
+        ] || 0;
+
+      return 1/(1+opens*0.4);
+
+    });
+
+  var total=
+    weights.reduce(
+      function(a,b){ return a+b; },
+      0
+    );
+
+  var r=Math.random()*total;
+
+  for(var i=0;i<editions.length;i++){
+
+    r-=weights[i];
+
+    if(r<=0){
+      return editions[i];
+    }
+
+  }
+
+  return editions[
+    editions.length-1
+  ];
 
 }
 
@@ -2553,8 +2846,8 @@ function applyTheme(){
     themeColorMeta.setAttribute(
       "content",
       state.theme==="dark"
-      ? "#10161F"
-      : "#F1E7D2"
+      ? "#0B1020"
+      : "#F3F6FB"
     );
 
   }
@@ -3031,16 +3324,7 @@ function renderEditionsList(key){
   var editions=
     ARCHIVE[key]
     .editions
-    .slice()
-    .sort(function(a,b){
-
-      if(b.year!==a.year){
-        return b.year-a.year;
-      }
-
-      return a.tag ? 1 : -1;
-
-    });
+    .slice();
 
 
   var list=
@@ -3060,17 +3344,60 @@ function renderEditionsList(key){
 
   searchInput.type="search";
   searchInput.className="year-search-input";
-  searchInput.placeholder="ابحث عن سنة… مثال: 2021";
+  searchInput.placeholder="ابحث برقم المقترح… مثال: 5";
   searchInput.setAttribute(
     "inputmode",
     "numeric"
   );
   searchInput.setAttribute(
     "aria-label",
-    "البحث عن سنة"
+    "البحث برقم المقترح"
   );
 
   searchWrap.appendChild(searchInput);
+
+
+  var randomBtn=
+    document.createElement("button");
+
+  randomBtn.type="button";
+  randomBtn.className="btn primary random-pick-btn";
+  randomBtn.textContent="🎲 اختيار عشوائي";
+  randomBtn.title=
+    "يفتح بكالوريا تجريبية مقترحة عشوائية، مع ميل خفيف نحو المقترحات الأقل فتحًا";
+
+  randomBtn.addEventListener(
+    "click",
+    function(){
+
+      var pool=
+        ARCHIVE[key].editions;
+
+      if(!pool.length)
+        return;
+
+      var chosen=
+        pickWeightedRandomEdition(
+          key,
+          pool
+        );
+
+      state.editionId=chosen.id;
+      state.view="year";
+
+      registerEditionOpen(
+        key,
+        chosen.id
+      );
+
+      render();
+
+      bacPushLevel();
+
+    }
+  );
+
+  searchWrap.appendChild(randomBtn);
 
 
   editions.forEach(
@@ -3081,13 +3408,7 @@ function renderEditionsList(key){
 
       row.type="button";
 
-      row.className=
-        "edition-row"+
-        (
-          ed.tag
-          ? " exceptional"
-          : ""
-        );
+      row.className="edition-row";
 
 
       var left=
@@ -3100,22 +3421,10 @@ function renderEditionsList(key){
         document.createElement("span");
 
       year.className="year-num";
-      year.textContent=ed.year;
-
-
-      var tag=
-        document.createElement("span");
-
-      tag.className="tag-chip";
-
-      tag.textContent=
-        ed.tag
-        ? "الدورة الاستثنائية"
-        : "الدورة العادية";
+      year.textContent=ed.label;
 
 
       left.appendChild(year);
-      left.appendChild(tag);
 
 
       var right=
@@ -3161,6 +3470,11 @@ function renderEditionsList(key){
 
           state.editionId=ed.id;
           state.view="year";
+
+          registerEditionOpen(
+            key,
+            ed.id
+          );
 
           render();
 
@@ -3243,7 +3557,7 @@ function renderEditionDetail(key){
 
     errorNote.className="empty-note";
     errorNote.textContent=
-      "تعذر العثور على هذه السنة.";
+      "تعذر العثور على هذا المقترح.";
 
     wrap.appendChild(errorNote);
 
@@ -3527,7 +3841,7 @@ var topicCardObserver=
 
       },
       {
-        rootMargin:"250px 0px"
+        rootMargin:"1500px 0px"
       }
     )
   : null;
@@ -3708,89 +4022,100 @@ function renderTopicCard(
   }
 
 
+  var fullPagesPromise=null;
+  var actionsBound=false;
+  var firstShown=false;
+
+  function bindActions(){
+
+    if(actionsBound) return;
+
+    actionsBound=true;
+
+    dl.removeAttribute("aria-disabled");
+    viewBtn.removeAttribute("aria-disabled");
+
+    dl.addEventListener("click",function(){
+
+      fullPagesPromise.then(function(pages){
+
+        downloadTopicZIP(
+          pages,
+          streamKey,
+          edition,
+          topic,
+          dl
+        );
+
+      });
+
+    });
+
+    viewBtn.addEventListener("click",function(){
+
+      fullPagesPromise.then(function(pages){
+
+        openViewer(
+          topic.folder,
+          edition,
+          topic,
+          fk,
+          pages
+        );
+
+      });
+
+    });
+
+  }
+
+
   function attemptLoadTopic(forceRefresh){
 
-    loadTopicImages(
+    firstShown=false;
+
+    fullPagesPromise=loadTopicImages(
       topic.folder,
-      forceRefresh
-    )
-    .then(
-      function(pages){
+      forceRefresh,
+      function(first){
+
+        // عرض الصفحة الأولى فور توفرها دون انتظار باقي الصفحات
+        firstShown=true;
 
         slot.innerHTML="";
-
-        if(!pages.length){
-
-          showTopicLoadFailure(
-            "تعذّر العثور على صفحات هذا الموضوع، قد تكون المشكلة في اتصالك بالإنترنت"
-          );
-
-          return;
-        }
-
-        /*
-          الصورة الأولى.
-        */
 
         var img=
           document.createElement("img");
 
-        img.src=pages[0].src;
+        img.src=first.src;
 
         img.alt=
           topic.title+
           " "+
           edition.label;
 
-        img.loading="lazy";
+        img.decoding="async";
 
         slot.appendChild(img);
 
-        /*
-          تفعيل تحميل ملف الضغط ZIP المباشر.
-        */
+        bindActions();
 
-        dl.removeAttribute(
-          "aria-disabled"
-        );
+      }
+    );
 
-        dl.addEventListener(
-          "click",
-          function(){
+    fullPagesPromise
+    .then(
+      function(pages){
 
-            downloadTopicZIP(
-              pages,
-              streamKey,
-              edition,
-              topic,
-              dl
-            );
+        if(!pages.length){
 
-          }
-        );
+          slot.innerHTML="";
 
-        /*
-          تفعيل العرض.
-        */
+          showTopicLoadFailure(
+            "تعذّر العثور على صفحات هذا الموضوع، قد تكون المشكلة في اتصالك بالإنترنت"
+          );
 
-        viewBtn.removeAttribute(
-          "aria-disabled"
-        );
-
-        viewBtn.addEventListener(
-          "click",
-          function(){
-
-            openViewer(
-              topic.folder,
-              edition,
-              topic,
-              fk,
-              pages
-            );
-
-          }
-        );
+        }
 
       }
     )
@@ -3802,9 +4127,13 @@ function renderTopicCard(
           error
         );
 
-        showTopicLoadFailure(
-          "تعذّر تحميل صفحات هذا الموضوع، قد تكون المشكلة في اتصالك بالإنترنت"
-        );
+        if(!firstShown){
+
+          showTopicLoadFailure(
+            "تعذّر تحميل صفحات هذا الموضوع، قد تكون المشكلة في اتصالك بالإنترنت"
+          );
+
+        }
 
       }
     );
