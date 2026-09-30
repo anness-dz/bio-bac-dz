@@ -1296,24 +1296,29 @@ a{
   flex-direction:column;
   overflow:hidden;
   overscroll-behavior:contain;
+  touch-action:none;
 }
 
 .viewer-toolbar{
   min-height:60px;
+  height:60px;
   display:flex;
   align-items:center;
   justify-content:center;
   gap:.4rem;
-  flex-wrap:wrap;
+  flex-wrap:nowrap;
   padding:.5rem .8rem;
+  box-sizing:border-box;
   background:var(--card);
   border-bottom:1px solid var(--line);
   box-shadow:0 4px 15px rgba(0,0,0,.3);
-  z-index:5;
+  z-index:20;
   position:relative;
-  flex-shrink:0;
-  isolation:isolate;
-  transform:none;
+  flex:0 0 60px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  touch-action:pan-x;
+  overscroll-behavior:contain;
 }
 
 .viewer-toolbar button{
@@ -1419,23 +1424,28 @@ a{
 ========================================================= */
 
 .viewer-canvas-area{
-  flex:1;
+  flex:1 1 auto;
   min-height:0;
-  overflow:auto;
+  overflow:hidden;
   position:relative;
   display:block;
-  padding:20px 20px 0;
-  /* منع تكبير الصفحة نفسها في الهاتف؛ التكبير هنا خاص بالموضوع. */
+  padding:20px;
+  box-sizing:border-box;
   touch-action:none;
-  -webkit-overflow-scrolling:touch;
-  overscroll-behavior:contain;
-  overscroll-behavior-x:contain;
-  overscroll-behavior-y:contain;
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-overflow-scrolling:auto;
+  overscroll-behavior:none;
+  overscroll-behavior-x:none;
+  overscroll-behavior-y:none;
 }
 
 .viewer-scale-wrap{
   width:100%;
+  height:100%;
   position:relative;
+  overflow:visible;
+  display:block;
 }
 
 .viewer-pages-stack{
@@ -1443,6 +1453,9 @@ a{
   margin:0 auto;
   transform-origin:top center;
   will-change:transform;
+  touch-action:none;
+  -webkit-user-select:none;
+  user-select:none;
 }
 
 /* تعديل توحيد عرض الصفحات */
@@ -1473,7 +1486,7 @@ a{
   width:100%;
   height:100%;
   /* نفس منطق التمرير الحر أعلاه، مع تعطيله إلى none أثناء الرسم فقط عبر جافاسكريبت */
-  touch-action:pan-x pan-y;
+  touch-action:none;
 }
 
 .viewer-page-number{
@@ -1547,7 +1560,13 @@ a{
   .viewer-toolbar{
     justify-content:flex-start;
     padding:.35rem;
+    height:52px;
+    min-height:52px;
+    flex:0 0 52px;
     overflow-x:auto;
+    overflow-y:hidden;
+    flex-wrap:nowrap;
+    touch-action:pan-x;
   }
 
   .viewer-toolbar button{
@@ -1597,9 +1616,6 @@ a{
 
   .viewer-toolbar{
     width:100%;
-    height:52px;
-    min-height:52px;
-    max-height:52px;
     max-width:100%;
     overflow-x:auto;
     overflow-y:hidden;
@@ -4645,10 +4661,10 @@ function openViewer(
      حتى يبقى التصفح والتكبير بحركة الأصابع سهلين عندما لا يرسم المستخدم */
   function updateCanvasTouchAction(){
 
-    /* لا نسمح للمتصفح بإدارة اللمس فوق الصفحات.
-       هذا يمنع pinch-zoom الخاص بالمتصفح من تكبير العارض كله واختفاء
-       شريط الأدوات. كل اللمس هنا يُدار بواسطة عارض الموضوع. */
-    var mode="none";
+    var mode=
+      (drawingMode || zoom>1)
+      ? "none"
+      : "pan-x pan-y";
 
     pageCanvases.forEach(
       function(c){
@@ -5732,114 +5748,85 @@ function openViewer(
   // بدل الاعتماد على scrollLeft الذي يتصرف بشكل غير متسق يمينًا
   // ويسارًا في الصفحات ذات الاتجاه RTL بين المتصفحات
   var panX=0;
+  var panY=0;
+
+
+  function getPanBounds(){
+
+    var scaledWidth=pagesStack.offsetWidth*zoom;
+    var scaledHeight=pagesStack.scrollHeight*zoom;
+
+    var horizontalOverflow=Math.max(0,(scaledWidth-area.clientWidth)/2);
+    var verticalOverflow=Math.max(0,scaledHeight-area.clientHeight);
+
+    return {
+      x:horizontalOverflow,
+      y:verticalOverflow
+    };
+
+  }
 
 
   function clampPanX(x){
+    var b=getPanBounds();
+    return Math.max(-b.x,Math.min(b.x,x));
+  }
 
-    var scaledWidth=
-      pagesStack.offsetWidth*zoom;
 
-    var overflow=
-      Math.max(
-        0,
-        (scaledWidth-area.clientWidth)/2
-      );
-
-    return Math.max(
-      -overflow,
-      Math.min(overflow,x)
-    );
-
+  function clampPanY(y){
+    var b=getPanBounds();
+    return Math.max(-b.y,Math.min(0,y));
   }
 
 
   function applyPanTransform(){
 
     pagesStack.style.transform=
-      "translateX("+panX+"px) scale("+zoom+")";
+      "translate3d("+panX+"px,"+panY+"px,0) scale("+zoom+")";
 
   }
 
 
   function updateScaleHeight(){
 
-    requestAnimationFrame(
-      function(){
-
-        var naturalHeight=
-          pagesStack.scrollHeight;
-
-
-        scaleWrap.style.height=
-          (
-            naturalHeight*
-            zoom
-          )+
-          "px";
-
-      }
-    );
+    // لا نستخدم scrollTop هنا. ارتفاع العارض ثابت، والحركة كلها
+    // تتم داخل الصفحة عبر panX/panY حتى لا يستطيع المتصفح سحب الشريط.
+    requestAnimationFrame(function(){
+      panX=clampPanX(panX);
+      panY=clampPanY(panY);
+      applyPanTransform();
+    });
 
   }
 
 
   function applyZoom(){
 
-    zoom=
-      Math.max(
-        .5,
-        Math.min(
-          3,
-          zoom
-        )
-      );
+    zoom=Math.max(.5,Math.min(3,zoom));
 
+    panX=clampPanX(panX);
+    panY=clampPanY(panY);
 
-    panX=
-      clampPanX(panX);
-
-
+    pagesStack.style.transformOrigin="top center";
     applyPanTransform();
 
-
-    pagesStack.style.transformOrigin=
-      "top center";
-
-
-    zoomValue.textContent=
-      Math.round(
-        zoom*100
-      )+
-      "%";
-
-
-    updateScaleHeight();
+    zoomValue.textContent=Math.round(zoom*100)+"%";
 
     updateAreaTouchAction();
 
     if(typeof updateCanvasTouchAction==="function"){
-
       updateCanvasTouchAction();
-
     }
 
   }
 
 
-  /* عند التكبير فوق 100% نسلّم التحكم بالتمرير بإصبع واحد
-     بالكامل لجافاسكريبت (حركة حرة بكل الاتجاهات معًا، وليست
-     محصورة بمحور واحد كما يفعل تمرير المتصفح الافتراضي أحيانًا)،
-     وعند العودة لـ100% أو أقل نُبقي التمرير الطبيعي للمتصفح */
   function updateAreaTouchAction(){
 
-    // ثابت دائمًا: التكبير/التحريك يجب أن يبقيا داخل العارض فقط.
+    // كل اللمس داخل مساحة الصفحات يُدار بواسطة Pointer Events.
+    // لا نسمح للمتصفح بتحريك الصفحة أو الـ viewport أثناء التكبير.
     area.style.touchAction="none";
-
-    // في الحاسوب: أظهر مؤشر "قبضة" يدعو للسحب عند التكبير
-    area.style.cursor=
-      zoom>1
-      ? "grab"
-      : "";
+    area.style.cursor=zoom>1 ? "grab" : "";
 
   }
 
@@ -5880,6 +5867,7 @@ function openViewer(
 
       zoom=1;
       panX=0;
+      panY=0;
 
       applyZoom();
 
@@ -5928,329 +5916,153 @@ function openViewer(
   var pinchStartDist=0;
   var pinchStartZoom=1;
   var pinchStartPanX=0;
-  var pinchStartScrollTop=0;
+  var pinchStartPanY=0;
   var pinchStartMidX=0;
   var pinchStartMidY=0;
   var panRef=null;
-
-  // تجميع تحديثات السحب ضمن requestAnimationFrame لحركة أسلس
   var panRafPending=false;
   var pendingPanX=0;
-  var pendingPanTop=0;
-
-  function flushPan(){
-
-    panRafPending=false;
-
-    panX=clampPanX(pendingPanX);
-
-    applyPanTransform();
-
-    var maxTop=Math.max(0,area.scrollHeight-area.clientHeight);
-    area.scrollTop=Math.max(0,Math.min(maxTop,pendingPanTop));
-
-  }
+  var pendingPanY=0;
 
 
   function pinchDistance(){
-
-    var ids=
-      Object.keys(pinchPointers);
-
-
-    if(ids.length<2)
-      return 0;
-
-
-    var p1=
-      pinchPointers[ids[0]];
-
-    var p2=
-      pinchPointers[ids[1]];
+    var ids=Object.keys(pinchPointers);
+    if(ids.length<2) return 0;
+    var p1=pinchPointers[ids[0]], p2=pinchPointers[ids[1]];
+    var dx=p1.x-p2.x, dy=p1.y-p2.y;
+    return Math.sqrt(dx*dx+dy*dy);
+  }
 
 
-    var dx=
-      p1.x-p2.x;
-
-    var dy=
-      p1.y-p2.y;
-
-
-    return Math.sqrt(
-      dx*dx+dy*dy
-    );
-
+  function pinchMidpoint(){
+    var ids=Object.keys(pinchPointers);
+    var p1=pinchPointers[ids[0]], p2=pinchPointers[ids[1]];
+    return {x:(p1.x+p2.x)/2,y:(p1.y+p2.y)/2};
   }
 
 
   function resetPanRef(){
-
-    var ids=
-      Object.keys(pinchPointers);
-
-
+    var ids=Object.keys(pinchPointers);
     if(ids.length===1){
-
-      var p=
-        pinchPointers[ids[0]];
-
-      panRef=
-        {
-          x:p.x,
-          y:p.y,
-          panX:panX,
-          scrollTop:area.scrollTop
-        };
-
+      var p=pinchPointers[ids[0]];
+      panRef={x:p.x,y:p.y,panX:panX,panY:panY};
     }else{
-
       panRef=null;
-
     }
-
   }
 
 
-  area.addEventListener(
-    "pointerdown",
-    function(e){
-
-      if(
-        drawingMode ||
-        (
-          e.pointerType!=="touch" &&
-          e.pointerType!=="mouse"
-        )
-      ){
-        return;
-      }
+  function flushPan(){
+    panRafPending=false;
+    panX=clampPanX(pendingPanX);
+    panY=clampPanY(pendingPanY);
+    applyPanTransform();
+  }
 
 
-      // في الحاسوب: فعّل السحب فقط عند التكبير فوق 100%،
-      // حتى لا يتعارض مع النقر العادي أو تحديد النص
-      if(
-        e.pointerType==="mouse" &&
-        zoom<=1
-      ){
-        return;
-      }
+  area.addEventListener("pointerdown",function(e){
+
+    if(drawingMode || (e.pointerType!=="touch" && e.pointerType!=="mouse")) return;
+    if(e.pointerType==="mouse" && zoom<=1) return;
+
+    e.preventDefault();
+
+    pinchPointers[e.pointerId]={x:e.clientX,y:e.clientY};
+
+    try{ area.setPointerCapture(e.pointerId); }catch(err){}
+
+    var count=Object.keys(pinchPointers).length;
+
+    if(count===2){
+      pinchStartDist=pinchDistance();
+      pinchStartZoom=zoom;
+      pinchStartPanX=panX;
+      pinchStartPanY=panY;
+      var mid=pinchMidpoint();
+      pinchStartMidX=mid.x;
+      pinchStartMidY=mid.y;
+      panRef=null;
+    }else{
+      resetPanRef();
+    }
+
+    area.style.cursor=zoom>1 ? "grabbing" : "";
+
+  },{passive:false});
 
 
-      if(e.pointerType==="mouse"){
+  area.addEventListener("pointermove",function(e){
 
-        e.preventDefault();
+    if(!(e.pointerId in pinchPointers)) return;
 
-        area.style.cursor="grabbing";
+    e.preventDefault();
+    pinchPointers[e.pointerId]={x:e.clientX,y:e.clientY};
 
-      }else if(e.pointerType==="touch"){
+    var count=Object.keys(pinchPointers).length;
 
-        e.preventDefault();
+    if(count===2 && pinchStartDist>0){
 
-      }
+      var ratio=pinchDistance()/pinchStartDist;
+      var newZoom=Math.max(.5,Math.min(3,pinchStartZoom*ratio));
+      var mid=pinchMidpoint();
+      var rect=area.getBoundingClientRect();
 
-      try{
-        area.setPointerCapture(e.pointerId);
-      }catch(err){}
+      // نحافظ على النقطة الواقعة بين الإصبعين في مكانها قدر الإمكان.
+      var localX=pinchStartMidX-rect.left-area.clientWidth/2;
+      var localY=pinchStartMidY-rect.top;
+      var contentX=(localX-pinchStartPanX)/pinchStartZoom;
+      var contentY=(localY-pinchStartPanY)/pinchStartZoom;
 
-      pinchPointers[e.pointerId]=
-        {
-          x:e.clientX,
-          y:e.clientY
-        };
+      zoom=Math.round(newZoom*100)/100;
+      panX=(mid.x-rect.left-area.clientWidth/2)-(contentX*zoom);
+      panY=(mid.y-rect.top)-(contentY*zoom);
+      panX=clampPanX(panX);
+      panY=clampPanY(panY);
+      applyPanTransform();
+      zoomValue.textContent=Math.round(zoom*100)+"%";
+      updateCanvasTouchAction();
 
+    }else if(count===1 && panRef){
 
-      if(
-        Object.keys(pinchPointers).length===2
-      ){
+      var dx=e.clientX-panRef.x;
+      var dy=e.clientY-panRef.y;
 
-        pinchStartDist=
-          pinchDistance();
+      pendingPanX=panRef.panX+dx;
+      pendingPanY=panRef.panY+dy;
 
-        pinchStartZoom=zoom;
-        pinchStartPanX=panX;
-        pinchStartScrollTop=area.scrollTop;
-
-        var ids=Object.keys(pinchPointers);
-        var p1=pinchPointers[ids[0]];
-        var p2=pinchPointers[ids[1]];
-        pinchStartMidX=(p1.x+p2.x)/2;
-        pinchStartMidY=(p1.y+p2.y)/2;
-
-        panRef=null;
-
-      }else{
-
-        resetPanRef();
-
+      if(!panRafPending){
+        panRafPending=true;
+        requestAnimationFrame(flushPan);
       }
 
     }
-  );
 
-
-  area.addEventListener(
-    "pointermove",
-    function(e){
-
-      if(!(e.pointerId in pinchPointers))
-        return;
-
-
-      pinchPointers[e.pointerId]=
-        {
-          x:e.clientX,
-          y:e.clientY
-        };
-
-
-      var count=
-        Object.keys(pinchPointers).length;
-
-
-      if(
-        count===2 &&
-        pinchStartDist>0
-      ){
-
-        e.preventDefault();
-
-
-        var ratio=
-          pinchDistance()/
-          pinchStartDist;
-
-        var newZoom=
-          Math.round(
-            Math.max(
-              .5,
-              Math.min(
-                3,
-                pinchStartZoom*ratio
-              )
-            )*100
-          )/100;
-
-        var ids=Object.keys(pinchPointers);
-        var p1=pinchPointers[ids[0]];
-        var p2=pinchPointers[ids[1]];
-        var midX=(p1.x+p2.x)/2;
-        var midY=(p1.y+p2.y)/2;
-
-        /* أبقِ النقطة الموجودة تحت الإصبعين في مكانها أثناء التكبير،
-           بدل أن تقفز الصفحة إلى أعلى/الوسط. */
-        var areaRect=area.getBoundingClientRect();
-        var startLocalX=
-          pinchStartMidX-areaRect.left-area.clientWidth/2;
-
-        panX=
-          (midX-areaRect.left-area.clientWidth/2)
-          -
-          ((startLocalX-pinchStartPanX)/pinchStartZoom)*newZoom;
-
-        var startLocalY=
-          pinchStartMidY-areaRect.top+pinchStartScrollTop;
-
-        var newScrollTop=
-          (startLocalY/pinchStartZoom)*newZoom
-          -(midY-areaRect.top);
-
-        zoom=newZoom;
-        applyZoom();
-
-        pendingPanTop=newScrollTop;
-        pendingPanX=panX;
-        if(!panRafPending){
-          panRafPending=true;
-          requestAnimationFrame(flushPan);
-        }
-
-      }else if(
-        count===1 &&
-        panRef
-      ){
-
-        e.preventDefault();
-
-
-        var dx=
-          e.clientX-panRef.x;
-
-        var dy=
-          e.clientY-panRef.y;
-
-
-        // نجمّع التحديثات ضمن إطار رسم واحد لحركة أسلس.
-        // الأفقي عبر تحويل CSS مباشر (وليس scrollLeft، الذي يختلف
-        // اتجاهه بين المتصفحات في الصفحات RTL ويسبب تعطّلاً يمينًا)،
-        // والعمودي يبقى بالتمرير الطبيعي كما هو
-        pendingPanX=
-          clampPanX(
-            panRef.panX+dx
-          );
-
-        pendingPanTop=
-          panRef.scrollTop-dy;
-
-
-        if(!panRafPending){
-
-          panRafPending=true;
-
-          requestAnimationFrame(
-            flushPan
-          );
-
-        }
-
-      }
-
-    },
-    {
-      passive:false
-    }
-  );
+  },{passive:false});
 
 
   function endPinchPointer(e){
 
     delete pinchPointers[e.pointerId];
+    try{ area.releasePointerCapture(e.pointerId); }catch(err){}
 
-
-    if(
-      Object.keys(pinchPointers).length<2
-    ){
-
+    if(Object.keys(pinchPointers).length===0){
       pinchStartDist=0;
-
+      panRef=null;
+    }else if(Object.keys(pinchPointers).length===1){
+      pinchStartDist=0;
+      resetPanRef();
     }
 
-
-    resetPanRef();
-
-
-    if(e.pointerType==="mouse"){
-
-      area.style.cursor=
-        zoom>1
-        ? "grab"
-        : "";
-
-    }
+    area.style.cursor=zoom>1 ? "grab" : "";
 
   }
 
 
-  area.addEventListener(
-    "pointerup",
-    endPinchPointer
-  );
-
-  area.addEventListener(
-    "pointercancel",
-    endPinchPointer
-  );
-
-  /* لا ننهي اللمس عند pointerleave؛ Pointer Capture يبقي الحركة داخل العارض. */
+  area.addEventListener("pointerup",endPinchPointer);
+  area.addEventListener("pointercancel",endPinchPointer);
+  area.addEventListener("lostpointercapture",function(e){
+    if(e.pointerId in pinchPointers) endPinchPointer(e);
+  });
 
 
   /* تمت إزالة ساعة العارض المكررة داخل شريط الأدوات؛
