@@ -5184,11 +5184,15 @@ function openViewer(
     e.preventDefault();
 
 
-    var p=
-      getPoint(
-        e,
-        canvas
-      );
+    var points=
+      (typeof e.getCoalescedEvents==="function")
+      ? e.getCoalescedEvents()
+      : [e];
+
+    if(!points.length) points=[e];
+
+    for(var pi=0;pi<points.length;pi++){
+      var p=getPoint(points[pi],canvas);
 
 
     if(
@@ -5240,6 +5244,7 @@ function openViewer(
         p.y
       );
 
+    }
     }
 
   }
@@ -5923,6 +5928,12 @@ function openViewer(
   var panRafPending=false;
   var pendingPanX=0;
   var pendingPanY=0;
+  var panVelocityX=0;
+  var panVelocityY=0;
+  var panLastX=0;
+  var panLastY=0;
+  var panLastTime=0;
+  var panInertiaRaf=0;
 
 
   function pinchDistance(){
@@ -5959,6 +5970,29 @@ function openViewer(
     applyPanTransform();
   }
 
+  function stopPanInertia(){
+    if(panInertiaRaf){
+      cancelAnimationFrame(panInertiaRaf);
+      panInertiaRaf=0;
+    }
+  }
+
+  function startPanInertia(){
+    stopPanInertia();
+    var vx=panVelocityX, vy=panVelocityY;
+    if(Math.abs(vx)<0.15 && Math.abs(vy)<0.15) return;
+    function step(){
+      vx*=0.94; vy*=0.94;
+      var nx=clampPanX(panX+vx), ny=clampPanY(panY+vy);
+      if(nx===panX) vx=0;
+      if(ny===panY) vy=0;
+      panX=nx; panY=ny; applyPanTransform();
+      if(Math.abs(vx)<0.15 && Math.abs(vy)<0.15){ panInertiaRaf=0; return; }
+      panInertiaRaf=requestAnimationFrame(step);
+    }
+    panInertiaRaf=requestAnimationFrame(step);
+  }
+
 
   area.addEventListener("pointerdown",function(e){
 
@@ -5966,6 +6000,10 @@ function openViewer(
     if(e.pointerType==="mouse" && zoom<=1) return;
 
     e.preventDefault();
+
+    stopPanInertia();
+    panVelocityX=0; panVelocityY=0;
+    panLastX=e.clientX; panLastY=e.clientY; panLastTime=performance.now();
 
     pinchPointers[e.pointerId]={x:e.clientX,y:e.clientY};
 
@@ -6030,6 +6068,14 @@ function openViewer(
       pendingPanX=panRef.panX+dx;
       pendingPanY=panRef.panY+dy;
 
+      var now=performance.now();
+      var dt=Math.max(8,now-panLastTime);
+      var ivx=(e.clientX-panLastX)/dt*16.67;
+      var ivy=(e.clientY-panLastY)/dt*16.67;
+      panVelocityX=panVelocityX*0.65+ivx*0.35;
+      panVelocityY=panVelocityY*0.65+ivy*0.35;
+      panLastX=e.clientX; panLastY=e.clientY; panLastTime=now;
+
       if(!panRafPending){
         panRafPending=true;
         requestAnimationFrame(flushPan);
@@ -6042,15 +6088,20 @@ function openViewer(
 
   function endPinchPointer(e){
 
+    var hadSinglePan=Object.keys(pinchPointers).length===1 && !!panRef;
     delete pinchPointers[e.pointerId];
     try{ area.releasePointerCapture(e.pointerId); }catch(err){}
 
     if(Object.keys(pinchPointers).length===0){
       pinchStartDist=0;
       panRef=null;
+      if(hadSinglePan) startPanInertia();
     }else if(Object.keys(pinchPointers).length===1){
       pinchStartDist=0;
       resetPanRef();
+      panVelocityX=0; panVelocityY=0;
+      var id=Object.keys(pinchPointers)[0], q=pinchPointers[id];
+      panLastX=q.x; panLastY=q.y; panLastTime=performance.now();
     }
 
     area.style.cursor=zoom>1 ? "grab" : "";
