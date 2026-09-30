@@ -1436,11 +1436,12 @@ a{
   padding:20px 20px 0;
   /* السماح بالتمرير الأفقي (يمين/يسار) والعمودي معًا بإصبع واحد،
      خصوصًا عند التكبير حيث تتجاوز الصفحة عرض الشاشة */
-  touch-action:pan-x pan-y;
+  touch-action:none;
   -webkit-overflow-scrolling:touch;
-  /* منع انتقال التمرير إلى الصفحة الخلفية، حتى يبقى شريط
-     الأدوات ثابتًا تمامًا في الأعلى ولا يهتز شريط عنوان المتصفح */
   overscroll-behavior:contain;
+  overscroll-behavior-x:contain;
+  overscroll-behavior-y:contain;
+  min-height:0;
 }
 
 .viewer-scale-wrap{
@@ -1483,7 +1484,7 @@ a{
   width:100%;
   height:100%;
   /* نفس منطق التمرير الحر أعلاه، مع تعطيله إلى none أثناء الرسم فقط عبر جافاسكريبت */
-  touch-action:pan-x pan-y;
+  touch-action:none;
 }
 
 .viewer-page-number{
@@ -1558,6 +1559,15 @@ a{
     justify-content:flex-start;
     padding:.35rem;
     overflow-x:auto;
+    overflow-y:hidden;
+    flex-wrap:nowrap;
+    flex-shrink:0;
+    min-height:52px;
+    height:52px;
+    max-height:52px;
+    width:100%;
+    max-width:100%;
+    touch-action:pan-x;
   }
 
   .viewer-toolbar button{
@@ -5595,6 +5605,10 @@ function openViewer(
   var pinchPointers={};
   var pinchStartDist=0;
   var pinchStartZoom=1;
+  var pinchStartPanX=0;
+  var pinchStartScrollTop=0;
+  var pinchStartMidX=0;
+  var pinchStartMidY=0;
   var panRef=null;
 
   // تجميع تحديثات السحب ضمن requestAnimationFrame لحركة أسلس
@@ -5606,11 +5620,12 @@ function openViewer(
 
     panRafPending=false;
 
-    panX=pendingPanX;
+    panX=clampPanX(pendingPanX);
 
     applyPanTransform();
 
-    area.scrollTop=pendingPanTop;
+    var maxTop=Math.max(0,area.scrollHeight-area.clientHeight);
+    area.scrollTop=Math.max(0,Math.min(maxTop,pendingPanTop));
 
   }
 
@@ -5680,59 +5695,56 @@ function openViewer(
 
       if(
         drawingMode ||
-        (
-          e.pointerType!=="touch" &&
-          e.pointerType!=="mouse"
-        )
+        (e.pointerType!=="touch" && e.pointerType!=="mouse")
       ){
         return;
       }
 
-
-      // في الحاسوب: فعّل السحب فقط عند التكبير فوق 100%،
-      // حتى لا يتعارض مع النقر العادي أو تحديد النص
-      if(
-        e.pointerType==="mouse" &&
-        zoom<=1
-      ){
+      if(e.pointerType==="mouse" && zoom<=1){
         return;
       }
 
+      if(e.pointerType==="touch"){
+        e.preventDefault();
+      }
 
       if(e.pointerType==="mouse"){
-
         e.preventDefault();
-
         area.style.cursor="grabbing";
-
       }
 
+      pinchPointers[e.pointerId]={
+        x:e.clientX,
+        y:e.clientY
+      };
 
-      pinchPointers[e.pointerId]=
-        {
-          x:e.clientX,
-          y:e.clientY
-        };
+      try{
+        area.setPointerCapture(e.pointerId);
+      }catch(err){}
 
+      var ids=Object.keys(pinchPointers);
 
-      if(
-        Object.keys(pinchPointers).length===2
-      ){
+      if(ids.length===2){
 
-        pinchStartDist=
-          pinchDistance();
-
+        pinchStartDist=pinchDistance();
         pinchStartZoom=zoom;
+        pinchStartPanX=panX;
+        pinchStartScrollTop=area.scrollTop;
+
+        var p1=pinchPointers[ids[0]];
+        var p2=pinchPointers[ids[1]];
+
+        pinchStartMidX=(p1.x+p2.x)/2;
+        pinchStartMidY=(p1.y+p2.y)/2;
 
         panRef=null;
 
       }else{
-
         resetPanRef();
-
       }
 
-    }
+    },
+    {passive:false}
   );
 
 
@@ -5743,90 +5755,80 @@ function openViewer(
       if(!(e.pointerId in pinchPointers))
         return;
 
+      pinchPointers[e.pointerId]={
+        x:e.clientX,
+        y:e.clientY
+      };
 
-      pinchPointers[e.pointerId]=
-        {
-          x:e.clientX,
-          y:e.clientY
-        };
+      var count=Object.keys(pinchPointers).length;
 
-
-      var count=
-        Object.keys(pinchPointers).length;
-
-
-      if(
-        count===2 &&
-        pinchStartDist>0
-      ){
+      if(count===2 && pinchStartDist>0){
 
         e.preventDefault();
 
+        var ratio=pinchDistance()/pinchStartDist;
 
-        var ratio=
-          pinchDistance()/
-          pinchStartDist;
+        var newZoom=Math.round(
+          Math.max(
+            .5,
+            Math.min(3,pinchStartZoom*ratio)
+          )*100
+        )/100;
 
+        var ids=Object.keys(pinchPointers);
+        var p1=pinchPointers[ids[0]];
+        var p2=pinchPointers[ids[1]];
 
-        zoom=
-          Math.round(
-            Math.max(
-              .5,
-              Math.min(
-                3,
-                pinchStartZoom*ratio
-              )
-            )*100
-          )/100;
+        var midX=(p1.x+p2.x)/2;
+        var midY=(p1.y+p2.y)/2;
 
+        var rect=area.getBoundingClientRect();
 
+        var startLocalX=
+          pinchStartMidX-rect.left-area.clientWidth/2;
+
+        panX=
+          (midX-rect.left-area.clientWidth/2)
+          -
+          ((startLocalX-pinchStartPanX)/pinchStartZoom)*newZoom;
+
+        var startLocalY=
+          pinchStartMidY-rect.top+pinchStartScrollTop;
+
+        var newScrollTop=
+          (startLocalY/pinchStartZoom)*newZoom
+          -(midY-rect.top);
+
+        zoom=newZoom;
         applyZoom();
 
-      }else if(
-        count===1 &&
-        zoom>1 &&
-        panRef
-      ){
+        pendingPanX=panX;
+        pendingPanTop=newScrollTop;
+
+        if(!panRafPending){
+          panRafPending=true;
+          requestAnimationFrame(flushPan);
+        }
+
+      }else if(count===1 && panRef){
 
         e.preventDefault();
 
+        var dx=e.clientX-panRef.x;
+        var dy=e.clientY-panRef.y;
 
-        var dx=
-          e.clientX-panRef.x;
-
-        var dy=
-          e.clientY-panRef.y;
-
-
-        // نجمّع التحديثات ضمن إطار رسم واحد لحركة أسلس.
-        // الأفقي عبر تحويل CSS مباشر (وليس scrollLeft، الذي يختلف
-        // اتجاهه بين المتصفحات في الصفحات RTL ويسبب تعطّلاً يمينًا)،
-        // والعمودي يبقى بالتمرير الطبيعي كما هو
-        pendingPanX=
-          clampPanX(
-            panRef.panX+dx
-          );
-
-        pendingPanTop=
-          panRef.scrollTop-dy;
-
+        pendingPanX=clampPanX(panRef.panX+dx);
+        pendingPanTop=panRef.scrollTop-dy;
 
         if(!panRafPending){
-
           panRafPending=true;
-
-          requestAnimationFrame(
-            flushPan
-          );
-
+          requestAnimationFrame(flushPan);
         }
 
       }
 
     },
-    {
-      passive:false
-    }
+    {passive:false}
   );
 
 
@@ -5834,46 +5836,25 @@ function openViewer(
 
     delete pinchPointers[e.pointerId];
 
-
-    if(
-      Object.keys(pinchPointers).length<2
-    ){
-
+    if(Object.keys(pinchPointers).length<2){
       pinchStartDist=0;
-
     }
-
 
     resetPanRef();
 
+    try{
+      area.releasePointerCapture(e.pointerId);
+    }catch(err){}
 
     if(e.pointerType==="mouse"){
-
-      area.style.cursor=
-        zoom>1
-        ? "grab"
-        : "";
-
+      area.style.cursor=zoom>1 ? "grab" : "";
     }
 
   }
 
 
-  area.addEventListener(
-    "pointerup",
-    endPinchPointer
-  );
-
-  area.addEventListener(
-    "pointercancel",
-    endPinchPointer
-  );
-
-  area.addEventListener(
-    "pointerleave",
-    endPinchPointer
-  );
-
+  area.addEventListener("pointerup",endPinchPointer);
+  area.addEventListener("pointercancel",endPinchPointer);
 
   /* تمت إزالة ساعة العارض المكررة داخل شريط الأدوات؛
      المؤقت العائم (الذي يعمل الآن فوق العارض) كافٍ ويعرض

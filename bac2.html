@@ -1312,6 +1312,8 @@ a{
   z-index:5;
   position:relative;
   flex-shrink:0;
+  isolation:isolate;
+  transform:none;
 }
 
 .viewer-toolbar button{
@@ -1418,17 +1420,17 @@ a{
 
 .viewer-canvas-area{
   flex:1;
+  min-height:0;
   overflow:auto;
   position:relative;
   display:block;
   padding:20px 20px 0;
-  /* السماح بالتمرير الأفقي (يمين/يسار) والعمودي معًا بإصبع واحد،
-     خصوصًا عند التكبير حيث تتجاوز الصفحة عرض الشاشة */
-  touch-action:pan-x pan-y;
+  /* منع تكبير الصفحة نفسها في الهاتف؛ التكبير هنا خاص بالموضوع. */
+  touch-action:none;
   -webkit-overflow-scrolling:touch;
-  /* منع انتقال التمرير إلى الصفحة الخلفية، حتى يبقى شريط
-     الأدوات ثابتًا تمامًا في الأعلى ولا يهتز شريط عنوان المتصفح */
   overscroll-behavior:contain;
+  overscroll-behavior-x:contain;
+  overscroll-behavior-y:contain;
 }
 
 .viewer-scale-wrap{
@@ -1595,6 +1597,9 @@ a{
 
   .viewer-toolbar{
     width:100%;
+    height:52px;
+    min-height:52px;
+    max-height:52px;
     max-width:100%;
     overflow-x:auto;
     overflow-y:hidden;
@@ -1723,7 +1728,7 @@ a{
   </p>
 
   <h1>
-    أرشيف مواضيع بكالوريا<br>
+    أرشيف مواضيع بكالوريا تجريبية<br>
     علوم الطبيعة والحياة
   </h1>
 
@@ -4640,10 +4645,10 @@ function openViewer(
      حتى يبقى التصفح والتكبير بحركة الأصابع سهلين عندما لا يرسم المستخدم */
   function updateCanvasTouchAction(){
 
-    var mode=
-      (drawingMode || zoom>1)
-      ? "none"
-      : "pan-x pan-y";
+    /* لا نسمح للمتصفح بإدارة اللمس فوق الصفحات.
+       هذا يمنع pinch-zoom الخاص بالمتصفح من تكبير العارض كله واختفاء
+       شريط الأدوات. كل اللمس هنا يُدار بواسطة عارض الموضوع. */
+    var mode="none";
 
     pageCanvases.forEach(
       function(c){
@@ -5827,10 +5832,8 @@ function openViewer(
      وعند العودة لـ100% أو أقل نُبقي التمرير الطبيعي للمتصفح */
   function updateAreaTouchAction(){
 
-    area.style.touchAction=
-      zoom>1
-      ? "none"
-      : "pan-x pan-y";
+    // ثابت دائمًا: التكبير/التحريك يجب أن يبقيا داخل العارض فقط.
+    area.style.touchAction="none";
 
     // في الحاسوب: أظهر مؤشر "قبضة" يدعو للسحب عند التكبير
     area.style.cursor=
@@ -5924,6 +5927,10 @@ function openViewer(
   var pinchPointers={};
   var pinchStartDist=0;
   var pinchStartZoom=1;
+  var pinchStartPanX=0;
+  var pinchStartScrollTop=0;
+  var pinchStartMidX=0;
+  var pinchStartMidY=0;
   var panRef=null;
 
   // تجميع تحديثات السحب ضمن requestAnimationFrame لحركة أسلس
@@ -5935,11 +5942,12 @@ function openViewer(
 
     panRafPending=false;
 
-    panX=pendingPanX;
+    panX=clampPanX(pendingPanX);
 
     applyPanTransform();
 
-    area.scrollTop=pendingPanTop;
+    var maxTop=Math.max(0,area.scrollHeight-area.clientHeight);
+    area.scrollTop=Math.max(0,Math.min(maxTop,pendingPanTop));
 
   }
 
@@ -6034,8 +6042,15 @@ function openViewer(
 
         area.style.cursor="grabbing";
 
+      }else if(e.pointerType==="touch"){
+
+        e.preventDefault();
+
       }
 
+      try{
+        area.setPointerCapture(e.pointerId);
+      }catch(err){}
 
       pinchPointers[e.pointerId]=
         {
@@ -6052,6 +6067,14 @@ function openViewer(
           pinchDistance();
 
         pinchStartZoom=zoom;
+        pinchStartPanX=panX;
+        pinchStartScrollTop=area.scrollTop;
+
+        var ids=Object.keys(pinchPointers);
+        var p1=pinchPointers[ids[0]];
+        var p2=pinchPointers[ids[1]];
+        pinchStartMidX=(p1.x+p2.x)/2;
+        pinchStartMidY=(p1.y+p2.y)/2;
 
         panRef=null;
 
@@ -6096,8 +6119,7 @@ function openViewer(
           pinchDistance()/
           pinchStartDist;
 
-
-        zoom=
+        var newZoom=
           Math.round(
             Math.max(
               .5,
@@ -6108,12 +6130,42 @@ function openViewer(
             )*100
           )/100;
 
+        var ids=Object.keys(pinchPointers);
+        var p1=pinchPointers[ids[0]];
+        var p2=pinchPointers[ids[1]];
+        var midX=(p1.x+p2.x)/2;
+        var midY=(p1.y+p2.y)/2;
 
+        /* أبقِ النقطة الموجودة تحت الإصبعين في مكانها أثناء التكبير،
+           بدل أن تقفز الصفحة إلى أعلى/الوسط. */
+        var areaRect=area.getBoundingClientRect();
+        var startLocalX=
+          pinchStartMidX-areaRect.left-area.clientWidth/2;
+
+        panX=
+          (midX-areaRect.left-area.clientWidth/2)
+          -
+          ((startLocalX-pinchStartPanX)/pinchStartZoom)*newZoom;
+
+        var startLocalY=
+          pinchStartMidY-areaRect.top+pinchStartScrollTop;
+
+        var newScrollTop=
+          (startLocalY/pinchStartZoom)*newZoom
+          -(midY-areaRect.top);
+
+        zoom=newZoom;
         applyZoom();
+
+        pendingPanTop=newScrollTop;
+        pendingPanX=panX;
+        if(!panRafPending){
+          panRafPending=true;
+          requestAnimationFrame(flushPan);
+        }
 
       }else if(
         count===1 &&
-        zoom>1 &&
         panRef
       ){
 
@@ -6198,10 +6250,7 @@ function openViewer(
     endPinchPointer
   );
 
-  area.addEventListener(
-    "pointerleave",
-    endPinchPointer
-  );
+  /* لا ننهي اللمس عند pointerleave؛ Pointer Capture يبقي الحركة داخل العارض. */
 
 
   /* تمت إزالة ساعة العارض المكررة داخل شريط الأدوات؛
