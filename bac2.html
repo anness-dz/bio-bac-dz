@@ -1593,52 +1593,35 @@ a{
 
 @media (max-width:600px){
 
-  /* الهاتف فقط: الشريط والصفحات في منطقتين منفصلتين.
-     لذلك لا يمكن للـzoom/scroll أن يسحب الشريط أو يرسم فوقه. */
   .subject-viewer{
-    position:fixed;
-    inset:0;
-    width:100%;
-    height:100vh;
-    height:100dvh;
-    min-height:100vh;
-    min-height:100dvh;
-    display:grid;
-    grid-template-rows:52px minmax(0,1fr);
-    grid-template-columns:minmax(0,1fr);
-    overflow:hidden;
     touch-action:none;
   }
 
   .viewer-toolbar{
-    grid-row:1;
-    grid-column:1;
     width:100%;
     max-width:100%;
-    height:52px;
-    min-height:52px;
-    max-height:52px;
+    overflow-x:auto;
+    overflow-y:hidden;
     display:flex;
     flex-wrap:nowrap;
-    align-items:center;
-    justify-content:flex-start;
     gap:6px;
     padding:7px;
     box-sizing:border-box;
     position:relative;
-    inset:auto;
-    margin:0;
-    z-index:1000;
-    flex:none;
-    overflow-x:auto;
-    overflow-y:hidden;
-    overscroll-behavior:contain;
+    top:auto;
+    bottom:auto;
+    height:52px;
+    min-height:52px;
+    max-height:52px;
+    flex:0 0 52px;
+    flex-shrink:0;
+    z-index:30;
+    transform:none !important;
     touch-action:pan-x;
+    overscroll-behavior:contain;
     -webkit-overflow-scrolling:touch;
     scrollbar-width:none;
-    transform:none !important;
-    isolation:isolate;
-    /* أبقينا تلميح الحواف الأصلي كما هو. */
+    /* تلميح بصري بأن الشريط قابل للتمرير أفقيًا */
     -webkit-mask-image:linear-gradient(to right,transparent 0,#000 20px,#000 calc(100% - 20px),transparent 100%);
     mask-image:linear-gradient(to right,transparent 0,#000 20px,#000 calc(100% - 20px),transparent 100%);
   }
@@ -1664,21 +1647,10 @@ a{
   }
 
   .viewer-canvas-area{
-    grid-row:2;
-    grid-column:1;
-    width:100%;
-    height:auto;
-    min-height:0;
-    position:relative;
-    overflow:auto;
-    padding:12px 10px 0;
     touch-action:none;
-    overscroll-behavior:none;
-    overflow-anchor:none;
+    overscroll-behavior:contain;
     -webkit-user-select:none;
     user-select:none;
-    -webkit-overflow-scrolling:touch;
-    z-index:1;
   }
 
 }
@@ -1722,6 +1694,96 @@ a{
 
 }
 
+
+
+/* =========================================================
+   عارض الموضوع — لمس الهاتف فقط
+   سلوك الكمبيوتر يبقى كما هو
+========================================================= */
+@media (max-width:600px){
+
+  .subject-viewer{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100vh;
+    height:100dvh;
+    min-height:100vh;
+    min-height:100dvh;
+    display:block;
+    overflow:hidden;
+    touch-action:none;
+    isolation:isolate;
+  }
+
+  .subject-viewer .viewer-toolbar{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    width:100%;
+    max-width:100%;
+    height:52px;
+    min-height:52px;
+    max-height:52px;
+    z-index:99999;
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    overflow-y:hidden;
+    box-sizing:border-box;
+    padding:7px;
+    gap:6px;
+    margin:0;
+    flex:none;
+    transform:none !important;
+    contain:layout style paint;
+    isolation:isolate;
+    touch-action:pan-x;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
+    -webkit-mask-image:none;
+    mask-image:none;
+  }
+
+  .subject-viewer .viewer-toolbar::-webkit-scrollbar{
+    display:none;
+  }
+
+  .subject-viewer .viewer-toolbar button,
+  .subject-viewer .viewer-toolbar .tool-group{
+    flex:0 0 auto;
+  }
+
+  .subject-viewer .viewer-canvas-area{
+    position:absolute;
+    top:52px;
+    right:0;
+    bottom:0;
+    left:0;
+    width:auto;
+    height:auto;
+    min-height:0;
+    overflow:auto;
+    padding:12px 10px 24px;
+    box-sizing:border-box;
+    touch-action:none !important;
+    -webkit-overflow-scrolling:auto;
+    overscroll-behavior:none;
+    overflow-anchor:none;
+    -webkit-user-select:none;
+    user-select:none;
+    z-index:1;
+  }
+
+  .subject-viewer .viewer-pages-stack,
+  .subject-viewer .viewer-page,
+  .subject-viewer .viewer-page canvas{
+    touch-action:none !important;
+  }
+}
 
 </style>
 </head>
@@ -4691,10 +4753,18 @@ function openViewer(
      حتى يبقى التصفح والتكبير بحركة الأصابع سهلين عندما لا يرسم المستخدم */
   function updateCanvasTouchAction(){
 
+    var isMobile=
+      window.matchMedia &&
+      window.matchMedia("(max-width:600px)").matches;
+
     var mode=
-      (drawingMode || zoom>1)
+      isMobile
       ? "none"
-      : "pan-x pan-y";
+      : (
+          (drawingMode || zoom>1)
+          ? "none"
+          : "pan-x pan-y"
+        );
 
     pageCanvases.forEach(
       function(c){
@@ -5878,12 +5948,22 @@ function openViewer(
      وعند العودة لـ100% أو أقل نُبقي التمرير الطبيعي للمتصفح */
   function updateAreaTouchAction(){
 
+    var isMobile=
+      window.matchMedia &&
+      window.matchMedia("(max-width:600px)").matches;
+
+    if(isMobile){
+      area.style.touchAction="none";
+      area.style.cursor="";
+      return;
+    }
+
+    // الكمبيوتر: نفس السلوك الأصلي دون تغيير.
     area.style.touchAction=
       zoom>1
       ? "none"
       : "pan-x pan-y";
 
-    // في الحاسوب: أظهر مؤشر "قبضة" يدعو للسحب عند التكبير
     area.style.cursor=
       zoom>1
       ? "grab"
@@ -6009,8 +6089,8 @@ function openViewer(
 
     function step(){
 
-      vx*=0.93;
-      vy*=0.93;
+      vx*=0.94;
+      vy*=0.94;
 
       var oldX=panX;
       var oldTop=area.scrollTop;
@@ -6180,10 +6260,6 @@ function openViewer(
 
         pinchStartZoom=zoom;
 
-        if(e.pointerType==="touch"){
-          try{ area.setPointerCapture(e.pointerId); }catch(err){}
-        }
-
         panRef=null;
 
       }else{
@@ -6192,9 +6268,10 @@ function openViewer(
 
       }
 
-    },
-    {passive:false}
+    }
   );
+
+
   area.addEventListener(
     "pointermove",
     function(e){
@@ -6203,19 +6280,11 @@ function openViewer(
         return;
 
 
-      /* الهاتف: استخدم آخر نقطة حركة متاحة لتقليل تقطّع السحب.
-         مسار mouse لا يتغير. */
-      if(e.pointerType==="touch" && typeof e.getCoalescedEvents==="function"){
-        var ce=e.getCoalescedEvents();
-        var latest=ce.length ? ce[ce.length-1] : e;
-        pinchPointers[e.pointerId]={x:latest.clientX,y:latest.clientY};
-      }else{
-        pinchPointers[e.pointerId]=
+      pinchPointers[e.pointerId]=
         {
           x:e.clientX,
           y:e.clientY
         };
-      }
 
 
       var count=
@@ -6251,18 +6320,32 @@ function openViewer(
 
       }else if(
         count===1 &&
-        zoom>1 &&
         panRef
       ){
 
         e.preventDefault();
 
 
+        var moveX=e.clientX;
+        var moveY=e.clientY;
+
+        if(
+          e.pointerType==="touch" &&
+          typeof e.getCoalescedEvents==="function"
+        ){
+          var moveEvents=e.getCoalescedEvents();
+          if(moveEvents.length){
+            var lastMove=moveEvents[moveEvents.length-1];
+            moveX=lastMove.clientX;
+            moveY=lastMove.clientY;
+          }
+        }
+
         var dx=
-          e.clientX-panRef.x;
+          moveX-panRef.x;
 
         var dy=
-          e.clientY-panRef.y;
+          moveY-panRef.y;
 
 
         // نجمّع التحديثات ضمن إطار رسم واحد لحركة أسلس.
@@ -6281,15 +6364,15 @@ function openViewer(
 
           var now=performance.now();
           var dt=Math.max(8,now-touchLastTime);
-          var ivx=(e.clientX-touchLastX)/dt*16.67;
-          var ivy=(e.clientY-touchLastY)/dt*16.67;
+          var ivx=(moveX-touchLastX)/dt*16.67;
+          var ivy=(moveY-touchLastY)/dt*16.67;
 
           // تنعيم السرعة يمنع القفزات ويعطي إحساس سحب الهاتف الطبيعي.
           touchVelocityX=touchVelocityX*0.65+ivx*0.35;
           touchVelocityY=touchVelocityY*0.65+ivy*0.35;
 
-          touchLastX=e.clientX;
-          touchLastY=e.clientY;
+          touchLastX=moveX;
+          touchLastY=moveY;
           touchLastTime=now;
 
         }
