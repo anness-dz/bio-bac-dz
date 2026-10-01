@@ -1605,6 +1605,10 @@ a{
 
 @media (max-width:600px){
 
+  .subject-viewer{
+    touch-action:none;
+  }
+
   .viewer-toolbar{
     width:100%;
     max-width:100%;
@@ -1615,6 +1619,18 @@ a{
     gap:6px;
     padding:7px;
     box-sizing:border-box;
+    position:relative;
+    top:auto;
+    bottom:auto;
+    height:52px;
+    min-height:52px;
+    max-height:52px;
+    flex:0 0 52px;
+    flex-shrink:0;
+    z-index:30;
+    transform:none !important;
+    touch-action:pan-x;
+    overscroll-behavior:contain;
     -webkit-overflow-scrolling:touch;
     scrollbar-width:none;
     /* تلميح بصري بأن الشريط قابل للتمرير أفقيًا */
@@ -1640,6 +1656,13 @@ a{
     flex:0 0 auto;
     display:flex;
     gap:5px;
+  }
+
+  .viewer-canvas-area{
+    touch-action:none;
+    overscroll-behavior:contain;
+    -webkit-user-select:none;
+    user-select:none;
   }
 
 }
@@ -5602,6 +5625,67 @@ function openViewer(
   var pendingPanX=0;
   var pendingPanTop=0;
 
+  // هذه المتغيرات خاصة باللمس فقط؛ لا تغيّر سلوك الماوس على الكمبيوتر.
+  var touchVelocityX=0;
+  var touchVelocityY=0;
+  var touchLastX=0;
+  var touchLastY=0;
+  var touchLastTime=0;
+  var touchInertiaRaf=0;
+
+  function stopTouchInertia(){
+    if(touchInertiaRaf){
+      cancelAnimationFrame(touchInertiaRaf);
+      touchInertiaRaf=0;
+    }
+  }
+
+  function startTouchInertia(){
+
+    stopTouchInertia();
+
+    var vx=touchVelocityX;
+    var vy=touchVelocityY;
+
+    if(Math.abs(vx)<0.15 && Math.abs(vy)<0.15)
+      return;
+
+    function step(){
+
+      vx*=0.94;
+      vy*=0.94;
+
+      var oldX=panX;
+      var oldTop=area.scrollTop;
+
+      panX=clampPanX(panX+vx);
+      area.scrollTop=Math.max(
+        0,
+        Math.min(
+          Math.max(0,area.scrollHeight-area.clientHeight),
+          area.scrollTop-vy
+        )
+      );
+
+      applyPanTransform();
+
+      if(panX===oldX) vx=0;
+      if(area.scrollTop===oldTop) vy=0;
+
+      if(Math.abs(vx)<0.15 && Math.abs(vy)<0.15){
+        touchInertiaRaf=0;
+        return;
+      }
+
+      touchInertiaRaf=requestAnimationFrame(step);
+
+    }
+
+    touchInertiaRaf=requestAnimationFrame(step);
+
+  }
+
+
   function flushPan(){
 
     panRafPending=false;
@@ -5703,12 +5787,22 @@ function openViewer(
 
         e.preventDefault();
 
-        // تثبيت السحب حتى لو خرج المؤشر قليلًا عن منطقة العارض.
+        area.style.cursor="grabbing";
+
+      }else if(e.pointerType==="touch"){
+
+        e.preventDefault();
+        stopTouchInertia();
+
+        touchVelocityX=0;
+        touchVelocityY=0;
+        touchLastX=e.clientX;
+        touchLastY=e.clientY;
+        touchLastTime=performance.now();
+
         try{
           area.setPointerCapture(e.pointerId);
         }catch(err){}
-
-        area.style.cursor="grabbing";
 
       }
 
@@ -5815,6 +5909,23 @@ function openViewer(
         pendingPanTop=
           panRef.scrollTop-dy;
 
+        if(e.pointerType==="touch"){
+
+          var now=performance.now();
+          var dt=Math.max(8,now-touchLastTime);
+          var ivx=(e.clientX-touchLastX)/dt*16.67;
+          var ivy=(e.clientY-touchLastY)/dt*16.67;
+
+          // تنعيم السرعة يمنع القفزات ويعطي إحساس سحب الهاتف الطبيعي.
+          touchVelocityX=touchVelocityX*0.65+ivx*0.35;
+          touchVelocityY=touchVelocityY*0.65+ivy*0.35;
+
+          touchLastX=e.clientX;
+          touchLastY=e.clientY;
+          touchLastTime=now;
+
+        }
+
 
         if(!panRafPending){
 
@@ -5837,6 +5948,9 @@ function openViewer(
 
   function endPinchPointer(e){
 
+    var wasSingleFingerPan=
+      Object.keys(pinchPointers).length===1 && !!panRef;
+
     delete pinchPointers[e.pointerId];
 
 
@@ -5852,11 +5966,20 @@ function openViewer(
     resetPanRef();
 
 
-    if(e.pointerType==="mouse"){
+    if(e.pointerType==="touch"){
 
       try{
         area.releasePointerCapture(e.pointerId);
       }catch(err){}
+
+      if(
+        wasSingleFingerPan &&
+        Object.keys(pinchPointers).length===0
+      ){
+        startTouchInertia();
+      }
+
+    }else if(e.pointerType==="mouse"){
 
       area.style.cursor=
         zoom>1
@@ -5880,7 +6003,14 @@ function openViewer(
 
   area.addEventListener(
     "pointerleave",
-    endPinchPointer
+    function(e){
+
+      // لا نُنهي gesture الهاتف عند الخروج الوهمـي؛ Pointer Capture يتولى ذلك.
+      if(e.pointerType!=="touch"){
+        endPinchPointer(e);
+      }
+
+    }
   );
 
 
