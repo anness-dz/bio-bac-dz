@@ -1,74 +1,38 @@
 <!DOCTYPE html>
 <!--
 ######################################################################
-##                                                                  ##
-##   دليل ملف index.html  —  اقرأه قبل أي تعديل                     ##
-##                                                                  ##
+##   فهرس أقسام الملف  (ابحث بـ Ctrl+F عن الرمز بين الأقواس)         ##
 ######################################################################
 
- أولاً: كيف الملف مرتب؟
- ابحث بـ Ctrl+F عن الرمز الموجود بين الأقواس المربعة، مثل:  [CSS-3]
+ HTML
+   [HTML-1] الشريط العلوي          [HTML-2] الغلاف ولوحة الترحيب
+   [HTML-3] البحث والوصول السريع    [HTML-4] الوحدات الدراسية
+   [HTML-5] المراجعة والتحضير       [HTML-6] العد التنازلي والمشاركة
+   [HTML-7] معلومات ومساعدة         [HTML-8] استكشاف العضيات
 
-   HTML (جسم الصفحة، من الأعلى إلى الأسفل)
-     [HTML-1]  الشريط العلوي (الشعار + الروابط + زر الوضع الليلي)
-     [HTML-2]  الغلاف ولوحة الترحيب (العنوان، زر ابدأ/تابع، الأرقام)
-     [HTML-3]  البحث والوصول السريع
-     [HTML-4]  الوحدات الثمانية + مساحات الإعلانات
-     [HTML-5]  المراجعة والتحضير (4 بطاقات)
-     [HTML-6]  العد التنازلي ومشاركة العبارة
-     [HTML-7]  معلومات ومساعدة (الفوتر والنصوص القانونية)
-     [HTML-8]  زر وشريط استكشاف العضيات
+ CSS
+   [CSS-1] المتغيرات والألوان        [CSS-2] التنسيقات العامة
+   [CSS-3] البطاقات                 [CSS-4] أزرار التواصل
+   [CSS-5] العد التنازلي والمشاركة    [CSS-6] الفوتر
+   [CSS-7] التجاوب وألوان الوحدات     [CSS-8] تحسينات إضافية
+   [CSS-9] الغلاف والبحث والحركة      [CSS-9B] الطبقة الفاخرة
+   [CSS-10] الطبقة الأخيرة (10-A بطاقات، B بحث، C هاتف، D عضيات، E أداء)
+   [CSS-11] تعديلات إضافية
 
-   CSS (داخل وسم style) — القاعدة الأحدث (الأسفل) تغلب الأقدم
-     [CSS-1]   المتغيرات والألوان  ← أسهل مكان لتغيير ألوان الموقع
-     [CSS-2]   التنسيقات العامة     [CSS-3]  البطاقات
-     [CSS-4]   أزرار التواصل        [CSS-5]  العد التنازلي والمشاركة
-     [CSS-6]   الفوتر               [CSS-7]  الشاشات والتجاوب + ألوان الوحدات
-     [CSS-8]   تحسينات إضافية       [CSS-9]  الغلاف واللوحات والبحث
-     [CSS-9B]  الطبقة الفاخرة (أغلب الشكل الحالي يأتي منها)
-     [CSS-10]  الطبقة الأخيرة (إصلاحات)
-     [CSS-11]  ✏️ مكان تعديلاتك الخاصة
-
-   JavaScript (في آخر الملف)
-     [JS-0]  ذاكرة المتصفح bioStore       [JS-1]  الوضع الليلي/النهاري
-     [JS-2]  العضيات في الخلفية           [JS-3]  العد التنازلي ومشاركة العبارة
-     [JS-4]  البحث الذكي                  [JS-5]  ذاكرة التقدم (آخر وحدة)
-     [JS-6]  تأثيرات الصفحة (التمرير والظهور التدريجي)
-
- ثانياً: وصفات تعديل سريعة
-   • تغيير تاريخ البكالوريا ......... [JS-3] ابحث عن  bacDate
-   • تغيير لون الموقع كله ........... [CSS-1] (المتغيرات). الوضع الليلي في :root والنهاري في body.light-theme
-   • إضافة وحدة جديدة ............... [HTML-4] انسخ بطاقة كاملة وغيّر الرابط والرقم واللون والعنوان.
-                                       البحث يكتشفها تلقائياً، ولتحسين نتائجها أضف كلماتها في [JS-4] FALLBACK_KEYWORDS
-   • وضع إعلان ....................... ابحث عن  ad-banner  وضع كود الإعلان داخله بدل كلمة «مساحة إعلانية»
-   • صور العضيات وأحجامها ونصوصها ... [JS-2] organellesData
-   • قوة موجة الضغط على الخلفية ...... [JS-2] RIPPLE
-   • عبارات التحفيز ................... [JS-3] ابحث عن  updateQuote
-   • كلمات البحث والمرادفات .......... [JS-4] FALLBACK_KEYWORDS و SYNONYMS
-   • أي تعديل شكل بسيط ................ اكتبه في [CSS-11] في آخر وسم style
-
- ثالثاً: ملفات يجب أن تبقى بجانب هذه الصفحة
-   style.css  script.js  favicon.png  header-bg.jpg
-   img1 إلى img8  (صور الوحدات)   prior.png  empty1.jpg  empty2.png  empty3.png
-   nucleus.png  mitochondria.png  chloroplast.png  ribosome.png  (صور العضيات)
-   lesson1.html إلى lesson8.html  prior-knowledge.html  methodology.html  bac.html  bac2.html
-
- رابعاً: ما الذي يتذكره المتصفح عند الطالب؟
-   الوضع الليلي/النهاري • آخر وحدة دخلها (زر الغلاف) • الصفحات التي زارها (علامة ✓)
-   • العضيات التي اكتشفها • فهرس البحث (24 ساعة)
-
- خامساً: تنبيه عن البحث
-   يقرأ البحث صفحات الدروس عبر fetch، وهذا يعمل عند رفع الموقع على الإنترنت (GitHub Pages)
-   ولا يعمل عند فتح الملف مباشرة من الحاسوب، وفي تلك الحالة يعتمد على القاموس الاحتياطي فقط.
+ JavaScript
+   [JS-0] ذاكرة المتصفح     [JS-1] الوضع الليلي/النهاري
+   [JS-2] العضيات           [JS-3] العد التنازلي والمشاركة
+   [JS-4] البحث الذكي       [JS-5] ذاكرة التقدم
+   [JS-6] تأثيرات الصفحة
 -->
 <html lang="ar" dir="rtl">
 <head>
-    <!-- ترميز الحروف (لا تغيّره، يضمن ظهور العربية) -->
+    <!-- ترميز الحروف -->
     <meta charset="UTF-8">
-    <!-- يجعل الصفحة تتكيف مع عرض شاشة الهاتف -->
+    <!-- تكيّف الصفحة مع عرض الشاشة -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- العنوان الذي يظهر على تبويب المتصفح -->
+    <!-- عنوان تبويب المتصفح -->
     <title>bio-bac-dz</title>
 
     <!-- وصف الموقع -->
@@ -102,7 +66,7 @@
     <link rel="canonical" href="https://anness-dz.github.io/bio-bac-dz/">
 
 
-    <!-- بيانات منظمة لمحركات البحث (جوجل) تعرّف بالموقع -->
+    <!-- بيانات منظمة لمحركات البحث -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -121,18 +85,15 @@
     <!-- الخط العربي + الأيقونات -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap"></noscript>
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"></noscript>
 
     <style>
-/* ملاحظة: التنسيقات مرتبة في طبقات، والأحدث (الأسفل) يغلب الأقدم. ابدأ بقراءة الدليل في أعلى الملف. */
+/* الطبقات مرتبة من الأقدم (أعلى) إلى الأحدث (أسفل) */
 /* ####################################################################
-   ##  [CSS-1]  المتغيرات والألوان
-   ##
-   ##  ألوان الموقع كلها تُعرَّف هنا مرة واحدة ثم تُستعمل في كل مكان.
-   ##  :root = ألوان الوضع الليلي (الافتراضي)
-   ##  body.light-theme = ألوان الوضع النهاري
-   ##  غيّر قيمة لون هنا فيتغير في كل الموقع.
+   ##   [CSS-1]  المتغيرات والألوان
    #################################################################### */
 /* =========================================================
    1. نظام المتغيرات الشامل (Variables System)
@@ -174,7 +135,7 @@
     --toast-color: #00ff88;
 }
 
-/* متغيرات الوضع النهاري (تغلب :root عندما يضيف زر الثيم الصنف light-theme) */
+/* متغيرات الوضع النهاري */
 body.light-theme {
     --bg-main: #f1f5f9;
     --text-primary: #0f172a;
@@ -211,9 +172,7 @@ body.light-theme {
 }
 
 /* ####################################################################
-   ##  [CSS-2]  التنسيقات العامة
-   ##
-   ##  الخط، الخلفية، حاوية المحتوى، لوحة العضيات، غلاف الصفحة، مساحات الإعلانات.
+   ##   [CSS-2]  التنسيقات العامة
    #################################################################### */
 /* =========================================================
    2. التنسيقات العامة للصفحة
@@ -254,7 +213,7 @@ button { font-family: inherit; }
     margin-right: auto;
 }
 
-/* زر تبديل الوضع الليلي/النهاري */
+/* زر الوضع الليلي/النهاري */
 .theme-toggle-btn {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
@@ -278,7 +237,7 @@ button { font-family: inherit; }
 }
 
 /* كانفاس تحريك العضيات */
-/* لوحة العضيات المتحركة في الخلفية (يرسمها [JS-2]) */
+/* لوحة العضيات المتحركة في الخلفية */
 #cellCanvas {
     position: fixed;
     top: 0;
@@ -289,7 +248,7 @@ button { font-family: inherit; }
     pointer-events: none;
 }
 
-/* الحاوية الرئيسية لكل محتوى الصفحة (تقع فوق خلفية العضيات) */
+/* الحاوية الرئيسية لمحتوى الصفحة (فوق خلفية العضيات) */
 .main-wrapper {
     position: relative;
     z-index: 2;
@@ -324,7 +283,7 @@ button { font-family: inherit; }
 }
 
 /* الإعلانات */
-/* مساحات الإعلانات (ثلاث مساحات في الصفحة) */
+/* مساحات الإعلانات */
 .ad-banner {
     position: relative;
     background: var(--ad-bg);
@@ -347,15 +306,12 @@ button { font-family: inherit; }
 }
 
 /* ####################################################################
-   ##  [CSS-3]  البطاقات (الوحدات والمراجعة)
-   ##
-   ##  كل ما يخص البطاقة: الحجم، الصورة، الشارة، العنوان، حركة التمرير بالفأرة.
-   ##  ألوان كل بطاقة على حدة في [CSS-7] (ابحث عن card-unit1).
+   ##   [CSS-3]  البطاقات
    #################################################################### */
 /* =========================================================
    3. شبكة الأزرار والبطاقات التفاعلية (مع الألوان المخصصة)
    ========================================================= */
-/* شبكة البطاقات: 4 أعمدة على الحاسوب وتقل على الشاشات الأصغر */
+/* شبكة البطاقات */
 .buttons-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -363,7 +319,7 @@ button { font-family: inherit; }
     margin: 15px 0;
 }
 
-/* البطاقة الواحدة (وحدة أو مراجعة)، وهي رابط كامل */
+/* البطاقة الواحدة (رابط كامل) */
 .card-btn {
     --card-glow: #38bdf8;
     position: relative;
@@ -486,14 +442,12 @@ button { font-family: inherit; }
 }
 
 /* ####################################################################
-   ##  [CSS-4]  أزرار التواصل (فيسبوك + BacOrbit)
-   ##
-   ##  شكل الزرين في الفوتر.
+   ##   [CSS-4]  أزرار التواصل
    #################################################################### */
 /* =========================================================
    4. زر التواصل و الباك أوربيت
    ========================================================= */
-/* حاوية أزرار التواصل (فيسبوك + BacOrbit) */
+/* حاوية أزرار التواصل */
 .contact-links-container {
     display: flex;
     gap: 15px;
@@ -503,7 +457,7 @@ button { font-family: inherit; }
     width: 100%;
 }
 
-/* شكل زر التواصل الواحد */
+/* زر تواصل واحد */
 .action-btn {
     flex: 1;
     max-width: 420px;
@@ -569,9 +523,7 @@ button { font-family: inherit; }
 
 
 /* ####################################################################
-   ##  [CSS-5]  العد التنازلي وقائمة المشاركة
-   ##
-   ##  الصندوق الزجاجي، الدوائر الأربع، العبارة التحفيزية، وقائمة أيقونات المشاركة الدائرية.
+   ##   [CSS-5]  العد التنازلي وقائمة المشاركة
    #################################################################### */
 /* =========================================================
    5. أداة العد التنازلي التفاعلية (Bio Organic Counter)
@@ -612,7 +564,7 @@ button { font-family: inherit; }
 
 .pulse-icon { font-size: 1.6rem; }
 
-/* حاوية دوائر الأيام والساعات والدقائق والثواني */
+/* حاوية دوائر العد */
 .bio-nodes-container {
     display: flex;
     justify-content: space-between;
@@ -683,7 +635,7 @@ button { font-family: inherit; }
     transition: color 0.4s ease;
 }
 
-/* شريط تفاصيل الدائرة المضغوطة */
+/* شريط تفاصيل الدائرة */
 .bio-tooltip {
     background: var(--tooltip-bg);
     border: 1px solid var(--tooltip-border);
@@ -696,7 +648,7 @@ button { font-family: inherit; }
     transition: background 0.4s ease;
 }
 
-/* العبارة التحفيزية تحت الدوائر */
+/* العبارة التحفيزية */
 .bio-quote {
     font-size: 1.05rem;
     color: var(--text-primary);
@@ -1185,7 +1137,7 @@ button { font-family: inherit; }
    رسالة النسخ
    ========================================== */
 
-/* رسالة «تم النسخ» الصغيرة */
+/* رسالة «تم النسخ» */
 .toast-msg {
     display: block;
 
@@ -1287,16 +1239,14 @@ button { font-family: inherit; }
 
 
 /* ####################################################################
-   ##  [CSS-6]  الفوتر
-   ##
-   ##  الصندوق الزجاجي للنصوص القانونية وسياسة الاستخدام.
+   ##   [CSS-6]  الفوتر
    #################################################################### */
 /* =========================================================
    6. تنسيقات الفوتر الذكية (Footer Responsive Styles) - زجاجي وشفاف
    ========================================================= */
 
 /* 1. الحاوية الكبرى (الفوتر) -> شفافة تماماً لرؤية الجسيمات */
-/* الفوتر (قسم معلومات ومساعدة) */
+/* الفوتر */
 .site-footer {
     background-color: transparent !important; /* ملغاة الخلفية الصلبة */
     border-top: 2px solid #22c55e;
@@ -1309,7 +1259,7 @@ button { font-family: inherit; }
 }
 
 /* 2. المركز (الصندوق القانوني) -> طابع زجاجي مغبش وأنيق */
-/* صندوق النصوص القانونية والتنبيهات */
+/* صندوق النصوص القانونية */
 .legal-box {
     max-width: 850px;
     margin: 0 auto 20px auto;
@@ -1359,11 +1309,7 @@ body.light .legal-box {
 
 
 /* ####################################################################
-   ##  [CSS-7]  التجاوب مع الشاشات + ألوان الوحدات + الشريط العلوي
-   ##
-   ##  @media = قواعد تعمل فقط عند عرض شاشة معين (هاتف، لوح، حاسوب).
-   ##  هنا أيضاً لون كل بطاقة: card-unit1 ... card-unit8 و card-prior و card-empty1..3
-   ##  وهنا الشريط العلوي top-navbar.
+   ##   [CSS-7]  التجاوب وألوان الوحدات والشريط العلوي
    #################################################################### */
 /* =========================================================
    7. التجاوب مع الشاشات (Media Queries)
@@ -1483,7 +1429,7 @@ body.light .legal-box {
 
 
 
-/* الشريط العلوي الثابت أثناء التمرير */
+/* الشريط العلوي الثابت */
 .top-navbar {
     width: 100%;
     position: sticky !important;
@@ -1597,9 +1543,7 @@ body.light .legal-box {
 
 
 /* ####################################################################
-   ##  [CSS-8]  تحسينات إضافية
-   ##
-   ##  الوصول (للقراءة بالشاشات)، روابط التنقل العلوية، العناوين، الفوتر.
+   ##   [CSS-8]  تحسينات إضافية
    #################################################################### */
 /* =========================================================
    8. تحسينات إضافية: الوصول، التنقل، المقدمة، العناوين، الفوتر
@@ -1610,7 +1554,7 @@ body.light .legal-box {
     outline-offset: 3px;
 }
 
-/* رابط «تخطَّ إلى المحتوى» لمستعملي قارئات الشاشة */
+/* رابط «تخطَّ إلى المحتوى» لقارئات الشاشة */
 .skip-link {
     position: absolute;
     top: -100px;
@@ -1626,7 +1570,7 @@ body.light .legal-box {
 .skip-link:focus { top: 12px; }
 
 /* روابط التنقل داخل الشريط العلوي */
-/* روابط الشريط العلوي (الوحدات، المراجعة، العد التنازلي، معلومات) */
+/* روابط الشريط العلوي */
 .top-nav-links {
     flex: 1;
     display: flex;
@@ -1658,7 +1602,7 @@ body.light-theme .top-brand-name {
 }
 
 /* عناوين الأقسام */
-/* عنوان كل قسم (الوحدات، المراجعة، معلومات) */
+/* عنوان القسم */
 .section-head {
     display: flex;
     align-items: center;
@@ -1757,9 +1701,7 @@ body.light-theme .highlight-blue   { color: #0369a1; }
 
 
 /* ####################################################################
-   ##  [CSS-9]  الغلاف ولوحة الترحيب والحركة والبحث
-   ##
-   ##  تصميم الغلاف، لوحة الترحيب والأزرار والأرقام، شريط تقدم التمرير، زر الأعلى.
+   ##   [CSS-9]  الغلاف ولوحة الترحيب والحركة
    #################################################################### */
 /* =========================================================
    9. الإصدار المتقدم: غلاف، لوحة ترحيب، حركة، بحث
@@ -1785,7 +1727,7 @@ body.light-theme::before { opacity: 0.6; }
 }
 
 /* شريط تقدم التمرير */
-/* شريط تقدم التمرير أعلى الصفحة */
+/* شريط تقدم التمرير */
 .scroll-progress {
     position: fixed;
     top: 0;
@@ -1825,7 +1767,7 @@ body.light-theme::before { opacity: 0.6; }
 }
 
 /* لوحة الترحيب (تتداخل مع الغلاف) */
-/* لوحة الترحيب (العنوان والأزرار والإحصائيات) */
+/* لوحة الترحيب */
 .hero-panel {
     position: relative;
     z-index: 1;
@@ -1880,7 +1822,7 @@ body.light-theme .hero-panel { box-shadow: 0 26px 50px -26px rgba(15, 23, 42, 0.
     margin-top: 24px;
 }
 
-/* الزر الرئيسي في الغلاف (ابدأ / تابع من الوحدة) */
+/* الزر الرئيسي في الغلاف */
 .btn-primary, .btn-ghost {
     display: inline-flex;
     align-items: center;
@@ -1899,7 +1841,7 @@ body.light-theme .hero-panel { box-shadow: 0 26px 50px -26px rgba(15, 23, 42, 0.
     box-shadow: 0 10px 28px -8px rgba(56, 189, 248, 0.7);
 }
 
-/* الأزرار الثانوية الشفافة في الغلاف */
+/* الأزرار الثانوية في الغلاف */
 .btn-ghost {
     color: var(--text-primary);
     background: var(--card-bg);
@@ -1911,7 +1853,7 @@ body.light-theme .hero-panel { box-shadow: 0 26px 50px -26px rgba(15, 23, 42, 0.
     .btn-ghost:hover { transform: translateY(-3px); border-color: #38bdf8; }
 }
 
-/* أرقام الغلاف (8 وحدات، 100% مجاني، الأيام المتبقية) */
+/* أرقام الغلاف */
 .hero-stats {
     list-style: none;
     display: grid;
@@ -2074,12 +2016,7 @@ body.light-theme .hero-stats strong { background-image: linear-gradient(135deg, 
 }
     
 /* ####################################################################
-   ##  [CSS-9B]  الطبقة الفاخرة
-   ##
-   ##  تجميل نهائي فوق كل ما سبق، ولذلك أغلب الشكل المرئي اليوم يأتي من هنا.
-   ##  لوحة البحث smart-dock، الأزرار الذكية، البطاقات الزجاجية، العد التنازلي.
-   ##  ملاحظة: العنصر الواحد قد يُنسَّق في أكثر من طبقة. الأحدث (الأسفل) هو الذي يظهر.
-   ##  لهذا الأفضل أن تضع تعديلاتك في [CSS-11] بدل البحث بين الطبقات.
+   ##   [CSS-9B]  الطبقة الفاخرة
    #################################################################### */
 /* =========================================================
    BIO-BAC-DZ — Premium interface layer
@@ -2234,7 +2171,7 @@ body.light-theme .smart-search{background:rgba(15,23,42,.035);border-color:rgba(
   border-radius:7px;padding:2px 7px;
   color:var(--text-secondary);font-size:.72rem;
 }
-/* صندوق نتائج البحث المنسدل */
+/* صندوق نتائج البحث */
 .smart-results{
   position:absolute;z-index:80;
   top:calc(100% + 8px);inset-inline:0;
@@ -2254,7 +2191,7 @@ body.light-theme .smart-results{background:rgba(255,255,255,.98)}
 .smart-result:hover{background:rgba(67,185,255,.10)}
 .smart-result i{color:var(--premium-accent-2);width:24px;text-align:center}
 .smart-result small{display:block;color:var(--text-secondary);font-size:.72rem}
-/* أزرار الوصول السريع الثلاثة */
+/* أزرار الوصول السريع */
 .smart-actions{display:flex;gap:8px}
 .smart-action{
   min-width:122px;
@@ -2280,7 +2217,7 @@ body.light-theme .smart-results{background:rgba(255,255,255,.98)}
 .smart-action strong,.smart-action small{display:block;text-align:right}
 .smart-action strong{font-size:.78rem}
 .smart-action small{font-size:.66rem;color:var(--text-secondary)}
-/* سطر «منصة مجانية • تابع من حيث توقفت» */
+/* سطر الحالة تحت البحث */
 .smart-status{
   display:flex;justify-content:center;align-items:center;gap:7px;
   padding:8px 4px 2px;color:var(--text-secondary);font-size:.7rem;
@@ -2428,13 +2365,7 @@ body.light-theme .bio-organic-counter{background:rgba(255,255,255,.78)}
 
 
 /* ####################################################################
-   ##                                                                ##
-   ##   [CSS-10]  الطبقة الأخيرة — تحديثات وإصلاحات                  ##
-   ##                                                                ##
-   ##   هذا القسم يأتي آخر الملف، لذلك ما يُكتب فيه يغلب ما قبله.     ##
-   ##   لتعديل أي شيء بسرعة: ضع قاعدتك الجديدة في [CSS-11] بالأسفل    ##
-   ##   بدل البحث داخل الطبقات القديمة.                               ##
-   ##                                                                ##
+   ##   [CSS-10]  الطبقة الأخيرة                                     ##
    #################################################################### */
 
 /* لوحة الكانفاس تملأ الشاشة (العضيات تُرسم عليها) */
@@ -2458,9 +2389,7 @@ body.light-theme .bio-organic-counter{background:rgba(255,255,255,.78)}
 .card-media::after { z-index: 1; }                       /* تظليل خفيف أسفل الصورة */
 .card-media img { position: relative; z-index: 1; }      /* الصورة فوق الرقم/الأيقونة البديلة */
 
-/* ★ إصلاح الإطار الأسود الرقيق حول الصور في الوضع النهاري ★
-   السبب: خلفية الإطار الداكنة كانت تظهر خلف حدّه الشفاف.
-   الحل: في الوضع النهاري تصبح الخلفية والحد أبيضين. (غيّر #fff إن أردت لوناً آخر) */
+/* الوضع النهاري: خلفية وحد أبيضان لإطار الصورة (بلا إطار داكن) */
 body.light-theme .card-media {
     background: linear-gradient(135deg, color-mix(in srgb, var(--card-glow) 16%, #ffffff), #ffffff);
     border-color: #ffffff;
@@ -2494,9 +2423,7 @@ body.light-theme .card-media {
 /* ====================================================================
    [CSS-10-B]  لوحة البحث وصندوق النتائج
    ==================================================================== */
-/* ★ إصلاح: صندوق النتائج كان يختبئ تحت مساحة الإعلان ★
-   الشرح: لوحة البحث تُنشئ طبقة مستقلة، والإعلان بعدها كان يرسم فوقها.
-   الحل: نرفع طبقة لوحة البحث (40) فوق الإعلانات والبطاقات وتحت الشريط العلوي (100). */
+/* طبقة لوحة البحث (40): فوق الإعلانات والبطاقات وتحت الشريط العلوي (100) ليظهر صندوق النتائج فوق الإعلان */
 .smart-dock { z-index: 40; }
 
 /* الصندوق المنسدل: ارتفاع أقصى مع تمرير داخلي */
@@ -2530,9 +2457,22 @@ body.light-theme .card-media {
     color: var(--text-secondary); font-size: 0.7rem; font-style: normal;
 }
 
-/* رابط «تابع من حيث توقفت» تحت لوحة البحث */
-a#recent-label { color: var(--premium-accent-2, #43b9ff); font-weight: 700; text-decoration: none; }
-a#recent-label:hover { text-decoration: underline; text-underline-offset: 4px; }
+/* سطر التقدم تحت لوحة البحث («زرت 3 من 8 وحدات») */
+#progress-label { color: var(--premium-accent-2, #43b9ff); font-weight: 700; }
+
+/* زر الغلاف يعرض عنوان آخر ملف: نص طويل يُقطع بنقاط */
+.hero-cta .btn-primary { max-width: 100%; }
+#hero-continue-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* زر صغير ثانوي (مسح البيانات المحفوظة) */
+.mini-btn {
+    align-self: flex-start; margin-top: 6px; padding: 5px 14px;
+    border: 1px solid var(--card-border); border-radius: 999px;
+    background: transparent; color: var(--text-secondary);
+    font: inherit; font-size: 0.78rem; cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+.mini-btn:hover, .mini-btn:focus-visible { border-color: var(--premium-accent, #38bdf8); color: var(--text-primary); }
 
 /* قسم «معلومات ومساعدة» في الأسفل: مسافة تمرير تحت الشريط العلوي */
 #info { scroll-margin-top: 84px; margin-top: 56px; }
@@ -2657,10 +2597,42 @@ body.cell-mode .back-top, body.cell-mode .cell-fab { opacity: 0; pointer-events:
 body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: none; cursor: pointer; }
 
 
+/* ====================================================================
+   [CSS-10-E]  الأداء: تخفيف الرسم أثناء التمرير والتحميل
+   ==================================================================== */
+/* خلفية الشفق ثابتة (كانت تتحرك دائماً فتعيد رسم الشاشة كل إطار) */
+body::before { animation: none; }
+
+/* شارة رقم الوحدة: بدون تمويه خلفي (صغيرة وخلفيتها داكنة أصلاً) */
+.unit-badge { -webkit-backdrop-filter: none; backdrop-filter: none; }
+
+/* الفوتر خارج الشاشة لا يُرسم حتى يقترب القارئ منه */
+.site-footer { content-visibility: auto; contain-intrinsic-size: auto 700px; }
+
+/* الظهور التدريجي أسرع وأقصر */
+.js-reveal .reveal { transform: translateY(10px); transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); transition-delay: var(--d, 0ms); }
+
+/* الهاتف وأجهزة اللمس: لا تمويه خلفي (ثقيل أثناء التمرير) مع خلفيات أكثر كثافة */
+@media (max-width: 900px), (hover: none) {
+    .card-btn, .ad-banner, .bio-organic-counter, .legal-box, .hero-panel, .smart-dock, .top-navbar,
+    .back-top, .cell-fab, .theme-toggle-btn, .main-share-btn, .pop-btn, .pop-btn span, .unit-search input {
+        -webkit-backdrop-filter: none; backdrop-filter: none;
+    }
+    .card-btn, .smart-dock, .hero-panel, .bio-organic-counter, .legal-box, .top-navbar, .cell-fab, .back-top {
+        background-color: rgba(13, 21, 37, 0.95);
+        background-image: none;
+    }
+    body.light-theme .card-btn, body.light-theme .smart-dock, body.light-theme .hero-panel,
+    body.light-theme .bio-organic-counter, body.light-theme .legal-box, body.light-theme .top-navbar,
+    body.light-theme .cell-fab, body.light-theme .back-top {
+        background-color: rgba(255, 255, 255, 0.96);
+    }
+    .card-btn::before { display: none; }
+}
+
+
 /* ####################################################################
-   ##   [CSS-11]  ✏️ مكان تعديلاتك الخاصة                            ##
-   ##   اكتب هنا أي قاعدة جديدة، وستغلب كل ما سبقها.                  ##
-   ##   مثال لتغيير لون زر ابدأ:  .btn-primary { background: red; }    ##
+   ##   [CSS-11]  تعديلات إضافية                                     ##
    #################################################################### */
 </style>
 
@@ -2669,9 +2641,10 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
 </head>
 <body>
     <script>
-        /* [JS-0] ذاكرة المتصفح bioStore — تُستعمل في كل الأقسام التالية:
-           bioStore.get('اسم') لقراءة قيمة، و bioStore.set('اسم','قيمة') لحفظها.
-           تحفظ في localStorage وفي cookie معاً (احتياط لمتصفحات التطبيقات التي تمنع localStorage). */
+        // ####################################################################
+        // ##   [JS-0]  ذاكرة المتصفح                                        ##
+        // ####################################################################
+        // get/set: حفظ وقراءة القيم في localStorage مع cookie احتياطي
         window.bioStore = {
             get: function (k) {
                 try { var v = localStorage.getItem(k); if (v !== null) return v; } catch (e) {}
@@ -2683,14 +2656,14 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
                 try { document.cookie = k + '=' + encodeURIComponent(v) + ';max-age=31536000;path=/;SameSite=Lax'; } catch (e) {}
             }
         };
-        /* تطبيق الوضع المحفوظ فوراً قبل ظهور الصفحة (لتجنب وميض الوضع الليلي ثم النهاري) */
+        // تطبيق الوضع المحفوظ فوراً قبل ظهور الصفحة
         if (bioStore.get('theme') === 'light') document.body.classList.add('light-theme');
         if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) document.documentElement.classList.add('js-reveal');
     </script>
     <a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
     <div class="scroll-progress" aria-hidden="true"></div>
 
-    <!-- لوحة العضيات المتحركة (يرسمها [JS-2]) وهي خلف كل المحتوى -->
+    <!-- لوحة العضيات المتحركة -->
     <canvas id="cellCanvas"></canvas>
 
     <div class="main-wrapper">
@@ -2703,22 +2676,18 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
 
 <!--
 ####################################################################
-##  [HTML-1]  الشريط العلوي
-##
-##  يبقى ثابتاً أعلى الشاشة أثناء التمرير.
-##  لإضافة رابط: انسخ سطر a داخل nav وغيّر href إلى #id القسم المطلوب.
-##  على الهاتف تنتقل الروابط تلقائياً إلى صف ثانٍ تحت الشعار.
+##   [HTML-1]  الشريط العلوي
 ####################################################################
 -->
 <header class="top-navbar">
     <div class="top-nav-container">
-        <!-- شعار الموقع واسمه (يفتح الصفحة الرئيسية) -->
+        <!-- الشعار والاسم -->
         <a href="index.html" class="top-brand-logo">
             <img src="favicon.png" alt="" class="top-logo-img" onerror="this.onerror=null; this.src='favicon.ico';">
             <span class="top-brand-name">bio-bac-dz</span>
         </a>
 
-        <!-- روابط التنقل داخل الصفحة. كل رابط يقفز إلى قسم له id مطابق: #units #review #countdown #info -->
+        <!-- روابط التنقل داخل الصفحة -->
         <nav class="top-nav-links" aria-label="التنقل في الصفحة">
             <a href="#units">الوحدات</a>
             <a href="#review">المراجعة</a>
@@ -2726,7 +2695,7 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
             <a href="#info">معلومات</a>
         </nav>
 
-        <!-- زر تبديل الوضع الليلي/النهاري (يستدعي toggleTheme في [JS-1]) -->
+        <!-- زر الوضع الليلي/النهاري -->
         <button type="button" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="تبديل الوضع الليلي والنهاري">
             <i id="theme-icon" class="fa-solid fa-moon" aria-hidden="true"></i>
             <span id="theme-text">الوضع الليلي</span>
@@ -2741,22 +2710,20 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
 
 
 
-        <!-- المحتوى الرئيسي للصفحة -->
+        <!-- المحتوى الرئيسي -->
 <main id="main">
 
         <!--
 ####################################################################
-##  [HTML-2]  الغلاف ولوحة الترحيب
-##
-##  hero-header = صورة الغلاف (header-bg.jpg).
-##  hero-panel  = اللوحة الزجاجية: العنوان h1 والوصف والأزرار والأرقام.
+##   [HTML-2]  الغلاف ولوحة الترحيب
 ####################################################################
 -->
+<!-- صورة الغلاف -->
         <div class="hero-header">
             <img src="header-bg.jpg" alt="bio-bac-dz — علوم الطبيعة والحياة للبكالوريا" fetchpriority="high" onerror="this.onerror=null;this.hidden=true">
         </div>
 
-        <!-- لوحة الترحيب: العنوان + الوصف + الأزرار + الأرقام -->
+        <!-- لوحة الترحيب: العنوان + الأزرار + الأرقام -->
         <section class="hero-panel" aria-labelledby="site-title">
             <h1 id="site-title">علوم الطبيعة والحياة لطلاب البكالوريا</h1>
             <p>دروس وملخصات الوحدات وتمارين محلولة وفق المنهجية الرسمية، لشعبتي العلوم التجريبية والرياضيات.</p>
@@ -2777,13 +2744,10 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
 
         <!--
 ####################################################################
-##  [HTML-3]  البحث والوصول السريع
-##
-##  smart-search  = خانة البحث + صندوق النتائج (يتحكم بهما [JS-4]).
-##  smart-actions = ثلاثة أزرار: استكشف الوحدات، اختبر نفسك (البكالوريا)، مفاجأة (وحدة عشوائية).
-##  smart-status  = سطر «تابع من حيث توقفت» يحدّثه [JS-5].
+##   [HTML-3]  البحث والوصول السريع
 ####################################################################
 -->
+<!-- خانة البحث + أزرار الوصول + سطر التقدم -->
         <section class="smart-dock" aria-label="الوصول السريع">
             <div class="smart-dock-main">
                 <div class="smart-search">
@@ -2813,23 +2777,21 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
                 <span class="status-dot"></span>
                 <span>منصة مجانية</span>
                 <span class="status-sep">•</span>
-                <a id="recent-label" href="#units">اختر وحدة للبدء</a>
+                <span id="progress-label">اختر وحدة للبدء</span>
             </div>
         </section>
 
-        <!-- ★ مساحة إعلان 1 من 3 (العلوية): ضع كود الإعلان داخل هذا div بدل كلمة «مساحة إعلانية» ★ -->
+        <!-- مساحة إعلان 1 من 3 (علوية) -->
         <div class="ad-banner">
             <span>مساحة إعلانية</span>
         </div>
 
 <!--
 ####################################################################
-##  [HTML-4]  قسم الوحدات الدراسية
-##
-##  العنوان ثم شبكتان: الوحدات 1 إلى 4، ثم إعلان، ثم الوحدات 5 إلى 8.
-##  id="units" هو هدف رابط «الوحدات» في الشريط العلوي.
+##   [HTML-4]  الوحدات الدراسية
 ####################################################################
 -->
+
         <div class="section-head" id="units">
             <span class="section-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
             <div>
@@ -2840,22 +2802,7 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
         </div>
         
 
-        <!--
-####################################################################
-##    قالب البطاقة (انسخه لإضافة وحدة جديدة)
-##
-##  كل بطاقة = وسم a واحد من البداية إلى النهاية. بعد النسخ غيّر هذه الأشياء فقط:
-##    href="lessonN.html"   رابط صفحة الدرس
-##    card-unitN            رقم يحدد لون البطاقة (ألوانها في [CSS-7])
-##    data-n="N"            الرقم الكبير الذي يظهر إن غابت الصورة
-##    src="imgN.jpg"        صورة الوحدة
-##    الوحدة N             نص الشارة فوق الصورة
-##    card-title            عنوان البطاقة (العنوان الرئيسي فقط)
-##    data-kw="..."         كلمات إضافية يستعملها البحث ولا تظهر في الشاشة
-##  البحث والذاكرة يكتشفان البطاقة الجديدة تلقائياً.
-####################################################################
--->
-<!-- شبكة البطاقات الأولى: الوحدات 1 إلى 4 -->
+        <!-- الوحدات 1 إلى 4 (كل بطاقة: رابط + صورة + شارة + عنوان) -->
         <section class="buttons-grid">
             <!-- الوحدة 1: أزرق داكن -->
             <a href="lesson1.html" class="card-btn card-unit1" data-kw="DNA → RNA → Protein أساسيات التعبير المورثي">
@@ -2886,12 +2833,12 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
             </a>
         </section>
 
-        <!-- ★ مساحة إعلان 2 من 3 (الوسطى) ★ -->
+        <!-- مساحة إعلان 2 من 3 (وسطى) -->
         <div class="ad-banner">
             <span>مساحة إعلانية</span>
         </div>
 
-        <!-- شبكة البطاقات الثانية: الوحدات 5 إلى 8 -->
+        <!-- الوحدات 5 إلى 8 -->
         <section class="buttons-grid">
             <!-- الوحدة 5: أصفر -->
             <a href="lesson5.html" class="card-btn card-unit5" data-kw="Neural Communication الاتصال العصبي والمشابك">
@@ -2922,7 +2869,7 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
             </a>
         </section>
 
-        <!-- ★ مساحة إعلان 3 من 3 (السفلية) ★ -->
+        <!-- مساحة إعلان 3 من 3 (سفلية) -->
         <div class="ad-banner">
             <span>مساحة إعلانية</span>
         </div>
@@ -2933,10 +2880,7 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
 
 <!--
 ####################################################################
-##  [HTML-5]  المراجعة والتحضير للامتحان
-##
-##  أربع بطاقات: المكتسبات القبلية، منهجية الإجابة، البكالوريا، بكالوريا تجريبية.
-##  id="review" هو هدف رابط «المراجعة» في الشريط العلوي.
+##   [HTML-5]  المراجعة والتحضير
 ####################################################################
 -->
 <div class="section-head" id="review">
@@ -2982,11 +2926,7 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
 
 <!--
 ####################################################################
-##  [HTML-6]  العد التنازلي ومشاركة العبارة
-##
-##  أربع دوائر (أيام، ساعات، دقائق، ثواني) يحدّثها [JS-3] كل ثانية.
-##  تحتها عبارة تحفيزية وزر مشاركة بقائمة أيقونات.
-##  لتغيير تاريخ البكالوريا ابحث عن bacDate في [JS-3].
+##   [HTML-6]  العد التنازلي ومشاركة العبارة
 ####################################################################
 -->
 <div class="bio-organic-counter" id="countdown" role="region" aria-label="العد التنازلي لشهادة البكالوريا">
@@ -3139,13 +3079,10 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
 
 <!--
 ####################################################################
-##  [HTML-7]  معلومات ومساعدة
-##
-##  العنوان هنا، ثم الفوتر تحته: التعريف بالموقع، الروابط السريعة، أزرار التواصل، النصوص القانونية.
-##  id="info" هو هدف رابط «معلومات» في الشريط العلوي.
-##  لتغيير اسم القسم عدّل h2 هنا، واسم الرابط في [HTML-1].
+##   [HTML-7]  معلومات ومساعدة
 ####################################################################
 -->
+
 <div class="section-head" id="info">
     <span class="section-icon" aria-hidden="true"><i class="fa-solid fa-circle-info"></i></span>
     <div>
@@ -3170,6 +3107,7 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
             <a href="bac2.html">بكالوريا تجريبية</a>
             <a href="#countdown">العد التنازلي</a>
         </nav>
+        <button type="button" id="clear-memory" class="mini-btn">مسح بياناتي المحفوظة</button>
     </div>
 
     <!-- أزرار التواصل والمواقع الشقيقة -->
@@ -3197,7 +3135,7 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
         </a>
     </div>
 
-    <!-- صندوق النصوص القانونية: كل legal-item فقرة مستقلة (أيقونة + نص). انسخ واحدة لإضافة فقرة -->
+    <!-- النصوص القانونية: كل فقرة = أيقونة + نص -->
     <div class="legal-box">
         <div class="legal-item">
             <i class="legal-icon highlight-green fa-solid fa-lock" aria-hidden="true"></i>
@@ -3220,7 +3158,7 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
         </div>
     </div>
 
-    <!-- سطر حقوق النشر: غيّر السنة هنا -->
+    <!-- حقوق النشر -->
     <p class="copyright-text">© 2026 جميع الحقوق محفوظة - bio-bac-dz</p>
 </footer>
 
@@ -3233,14 +3171,10 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
 
     <!--
 ####################################################################
-##  [HTML-8]  استكشاف العضيات
-##
-##  cell-fab    = الزر الطافي أسفل الصفحة الذي يفتح وضع الاستكشاف.
-##  cell-hud    = الشريط العلوي في الوضع (تلميح + عداد + إغلاق).
-##  cell-bubble = بطاقة معلومات العضية عند لمسها.
-##  الكود المتحكم بها كلها في [JS-2].
+##   [HTML-8]  استكشاف العضيات
 ####################################################################
 -->
+<!-- الزر العائم + الشريط العلوي + بطاقة المعلومات -->
     <button type="button" class="cell-fab" id="cell-fab" aria-pressed="false" title="تفاعل مع العضيات في الخلفية">
         <i class="fa-solid fa-microscope" aria-hidden="true"></i>
         <span class="fab-long">استكشف العضيات</span><span class="fab-short">العضيات</span>
@@ -3254,25 +3188,17 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
 
     <button type="button" class="back-top" aria-label="العودة إلى الأعلى"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
 
-    <!-- السكربت الرئيسي: [JS-2] العضيات، [JS-3] العد التنازلي والمشاركة، [JS-1] الوضع الليلي -->
+    <!-- السكربت الرئيسي: العضيات + العد التنازلي + الوضع الليلي -->
     <script>
         // ####################################################################
-// ##                                                                ##
-// ##   [JS-2]  العضيات المتحركة في الخلفية + التفاعل معها            ##
-// ##                                                                ##
-// ##   ماذا يفعل هذا القسم؟                                         ##
-// ##   1) يرسم صور العضيات (نواة، ميتوكندري، ...) تطفو خلف الصفحة   ##
-// ##   2) الضغط على أي مكان فارغ  = موجة (تموّج) تدفع العضيات القريبة ##
-// ##   3) زر «استكشف العضيات» = وضع خاص تُلمس فيه كل عضية فتظهر     ##
-// ##      بطاقة بوظيفتها ورابط للوحدة المناسبة                       ##
-// ##                                                                ##
+// ##   [JS-2]  العضيات المتحركة في الخلفية والتفاعل معها             ##
 // ####################################################################
 const canvas = document.getElementById('cellCanvas');   // لوحة الرسم الثابتة خلف الصفحة
         if (canvas) {
             const ctx = canvas.getContext('2d');
             let W = innerWidth, H = innerHeight;         // أبعاد الشاشة الحالية
 
-            // ---------- ضبط حجم اللوحة (وضوح أعلى على الشاشات الحادة) ----------
+            // ---------- حجم اللوحة (وضوح أعلى على الشاشات الحادة) ----------
             function resizeCanvas() {
                 const dpr = Math.min(window.devicePixelRatio || 1, 2);
                 W = innerWidth; H = innerHeight;
@@ -3283,20 +3209,18 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
 
-            // على الهاتف نصغّر العضيات ونقلل عددها حتى لا تثقل الجهاز
+            // ---------- وضع خفيف: أجهزة ضعيفة أو توفير البيانات ----------
+            const conn = navigator.connection || {};
+            const lite = !!(conn.saveData || (navigator.deviceMemory && navigator.deviceMemory <= 2) ||
+                            (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2));
             const small = innerWidth < 700;
-            const sizeScale = small ? 0.62 : 1;          // ← غيّر 0.62 لتكبير/تصغير العضيات على الهاتف
-            const countScale = small ? 0.6 : 1;          // ← غيّر 0.6 لزيادة/تقليل العدد على الهاتف
+            const sizeScale = small ? 0.62 : 1;                  // حجم العضيات على الهاتف
+            const countScale = (small ? 0.6 : 1) * (lite ? 0.5 : 1);   // عدد العضيات
 
             // ================================================================
-            //  ★ قائمة العضيات — هنا تعدّل الصور والأحجام والنصوص ★
-            //  src      : اسم ملف الصورة (يجب أن يكون بجانب index.html)
-            //  sizeMin/Max : الحجم بالبكسل (يُختار عشوائياً بين الرقمين)
-            //  opacity  : الشفافية في الوضع العادي (0 شفاف تماماً ← 1 كامل)
-            //  count    : كم نسخة تظهر من هذه العضية
-            //  name/info: النص الذي يظهر في بطاقة المعلومات
-            //  href/unit: الوحدة التي يفتحها زر البطاقة
-            //  ملاحظة: إن لم توجد صورة العضية لا تظهر ولا يحدث أي خطأ
+            //  قائمة العضيات
+            //  src: ملف الصورة | sizeMin/Max: الحجم بالبكسل | opacity: الشفافية
+            //  count: عدد النسخ | name/info: نص البطاقة | href/unit: الوحدة المرتبطة
             // ================================================================
             const organellesData = [
                 { key: 'nucleus', src: 'nucleus.png', sizeMin: 200, sizeMax: 230, opacity: 0.35, count: 1,
@@ -3313,48 +3237,54 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
                   href: 'lesson1.html', unit: 'الوحدة 1: تركيب البروتين' }
             ];
 
-            const floatingObjects = [];                  // كل العضيات الظاهرة حالياً
-            const ripples = [];                          // الموجات الجارية (تموّج الضغط)
+            const floatingObjects = [];                  // كل العضيات الظاهرة
+            const ripples = [];                          // الموجات الجارية
             const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-            let explore = false;                         // هل وضع الاستكشاف مفعّل؟
+            let explore = false;                         // وضع الاستكشاف مفعّل؟
+            let pinned = null;                           // العضية المفتوحة بطاقتها (تتوقف عن الحركة)
 
             // ================================================================
-            //  ★ إعدادات الموجة (التموّج) — عدّل الأرقام لتغيير إحساسها ★
+            //  إعدادات الموجة
+            //  speed: سرعة الاتساع | maxRadius: أقصى مدى | band: سُمك الحافة | push: قوة الدفع
             // ================================================================
-            const RIPPLE = {
-                speed: 6.5,       // سرعة اتساع الموجة (بكسل لكل إطار)
-                maxRadius: 320,   // أقصى نصف قطر تصل إليه قبل أن تختفي
-                band: 55,         // سُمك حافة الموجة التي تدفع العضيات
-                push: 1.9         // قوة الدفع (زد الرقم لدفع أقوى)
-            };
+            const RIPPLE = { speed: 6.5, maxRadius: 320, band: 55, push: 1.9 };
 
-            // ---------- عضية واحدة تطفو ----------
+            // ================================================================
+            //  إعدادات الأداء
+            //  fps: عدد الإطارات في الثانية | fpsScroll: أثناء التمرير | scrollIdle: مهلة انتهاء التمرير
+            // ================================================================
+            const PERF = { fps: lite ? 20 : 30, fpsScroll: 12, scrollIdle: 140 };
+
+            // ---------- عضية واحدة ----------
             class FloatingOrganelle {
                 constructor(src, data) {
                     this.src = src; this.data = data; this.opacity = data.opacity;
                     const baseSize = (Math.random() * (data.sizeMax - data.sizeMin) + data.sizeMin) * sizeScale;
-                    const aspect = (src.naturalWidth / src.naturalHeight) || 1;   // نسبة العرض للارتفاع
+                    const aspect = (src.naturalWidth / src.naturalHeight) || 1;
                     if (aspect >= 1) { this.width = baseSize * aspect; this.height = baseSize; }
                     else { this.width = baseSize; this.height = baseSize / aspect; }
-                    this.x = Math.random() * W;          // الموضع
+                    this.x = Math.random() * W;
                     this.y = Math.random() * H;
-                    this.vx = (Math.random() - 0.5) * 0.4;   // السرعة الهادئة الدائمة
+                    this.vx = (Math.random() - 0.5) * 0.4;       // السرعة الهادئة الدائمة
                     this.vy = (Math.random() - 0.5) * 0.4;
-                    this.ix = 0; this.iy = 0;            // دفعة مؤقتة (من الموجة) تتلاشى تدريجياً
+                    this.ix = 0; this.iy = 0;                    // دفعة مؤقتة من الموجة
                     this.angle = Math.random() * Math.PI * 2;
                     this.vAngle = (Math.random() - 0.5) * 0.008;
-                    this.spin = 0; this.pulse = 0;       // دوران ونبضة مؤقتان عند الضغط على العضية
+                    this.spin = 0; this.pulse = 0;               // دوران ونبضة عند الضغط عليها
                 }
-                // نصف قطر منطقة اللمس (لا يقل عن 26 حتى تسهل إصابة العضيات الصغيرة)
+                // نصف قطر منطقة اللمس (حد أدنى 26 لتسهيل إصابة العضيات الصغيرة)
                 radius() { return Math.max(Math.max(this.width, this.height) / 2 * (1 + this.pulse * 0.3), 26); }
-                update() {
+                // k = عدد الإطارات الافتراضية (60fps) التي مرّت منذ آخر تحديث
+                update(k) {
+                    if (this === pinned) { this.ix = this.iy = 0; this.pulse *= Math.pow(0.9, k); return; }
                     if (!reduceMotion.matches) {
-                        this.x += this.vx + this.ix; this.y += this.vy + this.iy;
-                        this.angle += this.vAngle + this.spin;
+                        this.x += (this.vx + this.ix) * k; this.y += (this.vy + this.iy) * k;
+                        this.angle += (this.vAngle + this.spin) * k;
                     }
-                    this.ix *= 0.93; this.iy *= 0.93;    // تلاشي الدفعة
-                    this.spin *= 0.94; this.pulse *= 0.9;
-                    const m = 150;                       // عند الخروج من حافة الشاشة تعود من الجهة المقابلة
+                    const d = Math.pow(0.93, k);                 // تلاشي الدفعة
+                    this.ix *= d; this.iy *= d;
+                    this.spin *= Math.pow(0.94, k); this.pulse *= Math.pow(0.9, k);
+                    const m = 150;                               // الخروج من حافة يعيدها من الجهة المقابلة
                     if (this.x < -m) this.x = W + m;
                     if (this.x > W + m) this.x = -m;
                     if (this.y < -m) this.y = H + m;
@@ -3366,7 +3296,6 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
                     ctx.translate(this.x, this.y);
                     ctx.rotate(this.angle);
                     ctx.scale(s, s);
-                    // في وضع الاستكشاف تصبح العضيات أوضح (×2.4 بحد أقصى 1)
                     ctx.globalAlpha = explore ? Math.min(1, this.opacity * 2.4) : this.opacity;
                     ctx.drawImage(this.src, -this.width / 2, -this.height / 2, this.width, this.height);
                     ctx.restore();
@@ -3380,42 +3309,44 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
             }
             organellesData.forEach(data => {
                 const img = new Image();
+                img.decoding = 'async';
                 img.onload = () => spawn(img, data);
-                img.onerror = () => { /* الصورة غير موجودة: نتجاهلها بصمت */ };
+                img.onerror = () => { /* صورة غير موجودة: تُتجاهل */ };
                 img.src = data.src;
             });
 
             // ================================================================
-            //  الموجة (التموّج): إنشاؤها + تحريكها + دفع العضيات القريبة
+            //  الموجة: الإنشاء + الدفع + الرسم
             // ================================================================
             function addRipple(x, y) {
-                if (reduceMotion.matches) return;        // من يفضّل تقليل الحركة لا نُظهر له موجات
+                if (reduceMotion.matches) return;
                 ripples.push({ x, y, r: 0 });
-                if (ripples.length > 6) ripples.shift(); // حد أقصى 6 موجات معاً
+                if (ripples.length > 6) ripples.shift();
             }
 
-            function updateRipples() {
+            function updateRipples(k) {
                 const light = document.body.classList.contains('light-theme');
-                const rgb = light ? '2,132,199' : '125,211,252';     // لون الحلقة (نهاري/ليلي)
+                const rgb = light ? '2,132,199' : '125,211,252';
                 for (let i = ripples.length - 1; i >= 0; i--) {
                     const rp = ripples[i];
-                    rp.r += RIPPLE.speed;
-                    const life = rp.r / RIPPLE.maxRadius;            // 0 → 1 عمر الموجة
+                    rp.r += RIPPLE.speed * k;
+                    const life = rp.r / RIPPLE.maxRadius;
                     if (life >= 1) { ripples.splice(i, 1); continue; }
 
-                    // ادفع كل عضية تقع على حافة الموجة بعيداً عن مركزها
+                    // دفع العضيات الواقعة على حافة الموجة (ما عدا المثبتة)
                     floatingObjects.forEach(o => {
+                        if (o === pinned) return;
                         const dx = o.x - rp.x, dy = o.y - rp.y;
                         const d = Math.hypot(dx, dy) || 1;
                         const off = Math.abs(d - rp.r);
                         if (off < RIPPLE.band) {
-                            const f = (1 - off / RIPPLE.band) * (1 - life) * RIPPLE.push;
+                            const f = (1 - off / RIPPLE.band) * (1 - life) * RIPPLE.push * k;
                             o.ix += dx / d * f; o.iy += dy / d * f;
                             o.spin += (dx > 0 ? 1 : -1) * 0.0012 * f;
                         }
                     });
 
-                    // ارسم حلقتين متتاليتين تتلاشيان
+                    // حلقتان تتلاشيان
                     ctx.save();
                     ctx.lineWidth = 2.5;
                     ctx.strokeStyle = `rgba(${rgb},${(1 - life) * 0.55})`;
@@ -3427,27 +3358,39 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
                 }
             }
 
-            // ---------- الحلقة الرئيسية للرسم (تعمل كل إطار) ----------
-            function animate() {
-                ctx.clearRect(0, 0, W, H);
-                floatingObjects.forEach(o => { o.update(); o.draw(); });
-                updateRipples();
+            // ================================================================
+            //  حلقة الرسم: إطارات محدودة، وأبطأ أثناء التمرير، وتتوقف حين تختفي الصفحة
+            // ================================================================
+            let lastT = 0, lastScroll = 0;
+            window.addEventListener('scroll', () => { lastScroll = performance.now(); }, { passive: true });
+
+            function animate(now) {
                 requestAnimationFrame(animate);
+                if (document.hidden) return;
+                const scrolling = now - lastScroll < PERF.scrollIdle && !explore;
+                const interval = 1000 / (scrolling ? PERF.fpsScroll : PERF.fps);
+                const elapsed = now - lastT;
+                if (elapsed < interval - 1) return;              // تخطَّ الإطار
+                lastT = now;
+                const k = Math.min(elapsed / 16.667, 4);         // تعويض الإطارات المتخطاة
+                ctx.clearRect(0, 0, W, H);
+                floatingObjects.forEach(o => { o.update(k); o.draw(); });
+                updateRipples(k);
             }
-            animate();
+            requestAnimationFrame(animate);
 
             // ================================================================
-            //  واجهة وضع الاستكشاف (الزر العائم + الشريط العلوي + بطاقة المعلومات)
+            //  واجهة وضع الاستكشاف
             // ================================================================
-            const fab = document.getElementById('cell-fab');         // الزر العائم «استكشف العضيات»
-            const hud = document.getElementById('cell-hud');         // الشريط العلوي (التلميح + العداد + إغلاق)
+            const fab = document.getElementById('cell-fab');         // الزر العائم
+            const hud = document.getElementById('cell-hud');         // الشريط العلوي
             const hint = document.getElementById('cell-hint');
-            const countEl = document.getElementById('cell-count');   // عداد «1/4»
+            const countEl = document.getElementById('cell-count');   // العداد 1/4
             const exitBtn = document.getElementById('cell-exit');
-            const bubble = document.getElementById('cell-bubble');   // بطاقة معلومات العضية
-            const HINT = 'المس أي عضية لتعرف وظيفتها';              // نص التلميح
+            const bubble = document.getElementById('cell-bubble');   // بطاقة المعلومات
+            const HINT = 'المس أي عضية لتعرف وظيفتها';
 
-            // العضيات التي اكتشفها الطالب (يتذكرها المتصفح)
+            // العضيات التي اكتشفها الطالب
             const found = new Set();
             try { JSON.parse(bioStore.get('bio-cells') || '[]').forEach(k => found.add(k)); } catch (e) {}
 
@@ -3457,12 +3400,11 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
             }
             updateCount();
 
-            function hideBubble() { bubble.hidden = true; }
+            function hideBubble() { bubble.hidden = true; pinned = null; }
 
-            // تشغيل/إيقاف وضع الاستكشاف
             function setExplore(on) {
                 explore = on;
-                document.body.classList.toggle('cell-mode', on);   // يُعتّم الصفحة ويرفع الكانفاس (انظر CSS)
+                document.body.classList.toggle('cell-mode', on);
                 fab.setAttribute('aria-pressed', on ? 'true' : 'false');
                 hud.hidden = !on;
                 if (!on) hideBubble();
@@ -3471,7 +3413,7 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
             exitBtn.addEventListener('click', () => setExplore(false));
             document.addEventListener('keydown', e => { if (e.key === 'Escape' && explore) setExplore(false); });
 
-            // أقرب عضية إلى نقطة اللمس (أو لا شيء)
+            // أقرب عضية إلى نقطة الضغط
             function hit(px, py) {
                 let best = null, bestScore = 1;
                 floatingObjects.forEach(o => {
@@ -3481,7 +3423,7 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
                 return best;
             }
 
-            // بناء بطاقة المعلومات ووضعها قرب العضية (دون الخروج من الشاشة)
+            // بطاقة المعلومات قرب العضية دون الخروج من الشاشة
             function showBubble(o) {
                 const d = o.data;
                 bubble.textContent = '';
@@ -3500,30 +3442,37 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
             }
 
             // ================================================================
-            //  ★ الضغط على الخلفية ★
-            //  (أ) داخل وضع الاستكشاف: الضغط على الكانفاس نفسه
-            //  (ب) في الوضع العادي: الضغط على أي مكان ليس رابطاً ولا زراً
+            //  الضغط على العضية: نبضة + بطاقة، بدون موجة (فلا تتنافر)
             // ================================================================
-            // (أ) وضع الاستكشاف
-            canvas.addEventListener('click', e => {
-                if (!explore) return;
-                addRipple(e.clientX, e.clientY);                 // موجة في كل ضغطة
-                const o = hit(e.clientX, e.clientY);
-                if (!o) { hideBubble(); return; }                // ضغطة على فراغ: أخفِ البطاقة فقط
-                o.pulse = 1; o.spin = (Math.random() < 0.5 ? -1 : 1) * 0.35;   // العضية تنبض وتدور
-                if (!found.has(o.data.key)) {                    // اكتشاف جديد: احفظه وحدّث العداد
+            function touchOrganelle(o) {
+                o.pulse = 1; o.spin = (Math.random() < 0.5 ? -1 : 1) * 0.35;
+                if (!found.has(o.data.key)) {
                     found.add(o.data.key);
                     bioStore.set('bio-cells', JSON.stringify([...found]));
                     updateCount();
                 }
-                showBubble(o);
+            }
+
+            // ================================================================
+            //  الضغط على الخلفية
+            //  على عضية: تنبض فقط | على فراغ: موجة تدفع القريب
+            // ================================================================
+            // وضع الاستكشاف: الضغط على اللوحة نفسها
+            canvas.addEventListener('click', e => {
+                if (!explore) return;
+                const o = hit(e.clientX, e.clientY);
+                if (o) { touchOrganelle(o); pinned = o; showBubble(o); return; }
+                hideBubble();
+                addRipple(e.clientX, e.clientY);
             });
 
-            // (ب) الوضع العادي — العناصر التي لا نريد موجة عند الضغط عليها
+            // الوضع العادي: العناصر التي لا تُطلق موجة عند الضغط عليها
             const INTERACTIVE = 'a,button,input,textarea,select,label,summary,.smart-results,.share-popover,.bio-node,.cell-bubble,.cell-hud';
             document.addEventListener('click', e => {
-                if (explore) return;                             // وضع الاستكشاف له معالجه الخاص
-                if (e.target.closest(INTERACTIVE)) return;       // رابط/زر: لا موجة
+                if (explore) return;
+                if (e.target.closest(INTERACTIVE)) return;
+                const o = hit(e.clientX, e.clientY);
+                if (o) { touchOrganelle(o); return; }
                 addRipple(e.clientX, e.clientY);
             });
         }
@@ -3535,18 +3484,11 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
 
 
 // ####################################################################
-// ##  [JS-3]  العد التنازلي ومشاركة العبارة
-// ##
-// ##  ماذا يفعل؟ يحسب الوقت المتبقي للبكالوريا ويحدّث الدوائر والعبارة كل ثانية،
-// ##  ثم يتيح مشاركة العبارة عبر فيسبوك وماسنجر وواتساب وتيليجرام وتيك توك أو نسخها.
-// ##
-// ##  ★ تاريخ البكالوريا — عدّل السطر التالي (bacDate) ★
-// ##    الصيغة: new Date(السنة, الشهر ناقص 1, اليوم, الساعة, الدقيقة, الثانية)
-// ##    انتبه: الأشهر تبدأ من 0، فـ 0 = جانفي و 5 = جوان و 11 = ديسمبر.
-// ##    مثال: 14 جوان 2027 على الساعة 8 صباحاً  ←  new Date(2027, 5, 14, 8, 0, 0)
+// ##   [JS-3]  العد التنازلي ومشاركة العبارة
 // ####################################################################
 
-const bacDate = new Date(2027, 6, 14, 8, 0, 0).getTime();
+// تاريخ ووقت البكالوريا
+const bacDate = new Date(2027, 5, 14, 8, 0, 0).getTime();
 let currentDaysLeft = 0;
 let prevSec = -1;
 
@@ -4119,11 +4061,7 @@ setInterval(updateCountdown, 1000);
 
 
 // ####################################################################
-// ##  [JS-1]  الوضع الليلي / النهاري
-// ##
-// ##  toggleTheme() يُستدعى من زر الشريط العلوي: يبدّل الوضع ويحفظه عبر bioStore.
-// ##  عند فتح الصفحة يُطبَّق الوضع المحفوظ فوراً (انظر [JS-0] في أول الصفحة).
-// ##  الألوان نفسها في [CSS-1]: :root للّيلي و body.light-theme للنهاري.
+// ##   [JS-1]  الوضع الليلي / النهاري
 // ####################################################################
         // 1. دالة تحديث شكل الزر والنصوص
 function updateThemeUI(isLight) {
@@ -4157,12 +4095,7 @@ function toggleTheme() {
 
     <script>
 // ####################################################################
-// ##  [JS-6]  تأثيرات الصفحة
-// ##
-// ##  شريط تقدم التمرير • حالة الشريط العلوي • زر العودة للأعلى
-// ##  تمييز رابط القسم الحالي في الشريط العلوي • الظهور التدريجي للبطاقات
-// ##  عدّاد الأرقام في الغلاف • إضاءة تتبع المؤشر على البطاقات.
-// ##  هذه كلها تجميلية، ولا يتأثر عمل الموقع لو عُطّلت.
+// ##   [JS-6]  تأثيرات الصفحة
 // ####################################################################
 (function () {
     const $ = (s, c = document) => c.querySelector(s);
@@ -4211,7 +4144,7 @@ function toggleTheme() {
     // ---- ظهور تدريجي للأقسام والبطاقات ----
     if (document.documentElement.classList.contains('js-reveal')) {
         const items = $$('.section-head, .card-btn, .bio-organic-counter, .legal-box');
-        $$('.buttons-grid').forEach(g => $$('.card-btn', g).forEach((c, i) => c.style.setProperty('--d', (i % 4) * 70 + 'ms')));
+        $$('.buttons-grid').forEach(g => $$('.card-btn', g).forEach((c, i) => c.style.setProperty('--d', (i % 4) * 35 + 'ms')));
         items.forEach(el => el.classList.add('reveal'));
         const io = new IntersectionObserver(entries => entries.forEach(en => {
             if (!en.isIntersecting) return;
@@ -4219,8 +4152,8 @@ function toggleTheme() {
             el.classList.add('in');
             io.unobserve(el);
             // نزيل الفئة بعد انتهاء الحركة ليعود تنسيق التمرير الأصلي للبطاقة
-            setTimeout(() => el.classList.remove('reveal', 'in'), 1100);
-        }), { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            setTimeout(() => el.classList.remove('reveal', 'in'), 800);
+        }), { threshold: 0.01, rootMargin: '0px 0px 320px 0px' });
         items.forEach(el => io.observe(el));
     }
 
@@ -4272,21 +4205,7 @@ function toggleTheme() {
 
 <script>
 /* ####################################################################
-   ##                                                                ##
    ##   [JS-4]  البحث الذكي                                          ##
-   ##                                                                ##
-   ##   كيف يعمل؟                                                    ##
-   ##   1) يقرأ تلقائياً كل صفحات البطاقات (lesson1.html ... الخ)     ##
-   ##      ويستخرج منها العناوين والفقرات والكلمات المميزة            ##
-   ##   2) يحفظ هذا «الفهرس» في المتصفح 24 ساعة حتى يكون سريعاً       ##
-   ##   3) عند الكتابة يعرض: صفحات مطابقة + مقتطف يوضح مكان الكلمة    ##
-   ##      + «اقتراحات» (كلمات مقترحة) + «هل تقصد» عند الخطأ الإملائي  ##
-   ##   4) إن تعذّر قراءة الصفحات (فتح الملف من الحاسوب مثلاً)         ##
-   ##      يعمل بالقاموس الاحتياطي FALLBACK_KEYWORDS أدناه            ##
-   ##                                                                ##
-   ##   لإضافة بطاقة/وحدة جديدة: لا تغيّر شيئاً هنا، تُكتشف تلقائياً. ##
-   ##   لتحسين نتائجها: أضف كلماتها في FALLBACK_KEYWORDS.            ##
-   ##                                                                ##
    #################################################################### */
 (function () {
   // ---------- العناصر التي يتحكم بها هذا الكود ----------
@@ -4296,10 +4215,10 @@ function toggleTheme() {
   if (!input || !results) return;
 
   // ================================================================
-  //  ★ إعدادات البحث — عدّل الأرقام هنا ★
+  //  إعدادات البحث
   // ================================================================
   const CFG = {
-    version: 1,            // غيّر الرقم إذا عدّلت محتوى الدروس لإجبار المتصفحات على إعادة الفهرسة
+    version: 2,            // رقم نسخة الفهرس المحفوظ
     cacheHours: 24,        // مدة حفظ الفهرس في المتصفح (بالساعات)
     maxResults: 6,         // أقصى عدد صفحات تظهر في النتائج
     maxChips: 6,           // أقصى عدد كلمات مقترحة
@@ -4308,8 +4227,7 @@ function toggleTheme() {
   };
 
   // ================================================================
-  //  ★ مرادفات: كلمات مختلفة بنفس المعنى (الكتابة بأحدها تجد الآخر) ★
-  //  اكتب كل كلمة بأحرف صغيرة، وبلا همزات في العربي (انزيم لا إنزيم)
+  //  مرادفات: كلمات مختلفة بنفس المعنى
   // ================================================================
   const SYNONYMS = [
     ['arn', 'rna'], ['adn', 'dna'], ['arnm', 'mrna'], ['arnt', 'trna'], ['arnr', 'rrna'],
@@ -4319,9 +4237,7 @@ function toggleTheme() {
   ];
 
   // ================================================================
-  //  ★ القاموس الاحتياطي — كلمات مفتاحية لكل صفحة ★
-  //  يُستخدم دائماً بجانب ما يُستخرج من الصفحات، ويكفي وحده إن تعذّر القراءة.
-  //  المفتاح = رابط الصفحة كما في البطاقة، والقيمة = كلمات تريد أن تجد هذه الصفحة.
+  //  القاموس الاحتياطي: كلمات مفتاحية لكل صفحة (رابط الصفحة ← كلماتها)
   // ================================================================
   const FALLBACK_KEYWORDS = {
     'lesson1.html': ['ADN', 'ARN', 'ARNm', 'ARNt', 'ARNr', 'الاستنساخ', 'الترجمة', 'الشفرة الوراثية', 'الرامزة',
@@ -4456,13 +4372,17 @@ function toggleTheme() {
 
     const blocks = [], seen = new Set();
     const BLOCK = 'h1,h2,h3,h4,h5,h6,p,li,td,th,figcaption,dt,dd,blockquote,summary';
-    doc.querySelectorAll(BLOCK).forEach(el => {
+    let lastAnchor = '';                                             // آخر معرّف قسم مرّ بنا (لرابط القفز إليه)
+    doc.querySelectorAll('[id],' + BLOCK).forEach(el => {
+      if (el.id && !el.matches(BLOCK)) { lastAnchor = el.id; return; }   // حاوية لها معرّف: تحدّد القسم الحالي
+      if (!el.matches(BLOCK)) return;
+      if (el.id) lastAnchor = el.id;
       if (blocks.length >= CFG.maxBlocksPerPage) return;
       if (el.querySelector(BLOCK)) return;                         // نأخذ العناصر الداخلية فقط لتفادي التكرار
       const t = clean(el.textContent);
       if (t.length < 3 || seen.has(t.slice(0, 80))) return;
       seen.add(t.slice(0, 80));
-      const anchor = el.id || (el.closest('[id]') ? el.closest('[id]').id : '');
+      const anchor = el.id || (el.closest('[id]') ? el.closest('[id]').id : '') || lastAnchor;
       blocks.push([t.slice(0, 260), anchor, /^H[1-6]$/.test(el.tagName) ? 1 : 0]);
     });
 
@@ -4481,6 +4401,20 @@ function toggleTheme() {
     return { blocks, kw: Array.from(kw).slice(0, 200) };
   }
 
+  // ---------- قراءة الصفحات على دفعات من 3 حتى لا تزدحم الشبكة ----------
+  async function fetchAll() {
+    const out = new Array(pages.length).fill(null);
+    let next = 0;
+    async function worker() {
+      while (next < pages.length) {
+        const i = next++;
+        try { out[i] = await fetchPage(pages[i].href); } catch (e) { out[i] = null; }
+      }
+    }
+    await Promise.all([worker(), worker(), worker()]);
+    return out;
+  }
+
   // ---------- قراءة كل الصفحات (مرة واحدة) ----------
   let started = false;
   function startIndexing() {
@@ -4488,9 +4422,9 @@ function toggleTheme() {
     const cached = readCache();
     if (cached) { hydrate(cached); state = 'ready'; return; }
     state = 'loading';
-    Promise.allSettled(pages.map(p => fetchPage(p.href))).then(out => {
+    fetchAll().then(out => {
       const data = {}; let ok = 0;
-      out.forEach((r, i) => { if (r.status === 'fulfilled') { data[pages[i].href] = r.value; ok++; } });
+      out.forEach((r, i) => { if (r) { data[pages[i].href] = r; ok++; } });
       if (ok) { hydrate(data); writeCache(data); state = 'ready'; }
       else state = 'fallback';                                    // فشلت كل الصفحات: نبقى على القاموس
       if (input.value) render(input.value);                       // حدّث النتائج إن كان الطالب يكتب
@@ -4498,7 +4432,7 @@ function toggleTheme() {
   }
   const earlyCache = readCache();
   if (earlyCache) { hydrate(earlyCache); state = 'ready'; started = true; }
-  window.addEventListener('load', () => setTimeout(startIndexing, 2500));   // ابدأ بهدوء بعد تحميل الصفحة
+  // الفهرسة لا تبدأ عند تحميل الصفحة (لتبقى خفيفة)، بل عند أول اقتراب من خانة البحث
 
   // ================================================================
   //  البحث نفسه
@@ -4663,6 +4597,8 @@ function toggleTheme() {
   // أغلق النتائج عند الضغط خارج مربع البحث
   // (نستخدم composedPath لأن زر الاقتراح يُستبدل أثناء النقر فلا يصلح closest)
   const searchBox = input.closest('.smart-search');
+  ['pointerenter', 'touchstart', 'focusin'].forEach(ev =>
+    searchBox.addEventListener(ev, startIndexing, { once: true, passive: true }));
   document.addEventListener('click', e => {
     if (!e.composedPath().includes(searchBox)) results.hidden = true;
   });
@@ -4687,44 +4623,21 @@ function toggleTheme() {
 
 <script>
 /* ####################################################################
-   ##                                                                ##
-   ##   [JS-5]  ذاكرة المتصفح: يتذكر الطالب ويكمل من حيث توقف       ##
-   ##                                                                ##
-   ##   ما الذي يُحفظ في المتصفح؟                                    ##
-   ##   • آخر وحدة (lessonN.html) فتحها  → زر الغلاف يصبح             ##
-   ##       «تابع من الوحدة N» بدل «ابدأ من الوحدة 1»                 ##
-   ##   • آخر صفحة فتحها (أي بطاقة)      → رابط «تابع من حيث توقفت»   ##
-   ##   • البطاقات التي زارها            → علامة ✓ خضراء على العنوان   ##
-   ##   • وضع ليلي/نهاري                 → في [JS-1] (قسم الثيم)       ##
-   ##   • العضيات المكتشفة               → في [JS-2]                  ##
-   ##   • فهرس البحث                    → في [JS-4]                  ##
-   ##                                                                ##
-   ##   يُحفظ في localStorage (وفي cookie احتياطاً داخل متصفحات        ##
-   ##   التطبيقات مثل فيسبوك التي قد تمنع localStorage) عبر bioStore. ##
-   ##                                                                ##
-   ##   ✏️ لتسجيل آخر وحدة حتى لو فُتحت صفحة الدرس مباشرة، الصق هذا   ##
-   ##   السطر داخل <script> في آخر كل صفحة درس (lesson1.html ...):    ##
-   ##                                                                ##
-   ##   (function(){var f=location.pathname.split('/').pop();         ##
-   ##   if(!/^lesson\d+\.html$/.test(f))return;                       ##
-   ##   var h=document.querySelector('h1'),t=(h?h.textContent:document.title).trim();##
-   ##   var v=JSON.stringify({href:f,title:t});                       ##
-   ##   try{localStorage.setItem('bio-last-unit',v);                  ##
-   ##   localStorage.setItem('bio-last-page',v)}catch(e){}})();       ##
-   ##                                                                ##
+   ##   [JS-5]  ذاكرة المتصفح: آخر ملف وتقدم الطالب                  ##
    #################################################################### */
 (function () {
-  // ---------- أسماء المفاتيح المحفوظة (لا تغيّرها إلا إذا غيّرت سطر صفحات الدروس أيضاً) ----------
-  const KEY_UNIT = 'bio-last-unit';      // آخر وحدة {href, title}
-  const KEY_PAGE = 'bio-last-page';      // آخر صفحة من أي نوع {href, title}
-  const KEY_SEEN = 'bio-visited';        // قائمة الصفحات المزارة ["lesson1.html", ...]
+  // ---------- أسماء المفاتيح المحفوظة ----------
+  const KEY_PAGE = 'bio-last-page';      // آخر ملف فتحه الطالب {href, go, title}
+  const KEY_SEEN = 'bio-visited';        // الملفات التي زارها ["lesson1.html", ...]
+  const ALL_KEYS = [KEY_PAGE, KEY_SEEN, 'bio-cells', 'bio-search-index', 'bio-last-unit'];
 
-  // ---------- عناصر الصفحة التي نحدّثها ----------
+  // ---------- عناصر الصفحة التي تتحدّث ----------
   const heroBtn = document.getElementById('hero-continue');          // زر الغلاف الكبير
   const heroLabel = document.getElementById('hero-continue-label');  // نص الزر
-  const recentLabel = document.getElementById('recent-label');       // رابط تحت لوحة البحث
+  const progress = document.getElementById('progress-label');        // سطر التقدم تحت البحث
+  const clearBtn = document.getElementById('clear-memory');          // زر مسح البيانات المحفوظة
 
-  // ---------- بطاقات الصفحة: رابط الصفحة → عنوانها ونوعها ----------
+  // ---------- بطاقات الصفحة: رابط الملف → عنوانه ونوعه ----------
   const cards = Array.from(document.querySelectorAll('.card-btn'));
   const info = {};
   cards.forEach(el => {
@@ -4733,6 +4646,7 @@ function toggleTheme() {
       isUnit: /^lesson\d+\.html$/.test(el.getAttribute('href'))
     };
   });
+  const unitCount = cards.filter(el => /^lesson\d+\.html$/.test(el.getAttribute('href'))).length;
 
   // ---------- قراءة/كتابة JSON عبر bioStore ----------
   const read = (k, def) => { try { return JSON.parse(bioStore.get(k) || ''); } catch (e) { return def; } };
@@ -4740,52 +4654,66 @@ function toggleTheme() {
 
   // ---------- تحديث الواجهة بحسب المحفوظ ----------
   function apply() {
-    // 1) زر الغلاف: «تابع من الوحدة N»
-    const unit = read(KEY_UNIT, null);
-    const m = unit && /^lesson(\d+)\.html$/.exec(unit.href || '');
-    if (heroBtn && heroLabel && m) {
-      heroBtn.setAttribute('href', unit.href);
-      heroLabel.textContent = 'تابع من الوحدة ' + m[1];
-      heroBtn.title = unit.title || '';
+    // 1) زر الغلاف: يفتح آخر ملف اختاره الطالب (وحدة أو مراجعة) وبنفس الموضع داخله
+    const last = read(KEY_PAGE, null);
+    if (heroBtn && heroLabel) {
+      if (last && last.href && info[last.href]) {
+        heroBtn.setAttribute('href', last.go || last.href);
+        heroLabel.textContent = 'تابع: ' + info[last.href].title;
+        heroBtn.title = info[last.href].title;
+      } else {
+        heroBtn.setAttribute('href', 'lesson1.html');
+        heroLabel.textContent = 'ابدأ من الوحدة 1';
+        heroBtn.removeAttribute('title');
+      }
     }
-    // 2) الرابط تحت لوحة البحث
-    const page = read(KEY_PAGE, null);
-    if (recentLabel && page && page.href) {
-      recentLabel.setAttribute('href', page.href);
-      recentLabel.textContent = 'تابع من حيث توقفت: ' + page.title;
-    }
-    // 3) علامة ✓ على البطاقات المزارة
+    // 2) علامة ✓ على البطاقات المزارة
     const seen = read(KEY_SEEN, []);
     cards.forEach(el => el.classList.toggle('visited', seen.includes(el.getAttribute('href'))));
+    // 3) سطر التقدم
+    if (progress) {
+      const n = seen.filter(h => info[h] && info[h].isUnit).length;
+      progress.textContent = n ? 'زرت ' + n + ' من ' + unitCount + ' وحدات' : 'اختر وحدة للبدء';
+    }
   }
 
-  // ---------- تسجيل الزيارة عند الضغط على أي رابط لصفحة معروفة ----------
-  // يشمل: البطاقات، نتائج البحث، زر الغلاف، زر «مفاجأة»، الضغط بالزر الأوسط
+  // ---------- تسجيل الزيارة عند الضغط على أي رابط لملف معروف ----------
+  // يشمل: البطاقات، نتائج البحث، زر الغلاف، زر «مفاجأة»، الزر الأوسط
   function record(e) {
     const a = e.target.closest && e.target.closest('a[href]');
     if (!a) return;
-    const href = (a.getAttribute('href') || '').split('#')[0].split('?')[0];
+    const full = a.getAttribute('href') || '';
+    const href = full.split('#')[0].split('?')[0];
     const meta = info[href];
-    if (!meta) return;                                     // ليس صفحة من البطاقات
-    const entry = { href, title: meta.title };
-    write(KEY_PAGE, entry);
-    if (meta.isUnit) write(KEY_UNIT, entry);
+    if (!meta) return;                                     // ليس ملفاً من البطاقات
+    write(KEY_PAGE, { href, go: full, title: meta.title });
     const seen = read(KEY_SEEN, []);
     if (!seen.includes(href)) { seen.push(href); write(KEY_SEEN, seen); }
     apply();
   }
-  document.addEventListener('click', record, true);        // true = قبل أي معالج آخر
+  document.addEventListener('click', record, true);
   document.addEventListener('auxclick', record, true);
+  window.addEventListener('pageshow', apply);              // عند الرجوع بزر المتصفح
 
-  // العودة بزر «رجوع» في المتصفح تعيد الصفحة من الذاكرة: حدّث الحالة
-  window.addEventListener('pageshow', apply);
+  // ---------- زر مسح البيانات المحفوظة ----------
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      ALL_KEYS.forEach(k => {
+        try { localStorage.removeItem(k); } catch (e) {}
+        try { document.cookie = k + '=;max-age=0;path=/'; } catch (e) {}
+      });
+      apply();
+      clearBtn.textContent = 'تم المسح';
+      setTimeout(() => { clearBtn.textContent = 'مسح بياناتي المحفوظة'; }, 2000);
+    });
+  }
 
-  apply();                                                 // عند فتح الصفحة
+  apply();
 })();
 
 </script>
 
-<!-- ملف خارجي خاص بك (script.js) يُحمَّل بعد كل ما سبق -->
+<!-- ملف خارجي -->
 <script src="script.js"></script>
 
 </body>
