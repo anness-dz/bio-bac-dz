@@ -2395,6 +2395,9 @@ body.light-theme .card-media {
     border-color: #ffffff;
 }
 
+/* وهج مرور الفأرة: فوق الصورة (كانت الصورة ترتفع فوقه فيظهر تحتها) */
+.card-btn::after { z-index: 2; pointer-events: none; }
+
 /* رقم الوحدة الكبير: يظهر مكان الصورة إن لم تتوفر */
 .card-media[data-n]::before {
     content: attr(data-n);
@@ -2410,15 +2413,6 @@ body.light-theme .card-media {
     font-size: 3rem;
     color: color-mix(in srgb, var(--card-glow) 65%, transparent);
 }
-
-/* علامة ✓ خضراء بجانب عنوان كل بطاقة سبق للطالب فتحها (يضعها memory.js) */
-.card-btn.visited .card-title::after {
-    content: "✓";
-    margin-inline-start: 8px;
-    color: #22c55e;
-    font-weight: 800;
-}
-
 
 /* ====================================================================
    [CSS-10-B]  لوحة البحث وصندوق النتائج
@@ -2517,7 +2511,7 @@ body.light-theme .card-media {
     .buttons-grid:not(.review-grid) .card-title { padding: 0 4px; font-size: 0.95rem; }
     .buttons-grid:not(.review-grid) .unit-badge { top: 6px; inset-inline-start: 6px; padding: 1px 8px; font-size: 0.66rem; }
     .review-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .review-grid .card-media { height: 96px; }
+    .review-grid .card-media { height: auto; aspect-ratio: 4 / 3; }
     .review-grid .card-title { padding: 0; font-size: 0.88rem; }
 }
 
@@ -3423,8 +3417,8 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
                 return best;
             }
 
-            // بطاقة المعلومات قرب العضية دون الخروج من الشاشة
-            function showBubble(o) {
+            // بطاقة المعلومات قرب نقطة الضغط (px, py) دون الخروج من الشاشة
+            function showBubble(o, px, py) {
                 const d = o.data;
                 bubble.textContent = '';
                 const t = document.createElement('strong'); t.textContent = d.name;
@@ -3432,10 +3426,10 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
                 const a = document.createElement('a'); a.href = d.href; a.textContent = 'افتح ' + d.unit;
                 bubble.append(t, p, a);
                 bubble.hidden = false;
-                const bw = bubble.offsetWidth, bh = bubble.offsetHeight, r = o.radius();
-                let left = Math.min(Math.max(o.x - bw / 2, 10), W - bw - 10);
-                let top = o.y + r + 10;
-                if (top + bh > H - 10) top = o.y - r - bh - 10;
+                const bw = bubble.offsetWidth, bh = bubble.offsetHeight, gap = 22;
+                let left = Math.min(Math.max(px - bw / 2, 10), W - bw - 10);
+                let top = py + gap;                              // تحت نقطة الضغط
+                if (top + bh > H - 10) top = py - gap - bh;      // وإن لم يتسع فوقها
                 top = Math.min(Math.max(top, 64), H - bh - 10);
                 bubble.style.left = left + 'px';
                 bubble.style.top = top + 'px';
@@ -3461,7 +3455,7 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
             canvas.addEventListener('click', e => {
                 if (!explore) return;
                 const o = hit(e.clientX, e.clientY);
-                if (o) { touchOrganelle(o); pinned = o; showBubble(o); return; }
+                if (o) { touchOrganelle(o); pinned = o; showBubble(o, e.clientX, e.clientY); return; }
                 hideBubble();
                 addRipple(e.clientX, e.clientY);
             });
@@ -4667,10 +4661,8 @@ function toggleTheme() {
         heroBtn.removeAttribute('title');
       }
     }
-    // 2) علامة ✓ على البطاقات المزارة
+    // 2) سطر التقدم
     const seen = read(KEY_SEEN, []);
-    cards.forEach(el => el.classList.toggle('visited', seen.includes(el.getAttribute('href'))));
-    // 3) سطر التقدم
     if (progress) {
       const n = seen.filter(h => info[h] && info[h].isUnit).length;
       progress.textContent = n ? 'زرت ' + n + ' من ' + unitCount + ' وحدات' : 'اختر وحدة للبدء';
