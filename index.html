@@ -52,17 +52,27 @@
     <link rel="apple-touch-icon" href="favicon.png">
 
     <!-- لون شريط المتصفح -->
-    <meta name="theme-color" content="#2e7d32">
+    <meta name="theme-color" content="#080d1a" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f1f5f9" media="(prefers-color-scheme: light)">
     
     <!-- تحسين الظهور عند مشاركة الرابط -->
     <meta property="og:title" content="bio-bac-dz | علوم الطبيعة والحياة لطلاب البكالوريا">
     <meta property="og:description" content="ملخصات وتمارين علوم الطبيعة والحياة (المناعة، التركيب الضوئي، التنفس، تركيب البروتين، الاتصال العصبي).">
-    <meta property="og:image" content="https://anness-dz.github.io/bio-bac-dz/favicon.png">
+    <meta property="og:image" content="https://anness-dz.github.io/bio-bac-dz/og-image.jpg">
+    <meta property="og:image:secure_url" content="https://anness-dz.github.io/bio-bac-dz/og-image.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="bio-bac-dz — علوم الطبيعة والحياة لطلاب البكالوريا">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://anness-dz.github.io/bio-bac-dz/">
     <meta property="og:site_name" content="bio-bac-dz">
     <meta property="og:locale" content="ar_AR">
-    <meta name="twitter:card" content="summary">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="bio-bac-dz | علوم الطبيعة والحياة لطلاب البكالوريا">
+    <meta name="twitter:description" content="دروس وملخصات وتمارين محلولة في علوم الطبيعة والحياة لشعبتي العلوم التجريبية والرياضيات.">
+    <meta name="twitter:image" content="https://anness-dz.github.io/bio-bac-dz/og-image.jpg">
+    <meta name="twitter:image:alt" content="bio-bac-dz — علوم الطبيعة والحياة لطلاب البكالوريا">
     <link rel="canonical" href="https://anness-dz.github.io/bio-bac-dz/">
 
 
@@ -2591,6 +2601,10 @@ body.cell-mode .back-top, body.cell-mode .cell-fab { opacity: 0; pointer-events:
 body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: none; cursor: pointer; }
 
 
+/* شريط تقدم التمرير: لون واحد يتناسق مع الوضعين (بدل التدرج الذي ينتهي بالأخضر) */
+.scroll-progress { background: #38bdf8; }
+body.light-theme .scroll-progress { background: #0284c7; }
+
 /* ====================================================================
    [CSS-10-E]  الأداء: تخفيف الرسم أثناء التمرير والتحميل
    ==================================================================== */
@@ -2605,6 +2619,13 @@ body::before { animation: none; }
 
 /* الظهور التدريجي أسرع وأقصر */
 .js-reveal .reveal { transform: translateY(10px); transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); transition-delay: var(--d, 0ms); }
+
+/* أنواع حركة الظهور أثناء النزول: up ارتفاع | pop تكبير من الصغر | spin تكبير مع دوران | fade ظهور فقط */
+.js-reveal .reveal[data-rv="up"]   { transform: translateY(22px); transition: opacity 0.5s ease var(--d, 0ms), transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms); }
+.js-reveal .reveal[data-rv="pop"]  { transform: scale(0.5); transition: opacity 0.4s ease var(--d, 0ms), transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0ms); }
+.js-reveal .reveal[data-rv="spin"] { transform: scale(0.35) rotate(-40deg); transition: opacity 0.4s ease var(--d, 0ms), transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0ms); }
+.js-reveal .reveal[data-rv="fade"] { transform: none; transition: opacity 0.6s ease var(--d, 0ms); }
+.js-reveal .reveal[data-rv].in { opacity: 1; transform: none; }
 
 /* الهاتف وأجهزة اللمس: لا تمويه خلفي (ثقيل أثناء التمرير) مع خلفيات أكثر كثافة */
 @media (max-width: 900px), (hover: none) {
@@ -2628,6 +2649,159 @@ body::before { animation: none; }
 /* ####################################################################
    ##   [CSS-11]  تعديلات إضافية                                     ##
    #################################################################### */
+
+/* ====================================================================
+   [CSS-12]  مشاركة العبارة: الزر + لوحة المشاركة
+   ==================================================================== */
+/* حاوية الزر والرسالة تحته */
+.sh-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 4px; }
+
+/* زر «مشاركة العبارة»: كبسولة متدرجة بأيقونة داخل دائرة */
+.sh-btn {
+    position: relative; overflow: hidden;
+    display: inline-flex; align-items: center; gap: 14px;
+    padding: 8px 26px 8px 10px;
+    border: 0; border-radius: 999px;
+    background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+    color: #fff; font: inherit; font-size: 1.05rem; font-weight: 800; letter-spacing: 0.2px;
+    box-shadow: 0 12px 28px -12px rgba(99, 102, 241, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.sh-btn-ico {
+    display: grid; place-items: center; flex: none;
+    width: 42px; height: 42px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.22);
+    font-size: 1.05rem;
+    transition: transform 0.3s ease;
+}
+/* لمعة تعبر الزر عند المرور */
+.sh-btn::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.28) 50%, transparent 70%);
+    transform: translateX(120%); transition: transform 0.7s ease; pointer-events: none;
+}
+@media (hover: hover) {
+    .sh-btn:hover { transform: translateY(-3px); filter: brightness(1.06); box-shadow: 0 18px 34px -12px rgba(99, 102, 241, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.4); }
+    .sh-btn:hover::after { transform: translateX(-120%); }
+    .sh-btn:hover .sh-btn-ico { transform: rotate(-12deg) scale(1.08); }
+}
+.sh-btn:active { transform: scale(0.97); }
+.sh-btn:focus-visible { outline: 3px solid #7dd3fc; outline-offset: 3px; }
+
+/* خلفية معتمة خلف اللوحة */
+.sh-backdrop {
+    position: fixed; inset: 0; z-index: 300;
+    background: rgba(2, 6, 16, 0.6);
+    opacity: 0; transition: opacity 0.25s ease;
+}
+.sh-backdrop.open { opacity: 1; }
+.sh-backdrop[hidden], .sh-sheet[hidden] { display: none; }
+body.sh-open { overflow: hidden; }
+
+/* اللوحة: نافذة وسط الشاشة على الحاسوب، وورقة من الأسفل على الهاتف */
+.sh-sheet {
+    position: fixed; z-index: 310;
+    left: 50%; top: 50%;
+    width: min(760px, calc(100vw - 28px)); max-height: calc(100dvh - 40px); overflow-y: auto;
+    padding: 22px 24px 24px;
+    display: grid; grid-template-columns: 250px 1fr; column-gap: 24px; row-gap: 14px;
+    background: var(--popover-bg, #0f172a);
+    border: 1px solid var(--card-border); border-radius: 24px;
+    box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.6);
+    color: var(--text-primary);
+    opacity: 0; transform: translate(-50%, -46%) scale(0.97);
+    transition: opacity 0.22s ease, transform 0.26s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.sh-sheet.open { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.sh-grab { display: none; }
+
+.sh-head { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; }
+.sh-head h3 { font-size: 1.25rem; font-weight: 800; }
+.sh-close {
+    width: 40px; height: 40px; border: 1px solid var(--card-border); border-radius: 50%;
+    background: transparent; color: var(--text-primary); font-size: 1rem; cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.sh-close:hover { background: rgba(148, 163, 184, 0.15); border-color: var(--text-secondary); }
+
+/* معاينة صورة العبارة */
+.sh-preview { grid-row: 2 / 4; margin: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.sh-preview img {
+    display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+    border-radius: 16px; border: 1px solid var(--card-border);
+    background: linear-gradient(135deg, #0d2447, #0a2f3a);
+    box-shadow: 0 16px 34px -18px rgba(0, 0, 0, 0.7);
+}
+.sh-preview figcaption { color: var(--text-secondary); font-size: 0.78rem; }
+
+/* شبكة التطبيقات */
+.sh-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px 2px; align-content: start; }
+.sh-item {
+    display: flex; flex-direction: column; align-items: center; gap: 7px;
+    padding: 8px 2px; border: 0; border-radius: 14px; background: none;
+    color: var(--text-secondary); font: inherit; font-size: 0.78rem; font-weight: 700; cursor: pointer;
+}
+.sh-item i {
+    display: grid; place-items: center; width: 50px; height: 50px; border-radius: 16px;
+    background: var(--c); color: #fff; font-size: 1.35rem;
+    box-shadow: 0 10px 20px -10px var(--c), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transition: transform 0.18s ease;
+}
+.sh-item[data-id="x"] i, .sh-item[data-id="threads"] i { border: 1px solid rgba(255, 255, 255, 0.22); }
+@media (hover: hover) {
+    .sh-item:hover { color: var(--text-primary); }
+    .sh-item:hover i { transform: translateY(-4px); }
+}
+.sh-item:active i { transform: scale(0.92); }
+.sh-item:focus-visible { outline: 2px solid #7dd3fc; outline-offset: 2px; }
+
+/* أزرار الصورة */
+.sh-actions { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-self: end; }
+.sh-act {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    min-height: 52px; padding: 8px 16px;
+    border: 1px solid var(--card-border); border-radius: 16px;
+    background: rgba(148, 163, 184, 0.1); color: var(--text-primary);
+    font: inherit; font-size: 0.92rem; font-weight: 800; cursor: pointer; text-align: start;
+    transition: transform 0.18s ease, border-color 0.2s ease;
+}
+.sh-act small { display: block; margin-top: 1px; color: inherit; opacity: 0.8; font-size: 0.7rem; font-weight: 500; }
+.sh-act.primary { border-color: transparent; background: linear-gradient(135deg, #0ea5e9, #6366f1); color: #fff; }
+@media (hover: hover) { .sh-act:hover { transform: translateY(-2px); border-color: #38bdf8; } }
+.sh-act:active { transform: scale(0.97); }
+
+.sh-toast {
+    grid-column: 1 / -1; min-height: 1.4em; margin: 0; text-align: center;
+    color: #22c55e; font-size: 0.86rem; font-weight: 700; opacity: 0; transition: opacity 0.25s ease;
+}
+body.light-theme .sh-toast { color: #15803d; }
+.sh-toast.show { opacity: 1; }
+
+/* الهاتف: ورقة من الأسفل */
+@media (max-width: 640px) {
+    .sh-sheet {
+        left: 0; right: 0; top: auto; bottom: 0; width: auto; max-height: 92dvh;
+        grid-template-columns: 1fr; padding: 10px 16px calc(18px + env(safe-area-inset-bottom));
+        border-radius: 24px 24px 0 0; border-bottom: 0;
+        transform: translateY(100%); opacity: 1;
+        transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .sh-sheet.open { transform: translateY(0); }
+    .sh-grab { display: block; width: 44px; height: 5px; margin: 2px auto 4px; border-radius: 3px; background: rgba(148, 163, 184, 0.45); }
+    .sh-head { order: 0; }
+    .sh-preview { grid-row: auto; order: 1; }
+    .sh-preview img { width: auto; max-width: 100%; height: 150px; aspect-ratio: 4 / 5; }
+    .sh-preview figcaption { display: none; }
+    .sh-grid { order: 2; }
+    .sh-item { padding: 6px 0; font-size: 0.7rem; }
+    .sh-item i { width: 48px; height: 48px; font-size: 1.2rem; }
+    .sh-actions { order: 3; }
+    .sh-toast { order: 4; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .sh-sheet, .sh-backdrop, .sh-btn, .sh-btn::after, .sh-btn-ico { transition: none; }
+}
 </style>
 
     <link rel="stylesheet" href="style.css">
@@ -2650,8 +2824,9 @@ body::before { animation: none; }
                 try { document.cookie = k + '=' + encodeURIComponent(v) + ';max-age=31536000;path=/;SameSite=Lax'; } catch (e) {}
             }
         };
-        // تطبيق الوضع المحفوظ فوراً قبل ظهور الصفحة
-        if (bioStore.get('theme') === 'light') document.body.classList.add('light-theme');
+        // تطبيق الوضع المحفوظ (أو إعداد الجهاز عند أول زيارة) قبل ظهور الصفحة
+        var savedTheme = bioStore.get('theme');
+        if (savedTheme ? savedTheme === 'light' : matchMedia('(prefers-color-scheme: light)').matches) document.body.classList.add('light-theme');
         if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) document.documentElement.classList.add('js-reveal');
     </script>
     <a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
@@ -2992,64 +3167,13 @@ body::before { animation: none; }
         </p>
 
         <!-- زر المشاركة -->
-        <div class="share-wrapper">
-
-            <button
-                type="button"
-                class="main-share-btn"
-                onclick="toggleShareMenu()"
-                aria-controls="share-menu"
-                aria-expanded="false">
-                <span>
-                    <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
-                    مشاركة العبارة
-                </span>
+        <div class="sh-wrap">
+            <button type="button" class="sh-btn" id="sh-open" aria-haspopup="dialog" aria-expanded="false" aria-controls="sh-sheet">
+                <span class="sh-btn-ico"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i></span>
+                <span class="sh-btn-txt">مشاركة العبارة</span>
             </button>
-
-            <div id="share-menu" class="share-popover" hidden>
-
-                <!-- Facebook -->
-                <button type="button" class="pop-btn fb" onclick="shareTo('facebook')">
-                    <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
-                    <span>فيسبوك</span>
-                </button>
-
-                <!-- Messenger -->
-                <button type="button" class="pop-btn ms" onclick="shareTo('messenger')">
-                    <i class="fa-brands fa-facebook-messenger" aria-hidden="true"></i>
-                    <span>ماسنجر</span>
-                </button>
-
-                <!-- WhatsApp -->
-                <button type="button" class="pop-btn wa" onclick="shareTo('whatsapp')">
-                    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
-                    <span>واتساب</span>
-                </button>
-
-                <!-- Telegram -->
-                <button type="button" class="pop-btn tg" onclick="shareTo('telegram')">
-                    <i class="fa-brands fa-telegram" aria-hidden="true"></i>
-                    <span>تلغرام</span>
-                </button>
-
-                <!-- TikTok -->
-                <button type="button" class="pop-btn tk" onclick="shareTo('tiktok')">
-                    <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
-                    <span>TikTok</span>
-                </button>
-
-                <!-- نسخ -->
-                <button type="button" class="pop-btn cp" onclick="shareTo('copy')">
-                    <i class="fa-regular fa-copy" aria-hidden="true"></i>
-                    <span>نسخ النص</span>
-                </button>
-
-            </div>
+            <span id="toast-msg" class="toast-msg" role="status" aria-live="polite"></span>
         </div>
-
-        <span id="toast-msg" class="toast-msg" role="status" aria-live="polite">
-            تم نسخ العبارة والرابط بنجاح! 📋
-        </span>
 
     </div>
 </div>
@@ -3162,6 +3286,29 @@ body::before { animation: none; }
 
 
 
+
+    <!-- لوحة المشاركة: معاينة صورة العبارة + شبكة التطبيقات + أزرار الصورة -->
+    <div class="sh-backdrop" id="sh-backdrop" hidden></div>
+    <section class="sh-sheet" id="sh-sheet" role="dialog" aria-modal="true" aria-labelledby="sh-title" hidden>
+        <div class="sh-grab" aria-hidden="true"></div>
+        <header class="sh-head">
+            <h3 id="sh-title">شارك العبارة</h3>
+            <button type="button" class="sh-close" id="sh-close" aria-label="إغلاق"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+        </header>
+        <figure class="sh-preview">
+            <img id="sh-img" alt="معاينة صورة العبارة" width="360" height="450">
+            <figcaption id="sh-note">جاري تجهيز الصورة…</figcaption>
+        </figure>
+        <div class="sh-grid" id="sh-grid" role="list"></div>
+        <div class="sh-actions">
+            <button type="button" class="sh-act primary" id="sh-image">
+                <i class="fa-solid fa-image" aria-hidden="true"></i>
+                <span>مشاركة كصورة<small>إنستغرام • تيك توك • ستوري</small></span>
+            </button>
+            <button type="button" class="sh-act" id="sh-save"><i class="fa-solid fa-download" aria-hidden="true"></i><span>حفظ</span></button>
+        </div>
+        <p class="sh-toast" id="sh-toast" role="status" aria-live="polite"></p>
+    </section>
 
     <!--
 ####################################################################
@@ -3461,7 +3608,7 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
             });
 
             // الوضع العادي: العناصر التي لا تُطلق موجة عند الضغط عليها
-            const INTERACTIVE = 'a,button,input,textarea,select,label,summary,.smart-results,.share-popover,.bio-node,.cell-bubble,.cell-hud';
+            const INTERACTIVE = 'a,button,input,textarea,select,label,summary,.smart-results,.sh-sheet,.sh-backdrop,.bio-node,.cell-bubble,.cell-hud';
             document.addEventListener('click', e => {
                 if (explore) return;
                 if (e.target.closest(INTERACTIVE)) return;
@@ -3482,7 +3629,7 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
 // ####################################################################
 
 // تاريخ ووقت البكالوريا
-const bacDate = new Date(2027, 6, 14, 8, 0, 0).getTime();
+const bacDate = Date.parse('2027-06-14T08:00:00+01:00');   // 14 جوان 2027، 08:00 بتوقيت الجزائر (UTC+1)
 let currentDaysLeft = 0;
 let prevSec = -1;
 
@@ -3562,6 +3709,11 @@ function triggerCyberFlash(circleId) {
 // العبارة التحفيزية
 // ==========================================
 
+function setQuoteText(el, text) {
+    if (el.dataset.q !== text) { el.innerText = text; el.dataset.q = text; }
+}
+
+// يختار العبارة التحفيزية حسب الأيام المتبقية
 function updateQuote(daysLeft) {
 
     const quoteElement = document.getElementById("bio-quote");
@@ -3570,28 +3722,23 @@ function updateQuote(daysLeft) {
 
     if (daysLeft > 180) {
 
-        quoteElement.innerText =
-            "🌿 البدايات القوية تصنع النهايات المذهلة.. نظّم وقتك واثبت!";
+        setQuoteText(quoteElement, "🌿 البدايات القوية تصنع النهايات المذهلة.. نظّم وقتك واثبت!");
 
     } else if (daysLeft > 90) {
 
-        quoteElement.innerText =
-            "📚 استمراريتك اليوم هي التي ستجعلك تبتسم يوم النتائج!";
+        setQuoteText(quoteElement, "📚 استمراريتك اليوم هي التي ستجعلك تبتسم يوم النتائج!");
 
     } else if (daysLeft > 30) {
 
-        quoteElement.innerText =
-            "🌾 اقترب الموعد! ضاعف تركيزك ولا تدع الدقائق تضيع سدى.";
+        setQuoteText(quoteElement, "🌾 اقترب الموعد! ضاعف تركيزك ولا تدع الدقائق تضيع سدى.");
 
     } else if (daysLeft > 0) {
 
-        quoteElement.innerText =
-            "🍂 الشوط الأخير! ضع كل طاقتك هنا، المجد ينتظرك يا بطل!";
+        setQuoteText(quoteElement, "🍂 الشوط الأخير! ضع كل طاقتك هنا، المجد ينتظرك يا بطل!");
 
     } else {
 
-        quoteElement.innerText =
-            "🎓 حان وقت حصاد التعب! توكلوا على الله وبالتوفيق لكم جميعاً.";
+        setQuoteText(quoteElement, "🎓 حان وقت حصاد التعب! توكلوا على الله وبالتوفيق لكم جميعاً.");
     }
 }
 
@@ -3632,281 +3779,544 @@ function showInfo(type) {
 
 
 
+// ####################################################################
+// ##   [JS-7]  مشاركة العبارة                                       ##
+// ####################################################################
+
 // ==========================================
-// قائمة المشاركة الدائرية
+// نص المشاركة: العبارة مكتوبة + اسم الموقع + الرابط + وسوم
 // ==========================================
+const SHARE_SIGNATURE = 'bio-bac-dz — علوم الطبيعة والحياة للبكالوريا';
+const SHARE_TAGS = '#بكالوريا #علوم_الطبيعة_والحياة';
 
-function toggleShareMenu() {
-
-    const menu = document.getElementById("share-menu");
-    const button = document.querySelector(".main-share-btn");
-
-    if (!menu) return;
-
-    const isOpen = menu.classList.contains("active");
-
-    if (isOpen) {
-
-        menu.classList.remove("active");
-        menu.hidden = true;
-
-        if (button) {
-            button.setAttribute("aria-expanded", "false");
-        }
-
-    } else {
-
-        menu.hidden = false;
-
-        // السماح للمتصفح بإظهار الحركة
-        requestAnimationFrame(() => {
-            menu.classList.add("active");
-        });
-
-        if (button) {
-            button.setAttribute("aria-expanded", "true");
-        }
-    }
+// رابط الموقع النظيف (بدون # أو ؟)
+function getShareUrl() {
+    const canon = document.querySelector('link[rel="canonical"]');
+    if (location.protocol === 'file:' && canon) return canon.href;
+    return location.origin + location.pathname.replace(/index\.html$/, '');
 }
 
+// صورة المعاينة العامة للموقع (تحتاجها تطبيقات تطلب رابط صورة مثل Pinterest)
+function getShareImageUrl() {
+    const m = document.querySelector('meta[property="og:image"]');
+    return m ? m.content : getShareUrl() + 'og-image.jpg';
+}
 
-// ==========================================
-// الحصول على العبارة والرابط
-// ==========================================
-
+// يجهّز نص المشاركة (العبارة + الرابط)
 function getShareContent() {
-
-    const quoteElement = document.getElementById("bio-quote");
-
-    const quote = quoteElement
-        ? quoteElement.innerText.trim()
-        : "";
-
-    const url = window.location.href;
-
-    return {
-        quote: quote,
-        url: url,
-        text: `${quote}\n\n${url}`
-    };
+    const el = document.getElementById('bio-quote');
+    const quote = el ? el.innerText.replace(/\s+/g, ' ').trim() : '';
+    const url = getShareUrl();
+    const body = '«' + quote + '»\n\n' + SHARE_SIGNATURE;       // العبارة + التوقيع (بدون رابط)
+    return { quote, url, body, text: body + '\n' + url + '\n\n' + SHARE_TAGS };
 }
 
+// ==========================================
+// قائمة التطبيقات في لوحة المشاركة
+// id: معرّف | label: الاسم | icon: أيقونة Font Awesome | color: لون الأيقونة
+// ==========================================
+const SHARE_APPS = [
+    { id: 'facebook',  label: 'فيسبوك',   icon: 'fa-brands fa-facebook-f',        color: '#1877f2' },
+    { id: 'messenger', label: 'ماسنجر',   icon: 'fa-brands fa-facebook-messenger', color: '#0a84ff' },
+    { id: 'whatsapp',  label: 'واتساب',   icon: 'fa-brands fa-whatsapp',           color: '#1fb855' },
+    { id: 'telegram',  label: 'تيليجرام', icon: 'fa-brands fa-telegram',           color: '#229ed9' },
+    { id: 'x',         label: 'X',        icon: 'fa-brands fa-x-twitter',          color: '#0f1419' },
+    { id: 'threads',   label: 'Threads',  icon: 'fa-brands fa-threads',            color: '#1c1c1e' },
+    { id: 'pinterest', label: 'Pinterest', icon: 'fa-brands fa-pinterest-p',       color: '#e60023' },
+    { id: 'viber',     label: 'فايبر',    icon: 'fa-brands fa-viber',              color: '#7360f2' },
+    { id: 'reddit',    label: 'Reddit',   icon: 'fa-brands fa-reddit-alien',       color: '#ff4500' },
+    { id: 'tumblr',    label: 'Tumblr',   icon: 'fa-brands fa-tumblr',             color: '#36465d' },
+    { id: 'email',     label: 'البريد',   icon: 'fa-solid fa-envelope',            color: '#0ea5e9' },
+    { id: 'copy',      label: 'نسخ النص', icon: 'fa-regular fa-copy',              color: '#64748b' },
+    { id: 'native',    label: 'المزيد',   icon: 'fa-solid fa-ellipsis',            color: '#8b5cf6', needs: 'share' }
+];
 
 // ==========================================
-// المشاركة
+// صورة العبارة: قالب مرسوم بمساحة فارغة تمتلئ بعبارة المرحلة الحالية
 // ==========================================
+let quoteImage = { key: '', blob: null, url: '' };
 
-async function shareTo(platform) {
+// مراحل العبارات (العتبات نفسها في updateQuote): لكل مرحلة ألوان وشارة ورمز
+// a/b: لون التمييز | bg: خلفية الصفحة | lens: ألوان العدسة | nuc: ألوان النواة | motif: الرمز
+const QUOTE_TIERS = [
+    { id: 'start',   label: 'مرحلة الانطلاق',    a: '#34d399', b: '#16a34a', bg: ['#04201a', '#0a3a2e'], lens: ['#1f9d6b', '#0f5e45', '#06261d'], nuc: ['#d1fae5', '#6ee7b7', '#047857'], motif: 'sprout' },
+    { id: 'steady',  label: 'مرحلة الاستمرارية', a: '#38bdf8', b: '#2563eb', bg: ['#07122b', '#0c2d5a'], lens: ['#1f5fb8', '#0f2f66', '#071533'], nuc: ['#d7e0ff', '#8aa0ff', '#2a3a9b'], motif: 'books' },
+    { id: 'focus',   label: 'مرحلة التركيز',     a: '#fbbf24', b: '#d97706', bg: ['#1c1304', '#3a2a08'], lens: ['#b7791f', '#7a4a0f', '#2a1a05'], nuc: ['#fef3c7', '#fcd34d', '#b45309'], motif: 'wheat' },
+    { id: 'final',   label: 'الشوط الأخير',      a: '#fb923c', b: '#dc2626', bg: ['#240d08', '#4a1a0c'], lens: ['#c2410c', '#7c2d12', '#2a0e06'], nuc: ['#ffedd5', '#fdba74', '#c2410c'], motif: 'leaf' },
+    { id: 'harvest', label: 'يوم الحصاد',        a: '#c4b5fd', b: '#f59e0b', bg: ['#150b2e', '#2e1b5e'], lens: ['#7c3aed', '#4c1d95', '#170a38'], nuc: ['#ede9fe', '#c4b5fd', '#6d28d9'], motif: 'cap' }
+];
 
-    const content = getShareContent();
-
-    if (!content.quote) {
-        showShareToast("لا توجد عبارة للمشاركة");
-        return;
-    }
-
-
-    // ==========================
-    // نسخ
-    // ==========================
-
-    if (platform === "copy") {
-
-        await copyShareContent(content.text);
-        return;
-    }
-
-
-    // ==========================
-    // WhatsApp
-    // ==========================
-
-    if (platform === "whatsapp") {
-
-        const url =
-            "https://wa.me/?text=" +
-            encodeURIComponent(content.text);
-
-        window.open(url, "_blank");
-        return;
-    }
-
-
-    // ==========================
-    // Telegram
-    // ==========================
-
-    if (platform === "telegram") {
-
-        const url =
-            "https://t.me/share/url" +
-            "?url=" + encodeURIComponent(content.url) +
-            "&text=" + encodeURIComponent(content.quote);
-
-        window.open(url, "_blank");
-        return;
-    }
-
-
-
-// ==========================
-// Facebook
-// ==========================
-
-if (platform === "facebook") {
-
-    const shareUrl =
-        "https://www.facebook.com/sharer/sharer.php?u=" +
-        encodeURIComponent(content.url);
-
-    window.open(
-        shareUrl,
-        "facebookShare",
-        "width=700,height=600,resizable=yes,scrollbars=yes"
-    );
-
-    return;
+// المرحلة بحسب الأيام المتبقية (نفس عتبات updateQuote)
+function getQuoteTier(days) {
+    if (days === null || days > 180) return 0;
+    if (days > 90) return 1;
+    if (days > 30) return 2;
+    if (days > 0) return 3;
+    return 4;
 }
 
-    // ==========================
-    // Messenger
-    // ==========================
+// إزالة الإيموجي من نص الصورة وتنظيفه
+const cleanQuote = t => t.replace(/[\p{Extended_Pictographic}\uFE0F\u200d]/gu, '').replace(/\s+/g, ' ').trim();
 
-    if (platform === "messenger") {
-
-        // نسخ المحتوى أولًا لأن المشاركة المباشرة
-        // تحتاج إعداد Facebook App خاصًا.
-
-        await copyShareContent(content.text);
-
-        showShareToast(
-            "تم نسخ العبارة والرابط — يمكنك لصقه في ماسنجر"
-        );
-
-        return;
-    }
-
-
-    // ==========================
-    // TikTok
-    // ==========================
-
-    if (platform === "tiktok") {
-
-        await copyShareContent(content.text);
-
-        showShareToast(
-            "تم نسخ العبارة والرابط — يمكنك لصقه في TikTok"
-        );
-
-        return;
-    }
+// مستطيل بحواف دائرية
+function roundRectPath(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
 }
 
+// تقسيم النص إلى أسطر بحسب العرض المتاح
+function wrapLines(ctx, text, maxW) {
+    const words = text.split(' '), lines = [];
+    let cur = '';
+    words.forEach(w => {
+        const test = cur ? cur + ' ' + w : w;
+        if (ctx.measureText(test).width > maxW && cur) { lines.push(cur); cur = w; } else cur = test;
+    });
+    if (cur) lines.push(cur);
+    return lines;
+}
 
-// ==========================================
-// نسخ العبارة + الرابط
-// ==========================================
+// عدد الأيام المتبقية على البكالوريا
+function getDaysLeft() {
+    const n = parseInt((document.getElementById('stat-days') || {}).textContent, 10);
+    if (!isNaN(n)) return n;
+    return typeof bacDate !== 'undefined' ? Math.max(0, Math.floor((bacDate - Date.now()) / 864e5)) : null;
+}
 
-async function copyShareContent(text) {
+// رمز المرحلة داخل الشارة الدائرية (مرسوم حول النقطة 0,0 بنصف قطر نحو 60)
+function motifSvg(m, t) {
+    if (m === 'sprout') return `<path d="M0 56 C0 26 0 4 0 -16" stroke="#86efac" stroke-width="8" stroke-linecap="round" fill="none"/>
+        <path d="M0 12 C-46 12 -60 -22 -52 -46 C-18 -42 -2 -20 0 12Z" fill="#22c55e"/><path d="M0 -6 C40 -6 58 -38 50 -60 C16 -56 0 -32 0 -6Z" fill="#4ade80"/>
+        <path d="M-6 6 C-26 0 -38 -14 -44 -34" stroke="#14532d" stroke-width="2.5" fill="none" opacity=".6"/>`;
+    if (m === 'books') return `<rect x="-54" y="26" width="108" height="26" rx="6" fill="#2563eb"/><rect x="-46" y="0" width="96" height="26" rx="6" fill="#f59e0b"/>
+        <rect x="-50" y="-26" width="100" height="26" rx="6" fill="#ef4444"/><g stroke="#fff" stroke-opacity=".55" stroke-width="3" stroke-linecap="round">
+        <line x1="-36" y1="39" x2="30" y2="39"/><line x1="-28" y1="13" x2="34" y2="13"/><line x1="-32" y1="-13" x2="30" y2="-13"/></g>`;
+    if (m === 'wheat') {
+        let g = '<path d="M0 60 L0 -44" stroke="#fcd34d" stroke-width="6" stroke-linecap="round"/>';
+        for (let i = 0; i < 5; i++) {
+            const y = -34 + i * 15;
+            g += `<ellipse cx="-15" cy="${y}" rx="8" ry="15" transform="rotate(-30 -15 ${y})" fill="#fbbf24"/><ellipse cx="15" cy="${y}" rx="8" ry="15" transform="rotate(30 15 ${y})" fill="#f59e0b"/>`;
+        }
+        return g + '<ellipse cx="0" cy="-54" rx="8" ry="16" fill="#fcd34d"/>';
+    }
+    if (m === 'leaf') return `<path d="M0 -58 C32 -42 54 -20 42 6 C36 20 18 20 8 14 L8 50 L-8 50 L-8 14 C-18 20 -36 20 -42 6 C-54 -20 -32 -42 0 -58Z" fill="url(#mLeaf)"/>
+        <g stroke="#7c2d12" stroke-width="3" stroke-linecap="round" fill="none" opacity=".7"><path d="M0 44 L0 -34"/><path d="M0 8 L-26 -8"/><path d="M0 8 L26 -8"/><path d="M0 -14 L-16 -26"/><path d="M0 -14 L16 -26"/></g>`;
+    return `<polygon points="0,-36 66,-6 0,24 -66,-6" fill="#1f2937" stroke="#e9d5ff" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M-36 6 L-36 32 C-22 46 22 46 36 32 L36 6 L0 20Z" fill="#374151"/>
+        <path d="M58 -4 L58 32" stroke="#fbbf24" stroke-width="4" stroke-linecap="round"/><circle cx="58" cy="38" r="7" fill="#fbbf24"/>
+        <polygon points="0,-28 40,-9 0,10 -40,-9" fill="#fff" opacity=".1"/>`;
+}
 
+// قالب الصورة كاملاً بصيغة SVG (1080×1350): مشهد عدسة مجهر + شارة المرحلة + إطار فارغ للعبارة
+function templateSvg(t) {
+    let seed = 7;
+    const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+    let bokeh = '', ribs = '', dna = '';
+    for (let i = 0; i < 14; i++) {
+        const r = 24 + rnd() * 54;
+        bokeh += `<circle cx="${(40 + rnd() * 470).toFixed(0)}" cy="${(90 + rnd() * 450).toFixed(0)}" r="${r.toFixed(0)}" fill="${t.a}" opacity="${(0.1 + rnd() * 0.14).toFixed(2)}"/>`;
+    }
+    for (let i = 0; i < 40; i++) {
+        const x = 40 + rnd() * 440, y = 70 + rnd() * 480;
+        if (Math.hypot(x - 262, y - 292) < 118) continue;
+        ribs += `<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${(2.4 + rnd() * 3).toFixed(1)}" opacity="${(0.35 + rnd() * 0.5).toFixed(2)}"/>`;
+    }
+    // حلزون DNA
+    const x0 = 372, y0 = 122, x1 = 470, y1 = 292, dx = x1 - x0, dy = y1 - y0, L = Math.hypot(dx, dy), nx = -dy / L, ny = dx / L;
+    let pa = '', pb = '';
+    for (let i = 0; i <= 60; i++) {
+        const k = i / 60, off = Math.sin(k * Math.PI * 4.2) * 22, px = x0 + dx * k, py = y0 + dy * k;
+        pa += (i ? 'L' : 'M') + (px + nx * off).toFixed(1) + ' ' + (py + ny * off).toFixed(1) + ' ';
+        pb += (i ? 'L' : 'M') + (px - nx * off).toFixed(1) + ' ' + (py - ny * off).toFixed(1) + ' ';
+    }
+    for (let i = 0; i <= 22; i++) {
+        const k = i / 22, ph = k * Math.PI * 4.2, off = Math.sin(ph) * 22, px = x0 + dx * k, py = y0 + dy * k;
+        dna += `<line x1="${(px + nx * off).toFixed(1)}" y1="${(py + ny * off).toFixed(1)}" x2="${(px - nx * off).toFixed(1)}" y2="${(py - ny * off).toFixed(1)}" stroke="#e9d5ff" stroke-opacity="${(0.35 + 0.4 * Math.abs(Math.cos(ph))).toFixed(2)}" stroke-width="2.2"/>`;
+    }
+    dna += `<path d="${pa}" fill="none" stroke="#22d3ee" stroke-width="5" stroke-linecap="round"/><path d="${pb}" fill="none" stroke="#f472b6" stroke-width="5" stroke-linecap="round"/>`;
+
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350"><defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${t.bg[0]}"/><stop offset="1" stop-color="${t.bg[1]}"/></linearGradient>
+<radialGradient id="g1" cx="90%" cy="0%" r="70%"><stop offset="0" stop-color="${t.a}" stop-opacity=".30"/><stop offset="1" stop-color="${t.a}" stop-opacity="0"/></radialGradient>
+<radialGradient id="g2" cx="5%" cy="100%" r="60%"><stop offset="0" stop-color="${t.b}" stop-opacity=".28"/><stop offset="1" stop-color="${t.b}" stop-opacity="0"/></radialGradient>
+<radialGradient id="lens" cx="45%" cy="40%" r="75%"><stop offset="0" stop-color="${t.lens[0]}"/><stop offset=".55" stop-color="${t.lens[1]}"/><stop offset="1" stop-color="${t.lens[2]}"/></radialGradient>
+<radialGradient id="vig" cx="50%" cy="50%" r="50%"><stop offset=".62" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".62"/></radialGradient>
+<radialGradient id="nuc" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="${t.nuc[0]}"/><stop offset=".45" stop-color="${t.nuc[1]}"/><stop offset="1" stop-color="${t.nuc[2]}"/></radialGradient>
+<linearGradient id="mito" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd2a1"/><stop offset=".5" stop-color="#fb923c"/><stop offset="1" stop-color="#c2410c"/></linearGradient>
+<linearGradient id="chl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#bbf7d0"/><stop offset=".5" stop-color="#34d399"/><stop offset="1" stop-color="#15803d"/></linearGradient>
+<linearGradient id="bezel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e2e8f0"/><stop offset=".35" stop-color="#64748b"/><stop offset=".7" stop-color="#1e293b"/><stop offset="1" stop-color="#94a3b8"/></linearGradient>
+<linearGradient id="mLeaf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fdba74"/><stop offset="1" stop-color="#dc2626"/></linearGradient>
+<linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${t.a}"/><stop offset="1" stop-color="${t.b}"/></linearGradient>
+<filter id="b2"><feGaussianBlur stdDeviation="2"/></filter><filter id="b6"><feGaussianBlur stdDeviation="6"/></filter><filter id="b14"><feGaussianBlur stdDeviation="14"/></filter>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="lc"><circle cx="262" cy="315" r="236"/></clipPath>
+<pattern id="dots" width="36" height="36" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.6" fill="#fff" fill-opacity=".07"/></pattern>
+</defs>
+<rect width="1080" height="1350" fill="url(#bg)"/><rect width="1080" height="1350" fill="url(#g1)"/><rect width="1080" height="1350" fill="url(#g2)"/><rect width="1080" height="1350" fill="url(#dots)"/>
+
+<!-- مشهد العدسة -->
+<g transform="translate(540 265) scale(.87) translate(-262 -315)">
+<circle cx="262" cy="315" r="300" fill="${t.a}" opacity=".16" filter="url(#b14)"/>
+<g clip-path="url(#lc)"><rect x="0" y="0" width="560" height="630" fill="url(#lens)"/>
+<g filter="url(#b6)">${bokeh}</g>
+<g fill="#e8eefc">${ribs}</g>
+<g filter="url(#glow)">${dna}</g>
+<g transform="translate(398 392) rotate(-32)"><ellipse rx="86" ry="44" fill="url(#mito)"/><ellipse rx="86" ry="44" fill="none" stroke="#ffe3c2" stroke-width="3" opacity=".7"/><ellipse rx="72" ry="31" fill="#9a3412" opacity=".55"/>
+<path d="M-58 -26 C-52 -2 -44 -2 -40 24 M-34 -29 C-28 -4 -20 -4 -16 28 M-8 -30 C-2 -4 6 -4 10 30 M18 -29 C24 -4 32 -4 36 27 M44 -24 C48 -4 54 -2 58 18" fill="none" stroke="#ffd9b0" stroke-width="3.2" stroke-linecap="round"/></g>
+<g transform="translate(142 452) rotate(-14)"><ellipse rx="82" ry="46" fill="url(#chl)"/><ellipse rx="82" ry="46" fill="none" stroke="#dcfce7" stroke-width="3" opacity=".7"/>
+<g fill="#14532d" opacity=".9"><g transform="translate(-34 -14)"><rect width="30" height="5" rx="2.5"/><rect y="7" width="30" height="5" rx="2.5"/><rect y="14" width="30" height="5" rx="2.5"/><rect y="21" width="30" height="5" rx="2.5"/></g>
+<g transform="translate(8 -22)"><rect width="30" height="5" rx="2.5"/><rect y="7" width="30" height="5" rx="2.5"/><rect y="14" width="30" height="5" rx="2.5"/><rect y="21" width="30" height="5" rx="2.5"/></g>
+<g transform="translate(2 8)"><rect width="30" height="5" rx="2.5"/><rect y="7" width="30" height="5" rx="2.5"/><rect y="14" width="30" height="5" rx="2.5"/></g></g></g>
+<g transform="translate(262 292)"><circle r="112" fill="${t.nuc[1]}" opacity=".25" filter="url(#b14)"/><circle r="100" fill="url(#nuc)"/><circle r="100" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="3"/>
+<circle r="88" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="5" stroke-dasharray="1 13" stroke-linecap="round"/><circle cx="14" cy="10" r="30" fill="${t.nuc[2]}"/>
+<ellipse cx="-34" cy="-52" rx="44" ry="20" fill="#fff" opacity=".35" filter="url(#b6)" transform="rotate(-28 -34 -52)"/></g>
+</g>
+<circle cx="262" cy="315" r="236" fill="url(#vig)"/>
+<circle cx="262" cy="315" r="246" fill="none" stroke="url(#bezel)" stroke-width="16"/>
+<path d="M96 196 A190 190 0 0 1 252 128" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="7" stroke-linecap="round" filter="url(#b2)"/>
+</g>
+
+<!-- شارة المرحلة (الرمز) -->
+<g transform="translate(790 470)"><circle r="92" fill="#000" opacity=".35" filter="url(#b6)"/><circle r="86" fill="${t.bg[0]}" stroke="url(#ring)" stroke-width="7"/><circle r="74" fill="${t.a}" opacity=".12"/>
+<g transform="scale(.95)">${motifSvg(t.motif, t)}</g></g>
+
+<!-- الإطار الفارغ الذي تمتلئ فيه العبارة -->
+<rect x="70" y="590" width="940" height="500" rx="48" fill="#fff" fill-opacity=".06" stroke="${t.a}" stroke-opacity=".6" stroke-width="3"/>
+<rect x="70" y="590" width="940" height="500" rx="48" fill="none" stroke="#fff" stroke-opacity=".08" stroke-width="10"/>
+</svg>`;
+}
+
+// تحميل صورة SVG (بيانات داخلية، لا تلوّث الكانفاس ولا تحتاج ملفات خارجية)
+function loadSvgImage(svg) {
+    return new Promise((res, rej) => {
+        const i = new Image();
+        i.onload = () => res(i); i.onerror = () => rej(new Error('svg'));
+        i.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    });
+}
+
+// موضع النص داخل الإطار الفارغ
+const TEXT_BOX = { x: 110, y: 715, w: 860, h: 345 };
+
+async function drawQuoteCard(quote, days) {
+    const W = 1080, H = 1350, tier = QUOTE_TIERS[getQuoteTier(days)];
+    const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+    const ctx = cv.getContext('2d');
+    const FF = "'Tajawal','IBM Plex Sans Arabic',system-ui,sans-serif";
+    // انتظار تحميل الخط بحد أقصى 1.2 ثانية (إن تأخر نرسم بالخط البديل ولا تتعطل الصورة)
     try {
+        await Promise.race([
+            Promise.all([document.fonts.load('700 64px Tajawal'), document.fonts.load('500 34px Tajawal')]),
+            new Promise(r => setTimeout(r, 1200))
+        ]);
+    } catch (e) {}
 
-        await navigator.clipboard.writeText(text);
-
-        showShareToast(
-            "تم نسخ العبارة والرابط بنجاح! 📋"
-        );
-
-    } catch (error) {
-
-        const textarea =
-            document.createElement("textarea");
-
-        textarea.value = text;
-
-        textarea.style.position = "fixed";
-        textarea.style.left = "-9999px";
-
-        document.body.appendChild(textarea);
-
-        textarea.focus();
-        textarea.select();
-
-        try {
-            document.execCommand("copy");
-
-            showShareToast(
-                "تم نسخ العبارة والرابط بنجاح! 📋"
-            );
-
-        } catch (copyError) {
-
-            showShareToast(
-                "تعذر نسخ النص"
-            );
-        }
-
-        textarea.remove();
+    // القالب المرسوم (وإن تعذّر تحميله نرسم خلفية بسيطة بنفس الألوان)
+    try { ctx.drawImage(await loadSvgImage(templateSvg(tier)), 0, 0, W, H); }
+    catch (e) {
+        const g = ctx.createLinearGradient(0, 0, W, H); g.addColorStop(0, tier.bg[0]); g.addColorStop(1, tier.bg[1]);
+        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+        ctx.strokeStyle = tier.a; ctx.lineWidth = 3; roundRectPath(ctx, 70, 590, 940, 500, 48); ctx.stroke();
     }
+
+    ctx.textBaseline = 'alphabetic'; ctx.direction = 'rtl'; ctx.textAlign = 'center';
+
+    // شارة اسم المرحلة فوق الإطار
+    ctx.font = `800 36px ${FF}`;
+    const lw = ctx.measureText(tier.label).width + 90;
+    roundRectPath(ctx, (W - lw) / 2, 548, lw, 66, 33);
+    const pg = ctx.createLinearGradient((W - lw) / 2, 0, (W + lw) / 2, 0); pg.addColorStop(0, tier.a); pg.addColorStop(1, tier.b);
+    ctx.fillStyle = pg; ctx.fill();
+    ctx.fillStyle = '#0b1220'; ctx.fillText(tier.label, W / 2, 595);
+
+    // علامة اقتباس داخل الإطار
+    ctx.font = `700 150px ${FF}`; ctx.fillStyle = tier.a; ctx.globalAlpha = 0.6;
+    ctx.fillText('”', W / 2, 748); ctx.globalAlpha = 1;
+
+    // العبارة: أكبر خط يتسع داخل الإطار الفارغ
+    const text = cleanQuote(quote);
+    let size = 68, lines = [];
+    for (; size >= 34; size -= 2) {
+        ctx.font = `700 ${size}px ${FF}`;
+        lines = wrapLines(ctx, text, TEXT_BOX.w);
+        if (lines.length * size * 1.5 <= TEXT_BOX.h - 20) break;
+    }
+    const lh = size * 1.5;
+    let y = TEXT_BOX.y + 40 + (TEXT_BOX.h - 40 - lines.length * lh) / 2 + size * 0.95;
+    ctx.fillStyle = '#ffffff';
+    lines.forEach(l => { ctx.fillText(l, W / 2, y); y += lh; });
+
+    // الأيام المتبقية
+    if (days !== null) {
+        const label = days > 0 ? 'باقي ' + days + ' يوم على البكالوريا' : 'بالتوفيق في البكالوريا';
+        ctx.font = `700 38px ${FF}`;
+        const dw = ctx.measureText(label).width + 90;
+        roundRectPath(ctx, (W - dw) / 2, 1150, dw, 80, 40);
+        ctx.fillStyle = 'rgba(255,255,255,.10)'; ctx.fill();
+        ctx.strokeStyle = tier.a; ctx.globalAlpha = 0.7; ctx.lineWidth = 2.5; ctx.stroke(); ctx.globalAlpha = 1;
+        ctx.fillStyle = '#ffffff'; ctx.fillText(label, W / 2, 1203);
+    }
+
+    // اسم الموقع فقط (بدون رابط، فالنطاق قد يتغير)
+    ctx.direction = 'ltr';
+    ctx.font = `700 52px ${FF}`; ctx.fillStyle = '#e2e8f0';
+    ctx.fillText('bio-bac-dz', W / 2, 1300);
+
+    return new Promise((res, rej) => cv.toBlob(b => b ? res(b) : rej(new Error('toBlob')), 'image/jpeg', 0.92));
 }
 
+// يعيد صورة العبارة الحالية (ويحتفظ بها حتى تتغير العبارة أو المرحلة)
+async function getQuoteImage() {
+    const c = getShareContent(), days = getDaysLeft();
+    const key = c.quote + '|' + days;
+    if (quoteImage.key === key && quoteImage.blob) return quoteImage;
+    const blob = await drawQuoteCard(c.quote, days);
+    if (quoteImage.url) URL.revokeObjectURL(quoteImage.url);
+    quoteImage = { key, blob, url: URL.createObjectURL(blob) };
+    return quoteImage;
+}
 
 // ==========================================
-// رسالة التأكيد
+// الحافظة والرسائل
 // ==========================================
+// نسخ صامت (يبدأ فوراً داخل ضغطة المستخدم، ويُرجع true/false)
+function copyQuiet(text) {
+    try {
+        if (navigator.clipboard && window.isSecureContext)
+            return navigator.clipboard.writeText(text).then(() => true, () => false);
+    } catch (e) {}
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) {}
+    ta.remove();
+    return Promise.resolve(ok);
+}
 
+// نسخ العبارة والرابط مع رسالة تأكيد
+async function copyShareContent(text) {
+    const ok = await copyQuiet(text);
+    showShareToast(ok ? 'تم نسخ العبارة والرابط بنجاح' : 'تعذر نسخ النص');
+}
+
+// رسالة تأكيد صغيرة (تحت الزر وداخل اللوحة)
 function showShareToast(message) {
-
-    const toast =
-        document.getElementById("toast-msg");
-
-    if (!toast) return;
-
-    toast.textContent = message;
-    toast.classList.add("show");
-
+    ['toast-msg', 'sh-toast'].forEach(id => {
+        const t = document.getElementById(id);
+        if (t) { t.textContent = message; t.classList.add('show'); }
+    });
     clearTimeout(window.shareToastTimer);
-
-    window.shareToastTimer =
-        setTimeout(() => {
-
-            toast.classList.remove("show");
-
-        }, 2500);
+    window.shareToastTimer = setTimeout(() => {
+        ['toast-msg', 'sh-toast'].forEach(id => { const t = document.getElementById(id); if (t) t.classList.remove('show'); });
+    }, 2800);
 }
 
-
 // ==========================================
-// إغلاق القائمة عند الضغط خارجها
+// تنفيذ المشاركة بحسب التطبيق
 // ==========================================
+async function shareTo(platform) {
+    const c = getShareContent();
+    if (!c.quote) { showShareToast('لا توجد عبارة للمشاركة'); return; }
+    const enc = encodeURIComponent;
+    const canNative = typeof navigator.share === 'function';
+    const tagged = c.body + '\n' + SHARE_TAGS;                  // العبارة + التوقيع + الوسوم (بدون رابط)
+    // فتح الرابط في تبويب جديد؛ إن مُنعت النافذة نفتحه في نفس التبويب
+    const open = url => {
+        let w = null;
+        try { w = window.open(url, '_blank'); } catch (e) {}
+        if (w) { try { w.opener = null; } catch (e) {} } else location.href = url;
+    };
 
-document.addEventListener("click", function(event) {
+    switch (platform) {
+        case 'copy':
+            await copyShareContent(c.text); break;
 
-    const wrapper =
-        document.querySelector(".share-wrapper");
+        // قائمة تطبيقات الجهاز: النص والرابط معاً
+        case 'native':
+            try { await navigator.share({ title: SHARE_SIGNATURE, text: tagged, url: c.url }); } catch (e) {}
+            break;
 
-    const menu =
-        document.getElementById("share-menu");
-
-    const button =
-        document.querySelector(".main-share-btn");
-
-    if (!wrapper || !menu) return;
-
-    if (!wrapper.contains(event.target)) {
-
-        menu.classList.remove("active");
-        menu.hidden = true;
-
-        if (button) {
-            button.setAttribute(
-                "aria-expanded",
-                "false"
-            );
+        // فيسبوك قد يتجاهل النص المرفق، لذا ننسخه أيضاً
+        case 'facebook': {
+            const copied = copyQuiet(c.text);
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + enc(c.url) + '&quote=' + enc(c.body),
+                        'facebookShare', 'width=700,height=600,resizable=yes,scrollbars=yes');
+            copied.then(ok => { if (ok) showShareToast('تم نسخ العبارة أيضاً — ألصقها في المنشور إن لم تظهر'); });
+            break;
         }
+
+        // ماسنجر لا يقبل نصاً جاهزاً من الويب: قائمة الجهاز على الهاتف، والنسخ على الحاسوب
+        case 'messenger':
+            if (canNative) { try { await navigator.share({ title: SHARE_SIGNATURE, text: tagged, url: c.url }); } catch (e) {} }
+            else { const ok = await copyQuiet(c.text); showShareToast(ok ? 'تم نسخ العبارة والرابط — ألصقها في ماسنجر' : 'تعذر نسخ النص'); }
+            break;
+
+        case 'whatsapp':
+            open('https://wa.me/?text=' + enc(c.text)); break;
+        case 'telegram':
+            open('https://t.me/share/url?url=' + enc(c.url) + '&text=' + enc(tagged)); break;
+        case 'x':
+            open('https://x.com/intent/post?text=' + enc(tagged) + '&url=' + enc(c.url)); break;
+        case 'threads':
+            open('https://www.threads.net/intent/post?text=' + enc(tagged) + '&url=' + enc(c.url)); break;
+
+        // Pinterest يقبل رابطاً + صورة + وصفاً (العبارة)
+        case 'pinterest':
+            open('https://www.pinterest.com/pin/create/button/?url=' + enc(c.url) + '&media=' + enc(getShareImageUrl()) +
+                 '&description=' + enc(tagged)); break;
+
+        // Tumblr: منشور صورة مع العبارة كوصف والرابط عند الضغط على الصورة
+        case 'tumblr':
+            open('https://www.tumblr.com/widgets/share/tool?posttype=photo&content=' + enc(getShareImageUrl()) +
+                 '&caption=' + enc(tagged) + '&clickthrough=' + enc(c.url) + '&canonicalUrl=' + enc(c.url)); break;
+
+        case 'reddit':
+            open('https://www.reddit.com/submit?url=' + enc(c.url) + '&title=' + enc(c.quote)); break;
+
+        // فايبر (تطبيق الجوال أو سطح المكتب)
+        case 'viber':
+            location.href = 'viber://forward?text=' + enc(c.text);
+            showShareToast('إن لم يفتح فايبر فتأكد أنه مثبّت على جهازك'); break;
+
+        case 'email':
+            location.href = 'mailto:?subject=' + enc(SHARE_SIGNATURE) + '&body=' + enc(c.text); break;
     }
+}
+
+// ==========================================
+// مشاركة الصورة (إنستغرام، تيك توك، ستوري، وأي تطبيق يقبل الملفات)
+// ==========================================
+async function downloadQuoteImage() {
+    const img = await getQuoteImage();
+    const a = document.createElement('a');
+    a.href = img.url; a.download = 'bio-bac-dz-quote.jpg';
+    document.body.appendChild(a); a.click(); a.remove();
+}
+
+async function shareQuoteImage() {
+    const c = getShareContent();
+    if (!c.quote) { showShareToast('لا توجد عبارة للمشاركة'); return; }
+    let img;
+    try { img = await getQuoteImage(); } catch (e) { showShareToast('تعذر تجهيز الصورة، حاول مرة أخرى'); return; }
+    const file = new File([img.blob], 'bio-bac-dz-quote.jpg', { type: 'image/jpeg' });
+    // الصورة + العبارة + الرابط معاً (الرابط داخل النص لتحتفظ به التطبيقات التي تعرض ملفاً واحداً)
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try { await navigator.share({ files: [file], title: SHARE_SIGNATURE, text: c.text }); return; }
+        catch (e) { if (e && e.name === 'AbortError') return; }
+    }
+    // المتصفح لا يشارك الملفات: نحفظ الصورة وننسخ النص
+    try { await downloadQuoteImage(); } catch (e) { showShareToast('تعذر تجهيز الصورة، حاول مرة أخرى'); return; }
+    const ok = await copyQuiet(c.text);
+    showShareToast(ok ? 'تم حفظ الصورة ونسخ العبارة والرابط' : 'تم حفظ الصورة');
+}
+
+// ==========================================
+// لوحة المشاركة: فتح وإغلاق
+// ==========================================
+const shSheet = document.getElementById('sh-sheet');
+const shBackdrop = document.getElementById('sh-backdrop');
+const shOpenBtn = document.getElementById('sh-open');
+let shLastFocus = null;
+
+// بناء شبكة التطبيقات
+(function buildShareGrid() {
+    const grid = document.getElementById('sh-grid');
+    if (!grid) return;
+    SHARE_APPS.forEach(app => {
+        if (app.needs === 'share' && typeof navigator.share !== 'function') return;   // «المزيد» يحتاج دعم المتصفح
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'sh-item'; b.dataset.id = app.id; b.setAttribute('role', 'listitem');
+        b.style.setProperty('--c', app.color);
+        const i = document.createElement('i'); i.className = app.icon; i.setAttribute('aria-hidden', 'true');
+        const s = document.createElement('span'); s.textContent = app.label;
+        b.append(i, s);
+        b.addEventListener('click', () => shareTo(app.id));
+        grid.appendChild(b);
+    });
+})();
+
+// تحديث معاينة الصورة داخل اللوحة
+async function refreshSharePreview() {
+    const img = document.getElementById('sh-img'), note = document.getElementById('sh-note');
+    if (!img) return;
+    const key = getShareContent().quote + '|' + getDaysLeft();
+    if (quoteImage.key === key && quoteImage.blob && img.src === quoteImage.url) return;   // لا تغيير
+    try {
+        if (note) note.textContent = 'جاري تجهيز الصورة…';
+        const q = await getQuoteImage();
+        img.src = q.url;
+        if (note) note.textContent = QUOTE_TIERS[getQuoteTier(getDaysLeft())].label + ' — صورة العبارة جاهزة للمشاركة';
+    } catch (e) { if (note) note.textContent = 'تعذر تجهيز الصورة'; }
+}
+
+function openShare() {
+    if (!shSheet) return;
+    shLastFocus = document.activeElement;
+    shSheet.hidden = false; shBackdrop.hidden = false;
+    document.body.classList.add('sh-open');
+    requestAnimationFrame(() => { shSheet.classList.add('open'); shBackdrop.classList.add('open'); });
+    if (shOpenBtn) shOpenBtn.setAttribute('aria-expanded', 'true');
+    refreshSharePreview();
+    setTimeout(() => { const f = document.getElementById('sh-close'); if (f) f.focus(); }, 60);
+}
+
+function closeShare() {
+    if (!shSheet || shSheet.hidden) return;
+    shSheet.classList.remove('open'); shBackdrop.classList.remove('open');
+    document.body.classList.remove('sh-open');
+    if (shOpenBtn) shOpenBtn.setAttribute('aria-expanded', 'false');
+    setTimeout(() => { shSheet.hidden = true; shBackdrop.hidden = true; }, 260);
+    if (shLastFocus && shLastFocus.focus) shLastFocus.focus();
+}
+
+// اسم الدالة القديمة (للتوافق)
+function toggleShareMenu() { shSheet && shSheet.hidden ? openShare() : closeShare(); }
+
+if (shOpenBtn) shOpenBtn.addEventListener('click', openShare);
+
+// تجهيز صورة العبارة مسبقاً: عند اقتراب الطالب من الزر أو ظهور قسم العد التنازلي (فتفتح اللوحة فوراً)
+(function () {
+    let warmed = false;
+    const warm = () => {
+        if (warmed) return; warmed = true;
+        const run = () => getQuoteImage().catch(() => { warmed = false; });
+        if ('requestIdleCallback' in window) requestIdleCallback(run, { timeout: 2000 }); else setTimeout(run, 300);
+    };
+    if (shOpenBtn) ['pointerenter', 'touchstart', 'focus'].forEach(ev => shOpenBtn.addEventListener(ev, warm, { once: true, passive: true }));
+    const sec = document.getElementById('countdown');
+    if (sec && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { warm(); io.disconnect(); } }, { rootMargin: '400px' });
+        io.observe(sec);
+    }
+})();
+document.getElementById('sh-close')?.addEventListener('click', closeShare);
+if (shBackdrop) shBackdrop.addEventListener('click', closeShare);
+document.getElementById('sh-image')?.addEventListener('click', shareQuoteImage);
+document.getElementById('sh-save')?.addEventListener('click', async () => {
+    try { await downloadQuoteImage(); showShareToast('تم حفظ الصورة'); } catch (e) { showShareToast('تعذر تجهيز الصورة، حاول مرة أخرى'); }
 });
+
+// لوحة المفاتيح: Escape يغلق، وTab يدور داخل اللوحة
+document.addEventListener('keydown', e => {
+    if (!shSheet || shSheet.hidden) return;
+    if (e.key === 'Escape') { closeShare(); return; }
+    if (e.key !== 'Tab') return;
+    const f = Array.from(shSheet.querySelectorAll('button:not([disabled])'));
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+});
+
+// تحديث المعاينة إن تغيّرت العبارة والصفحة مفتوحة على اللوحة
+(function () {
+    const q = document.getElementById('bio-quote');
+    if (!q || !('MutationObserver' in window)) return;
+    new MutationObserver(() => { if (shSheet && !shSheet.hidden) refreshSharePreview(); })
+        .observe(q, { childList: true, characterData: true, subtree: true });
+})();
 
 
 // ==========================================
@@ -3915,8 +4325,8 @@ document.addEventListener("click", function(event) {
 
 function updateCountdown() {
 
-    const now = Date.now();
-    const difference = bacDate - now;
+    // الوقت المتبقي (بالمللي ثانية)
+    const difference = bacDate - Date.now();
 
 
     // انتهى العد
@@ -3928,58 +4338,22 @@ function updateCountdown() {
 
         updateQuote(0);
 
-        updateSingleNode(
-            ".seconds-progress",
-            "seconds",
-            0,
-            60,
-            0
-        );
-
-        updateSingleNode(
-            ".minutes-progress",
-            "minutes",
-            0,
-            60,
-            0
-        );
-
-        updateSingleNode(
-            ".hours-progress",
-            "hours",
-            0,
-            24,
-            0
-        );
-
-        updateSingleNode(
-            ".days-progress",
-            "days",
-            0,
-            365,
-            0
-        );
+        updateSingleNode(".seconds-progress", "seconds", 0, 60, 0);
+        updateSingleNode(".minutes-progress", "minutes", 0, 60, 0);
+        updateSingleNode(".hours-progress", "hours", 0, 24, 0);
+        updateSingleNode(".days-progress", "days", 0, 365, 0);
 
         return;
     }
 
 
-    const totalSeconds = difference / 1000;
+    // حساب بالأعداد الصحيحة (ثوانٍ كاملة) لتفادي أخطاء الكسور العشرية
+    const total = Math.floor(difference / 1000);
 
-    const totalMinutes = totalSeconds / 60;
-    const totalHours = totalMinutes / 60;
-    const totalDays = totalHours / 24;
-
-
-    const exactSeconds = totalSeconds % 60;
-    const exactMinutes = totalMinutes % 60;
-    const exactHours = totalHours % 24;
-
-
-    const displaySeconds = Math.floor(exactSeconds);
-    const displayMinutes = Math.floor(exactMinutes);
-    const displayHours = Math.floor(exactHours);
-    const displayDays = Math.floor(totalDays);
+    const displayDays = Math.floor(total / 86400);
+    const displayHours = Math.floor((total % 86400) / 3600);
+    const displayMinutes = Math.floor((total % 3600) / 60);
+    const displaySeconds = total % 60;
 
 
     currentDaysLeft = displayDays;
@@ -3988,57 +4362,19 @@ function updateCountdown() {
 
 
     // وميض عند انتقال الدقيقة
-    if (
-        prevSec !== -1 &&
-        prevSec !== displaySeconds &&
-        (
-            displaySeconds === 59 ||
-            displaySeconds === 0
-        )
-    ) {
+    if (prevSec !== -1 && prevSec !== displaySeconds && (displaySeconds === 59 || displaySeconds === 0)) {
         triggerCyberFlash("seconds-circle");
     }
 
     prevSec = displaySeconds;
 
 
-    updateSingleNode(
-        ".seconds-progress",
-        "seconds",
-        exactSeconds,
-        60,
-        displaySeconds
-    );
+    updateSingleNode(".seconds-progress", "seconds", displaySeconds, 60, displaySeconds);
+    updateSingleNode(".minutes-progress", "minutes", displayMinutes, 60, displayMinutes);
+    updateSingleNode(".hours-progress", "hours", displayHours, 24, displayHours);
 
-    updateSingleNode(
-        ".minutes-progress",
-        "minutes",
-        exactMinutes,
-        60,
-        displayMinutes
-    );
-
-    updateSingleNode(
-        ".hours-progress",
-        "hours",
-        exactHours,
-        24,
-        displayHours
-    );
-
-
-    // دائرة الأيام
-    // نستخدم الجزء المتبقي من السنة
-    const daysInYear = 365;
-    const daysProgress = displayDays % daysInYear;
-
-    updateSingleNode(
-        ".days-progress",
-        "days",
-        daysProgress,
-        daysInYear,
-        displayDays
-    );
+    // دائرة الأيام: نسبة الأيام المتبقية من سنة (وتبقى ممتلئة إن زادت عن 365 يوماً)
+    updateSingleNode(".days-progress", "days", Math.min(displayDays, 365), 365, displayDays);
 
 
     updateQuote(displayDays);
@@ -4046,12 +4382,20 @@ function updateCountdown() {
 
 
 // ==========================================
-// بدء العد
+// بدء العد: نبضة عند بداية كل ثانية بالضبط (فلا تتخطى الأرقام ثانية ولا تتكرر)
 // ==========================================
 
-updateCountdown();
+function countdownTick() {
+    updateCountdown();
+    const wait = (bacDate - Date.now() <= 0) ? 60000 : 1000 - (Date.now() % 1000) + 15;
+    setTimeout(countdownTick, wait);
+}
 
-setInterval(updateCountdown, 1000);
+countdownTick();
+
+// عند العودة إلى التبويب (المتصفح يبطئ المؤقتات في الخلفية) نحدّث فوراً
+document.addEventListener('visibilitychange', () => { if (!document.hidden) updateCountdown(); });
+window.addEventListener('pageshow', updateCountdown);
 
 
 // ####################################################################
@@ -4063,6 +4407,10 @@ function updateThemeUI(isLight) {
     const themeText = document.getElementById('theme-text');
 
     document.body.classList.toggle('light-theme', isLight);
+    // لون شريط المتصفح يطابق خلفية الصفحة (ليلي/نهاري)
+    const metas = document.querySelectorAll('meta[name="theme-color"]');
+    metas.forEach((m, i) => { if (i) m.remove(); });
+    if (metas[0]) { metas[0].removeAttribute('media'); metas[0].setAttribute('content', isLight ? '#f1f5f9' : '#080d1a'); }
     if (themeIcon) themeIcon.className = isLight ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
     if (themeText) themeText.textContent = isLight ? 'الوضع النهاري' : 'الوضع الليلي';
 }
@@ -4081,9 +4429,12 @@ function toggleTheme() {
 
 // 3. تطبيق الوضع المحفوظ فور فتح الصفحة
 (function initTheme() {
-    let saved = null;
-    saved = bioStore.get('theme');
-    updateThemeUI(saved === 'light');
+    const system = matchMedia('(prefers-color-scheme: light)');
+    const saved = bioStore.get('theme');
+    updateThemeUI(saved ? saved === 'light' : system.matches);       // اختيار الطالب، وإلا إعداد الجهاز
+    // إن لم يختر الطالب بنفسه، يتبع الصفحة تغيّر إعداد الجهاز مباشرة
+    const follow = e => { if (!bioStore.get('theme')) { updateThemeUI(e.matches); updateCountdown(); } };
+    if (system.addEventListener) system.addEventListener('change', follow); else if (system.addListener) system.addListener(follow);
 })();
     </script>
 
@@ -4135,20 +4486,70 @@ function toggleTheme() {
         });
     });
 
-    // ---- ظهور تدريجي للأقسام والبطاقات ----
+    // ---- ظهور الأزرار والأيقونات والأقسام تدريجياً أثناء النزول إليها ----
+    // كل سطر: [المحدد، نوع الحركة، فاصل التتابع بالمللي ثانية]
+    // up: ارتفاع خفيف | pop: تكبير من الصغر | spin: تكبير مع دوران | fade: ظهور فقط
     if (document.documentElement.classList.contains('js-reveal')) {
-        const items = $$('.section-head, .card-btn, .bio-organic-counter, .legal-box');
-        $$('.buttons-grid').forEach(g => $$('.card-btn', g).forEach((c, i) => c.style.setProperty('--d', (i % 4) * 35 + 'ms')));
-        items.forEach(el => el.classList.add('reveal'));
-        const io = new IntersectionObserver(entries => entries.forEach(en => {
-            if (!en.isIntersecting) return;
-            const el = en.target;
-            el.classList.add('in');
-            io.unobserve(el);
-            // نزيل الفئة بعد انتهاء الحركة ليعود تنسيق التمرير الأصلي للبطاقة
-            setTimeout(() => el.classList.remove('reveal', 'in'), 800);
-        }), { threshold: 0.01, rootMargin: '0px 0px 320px 0px' });
-        items.forEach(el => io.observe(el));
+        try {
+            const REVEAL = [
+                ['.top-brand-logo', 'pop', 0],
+                ['.top-nav-links a', 'up', 60],
+                ['.theme-toggle-btn', 'pop', 0],
+                ['.hero-cta > *', 'pop', 90],
+                ['.hero-stats li', 'up', 80],
+                ['.smart-search', 'up', 0],
+                ['.smart-actions .smart-action', 'pop', 90],
+                ['.smart-status', 'fade', 0],
+                ['.section-head .section-icon', 'spin', 0],
+                ['.section-head > div', 'up', 0],
+                ['.countdown-header', 'up', 0],
+                ['.bio-node', 'pop', 110],
+                ['.bio-tooltip', 'up', 0],
+                ['.bio-quote', 'up', 0],
+                ['.sh-btn', 'pop', 0],
+                ['.footer-logo', 'up', 0],
+                ['.footer-brand p', 'up', 0],
+                ['.footer-links a', 'up', 50],
+                ['.contact-links-container .action-btn', 'pop', 110],
+                ['.mini-btn', 'pop', 0],
+                ['.legal-item', 'up', 90],
+                ['.legal-icon', 'spin', 0],
+                ['.copyright-text', 'fade', 0]
+            ];
+            const items = [];
+            const mark = (el, kind) => {
+                if (el.classList.contains('reveal')) return;
+                el.classList.add('reveal'); el.dataset.rv = kind; items.push(el);
+            };
+            // الأقسام والبطاقات: ظهور بارتفاع، وتتابع داخل كل صف
+            $$('.buttons-grid').forEach(g => $$('.card-btn', g).forEach((c, i) => c.style.setProperty('--d', (i % 4) * 60 + 'ms')));
+            $$('.section-head, .card-btn, .bio-organic-counter, .legal-box').forEach(el => mark(el, 'up'));
+            REVEAL.forEach(([sel, kind, step]) => $$(sel).forEach((el, i) => {
+                mark(el, kind);
+                if (step) el.style.setProperty('--d', i * step + 'ms');
+            }));
+
+            // إظهار عنصر ثم إزالة فئات الحركة بعد انتهائها ليعود تنسيقه الأصلي (التمرير بالفأرة...)
+            const show = el => {
+                el.classList.add('in');
+                const d = parseInt(el.style.getPropertyValue('--d'), 10) || 0;
+                setTimeout(() => { el.classList.remove('reveal', 'in'); el.removeAttribute('data-rv'); el.style.removeProperty('--d'); }, d + 900);
+            };
+            const io = new IntersectionObserver(entries => entries.forEach(en => {
+                if (!en.isIntersecting) return;
+                io.unobserve(en.target); show(en.target);
+            }), { threshold: 0.01, rootMargin: '0px 0px 40px 0px' });
+            items.forEach(el => io.observe(el));
+
+            // شبكة أمان: أي عنصر داخل الشاشة لم يظهر بعد 4 ثوانٍ يُظهَر فوراً
+            setTimeout(() => items.forEach(el => {
+                if (!el.classList.contains('reveal') || el.classList.contains('in')) return;
+                const r = el.getBoundingClientRect();
+                if (r.top < innerHeight && r.bottom > 0) show(el);
+            }), 4000);
+        } catch (err) {
+            document.documentElement.classList.remove('js-reveal');   // عند أي خطأ تبقى العناصر ظاهرة
+        }
     }
 
     // ---- عدّاد الأرقام في لوحة الترحيب ----
@@ -4623,7 +5024,7 @@ function toggleTheme() {
   // ---------- أسماء المفاتيح المحفوظة ----------
   const KEY_PAGE = 'bio-last-page';      // آخر ملف فتحه الطالب {href, go, title}
   const KEY_SEEN = 'bio-visited';        // الملفات التي زارها ["lesson1.html", ...]
-  const ALL_KEYS = [KEY_PAGE, KEY_SEEN, 'bio-cells', 'bio-search-index', 'bio-last-unit'];
+  const ALL_KEYS = [KEY_PAGE, KEY_SEEN, 'bio-cells', 'bio-search-index', 'bio-last-unit', 'theme'];
 
   // ---------- عناصر الصفحة التي تتحدّث ----------
   const heroBtn = document.getElementById('hero-continue');          // زر الغلاف الكبير
@@ -4695,6 +5096,8 @@ function toggleTheme() {
         try { document.cookie = k + '=;max-age=0;path=/'; } catch (e) {}
       });
       apply();
+      // بعد المسح يعود الوضع إلى إعداد الجهاز
+      if (typeof updateThemeUI === 'function') updateThemeUI(matchMedia('(prefers-color-scheme: light)').matches);
       clearBtn.textContent = 'تم المسح';
       setTimeout(() => { clearBtn.textContent = 'مسح بياناتي المحفوظة'; }, 2000);
     });
