@@ -58,21 +58,12 @@
     <!-- تحسين الظهور عند مشاركة الرابط -->
     <meta property="og:title" content="bio-bac-dz | علوم الطبيعة والحياة لطلاب البكالوريا">
     <meta property="og:description" content="ملخصات وتمارين علوم الطبيعة والحياة (المناعة، التركيب الضوئي، التنفس، تركيب البروتين، الاتصال العصبي).">
-    <meta property="og:image" content="https://anness-dz.github.io/bio-bac-dz/og-image.jpg">
-    <meta property="og:image:secure_url" content="https://anness-dz.github.io/bio-bac-dz/og-image.jpg">
-    <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="bio-bac-dz — علوم الطبيعة والحياة لطلاب البكالوريا">
+    <meta property="og:image" content="https://anness-dz.github.io/bio-bac-dz/favicon.png">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://anness-dz.github.io/bio-bac-dz/">
     <meta property="og:site_name" content="bio-bac-dz">
     <meta property="og:locale" content="ar_AR">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="bio-bac-dz | علوم الطبيعة والحياة لطلاب البكالوريا">
-    <meta name="twitter:description" content="دروس وملخصات وتمارين محلولة في علوم الطبيعة والحياة لشعبتي العلوم التجريبية والرياضيات.">
-    <meta name="twitter:image" content="https://anness-dz.github.io/bio-bac-dz/og-image.jpg">
-    <meta name="twitter:image:alt" content="bio-bac-dz — علوم الطبيعة والحياة لطلاب البكالوريا">
+    <meta name="twitter:card" content="summary">
     <link rel="canonical" href="https://anness-dz.github.io/bio-bac-dz/">
 
 
@@ -254,7 +245,7 @@ button { font-family: inherit; }
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 0; /* تم تغييرها من -1 إلى 0 لكي يظهر فوق خلفية body وتحت محتوى الموقع */
+    z-index: 0;
     pointer-events: none;
 }
 
@@ -2605,6 +2596,14 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
 .scroll-progress { background: #38bdf8; }
 body.light-theme .scroll-progress { background: #0284c7; }
 
+/* عنوان المؤقت: تدرج واحد للوضعين (تدرج الوضع الليلي) */
+:root, body.light-theme { --count-title-grad: linear-gradient(135deg, #00f2fe 0%, #00ff88 100%); }
+
+/* إزالة الطبقة الزرقاء التي يرسمها متصفح الهاتف عند الضغط على أي مكان (وميض اللمس الافتراضي) */
+html, body, * { -webkit-tap-highlight-color: transparent; }
+html { touch-action: manipulation; }                               /* بلا تكبير بالضغط المزدوج وبلا تأخير للنقر */
+#cellCanvas, .cell-hud, .cell-bubble { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+
 /* ====================================================================
    [CSS-10-E]  الأداء: تخفيف الرسم أثناء التمرير والتحميل
    ==================================================================== */
@@ -2621,11 +2620,16 @@ body::before { animation: none; }
 .js-reveal .reveal { transform: translateY(10px); transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); transition-delay: var(--d, 0ms); }
 
 /* أنواع حركة الظهور أثناء النزول: up ارتفاع | pop تكبير من الصغر | spin تكبير مع دوران | fade ظهور فقط */
-.js-reveal .reveal[data-rv="up"]   { transform: translateY(22px); transition: opacity 0.5s ease var(--d, 0ms), transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms); }
-.js-reveal .reveal[data-rv="pop"]  { transform: scale(0.5); transition: opacity 0.4s ease var(--d, 0ms), transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0ms); }
-.js-reveal .reveal[data-rv="spin"] { transform: scale(0.35) rotate(-40deg); transition: opacity 0.4s ease var(--d, 0ms), transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0ms); }
-.js-reveal .reveal[data-rv="fade"] { transform: none; transition: opacity 0.6s ease var(--d, 0ms); }
+.js-reveal .reveal[data-rv="up"]   { transform: translateY(20px); transition: opacity 0.4s ease var(--d, 0ms), transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms); }
+.js-reveal .reveal[data-rv="pop"]  { transform: scale(0.5); transition: opacity 0.3s ease var(--d, 0ms), transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0ms); }
+.js-reveal .reveal[data-rv="spin"] { transform: scale(0.35) rotate(-40deg); transition: opacity 0.3s ease var(--d, 0ms), transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0ms); }
+.js-reveal .reveal[data-rv="fade"] { transform: none; transition: opacity 0.4s ease var(--d, 0ms); }
+/* أثناء التمرير السريع: ظهور فوري بلا حركة (لا يراها أحد بتلك السرعة) */
+.js-reveal .reveal[data-rv].rv-fast { transition: none; }
 .js-reveal .reveal[data-rv].in { opacity: 1; transform: none; }
+
+/* منع وميض عناصر الشاشة الأولى قبل أن تُهيَّأ حركة الظهور (تنتهي هذه القاعدة عند rv-ready) */
+.js-reveal:not(.rv-ready) :is(.top-brand-logo, .top-nav-links a, .theme-toggle-btn, .hero-cta > *, .hero-stats li, .smart-search, .smart-actions .smart-action, .smart-status) { opacity: 0; }
 
 /* الهاتف وأجهزة اللمس: لا تمويه خلفي (ثقيل أثناء التمرير) مع خلفيات أكثر كثافة */
 @media (max-width: 900px), (hover: none) {
@@ -2642,7 +2646,7 @@ body::before { animation: none; }
     body.light-theme .cell-fab, body.light-theme .back-top {
         background-color: rgba(255, 255, 255, 0.96);
     }
-    .card-btn::before { display: none; }
+    .card-btn::before, .card-btn::after { display: none; }   /* وهج المؤشر بلا معنى على اللمس */
 }
 
 
@@ -2828,6 +2832,7 @@ body.light-theme .sh-toast { color: #15803d; }
         var savedTheme = bioStore.get('theme');
         if (savedTheme ? savedTheme === 'light' : matchMedia('(prefers-color-scheme: light)').matches) document.body.classList.add('light-theme');
         if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) document.documentElement.classList.add('js-reveal');
+        setTimeout(function () { document.documentElement.classList.add('rv-ready'); }, 2500);
     </script>
     <a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
     <div class="scroll-progress" aria-hidden="true"></div>
@@ -3339,15 +3344,17 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
             const ctx = canvas.getContext('2d');
             let W = innerWidth, H = innerHeight;         // أبعاد الشاشة الحالية
 
-            // ---------- حجم اللوحة (وضوح أعلى على الشاشات الحادة) ----------
+            // ---------- حجم اللوحة ----------
+            // العضيات خفيفة الشفافية في الخلفية فلا تحتاج دقة الشاشة الكاملة: الدقة تُخفَّض لتخفيف الرسم،
+            // وتُرفع فقط داخل وضع الاستكشاف حيث تُعرض بوضوح
             function resizeCanvas() {
-                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                const real = window.devicePixelRatio || 1;
+                const dpr = explore ? Math.min(real, 2) : (innerWidth < 700 ? 1 : Math.min(real, 1.5));
                 W = innerWidth; H = innerHeight;
                 canvas.width = Math.round(W * dpr);
                 canvas.height = Math.round(H * dpr);
                 ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
             }
-            resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
 
             // ---------- وضع خفيف: أجهزة ضعيفة أو توفير البيانات ----------
@@ -3382,6 +3389,7 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
             const ripples = [];                          // الموجات الجارية
             const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
             let explore = false;                         // وضع الاستكشاف مفعّل؟
+            resizeCanvas();                              // الحجم الأولي للوحة
             let pinned = null;                           // العضية المفتوحة بطاقتها (تتوقف عن الحركة)
 
             // ================================================================
@@ -3392,9 +3400,34 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
 
             // ================================================================
             //  إعدادات الأداء
-            //  fps: عدد الإطارات في الثانية | fpsScroll: أثناء التمرير | scrollIdle: مهلة انتهاء التمرير
+            //  fps: إطارات الخلفية في الثانية | fpsScroll: أثناء التمرير | fpsExplore: داخل وضع الاستكشاف
+            //  scrollIdle: مدة السكون التي تعدّ بعدها الصفحة متوقفة عن التمرير
             // ================================================================
-            const PERF = { fps: lite ? 20 : 30, fpsScroll: 12, scrollIdle: 140 };
+            const PERF = { fps: lite ? 15 : 20, fpsScroll: lite ? 20 : 30, fpsExplore: 30, scrollIdle: 140 };
+
+            // ================================================================
+            //  حركة العضيات مع التمرير (تأثير عمق)
+            //  depth: كم تتحرك العضية بالنسبة لمقدار التمرير (الأقرب أسرع) | spin: قوة دورانها | maxStep: حد القفزة في الإطار
+            // ================================================================
+            const SCROLL_FX = { depth: { nucleus: 0.16, chloroplast: 0.28, mitochondria: 0.32, ribosome: 0.45 }, spin: 0.0003, maxStep: 150 };
+            let lastSY = window.scrollY;
+
+            // ---------- قناع شفافية الصورة (لمعرفة أين جسم العضية فعلاً) ----------
+            const alphaMasks = new Map();
+            function getAlphaMask(img) {
+                if (alphaMasks.has(img)) return alphaMasks.get(img);
+                let m = null;
+                try {
+                    const sc = Math.min(1, 160 / Math.max(img.naturalWidth, img.naturalHeight));
+                    const w = Math.max(1, Math.round(img.naturalWidth * sc)), h = Math.max(1, Math.round(img.naturalHeight * sc));
+                    const c = document.createElement('canvas'); c.width = w; c.height = h;
+                    const g = c.getContext('2d', { willReadFrequently: true });
+                    g.drawImage(img, 0, 0, w, h);
+                    m = { w, h, data: g.getImageData(0, 0, w, h).data };
+                } catch (e) { m = null; }          // صورة ملوّثة (ملف محلي): نستعمل دائرة داخلية بدل القناع
+                alphaMasks.set(img, m);
+                return m;
+            }
 
             // ---------- عضية واحدة ----------
             class FloatingOrganelle {
@@ -3412,19 +3445,44 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
                     this.angle = Math.random() * Math.PI * 2;
                     this.vAngle = (Math.random() - 0.5) * 0.008;
                     this.spin = 0; this.pulse = 0;               // دوران ونبضة عند الضغط عليها
+                    this.depth = (SCROLL_FX.depth[data.key] || 0.3) * (0.85 + Math.random() * 0.3);   // عمق العضية للتمرير
+                    this.sway = Math.random() < 0.5 ? -1 : 1;    // اتجاه انحرافها الأفقي الخفيف أثناء التمرير
                 }
-                // نصف قطر منطقة اللمس (حد أدنى 26 لتسهيل إصابة العضيات الصغيرة)
-                radius() { return Math.max(Math.max(this.width, this.height) / 2 * (1 + this.pulse * 0.3), 26); }
+                // نصف قطر العضية (يُستعمل لوضع البطاقة وغيرها)
+                radius() { return Math.max(this.width, this.height) / 2 * (1 + this.pulse * 0.3); }
+
+                // هل النقطة (px, py) على جسم العضية نفسه؟ بحسب شفافية الصورة (لا على فراغ حولها)
+                // هامش لمس صغير يتناسب عكسياً مع الحجم: ضئيل للنواة الكبيرة، ومريح للريبوزومات الصغيرة
+                contains(px, py) {
+                    const s = 1 + this.pulse * 0.3, size = Math.max(this.width, this.height);
+                    const tol = Math.min(20, Math.max(5, 26 - size * 0.12));
+                    const cos = Math.cos(-this.angle), sin = Math.sin(-this.angle);
+                    const mask = getAlphaMask(this.src);
+                    const test = (ox, oy) => {
+                        const x = px - this.x + ox, y = py - this.y + oy;
+                        const lx = (x * cos - y * sin) / s, ly = (x * sin + y * cos) / s;   // إلى إحداثيات الصورة (بعد عكس الدوران والتكبير)
+                        if (Math.abs(lx) > this.width / 2 || Math.abs(ly) > this.height / 2) return false;
+                        if (!mask) return Math.hypot(lx, ly) <= Math.min(this.width, this.height) / 2 * 0.85;   // بلا قناع: دائرة داخلية
+                        const u = Math.min(mask.w - 1, Math.floor((lx / this.width + 0.5) * mask.w));
+                        const v = Math.min(mask.h - 1, Math.floor((ly / this.height + 0.5) * mask.h));
+                        return mask.data[(v * mask.w + u) * 4 + 3] > 40;
+                    };
+                    if (test(0, 0)) return true;
+                    for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4; if (test(Math.cos(a) * tol, Math.sin(a) * tol)) return true; }
+                    return false;
+                }
                 // k = عدد الإطارات الافتراضية (60fps) التي مرّت منذ آخر تحديث
-                update(k) {
+                // dy = مقدار تمرير الصفحة منذ الإطار السابق
+                update(k, dy) {
                     if (this === pinned) { this.ix = this.iy = 0; this.pulse *= Math.pow(0.9, k); return; }
                     if (!reduceMotion.matches) {
                         this.x += (this.vx + this.ix) * k; this.y += (this.vy + this.iy) * k;
-                        this.angle += (this.vAngle + this.spin) * k;
+                        this.angle += this.vAngle * k; // تم جعل الزاوية تتأثر بالسرعة الأساسية فقط دون الـ spin
+                        // تم حذف أسطر التأثر بالتمرير (dy) بالكامل من هنا
                     }
                     const d = Math.pow(0.93, k);                 // تلاشي الدفعة
                     this.ix *= d; this.iy *= d;
-                    this.spin *= Math.pow(0.94, k); this.pulse *= Math.pow(0.9, k);
+                    this.pulse *= Math.pow(0.9, k);
                     const m = 150;                               // الخروج من حافة يعيدها من الجهة المقابلة
                     if (this.x < -m) this.x = W + m;
                     if (this.x > W + m) this.x = -m;
@@ -3448,13 +3506,18 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
                 const n = Math.max(1, Math.round(data.count * countScale));
                 for (let i = 0; i < n; i++) floatingObjects.push(new FloatingOrganelle(src, data));
             }
-            organellesData.forEach(data => {
-                const img = new Image();
-                img.decoding = 'async';
-                img.onload = () => spawn(img, data);
-                img.onerror = () => { /* صورة غير موجودة: تُتجاهل */ };
-                img.src = data.src;
-            });
+            // تُحمَّل بعد اكتمال الصفحة وفي وقت الفراغ، فلا تنافس صور الغلاف والوحدات
+            function loadOrganelles() {
+                organellesData.forEach(data => {
+                    const img = new Image();
+                    img.decoding = 'async';
+                    img.onload = () => spawn(img, data);
+                    img.onerror = () => { /* صورة غير موجودة: تُتجاهل */ };
+                    img.src = data.src;
+                });
+            }
+            const startLoading = () => ('requestIdleCallback' in window) ? requestIdleCallback(loadOrganelles, { timeout: 1500 }) : setTimeout(loadOrganelles, 600);
+            if (document.readyState === 'complete') startLoading(); else window.addEventListener('load', startLoading, { once: true });
 
             // ================================================================
             //  الموجة: الإنشاء + الدفع + الرسم
@@ -3500,7 +3563,7 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
             }
 
             // ================================================================
-            //  حلقة الرسم: إطارات محدودة، وأبطأ أثناء التمرير، وتتوقف حين تختفي الصفحة
+            //  حلقة الرسم: إطارات محدودة، وتتحرك العضيات مع التمرير، وتتوقف حين تختفي الصفحة
             // ================================================================
             let lastT = 0, lastScroll = 0;
             window.addEventListener('scroll', () => { lastScroll = performance.now(); }, { passive: true });
@@ -3508,14 +3571,17 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
             function animate(now) {
                 requestAnimationFrame(animate);
                 if (document.hidden) return;
-                const scrolling = now - lastScroll < PERF.scrollIdle && !explore;
-                const interval = 1000 / (scrolling ? PERF.fpsScroll : PERF.fps);
+                const scrolling = now - lastScroll < PERF.scrollIdle;
+                const interval = 1000 / (explore ? PERF.fpsExplore : (scrolling ? PERF.fpsScroll : PERF.fps));
                 const elapsed = now - lastT;
                 if (elapsed < interval - 1) return;              // تخطَّ الإطار
                 lastT = now;
                 const k = Math.min(elapsed / 16.667, 4);         // تعويض الإطارات المتخطاة
                 ctx.clearRect(0, 0, W, H);
-                floatingObjects.forEach(o => { o.update(k); o.draw(); });
+                const sy = window.scrollY;
+                const dy = Math.max(-SCROLL_FX.maxStep, Math.min(SCROLL_FX.maxStep, sy - lastSY));   // التمرير منذ آخر رسم
+                lastSY = sy;
+                floatingObjects.forEach(o => { o.update(k, dy); o.draw(); });
                 updateRipples(k);
             }
             requestAnimationFrame(animate);
@@ -3546,6 +3612,7 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
             function setExplore(on) {
                 explore = on;
                 document.body.classList.toggle('cell-mode', on);
+                resizeCanvas();                                  // دقة أعلى داخل الاستكشاف وأقل خارجه
                 fab.setAttribute('aria-pressed', on ? 'true' : 'false');
                 hud.hidden = !on;
                 if (!on) hideBubble();
@@ -3554,12 +3621,13 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
             exitBtn.addEventListener('click', () => setExplore(false));
             document.addEventListener('keydown', e => { if (e.key === 'Escape' && explore) setExplore(false); });
 
-            // أقرب عضية إلى نقطة الضغط
+            // العضية الواقعة تحت نقطة الضغط (إن وُجدت)
             function hit(px, py) {
-                let best = null, bestScore = 1;
+                let best = null, bestDist = Infinity;
                 floatingObjects.forEach(o => {
-                    const score = Math.hypot(o.x - px, o.y - py) / o.radius();
-                    if (score < bestScore) { best = o; bestScore = score; }
+                    if (!o.contains(px, py)) return;
+                    const d = Math.hypot(o.x - px, o.y - py);
+                    if (d < bestDist) { best = o; bestDist = d; }      // عند التراكب: الأقرب مركزاً
                 });
                 return best;
             }
@@ -3629,7 +3697,7 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
 // ####################################################################
 
 // تاريخ ووقت البكالوريا
-const bacDate = Date.parse('2027-06-14T08:00:00+01:00');   // 14 جوان 2027، 08:00 بتوقيت الجزائر (UTC+1)
+const bacDate = new Date('2027-06-14T08:00:00+01:00').getTime();   // 14 جوان 2027، 08:00 بتوقيت الجزائر (UTC+1)
 let currentDaysLeft = 0;
 let prevSec = -1;
 
@@ -3638,7 +3706,12 @@ let prevSec = -1;
 // تحديث الدوائر
 // ==========================================
 
+let countdownVisible = true;      // هل قسم العد التنازلي قريب من الشاشة؟
+
+// يحدّث دائرة واحدة: الرقم وامتلاء الحلقة واللون
 function updateSingleNode(circleClass, numId, exactValue, maxVal, displayNum) {
+    if (!countdownVisible) return;     // خارج الشاشة: لا نلمس الصفحة (يُحدَّث كل شيء عند الاقتراب منه)
+
 
     const circle = document.querySelector(circleClass);
     const numSpan = document.getElementById(numId);
@@ -3650,22 +3723,13 @@ function updateSingleNode(circleClass, numId, exactValue, maxVal, displayNum) {
         Math.min(100, (exactValue / maxVal) * 100)
     );
 
-    // ألوان أغمق في الوضع الفاتح ليبقى الرقم مقروءاً
-    const isLight = document.body.classList.contains("light-theme");
-
-    const palette = isLight
-        ? [
-            { min: 80, color: "#0891b2", glow: "rgba(8, 145, 178, 0.45)" },
-            { min: 50, color: "#059669", glow: "rgba(5, 150, 105, 0.45)" },
-            { min: 20, color: "#d97706", glow: "rgba(217, 119, 6, 0.45)" },
-            { min: 0,  color: "#dc2626", glow: "rgba(220, 38, 38, 0.50)" }
-        ]
-        : [
-            { min: 80, color: "#00f2fe", glow: "rgba(0, 242, 254, 0.75)" },
-            { min: 50, color: "#00ff88", glow: "rgba(0, 255, 136, 0.75)" },
-            { min: 20, color: "#ffdd00", glow: "rgba(255, 221, 0, 0.75)" },
-            { min: 0,  color: "#ff5252", glow: "rgba(255, 82, 82, 0.85)" }
-        ];
+    // لوحة ألوان واحدة للوضعين الليلي والنهاري
+    const palette = [
+        { min: 80, color: "#00f2fe", glow: "rgba(0, 242, 254, 0.75)" },
+        { min: 50, color: "#00ff88", glow: "rgba(0, 255, 136, 0.75)" },
+        { min: 20, color: "#ffdd00", glow: "rgba(255, 221, 0, 0.75)" },
+        { min: 0,  color: "#ff5252", glow: "rgba(255, 82, 82, 0.85)" }
+    ];
 
     const { color, glow } = palette.find(step => percent >= step.min);
 
@@ -3673,16 +3737,18 @@ function updateSingleNode(circleClass, numId, exactValue, maxVal, displayNum) {
     const circumference = 2 * Math.PI * radius;
     const offset = circumference - ((percent / 100) * circumference);
 
-    circle.style.strokeDasharray = circumference;
+    if (circle.dataset.col !== color) {          // اللون وتوهجه يتغيران نادراً: لا نعيد كتابتهما كل ثانية
+        circle.dataset.col = color;
+        circle.style.strokeDasharray = circumference;
+        circle.style.stroke = color;
+        circle.style.filter = `drop-shadow(0 0 10px ${glow})`;
+    }
     circle.style.strokeDashoffset = offset;
-    circle.style.stroke = color;
-    circle.style.filter = `drop-shadow(0 0 10px ${glow})`;
 
     if (numSpan) {
-        numSpan.innerText =
-            displayNum < 10 ? "0" + displayNum : displayNum;
-
-        numSpan.style.color = color;
+        const txt = String(displayNum < 10 ? "0" + displayNum : displayNum);
+        if (numSpan.dataset.t !== txt) { numSpan.dataset.t = txt; numSpan.innerText = txt; }          // الرقم يُكتب عند تغيّره فقط
+        if (numSpan.dataset.col !== color) { numSpan.dataset.col = color; numSpan.style.color = color; }
     }
 }
 
@@ -3794,12 +3860,6 @@ function getShareUrl() {
     const canon = document.querySelector('link[rel="canonical"]');
     if (location.protocol === 'file:' && canon) return canon.href;
     return location.origin + location.pathname.replace(/index\.html$/, '');
-}
-
-// صورة المعاينة العامة للموقع (تحتاجها تطبيقات تطلب رابط صورة مثل Pinterest)
-function getShareImageUrl() {
-    const m = document.querySelector('meta[property="og:image"]');
-    return m ? m.content : getShareUrl() + 'og-image.jpg';
 }
 
 // يجهّز نص المشاركة (العبارة + الرابط)
@@ -4162,15 +4222,14 @@ async function shareTo(platform) {
         case 'threads':
             open('https://www.threads.net/intent/post?text=' + enc(tagged) + '&url=' + enc(c.url)); break;
 
-        // Pinterest يقبل رابطاً + صورة + وصفاً (العبارة)
+        // Pinterest: الرابط والوصف (العبارة)، وهو يجلب صور الصفحة ليختار منها الطالب
         case 'pinterest':
-            open('https://www.pinterest.com/pin/create/button/?url=' + enc(c.url) + '&media=' + enc(getShareImageUrl()) +
-                 '&description=' + enc(tagged)); break;
+            open('https://www.pinterest.com/pin/create/button/?url=' + enc(c.url) + '&description=' + enc(tagged)); break;
 
-        // Tumblr: منشور صورة مع العبارة كوصف والرابط عند الضغط على الصورة
+        // Tumblr: منشور رابط، عنوانه العبارة ووصفه التوقيع والوسوم
         case 'tumblr':
-            open('https://www.tumblr.com/widgets/share/tool?posttype=photo&content=' + enc(getShareImageUrl()) +
-                 '&caption=' + enc(tagged) + '&clickthrough=' + enc(c.url) + '&canonicalUrl=' + enc(c.url)); break;
+            open('https://www.tumblr.com/widgets/share/tool?canonicalUrl=' + enc(c.url) + '&title=' + enc(c.quote) +
+                 '&caption=' + enc(tagged)); break;
 
         case 'reddit':
             open('https://www.reddit.com/submit?url=' + enc(c.url) + '&title=' + enc(c.quote)); break;
@@ -4362,7 +4421,7 @@ function updateCountdown() {
 
 
     // وميض عند انتقال الدقيقة
-    if (prevSec !== -1 && prevSec !== displaySeconds && (displaySeconds === 59 || displaySeconds === 0)) {
+    if (countdownVisible && prevSec !== -1 && prevSec !== displaySeconds && (displaySeconds === 59 || displaySeconds === 0)) {
         triggerCyberFlash("seconds-circle");
     }
 
@@ -4392,6 +4451,17 @@ function countdownTick() {
 }
 
 countdownTick();
+
+// تتبّع ظهور قسم العد التنازلي: عند اقترابه من الشاشة نحدّث الدوائر فوراً
+(function () {
+    const sec = document.getElementById('countdown');
+    if (!sec || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver(es => {
+        const v = es[0].isIntersecting;
+        const was = countdownVisible; countdownVisible = v;
+        if (v && !was) updateCountdown();
+    }, { rootMargin: '250px' }).observe(sec);
+})();
 
 // عند العودة إلى التبويب (المتصفح يبطئ المؤقتات في الخلفية) نحدّث فوراً
 document.addEventListener('visibilitychange', () => { if (!document.hidden) updateCountdown(); });
@@ -4490,6 +4560,7 @@ function toggleTheme() {
     // كل سطر: [المحدد، نوع الحركة، فاصل التتابع بالمللي ثانية]
     // up: ارتفاع خفيف | pop: تكبير من الصغر | spin: تكبير مع دوران | fade: ظهور فقط
     if (document.documentElement.classList.contains('js-reveal')) {
+        const items = [];
         try {
             const REVEAL = [
                 ['.top-brand-logo', 'pop', 0],
@@ -4516,39 +4587,75 @@ function toggleTheme() {
                 ['.legal-icon', 'spin', 0],
                 ['.copyright-text', 'fade', 0]
             ];
-            const items = [];
+            const pending = new Set();                      // العناصر التي لم تظهر بعد
             const mark = (el, kind) => {
                 if (el.classList.contains('reveal')) return;
-                el.classList.add('reveal'); el.dataset.rv = kind; items.push(el);
+                el.classList.add('reveal'); el.dataset.rv = kind; items.push(el); pending.add(el);
             };
             // الأقسام والبطاقات: ظهور بارتفاع، وتتابع داخل كل صف
-            $$('.buttons-grid').forEach(g => $$('.card-btn', g).forEach((c, i) => c.style.setProperty('--d', (i % 4) * 60 + 'ms')));
+            $$('.buttons-grid').forEach(g => $$('.card-btn', g).forEach((c, i) => c.style.setProperty('--d', (i % 4) * 50 + 'ms')));
             $$('.section-head, .card-btn, .bio-organic-counter, .legal-box').forEach(el => mark(el, 'up'));
             REVEAL.forEach(([sel, kind, step]) => $$(sel).forEach((el, i) => {
                 mark(el, kind);
-                if (step) el.style.setProperty('--d', i * step + 'ms');
+                if (step) el.style.setProperty('--d', Math.min(i * step, 200) + 'ms');   // التتابع لا يتجاوز 0.2 ثانية
             }));
+            document.documentElement.classList.add('rv-ready');   // انتهى الوسم: تتولى فئات الظهور الإخفاء من الآن
+
+            // سرعة التمرير: أثناء التمرير السريع تظهر العناصر فوراً بحركة قصيرة جداً وبلا تأخير
+            let fastUntil = 0, lastY = scrollY, lastT = performance.now(), rafBusy = false;
+            const isFast = () => performance.now() < fastUntil;
 
             // إظهار عنصر ثم إزالة فئات الحركة بعد انتهائها ليعود تنسيقه الأصلي (التمرير بالفأرة...)
-            const show = el => {
+            const show = (el, fast) => {
+                if (!pending.has(el)) return;
+                pending.delete(el); io.unobserve(el);
+                if (fast) { el.style.setProperty('--d', '0ms'); el.classList.add('rv-fast'); }
                 el.classList.add('in');
-                const d = parseInt(el.style.getPropertyValue('--d'), 10) || 0;
-                setTimeout(() => { el.classList.remove('reveal', 'in'); el.removeAttribute('data-rv'); el.style.removeProperty('--d'); }, d + 900);
+                const d = fast ? 0 : (parseInt(el.style.getPropertyValue('--d'), 10) || 0);
+                setTimeout(() => {
+                    el.classList.remove('reveal', 'in', 'rv-fast'); el.removeAttribute('data-rv'); el.style.removeProperty('--d');
+                }, d + (fast ? 400 : 750));
             };
+
             const io = new IntersectionObserver(entries => entries.forEach(en => {
                 if (!en.isIntersecting) return;
-                io.unobserve(en.target); show(en.target);
+                // وصل العنصر متأخراً (داخل الشاشة بعمق) أثناء تمرير سريع: يظهر فوراً
+                show(en.target, isFast() && en.boundingClientRect.top < innerHeight * 0.9);
             }), { threshold: 0.01, rootMargin: '0px 0px 40px 0px' });
             items.forEach(el => io.observe(el));
 
+            // مسار التمرير السريع: نكشف مسبقاً كل ما سيدخل الشاشة خلال ثلث ثانية تقريباً
+            addEventListener('scroll', () => {
+                if (rafBusy || !pending.size) return;
+                rafBusy = true;
+                requestAnimationFrame(() => {
+                    rafBusy = false;
+                    const now = performance.now(), y = scrollY;
+                    const dt = now - lastT, dy = Math.abs(y - lastY);
+                    let v = dy / Math.max(1, dt);                                 // بكسل لكل مللي ثانية
+                    if (dt > 200) v = dy > innerHeight * 0.8 ? 5 : 0;             // أول حركة بعد سكون: القفزة الكبيرة تعدّ سريعة
+                    lastY = y; lastT = now;
+                    if (v < 0.8) return;                                          // تمرير عادي: تتولاه الحركة العادية
+                    fastUntil = now + 300;
+                    const look = Math.min(1100, v * 330);
+                    pending.forEach(el => {
+                        const r = el.getBoundingClientRect();
+                        if (r.top < innerHeight + look && r.bottom > -150) show(el, true);
+                    });
+                });
+            }, { passive: true });
+
             // شبكة أمان: أي عنصر داخل الشاشة لم يظهر بعد 4 ثوانٍ يُظهَر فوراً
             setTimeout(() => items.forEach(el => {
-                if (!el.classList.contains('reveal') || el.classList.contains('in')) return;
+                if (!pending.has(el)) return;
                 const r = el.getBoundingClientRect();
-                if (r.top < innerHeight && r.bottom > 0) show(el);
+                if (r.top < innerHeight && r.bottom > 0) show(el, true);
             }), 4000);
         } catch (err) {
-            document.documentElement.classList.remove('js-reveal');   // عند أي خطأ تبقى العناصر ظاهرة
+            // عند أي خطأ تبقى العناصر ظاهرة وتُزال فئات الحركة
+            document.documentElement.classList.remove('js-reveal');
+            document.documentElement.classList.add('rv-ready');
+            items.forEach(el => { el.classList.remove('reveal', 'in'); el.removeAttribute('data-rv'); el.style.removeProperty('--d'); });
         }
     }
 
