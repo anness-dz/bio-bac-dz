@@ -2632,6 +2632,11 @@ body::before { animation: none; }
 .rv-skip .reveal[data-rv] { opacity: 1 !important; transform: none !important; transition: none !important; }
 /* أثناء التمرير: لا إعادة رسم للتأثيرات الجانبية للمؤشر */
 .rv-skip .card-btn, .rv-skip .card-btn * { transition: none !important; }
+/* تمرير سريع: إيقاف التمويه الخلفي الثقيل مؤقتاً على العناصر الكثيرة (يعود فور التوقف) */
+.rv-skip .card-btn, .rv-skip .legal-box, .rv-skip .bio-organic-counter, .rv-skip .ad-banner { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+/* تجهيز طبقات الرسم للعناصر المنتظرة فقط (تزول مع إزالة فئة reveal) */
+.js-reveal .reveal { will-change: transform, opacity; backface-visibility: hidden; }
+
 
 /* منع وميض عناصر الشاشة الأولى قبل أن تُهيَّأ حركة الظهور (تنتهي هذه القاعدة عند rv-ready) */
 .js-reveal:not(.rv-ready) :is(.top-brand-logo, .top-nav-links a, .theme-toggle-btn, .hero-cta > *, .hero-stats li, .smart-search, .smart-actions .smart-action, .smart-status) { opacity: 0; }
@@ -2899,7 +2904,7 @@ body.light-theme .sh-toast { color: #15803d; }
 -->
 <!-- صورة الغلاف -->
         <div class="hero-header">
-            <img src="header-bg.jpg" alt="bio-bac-dz — علوم الطبيعة والحياة للبكالوريا" fetchpriority="high" onerror="this.onerror=null;this.hidden=true">
+            <img src="header-bg.jpg" alt="bio-bac-dz — علوم الطبيعة والحياة للبكالوريا" fetchpriority="high" decoding="async" onerror="this.onerror=null;this.hidden=true">
         </div>
 
         <!-- لوحة الترحيب: العنوان + الأزرار + الأرقام -->
@@ -3577,7 +3582,8 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
                 requestAnimationFrame(animate);
                 if (document.hidden) return;
                 const scrolling = now - lastScroll < PERF.scrollIdle;
-                const interval = 1000 / (explore ? PERF.fpsExplore : (scrolling ? PERF.fpsScroll : PERF.fps));
+                const fastScroll = !explore && scrolling && document.documentElement.classList.contains('rv-skip');   // تمرير سريع: أخفّ رسم ممكن
+                const interval = 1000 / (explore ? PERF.fpsExplore : (fastScroll ? 10 : (scrolling ? PERF.fpsScroll : PERF.fps)));
                 const elapsed = now - lastT;
                 if (elapsed < interval - 1) return;              // تخطَّ الإطار
                 lastT = now;
@@ -4527,9 +4533,12 @@ function toggleTheme() {
     const navLinks = $$('.top-nav-links a');
     let ticking = false;
 
+    let cachedH = 0, hStamp = 0;
     function onScroll() {
         const y = window.scrollY;
-        const h = document.documentElement.scrollHeight - innerHeight;
+        const t = performance.now();
+        if (!cachedH || t - hStamp > 1000) { cachedH = document.documentElement.scrollHeight - innerHeight; hStamp = t; }   // قراءة التخطيط مرة كل ثانية فقط
+        const h = cachedH;
         if (bar) bar.style.setProperty('--p', h > 0 ? Math.min(1, y / h) : 0);
         if (nav) nav.classList.toggle('is-scrolled', y > 10);
         if (toTop) toTop.classList.toggle('show', y > 700);
@@ -4539,6 +4548,8 @@ function toggleTheme() {
     addEventListener('scroll', () => {
         if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
     }, { passive: true });
+    addEventListener('resize', () => { cachedH = 0; }, { passive: true });
+    addEventListener('load', () => { cachedH = 0; onScroll(); });
     onScroll();
     if (toTop) toTop.addEventListener('click', () => scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }));
 
@@ -5234,6 +5245,9 @@ function toggleTheme() {
 
 </script>
 
+<!-- ملف خارجي -->
+<script src="script.js"></script>
+
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://googletagmanager.com"></script>
 <script>
@@ -5243,9 +5257,6 @@ function toggleTheme() {
 
   gtag('config', 'G-72KM3WGRYW');
 </script>
-
-<!-- ملف خارجي -->
-<script src="script.js"></script>
 
 </body>
 </html>
