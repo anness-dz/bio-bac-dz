@@ -2617,16 +2617,21 @@ body::before { animation: none; }
 .site-footer { content-visibility: auto; contain-intrinsic-size: auto 700px; }
 
 /* الظهور التدريجي أسرع وأقصر */
-.js-reveal .reveal { transform: translateY(10px); transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); transition-delay: var(--d, 0ms); }
-
-/* أنواع حركة الظهور أثناء النزول: up ارتفاع | pop تكبير من الصغر | spin تكبير مع دوران | fade ظهور فقط */
-.js-reveal .reveal[data-rv="up"]   { transform: translateY(20px); transition: opacity 0.4s ease var(--d, 0ms), transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms); }
-.js-reveal .reveal[data-rv="pop"]  { transform: scale(0.5); transition: opacity 0.3s ease var(--d, 0ms), transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0ms); }
-.js-reveal .reveal[data-rv="spin"] { transform: scale(0.35) rotate(-40deg); transition: opacity 0.3s ease var(--d, 0ms), transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0ms); }
-.js-reveal .reveal[data-rv="fade"] { transform: none; transition: opacity 0.4s ease var(--d, 0ms); }
+/* حركة ظهور احترافية ناعمة (مثل المواقع الكبرى): إزاحة صغيرة + تكبير طفيف + منحنى expo-out بلا ارتداد ولا دوران */
+.js-reveal .reveal { --e: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; transform: translate3d(0, 18px, 0) scale(0.98);
+    transition: opacity 0.6s ease var(--d, 0ms), transform 0.8s var(--e) var(--d, 0ms); }
+.js-reveal .reveal[data-rv="up"]   { transform: translate3d(0, 22px, 0) scale(0.985); }
+.js-reveal .reveal[data-rv="pop"]  { transform: translate3d(0, 10px, 0) scale(0.88); transition: opacity 0.5s ease var(--d, 0ms), transform 0.75s var(--e) var(--d, 0ms); }
+.js-reveal .reveal[data-rv="spin"] { transform: scale(0.8); transition: opacity 0.5s ease var(--d, 0ms), transform 0.75s var(--e) var(--d, 0ms); }
+.js-reveal .reveal[data-rv="fade"] { transform: none; transition: opacity 0.7s ease var(--d, 0ms); }
 /* أثناء التمرير السريع: ظهور فوري بلا حركة (لا يراها أحد بتلك السرعة) */
 .js-reveal .reveal[data-rv].rv-fast { transition: none; }
 .js-reveal .reveal[data-rv].in { opacity: 1; transform: none; }
+/* تمرير متوسط: حركة قصيرة بلا تتابع | تمرير سريع: العناصر ظاهرة فوراً بلا أي حركة أو حساب */
+.rv-med .reveal[data-rv] { transition-duration: 0.28s !important; transition-delay: 0ms !important; }
+.rv-skip .reveal[data-rv] { opacity: 1 !important; transform: none !important; transition: none !important; }
+/* أثناء التمرير: لا إعادة رسم للتأثيرات الجانبية للمؤشر */
+.rv-skip .card-btn, .rv-skip .card-btn * { transition: none !important; }
 
 /* منع وميض عناصر الشاشة الأولى قبل أن تُهيَّأ حركة الظهور (تنتهي هذه القاعدة عند rv-ready) */
 .js-reveal:not(.rv-ready) :is(.top-brand-logo, .top-nav-links a, .theme-toggle-btn, .hero-cta > *, .hero-stats li, .smart-search, .smart-actions .smart-action, .smart-status) { opacity: 0; }
@@ -4601,48 +4606,62 @@ function toggleTheme() {
             }));
             document.documentElement.classList.add('rv-ready');   // انتهى الوسم: تتولى فئات الظهور الإخفاء من الآن
 
-            // سرعة التمرير: أثناء التمرير السريع تظهر العناصر فوراً بحركة قصيرة جداً وبلا تأخير
-            let fastUntil = 0, lastY = scrollY, lastT = performance.now(), rafBusy = false;
-            const isFast = () => performance.now() < fastUntil;
+            // ثلاث مستويات حسب سرعة التمرير (بدون أي قراءة للتخطيط أثناء التمرير = خفيف جداً):
+            //   بطيء: حركة كاملة | متوسط: حركة قصيرة بلا تأخير | سريع: ظهور فوري عبر CSS فقط
+            const root = document.documentElement;
+            let mode = 0, lastY = scrollY, lastT = performance.now(), idleTimer = 0, cleanTimer = 0;
+            const cleanQueue = [];
 
-            // إظهار عنصر ثم إزالة فئات الحركة بعد انتهائها ليعود تنسيقه الأصلي (التمرير بالفأرة...)
+            // إزالة فئات الحركة من عدة عناصر دفعة واحدة (مؤقت واحد بدل مؤقت لكل عنصر)
+            const flushClean = () => {
+                cleanTimer = 0;
+                const now = performance.now();
+                for (let i = cleanQueue.length - 1; i >= 0; i--) {
+                    const [el, t] = cleanQueue[i];
+                    if (now < t) continue;
+                    el.classList.remove('reveal', 'in', 'rv-fast'); el.removeAttribute('data-rv'); el.style.removeProperty('--d');
+                    cleanQueue.splice(i, 1);
+                }
+                if (cleanQueue.length) cleanTimer = setTimeout(flushClean, 400);
+            };
+
             const show = (el, fast) => {
                 if (!pending.has(el)) return;
                 pending.delete(el); io.unobserve(el);
                 if (fast) { el.style.setProperty('--d', '0ms'); el.classList.add('rv-fast'); }
                 el.classList.add('in');
                 const d = fast ? 0 : (parseInt(el.style.getPropertyValue('--d'), 10) || 0);
-                setTimeout(() => {
-                    el.classList.remove('reveal', 'in', 'rv-fast'); el.removeAttribute('data-rv'); el.style.removeProperty('--d');
-                }, d + (fast ? 400 : 750));
+                cleanQueue.push([el, performance.now() + d + (fast ? 400 : 1100)]);
+                if (!cleanTimer) cleanTimer = setTimeout(flushClean, 450);
             };
 
             const io = new IntersectionObserver(entries => entries.forEach(en => {
-                if (!en.isIntersecting) return;
-                // وصل العنصر متأخراً (داخل الشاشة بعمق) أثناء تمرير سريع: يظهر فوراً
-                show(en.target, isFast() && en.boundingClientRect.top < innerHeight * 0.9);
+                if (en.isIntersecting) show(en.target, mode > 0);
             }), { threshold: 0.01, rootMargin: '0px 0px 40px 0px' });
             items.forEach(el => io.observe(el));
 
-            // مسار التمرير السريع: نكشف مسبقاً كل ما سيدخل الشاشة خلال ثلث ثانية تقريباً
+            // انتهاء التمرير السريع: نثبّت ما أصبح داخل الشاشة قبل إعادة الإخفاء لما هو خارجها
+            const endFast = () => {
+                io.takeRecords().forEach(en => { if (en.isIntersecting) show(en.target, true); });
+                mode = 0;
+                root.classList.remove('rv-skip', 'rv-med');
+            };
+
             addEventListener('scroll', () => {
-                if (rafBusy || !pending.size) return;
-                rafBusy = true;
-                requestAnimationFrame(() => {
-                    rafBusy = false;
-                    const now = performance.now(), y = scrollY;
-                    const dt = now - lastT, dy = Math.abs(y - lastY);
-                    let v = dy / Math.max(1, dt);                                 // بكسل لكل مللي ثانية
-                    if (dt > 200) v = dy > innerHeight * 0.8 ? 5 : 0;             // أول حركة بعد سكون: القفزة الكبيرة تعدّ سريعة
-                    lastY = y; lastT = now;
-                    if (v < 0.8) return;                                          // تمرير عادي: تتولاه الحركة العادية
-                    fastUntil = now + 300;
-                    const look = Math.min(1100, v * 330);
-                    pending.forEach(el => {
-                        const r = el.getBoundingClientRect();
-                        if (r.top < innerHeight + look && r.bottom > -150) show(el, true);
-                    });
-                });
+                if (!pending.size) { if (mode) endFast(); return; }
+                const now = performance.now(), dt = now - lastT;
+                if (dt < 8) return;                                          // تجاهل الأحداث المتقاربة جداً
+                const y = scrollY, dy = Math.abs(y - lastY);
+                let v = dy / dt;                                             // بكسل لكل مللي ثانية
+                if (dt > 200) v = dy > innerHeight * 0.8 ? 5 : 0;            // قفزة كبيرة بعد سكون (مثل الروابط الداخلية)
+                lastY = y; lastT = now;
+                const m = v >= 1.4 ? 2 : (v >= 0.6 ? 1 : 0);
+                if (m > mode) {
+                    mode = m;
+                    root.classList.toggle('rv-skip', m === 2);
+                    root.classList.toggle('rv-med', m === 1);
+                }
+                if (mode) { clearTimeout(idleTimer); idleTimer = setTimeout(endFast, 160); }
             }, { passive: true });
 
             // شبكة أمان: أي عنصر داخل الشاشة لم يظهر بعد 4 ثوانٍ يُظهَر فوراً
@@ -5213,6 +5232,16 @@ function toggleTheme() {
   apply();
 })();
 
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://googletagmanager.com"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-72KM3WGRYW');
 </script>
 
 <!-- ملف خارجي -->
