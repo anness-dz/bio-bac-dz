@@ -1737,7 +1737,7 @@ body.light-theme::before { opacity: 0.6; }
     height: 3px;
     z-index: 200;
     pointer-events: none;
-    background: linear-gradient(90deg, #38bdf8, #818cf8, #22c55e);
+    background: linear-gradient(90deg, #38bdf8 0%, #2dd4bf 30%, #22c55e 65%, #4ade80 100%);
     transform: scaleX(var(--p, 0));
     transform-origin: right;
 }
@@ -2593,8 +2593,8 @@ body.cell-mode #cellCanvas { z-index: 120; pointer-events: auto; touch-action: n
 
 
 /* شريط تقدم التمرير: لون واحد يتناسق مع الوضعين (بدل التدرج الذي ينتهي بالأخضر) */
-.scroll-progress { background: #38bdf8; }
-body.light-theme .scroll-progress { background: #0284c7; }
+.scroll-progress { background: linear-gradient(90deg, #38bdf8 0%, #2dd4bf 35%, #22c55e 70%, #4ade80 100%); }
+body.light-theme .scroll-progress { background: linear-gradient(90deg, #0284c7 0%, #0d9488 35%, #16a34a 70%, #22c55e 100%); }
 
 /* عنوان المؤقت: تدرج واحد للوضعين (تدرج الوضع الليلي) */
 :root, body.light-theme { --count-title-grad: linear-gradient(135deg, #00f2fe 0%, #00ff88 100%); }
@@ -2618,22 +2618,20 @@ body::before { animation: none; }
 
 /* الظهور التدريجي أسرع وأقصر */
 /* حركة ظهور احترافية ناعمة (مثل المواقع الكبرى): إزاحة صغيرة + تكبير طفيف + منحنى expo-out بلا ارتداد ولا دوران */
-.js-reveal .reveal { --e: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; transform: translate3d(0, 18px, 0) scale(0.98);
-    transition: opacity 0.6s ease var(--d, 0ms), transform 0.8s var(--e) var(--d, 0ms); }
-.js-reveal .reveal[data-rv="up"]   { transform: translate3d(0, 22px, 0) scale(0.985); }
-.js-reveal .reveal[data-rv="pop"]  { transform: translate3d(0, 10px, 0) scale(0.88); transition: opacity 0.5s ease var(--d, 0ms), transform 0.75s var(--e) var(--d, 0ms); }
-.js-reveal .reveal[data-rv="spin"] { transform: scale(0.8); transition: opacity 0.5s ease var(--d, 0ms), transform 0.75s var(--e) var(--d, 0ms); }
-.js-reveal .reveal[data-rv="fade"] { transform: none; transition: opacity 0.7s ease var(--d, 0ms); }
+/* ظهور احترافي: انسياب expo-out (يبدأ سريعاً ويهدأ بنعومة) + تلاشي أسرع من الحركة ليبدو العنصر "ينبثق" ثم يستقر */
+.js-reveal .reveal { --e: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; transform: translate3d(0, 28px, 0);
+    transition: opacity 0.7s cubic-bezier(0.33, 1, 0.68, 1) var(--d, 0ms), transform 1s var(--e) var(--d, 0ms); }
+.js-reveal .reveal[data-rv="pop"], .js-reveal .reveal[data-rv="spin"] { transform: translate3d(0, 14px, 0) scale(0.92); }
+.js-reveal .reveal[data-rv="fade"] { transform: none; transition: opacity 0.8s ease var(--d, 0ms); }
 /* أثناء التمرير السريع: ظهور فوري بلا حركة (لا يراها أحد بتلك السرعة) */
 .js-reveal .reveal[data-rv].rv-fast { transition: none; }
 .js-reveal .reveal[data-rv].in { opacity: 1; transform: none; }
 /* تمرير متوسط: حركة قصيرة بلا تتابع | تمرير سريع: العناصر ظاهرة فوراً بلا أي حركة أو حساب */
-.rv-med .reveal[data-rv] { transition-duration: 0.28s !important; transition-delay: 0ms !important; }
+.rv-med .reveal[data-rv] { transition-duration: 0.45s !important; transition-delay: 0ms !important; }
 .rv-skip .reveal[data-rv] { opacity: 1 !important; transform: none !important; transition: none !important; }
 /* أثناء التمرير: لا إعادة رسم للتأثيرات الجانبية للمؤشر */
 .rv-skip .card-btn, .rv-skip .card-btn * { transition: none !important; }
-/* تمرير سريع: إيقاف التمويه الخلفي الثقيل مؤقتاً على العناصر الكثيرة (يعود فور التوقف) */
-.rv-skip .card-btn, .rv-skip .legal-box, .rv-skip .bio-organic-counter, .rv-skip .ad-banner { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+/* التمويه الخلفي يبقى مفعّلاً دائماً (بلا إطفاء أثناء التمرير) فلا تظهر العضيات حادة خلف العناصر في أي لحظة */
 /* تجهيز طبقات الرسم للعناصر المنتظرة فقط (تزول مع إزالة فئة reveal) */
 .js-reveal .reveal { will-change: transform, opacity; backface-visibility: hidden; }
 
@@ -3419,7 +3417,7 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
             //  حركة العضيات مع التمرير (تأثير عمق)
             //  depth: كم تتحرك العضية بالنسبة لمقدار التمرير (الأقرب أسرع) | spin: قوة دورانها | maxStep: حد القفزة في الإطار
             // ================================================================
-            const SCROLL_FX = { depth: { nucleus: 0.16, chloroplast: 0.28, mitochondria: 0.32, ribosome: 0.45 }, spin: 0.0003, maxStep: 150 };
+            const SCROLL_FX = { depth: { nucleus: 0.16, chloroplast: 0.28, mitochondria: 0.32, ribosome: 0.45 }, spin: 0.0003, maxStep: 400 };
             let lastSY = window.scrollY;
 
             // ---------- قناع شفافية الصورة (لمعرفة أين جسم العضية فعلاً) ----------
@@ -3575,25 +3573,30 @@ const canvas = document.getElementById('cellCanvas');   // لوحة الرسم �
             // ================================================================
             //  حلقة الرسم: إطارات محدودة، وتتحرك العضيات مع التمرير، وتتوقف حين تختفي الصفحة
             // ================================================================
-            let lastT = 0, lastScroll = 0;
+            let lastT = 0, lastScroll = 0, drawCost = 0;
             window.addEventListener('scroll', () => { lastScroll = performance.now(); }, { passive: true });
 
             function animate(now) {
                 requestAnimationFrame(animate);
                 if (document.hidden) return;
                 const scrolling = now - lastScroll < PERF.scrollIdle;
-                const fastScroll = !explore && scrolling && document.documentElement.classList.contains('rv-skip');   // تمرير سريع: أخفّ رسم ممكن
-                const interval = 1000 / (explore ? PERF.fpsExplore : (fastScroll ? 10 : (scrolling ? PERF.fpsScroll : PERF.fps)));
+                // أثناء التمرير: العضيات تتبع الحركة بمعدل تحديث الشاشة نفسه ما دام الرسم رخيصاً (يُقاس تلقائياً)، وإلا تنخفض تدريجياً
+                const sf = explore ? 1000 / PERF.fpsExplore
+                    : scrolling ? (drawCost < 4 ? 0 : (drawCost < 8 ? 1000 / 50 : 1000 / PERF.fpsScroll))
+                    : 1000 / PERF.fps;
+                const interval = sf;
                 const elapsed = now - lastT;
                 if (elapsed < interval - 1) return;              // تخطَّ الإطار
                 lastT = now;
                 const k = Math.min(elapsed / 16.667, 4);         // تعويض الإطارات المتخطاة
+                const t0 = performance.now();
                 ctx.clearRect(0, 0, W, H);
                 const sy = window.scrollY;
                 const dy = Math.max(-SCROLL_FX.maxStep, Math.min(SCROLL_FX.maxStep, sy - lastSY));   // التمرير منذ آخر رسم
                 lastSY = sy;
                 floatingObjects.forEach(o => { o.update(k, dy); o.draw(); });
                 updateRipples(k);
+                drawCost = drawCost * 0.8 + (performance.now() - t0) * 0.2;   // متوسط كلفة رسم الإطار (مللي ثانية)
             }
             requestAnimationFrame(animate);
 
@@ -4609,11 +4612,11 @@ function toggleTheme() {
                 el.classList.add('reveal'); el.dataset.rv = kind; items.push(el); pending.add(el);
             };
             // الأقسام والبطاقات: ظهور بارتفاع، وتتابع داخل كل صف
-            $$('.buttons-grid').forEach(g => $$('.card-btn', g).forEach((c, i) => c.style.setProperty('--d', (i % 4) * 50 + 'ms')));
+            $$('.buttons-grid').forEach(g => $$('.card-btn', g).forEach((c, i) => c.style.setProperty('--d', (i % 4) * 70 + 'ms')));
             $$('.section-head, .card-btn, .bio-organic-counter, .legal-box').forEach(el => mark(el, 'up'));
             REVEAL.forEach(([sel, kind, step]) => $$(sel).forEach((el, i) => {
                 mark(el, kind);
-                if (step) el.style.setProperty('--d', Math.min(i * step, 200) + 'ms');   // التتابع لا يتجاوز 0.2 ثانية
+                if (step) el.style.setProperty('--d', Math.min(i * Math.min(step, 80), 240) + 'ms');   // تتابع متدرج لا يتجاوز 0.24 ثانية
             }));
             document.documentElement.classList.add('rv-ready');   // انتهى الوسم: تتولى فئات الظهور الإخفاء من الآن
 
@@ -4642,37 +4645,49 @@ function toggleTheme() {
                 if (fast) { el.style.setProperty('--d', '0ms'); el.classList.add('rv-fast'); }
                 el.classList.add('in');
                 const d = fast ? 0 : (parseInt(el.style.getPropertyValue('--d'), 10) || 0);
-                cleanQueue.push([el, performance.now() + d + (fast ? 400 : 1100)]);
+                cleanQueue.push([el, performance.now() + d + (fast ? 400 : 1500)]);
                 if (!cleanTimer) cleanTimer = setTimeout(flushClean, 450);
             };
 
             const io = new IntersectionObserver(entries => entries.forEach(en => {
-                if (en.isIntersecting) show(en.target, mode > 0);
-            }), { threshold: 0.01, rootMargin: '0px 0px 40px 0px' });
+                if (en.isIntersecting) show(en.target, mode === 2);
+            }), { threshold: 0.01, rootMargin: '0px 0px -7% 0px' });
             items.forEach(el => io.observe(el));
 
             // انتهاء التمرير السريع: نثبّت ما أصبح داخل الشاشة قبل إعادة الإخفاء لما هو خارجها
             const endFast = () => {
                 io.takeRecords().forEach(en => { if (en.isIntersecting) show(en.target, true); });
+                // الذاكرة: كل ما مرّ عليه التمرير (فوق الشاشة أو داخلها) يبقى ظاهراً ولا يُنسى
+                const vh = innerHeight;
+                Array.from(pending).forEach(el => { if (el.getBoundingClientRect().top < vh) show(el, true); });
                 mode = 0;
                 root.classList.remove('rv-skip', 'rv-med');
             };
 
+            let settleTimer = 0;
+            const settle = () => {
+                const vh = innerHeight;
+                Array.from(pending).forEach(el => {
+                    const r = el.getBoundingClientRect();
+                    if (r.bottom <= 0) show(el, true);              // مرّ فوق الشاشة: يُحفظ ظاهراً فوراً
+                    else if (r.top < vh) show(el, false);           // داخل الشاشة: يظهر بحركته
+                });
+            };
             addEventListener('scroll', () => {
-                if (!pending.size) { if (mode) endFast(); return; }
+                if (pending.size) { clearTimeout(settleTimer); settleTimer = setTimeout(settle, 220); }
                 const now = performance.now(), dt = now - lastT;
                 if (dt < 8) return;                                          // تجاهل الأحداث المتقاربة جداً
                 const y = scrollY, dy = Math.abs(y - lastY);
                 let v = dy / dt;                                             // بكسل لكل مللي ثانية
                 if (dt > 200) v = dy > innerHeight * 0.8 ? 5 : 0;            // قفزة كبيرة بعد سكون (مثل الروابط الداخلية)
                 lastY = y; lastT = now;
-                const m = v >= 1.4 ? 2 : (v >= 0.6 ? 1 : 0);
+                const m = v >= 4 ? 2 : (v >= 2 ? 1 : 0);
                 if (m > mode) {
                     mode = m;
                     root.classList.toggle('rv-skip', m === 2);
                     root.classList.toggle('rv-med', m === 1);
                 }
-                if (mode) { clearTimeout(idleTimer); idleTimer = setTimeout(endFast, 160); }
+                if (mode) { clearTimeout(idleTimer); idleTimer = setTimeout(endFast, 90); }
             }, { passive: true });
 
             // شبكة أمان: أي عنصر داخل الشاشة لم يظهر بعد 4 ثوانٍ يُظهَر فوراً
@@ -4688,6 +4703,12 @@ function toggleTheme() {
             items.forEach(el => { el.classList.remove('reveal', 'in'); el.removeAttribute('data-rv'); el.style.removeProperty('--d'); });
         }
     }
+
+    // ---- حفظ الصور في الذاكرة: بعد اكتمال التحميل تُجلب الصور المؤجلة وقت الفراغ فلا تظهر متأخرة عند التمرير السريع ----
+    addEventListener('load', () => {
+        const warm = () => document.querySelectorAll('img[loading="lazy"]').forEach(i => { i.loading = 'eager'; });
+        (window.requestIdleCallback || (f => setTimeout(f, 800)))(warm, { timeout: 3000 });
+    });
 
     // ---- عدّاد الأرقام في لوحة الترحيب ----
     const ease = t => 1 - Math.pow(1 - t, 3);
@@ -5245,9 +5266,6 @@ function toggleTheme() {
 
 </script>
 
-<!-- ملف خارجي -->
-<script src="script.js"></script>
-
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://googletagmanager.com"></script>
 <script>
@@ -5257,6 +5275,9 @@ function toggleTheme() {
 
   gtag('config', 'G-72KM3WGRYW');
 </script>
+
+<!-- ملف خارجي -->
+<script src="script.js"></script>
 
 </body>
 </html>
