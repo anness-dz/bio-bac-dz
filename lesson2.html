@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الوحدة 2: العلاقة بين بنية ووظيفة البروتين</title>
+    <!-- الشعار الأساسي للمتصفح (يظهر بجانب العنوان في التبويب) -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.png">
+
+    <!-- الشعار للهواتف وأجهزة أبل -->
+    <link rel="apple-touch-icon" href="favicon.png">
     <meta name="description" content="ملخص الوحدة 2 علوم الطبيعة والحياة بكالوريا: بنية الأحماض الأمينية والرابطة الببتيدية ومستويات بنية البروتين وتجربة أنفينسن والمسخ، مع شروحات مبسطة وصور توضيحية.">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="theme-color" content="#0b0f19">
@@ -462,6 +468,7 @@
 
     body.light-theme .num-badge {
         color: #ffffff !important;
+        text-shadow: 0 1px 2px rgba(15, 23, 42, 0.3);
         box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3) !important;
     }
 
@@ -653,6 +660,20 @@
         }
     }
 
+    /* شعار الموقع: ظاهر في أعلى الصفحة بلا أرضية رمادية ولا إطار */
+    .top-brand-logo { flex-shrink: 0; }
+    .top-brand-logo .top-logo-img {
+        width: 40px;
+        height: 40px;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        object-fit: contain;
+        display: block;
+    }
+
     /* زر الصعود إلى أعلى الصفحة — أسفل يسار الشاشة */
     .back-top {
         position: fixed;
@@ -702,7 +723,7 @@
         <header class="top-navbar">
             <div class="top-nav-container">
                 <a href="index.html" class="top-brand-logo">
-                    <img src="favicon.png" alt="شعار" class="top-logo-img" onerror="this.onerror=null; this.src='favicon.ico';">
+                    <img src="favicon.png" alt="شعار" class="top-logo-img" width="40" height="40" decoding="async" fetchpriority="high" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='favicon.ico';}else{this.style.display='none';}">
                     <span class="top-brand-name">bio-bac-dz</span>
                 </a>
 

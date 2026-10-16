@@ -4,13 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الوحدة 1: تركيب البروتين</title>
+    <!-- الشعار الأساسي للمتصفح (يظهر بجانب العنوان في التبويب) -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.png">
+
+    <!-- الشعار للهواتف وأجهزة أبل -->
+    <link rel="apple-touch-icon" href="favicon.png">
+    <meta name="description" content="ملخص الوحدة 1 علوم الطبيعة والحياة بكالوريا: تركيب البروتين، الاستنساخ ونضج الـ ARNm، الشفرة الوراثية وتجربة نيرنبرغ، بنية ARNt والريبوزوم، الترجمة وتنشيط الأحماض الأمينية، مع شروحات مبسطة.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#0b0f19">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="bio-bac-dz">
+    <meta property="og:locale" content="ar_DZ">
+    <meta property="og:title" content="الوحدة 1: تركيب البروتين">
+    <meta property="og:description" content="ملخص الوحدة 1 علوم الطبيعة والحياة بكالوريا: تركيب البروتين، الاستنساخ ونضج الـ ARNm، الشفرة الوراثية وتجربة نيرنبرغ، بنية ARNt والريبوزوم، الترجمة وتنشيط الأحماض الأمينية، مع شروحات مبسطة.">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="الوحدة 1: تركيب البروتين">
+    <meta name="twitter:description" content="ملخص الوحدة 1 علوم الطبيعة والحياة بكالوريا: تركيب البروتين، الاستنساخ ونضج الـ ARNm، الشفرة الوراثية وتجربة نيرنبرغ، بنية ARNt والريبوزوم، الترجمة وتنشيط الأحماض الأمينية، مع شروحات مبسطة.">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"LearningResource","name":"الوحدة 1: تركيب البروتين","description":"ملخص الوحدة 1 علوم الطبيعة والحياة بكالوريا: تركيب البروتين، الاستنساخ ونضج الـ ARNm، الشفرة الوراثية وتجربة نيرنبرغ، بنية ARNt والريبوزوم، الترجمة وتنشيط الأحماض الأمينية، مع شروحات مبسطة.","inLanguage":"ar","learningResourceType":"ملخص درس","educationalLevel":"الثالثة ثانوي — بكالوريا (علوم تجريبية)","teaches":["تركيب البروتين","الاستنساخ","الشفرة الوراثية","الترجمة","الريبوزوم"],"isPartOf":{"@type":"WebSite","name":"bio-bac-dz"}}
+    </script>
     <style>
 
     :root {
         --bg-dark: #0b0f19;
         --card-bg: rgba(21, 30, 49, 0.85);
         --box-bg: rgba(15, 23, 42, 0.6);
-        --mechanism-bg: rgba(30, 41, 59, 0.6);
         --img-bg: rgba(255, 255, 255, 0.03);
         --h2-bg-end: rgba(15, 23, 42, 0.2);
         --ad-bg: rgba(30, 41, 59, 0.5);
@@ -35,7 +54,6 @@
         --bg-dark: #f1f5f9;
         --card-bg: rgba(255, 255, 255, 0.95);
         --box-bg: #f8fafc;
-        --mechanism-bg: #ffffff;
         --img-bg: #ffffff;
         --h2-bg-end: rgba(226, 232, 240, 0.5);
         --ad-bg: rgba(241, 245, 249, 0.8);
@@ -223,7 +241,8 @@ body.light-theme .particle, body.light .particle {
 /* إضافة هذا السطر لمنعه من التغير إطلاقاً في الوضع النهاري */
 .light-theme .num-badge {
     background: linear-gradient(135deg, #38bdf8, #c084fc) !important;
-    color: #0f172a !important;
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(15, 23, 42, 0.35);
     box-shadow: 0 0 12px rgba(56, 189, 248, 0.4) !important;
 }
 
@@ -244,19 +263,6 @@ body.light-theme .particle, body.light .particle {
         padding-bottom: 6px;
         border-radius: 0 8px 8px 0;
         transition: color 0.3s ease, border-color 0.3s ease, background 0.4s ease;
-    }
-
-    .mechanism-box { 
-        background: var(--mechanism-bg); 
-        border-right: 5px solid var(--accent-blue); 
-        padding: 22px; 
-        margin: 20px 0; 
-        border-radius: 14px; 
-        text-align: justify; 
-        font-size: 1.05em; 
-        border: 1px solid var(--border-glow);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        transition: background 0.4s ease;
     }
 
     .step-card { 
@@ -1327,24 +1333,36 @@ body.light-theme .top-navbar {
     white-space: nowrap;
 }
 
-/* 3. تنسيق زر التبديل نفسه ليعمل ويتجاوب بشكل ممتاز */
+/* زر الوضع الليلي/النهاري — نفس تصميم الصفحة الرئيسية */
 .top-navbar .theme-toggle-btn {
     margin: 0 !important;
     white-space: nowrap;
-    background: transparent;
+    background: var(--card-bg);
     border: 1px solid var(--card-border);
-    color: var(--text-color);
+    color: var(--text-main);
     padding: 8px 16px;
-    border-radius: 12px;
+    border-radius: 20px;
     cursor: pointer;
-    font-weight: 600;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
     transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 
-.top-navbar .theme-toggle-btn:hover {
-    border-color: #38bdf8;
-    transform: translateY(-2px);
-}
+body.light-theme .top-navbar .theme-toggle-btn { border-color: rgba(15, 23, 42, 0.12); }
+.top-navbar .theme-toggle-btn:hover { transform: scale(1.05); }
+.top-navbar .theme-toggle-btn:active { transform: scale(0.97); }
+
+#theme-icon { display: inline-flex; align-items: center; line-height: 1; }
+#theme-icon svg { width: 0.95rem; height: 0.95rem; display: block; }
+#theme-icon.is-moon { color: #818cf8; }
+#theme-icon.is-sun  { color: #f59e0b; }
 
 /* تجاوب الشاشات الصغيرة */
 @media (max-width: 600px) {
@@ -1381,6 +1399,52 @@ body.light-theme .top-navbar {
     color: var(--text-primary) !important;
 }
 
+    .step-card > p:last-child { margin-bottom: 0 !important; }
+
+    /* شعار الموقع: ظاهر في أعلى الصفحة بلا أرضية رمادية ولا إطار */
+    .top-brand-logo { flex-shrink: 0; }
+    .top-brand-logo .top-logo-img {
+        width: 40px;
+        height: 40px;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        object-fit: contain;
+        display: block;
+    }
+
+    /* زر الصعود إلى أعلى الصفحة — أسفل يسار الشاشة */
+    .back-top {
+        position: fixed;
+        left: calc(16px + env(safe-area-inset-left, 0px));
+        bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+        z-index: 90;
+        width: 48px;
+        height: 48px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+        cursor: pointer;
+        opacity: 0;
+        transform: translateY(14px) scale(0.9);
+        pointer-events: none;
+        transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .back-top.show { opacity: 1; transform: none; pointer-events: auto; }
+    .back-top svg { width: 22px; height: 22px; display: block; }
+    @media (hover: hover) { .back-top.show:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45); } }
+    .back-top:active { transform: scale(0.94); }
+    .back-top:focus-visible { outline: 3px solid var(--accent-blue); outline-offset: 3px; }
+    @media (prefers-reduced-motion: reduce) { .back-top { transition: opacity 0.2s ease; } }
     </style>
 
     <link rel="stylesheet" href="style.css">
@@ -1401,13 +1465,13 @@ body.light-theme .top-navbar {
     <div class="top-nav-container">
         <!-- الشعار والاسم (يعود بك للصفحة الرئيسية) -->
         <a href="index.html" class="top-brand-logo">
-            <img src="favicon.png" alt="شعار" class="top-logo-img" onerror="this.onerror=null; this.src='favicon.ico';">
+            <img src="favicon.png" alt="شعار" class="top-logo-img" width="40" height="40" decoding="async" fetchpriority="high" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='favicon.ico';}else{this.style.display='none';}">
             <span class="top-brand-name">bio-bac-dz</span>
         </a>
 
         <!-- زر التبديل -->
-        <button class="theme-toggle-btn" onclick="toggleTheme()">
-    <span id="theme-icon">🌙</span>
+        <button type="button" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="تبديل الوضع الليلي والنهاري">
+    <span id="theme-icon" class="is-moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span>
     <span id="theme-text">الوضع الليلي</span>
 </button>
     </div>
@@ -1439,7 +1503,7 @@ body.light-theme .top-navbar {
 
     <section>
         <h2><span class="num-badge">01</span> التخصص الوظيفي والتحكم في التعبير المورثي</h2>
-        <div class="mechanism-box">
+        <div class="step-card">
              تعتمد حيوية الخلية على قدرتها العالية على <span style="color: #38bdf8; font-weight: bold;">التحكم الدقيق</span> في نوعية وكمية البروتينات المصنعة في زمن محدد، وهو ما يُعرف بـ <span style="color: #818cf8; font-weight: bold;">التعبير المورثي</span>. ورغم تماثل <span style="color: #4ade80; font-weight: bold;">المعلومة الوراثية</span> (<span class="latin-tech">ADN</span>) في جميع خلايا العضوية الواحدة، إلا أن <span style="color: #fb923c; font-weight: bold;">التخصص الوظيفي للخلية</span> يعتمد على <span style="color: #facc15; font-weight: bold;">التعبير عن مورثات نوعية</span> وتثبيط أخرى، مما يؤدي إلى تشكيل بروتينات نوعية تُحدد <span style="color: #a78bfa; font-weight: bold;">النمط الظاهري</span> للخلية.
         </div>
     </section>
@@ -1455,8 +1519,9 @@ body.light-theme .top-navbar {
         <h2><span class="num-badge">03</span> التركيب الكيميائي والبنية الفضائية للـ ARN</h2>
         <div class="step-card">
              يتكون <span style="color: #a78bfa; font-weight: bold;">الحمض النووي الريبي</span> (<span class="latin-tech">ARN</span>) من متعدد <span style="color: #38bdf8; font-weight: bold;">النيكليوتيدات الريبية</span> المرتبطة فيما بينها بـ <span style="color: #818cf8; font-weight: bold;">روابط إستر فوسفاتية</span>. تُظهر <span style="color: #4ade80; font-weight: bold;">الإماهة الكلية</span> لـ <span class="latin-tech">ARN</span> جزيء <span style="color: #fb923c; font-weight: bold;">سكر ريبوز</span> (<span class="latin-tech">C₅H₁₀O₅</span>)، و<span style="color: #facc15; font-weight: bold;">حمض الفوسفوريك</span> (<span class="latin-tech">H₃PO₄</span>)، وواحدة من <span style="color: #2dd4bf; font-weight: bold;">القواعد الآزوتية الأربع</span>: <span style="color: #38bdf8; font-weight: bold;">الأدينين (A)</span>، <span style="color: #818cf8; font-weight: bold;">الغوانين (G)</span>، <span style="color: #4ade80; font-weight: bold;">السيتوزين (C)</span>، وتتميز بحضور قاعدة <span style="color: #fb923c; font-weight: bold;">اليوراسيل (U)</span> بدلاً من التيمين (<span class="latin-tech">T</span>). بينما تُظهر <span style="color: #4ade80; font-weight: bold;">الإماهة الجزئية</span> أربعة أنواع من <span style="color: #38bdf8; font-weight: bold;">النيكليوتيدات الريبية</span> وهي: <span style="color: #38bdf8; font-weight: bold;">الأدينوزين أحادي الفوسفات (AMP)</span>، <span style="color: #818cf8; font-weight: bold;">الغوانوزين أحادي الفوسفات (GMP)</span>، <span style="color: #4ade80; font-weight: bold;">السيتيدين أحادي الفوسفات (CMP)</span>، و<span style="color: #fb923c; font-weight: bold;">اليوريدين أحادي الفوسفات (UMP)</span>. يتميز <span class="latin-tech">ARN</span> بكونه يمتلك <span style="color: #facc15; font-weight: bold;">سلسلة واحدة مفردة</span> غير مستقرة مقارنة بـ <span class="latin-tech">ADN</span> المزدوج، مما يمنحه <span style="color: #2dd4bf; font-weight: bold;">عمرًا قصيرًا في الهيولى</span> لتفكيكه بسرعة عبر أنزيمات <span class="latin-tech">RNase</span> فور الانتهاء من عملية الترجمة.
+        </div>
 
-            <div class="img-container-box">
+        <div class="img-container-box">
 
             <div class="img-container-title">
                 رسم تخطيطي لمكونات الكميائية للARNm
@@ -1465,7 +1530,6 @@ body.light-theme .top-navbar {
             <!-- كود الصورة متكيف بالكامل -->
             <img src="images1/0.7.png" alt="رسم تخطيطي لمكونات الحمض الريبي النووي الرسول ARNm">
         </div>
-        </div>
     </section>
 
 
@@ -1473,13 +1537,19 @@ body.light-theme .top-navbar {
         <h2><span class="num-badge">04</span> عملية الاستنساخ</h2>
         
         <h3>أ- مرحلة الانطلاق (الانكشاف):</h3>
-        <p> يرتبط إنزيم <span style="color: #38bdf8; font-weight: bold;">ARN بوليميراز (<span class="latin-tech">ARNp</span>)</span> بمنطقة نوعية من الـ <span class="latin-tech">ADN</span> تكوين هي <span style="color: #818cf8; font-weight: bold;">بداية المورثة  </span> .يقوم الإنزيم بكسر <span style="color: #4ade80; font-weight: bold;">الروابط الهيدروجينية</span> بين القواعد الآزوتية المتكاملة ، مما يؤدي إلى <span style="color: #fb923c; font-weight: bold;">انفصال سلسلتي الـ ADN</span> و زوال الالتفاف الحلزوني . يبدأ الإنزيم بقراءة تتابع النيكليوتيدات على <span style="color: #2dd4bf; font-weight: bold;">السلسلة المستنسخة </span></p>
+        <div class="step-card">
+            <p> يرتبط إنزيم <span style="color: #38bdf8; font-weight: bold;">ARN بوليميراز (<span class="latin-tech">ARNp</span>)</span> بمنطقة نوعية من الـ <span class="latin-tech">ADN</span> تكوين هي <span style="color: #818cf8; font-weight: bold;">بداية المورثة  </span> .يقوم الإنزيم بكسر <span style="color: #4ade80; font-weight: bold;">الروابط الهيدروجينية</span> بين القواعد الآزوتية المتكاملة ، مما يؤدي إلى <span style="color: #fb923c; font-weight: bold;">انفصال سلسلتي الـ ADN</span> و زوال الالتفاف الحلزوني . يبدأ الإنزيم بقراءة تتابع النيكليوتيدات على <span style="color: #2dd4bf; font-weight: bold;">السلسلة المستنسخة </span></p>
+        </div>
 
         <h3>ب- مرحلة الاستطالة:</h3>
-        <p> يتحرك إنزيم <span class="latin-tech">ARNp</span> على طول <span style="color: #2dd4bf; font-weight: bold;">السلسلة المستنسخة</span> لقراءتها في الاتجاه <span class="latin-tech">3' → 5'</span>، بينما يتم بناء جزيء الـ <span class="latin-tech">ARNm</span> في الاتجاه <span class="latin-tech">5' → 3'</span>. يقوم الإنزيم بقراءة تتابع النيكليوتيدات على السلسلة المستنسخة وربط <span style="color: #38bdf8; font-weight: bold;">النيكليوتيدات الريبية الحرة</span> المتواجدة في <span style="color: #facc15; font-weight: bold;">العصارة النووية</span> حسب <span style="color: #818cf8; font-weight: bold;">مبدأ التكامل بين القواعد الآزوتية</span>: يضع <span style="color: #fb923c; font-weight: bold;">اليوراسيل (U)</span> مقابل الأدينين (<span class="latin-tech">A</span>)، <span style="color: #4ade80; font-weight: bold;">الأدينين (A)</span> مقابل التيمين (<span class="latin-tech">T</span>)، و<span style="color: #2dd4bf; font-weight: bold;">الغوانين (G)</span> مقابل السيتوزين (<span class="latin-tech">C</span>). تتشكل <span style="color: #818cf8; font-weight: bold;">روابط إستر-فوسفاتية</span> بين النيكليوتيدات المتتالية لتستطيل سلسلة الـ <span class="latin-tech">ARNm</span> تدريجياً.</p>
+        <div class="step-card">
+            <p> يتحرك إنزيم <span class="latin-tech">ARNp</span> على طول <span style="color: #2dd4bf; font-weight: bold;">السلسلة المستنسخة</span> لقراءتها في الاتجاه <span class="latin-tech">3' → 5'</span>، بينما يتم بناء جزيء الـ <span class="latin-tech">ARNm</span> في الاتجاه <span class="latin-tech">5' → 3'</span>. يقوم الإنزيم بقراءة تتابع النيكليوتيدات على السلسلة المستنسخة وربط <span style="color: #38bdf8; font-weight: bold;">النيكليوتيدات الريبية الحرة</span> المتواجدة في <span style="color: #facc15; font-weight: bold;">العصارة النووية</span> حسب <span style="color: #818cf8; font-weight: bold;">مبدأ التكامل بين القواعد الآزوتية</span>: يضع <span style="color: #fb923c; font-weight: bold;">اليوراسيل (U)</span> مقابل الأدينين (<span class="latin-tech">A</span>)، <span style="color: #4ade80; font-weight: bold;">الأدينين (A)</span> مقابل التيمين (<span class="latin-tech">T</span>)، و<span style="color: #2dd4bf; font-weight: bold;">الغوانين (G)</span> مقابل السيتوزين (<span class="latin-tech">C</span>). تتشكل <span style="color: #818cf8; font-weight: bold;">روابط إستر-فوسفاتية</span> بين النيكليوتيدات المتتالية لتستطيل سلسلة الـ <span class="latin-tech">ARNm</span> تدريجياً.</p>
+        </div>
 
         <h3>ج- مرحلة النهاية:</h3>
-        <p> عند وصول الإنزيم إلى <span style="color: #fb923c; font-weight: bold;">نهاية المورثة</span> ، ينفصل إنزيم <span class="latin-tech">ARN Polymérase</span> عن المورثة، وينفصل جزيء<span style="color: #a78bfa; font-weight: bold;">الـ ARN الرسول (<span class="latin-tech">ARNm</span>)</span> لكي يتحرر، بينما تعود سلسلتا الـ <span class="latin-tech">ADN</span> للالتحام وإعادة <span style="color: #4ade80; font-weight: bold;">التفاف الحلزوني التلقائي</span> عبر تشكل الروابط الهيدروجينية مجدداً.</p>
+        <div class="step-card">
+            <p> عند وصول الإنزيم إلى <span style="color: #fb923c; font-weight: bold;">نهاية المورثة</span> ، ينفصل إنزيم <span class="latin-tech">ARN Polymérase</span> عن المورثة، وينفصل جزيء<span style="color: #a78bfa; font-weight: bold;">الـ ARN الرسول (<span class="latin-tech">ARNm</span>)</span> لكي يتحرر، بينما تعود سلسلتا الـ <span class="latin-tech">ADN</span> للالتحام وإعادة <span style="color: #4ade80; font-weight: bold;">التفاف الحلزوني التلقائي</span> عبر تشكل الروابط الهيدروجينية مجدداً.</p>
+        </div>
 
         <div class="img-container-box">
             <!-- عنوان الصورة أعلى الإطار -->
@@ -1502,7 +1572,7 @@ body.light-theme .top-navbar {
 <section>
         <h2><span class="num-badge">06</span> الشفرة الوراثية وتجربة نيرنبرغ التاريخية</h2>
         
-        <div class="mechanism-box">
+        <div class="step-card">
              تُعتبر الشفرة الوراثية المترجم بين اللغة النووية و اللغة البروتينية اي <span style="color: #facc15; font-weight: bold;">4 قواعد آزوتية</span> في الـ <span class="latin-tech">ARNm</span> و<span style="color: #2dd4bf; font-weight: bold;">20 حمضاً أمينياً</span> يُدخل في تركيب البروتين. ولتحديد عدد القواعد المسؤولة عن تشفير كل حمض أميني، اعتُمدت الحسابات الرياضية والاحتمالية التالية:
              <br><br>
              • <strong>إذا كانت الشفرة أحادية (4¹ = 4):</strong> تُشفر لـ <span style="color: #fb923c; font-weight: bold;">4 أحماض أمينية فقط</span> (وهو غير كافٍ لـ 20 حمضاً).<br>
@@ -1627,21 +1697,27 @@ body.light-theme .top-navbar {
             
             <!-- المرحلة الأولى -->
             <h3 style="color: #1e40af; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">1. مرحلة تثبيت الحمض الأميني والـ ATP وتشكل المركب الانتقالي:</h3>
+        <div class="step-card">
             <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
                يتعرف إنزيم التنشيط بفضل التكامل البنيوي لموقعه الفعال فيثبت كلاً من <span style="color: #2dd4bf; font-weight: bold;">الحمض الأميني</span> وجزيء <span style="color: #facc15; font-weight: bold;">الـ <span class="latin-tech">ATP</span></span>. يُحفز الإنزيم إماهة الـ <span class="latin-tech">ATP</span> وتنفصل جزيئة البيوفوسفات (<span class="latin-tech">PPi</span>)، مما يؤدي إلى ربط الحمض الأميني بـ <span class="latin-tech">AMP</span> وتشكل مركب انتقالي مؤقت: <span style="color: #818cf8; font-weight: bold;">حمض اميني<span class="latin-tech">AMP</span></span> متصل بالإنزيم.
             </p>
+        </div>
 
             <!-- المرحلة الثانية -->
             <h3 style="color: #1e40af; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">2. مرحلة تثبيت الـ ARNt وتشكيل الرابطة الطاقوية:</h3>
+        <div class="step-card">
             <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
                يرتبط جزيء <span style="color: #a78bfa; font-weight: bold;">الـ <span class="latin-tech">ARNt</span> الموافق</span> بموقعه الخاص على الإنزيم، فتُنقل الطاقة من المركب الانتقالي ليتشكل رابطة تساهمية غنية بالطاقة بين <span style="color: #2dd4bf; font-weight: bold;">الحمض الأميني</span> والنهاية <span class="latin-tech">'3</span> لجزيء الـ <span class="latin-tech">ARNt</span>، مع تحرر جزيء الـ <span class="latin-tech">AMP</span>.
             </p>
+        </div>
 
             <!-- المرحلة الثالثة -->
             <h3 style="color: #1e40af; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">3. مرحلة تحرر الناتج واسترجاع الإنزيم:</h3>
+        <div class="step-card">
             <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
                ينفصل الناتج النهائي وهو **المعقد المنشط: <span style="color: #4ade80; font-weight: bold;">"حمض أميني - <span class="latin-tech">ARNt</span>"</span> ** عن الموقع الفعال للإنزيم وينطلق نحو الريبوزوم، بينما يسترجع الإنزيم حالته الأصلية ليكون جاهزاً لتكرار التفاعل.
             </p>
+        </div>
 
         </div>
 
@@ -1668,21 +1744,27 @@ body.light-theme .top-navbar {
 
             <!-- أ- مرحلة الانطلاق -->
             <h3 style="color: #1e40af; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">أ- مرحلة الانطلاق (Initiation Phase):</h3>
+        <div class="step-card">
             <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
                تبدأ المرحلة بارتباط <span style="color: #38bdf8; font-weight: bold;">تحت الوحدة الصغرى</span> للريبوزوم بخيط الـ <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNm</span> عند <span style="color: #facc15; font-weight: bold;">رامزة البداية (<span class="latin-tech">AUG</span>)</span>. يتوضع الـ <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNt</span> الأول الحامل لحمض <span style="color: #2dd4bf; font-weight: bold;">الميثيونين (<span class="latin-tech">Met</span>)</span> في <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">P</span></span> بفضل التكامل بين <span style="color: #facc15; font-weight: bold;">رامزته المضادة (<span class="latin-tech">UAC</span>)</span> ورامزة البداية. ترتبط بعدها <span style="color: #38bdf8; font-weight: bold;">تحت الوحدة الكبرى</span> ليتشكل <span style="color: #fb923c; font-weight: bold;">معقد الانطلاق</span>، حيث يكون <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">P</span></span> مشغولاً و<span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">A</span></span> شاغراً.
             </p>
+        </div>
 
             <!-- ب- مرحلة الاستطالة -->
             <h3 style="color: #1e40af; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">ب- مرحلة الاستطالة (Elongation Phase):</h3>
+        <div class="step-card">
             <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
                يتوضع جزيء <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNt</span> ثانٍ حامل لـ <span style="color: #2dd4bf; font-weight: bold;">حمض أميني ثانٍ</span> في <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">A</span></span> الشاغر بفضل التكامل بين رامزته المضادة والرامزة الثانية. تتشكل <span style="color: #fb923c; font-weight: bold;">رابطة ببتيدية</span> بين الحمض الأميني الأول والحمض الأميني الثاني بتدخل إنزيم نوعي واستهلاك طاقة. ينفصل الـ <span class="latin-tech">ARNt</span> الأول، وينتقل الريبوزوم بمقدار <span style="color: #facc15; font-weight: bold;">رامزة واحدة (3 نكليوتيدات)</span> باتجاه <span style="color: #facc15; font-weight: bold;">النهاية <span class="latin-tech">'3</span></span>، فيصبح الـ <span class="latin-tech">ARNt</span> الثاني في <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">P</span></span> ويفرغ <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">A</span></span> لاستقبال ناقل جديد. تتكرر هذه الدورة فتستطيل السلسلة الببتيدية تدريجياً.
             </p>
+        </div>
 
             <!-- ج- مرحلة النهاية -->
             <h3 style="color: ##1e40af; font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">ج- مرحلة النهاية :</h3>
+        <div class="step-card">
             <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 18px 0;">
                تنتهي الترجمة عند وصول <span style="color: #38bdf8; font-weight: bold;">الموقع <span class="latin-tech">A</span></span> إلى إحدى <span style="color: #facc15; font-weight: bold;">رامزات التوقف الثلاث (<span class="latin-tech">UAA, UAG, UGA</span>)</span>. يتدخل <span style="color: #fb923c; font-weight: bold;">عامل الانفصال</span> الذي يفصل السلسلة الببتيدية المتشكلة، وتتفكك <span style="color: #38bdf8; font-weight: bold;">تحت وحدتي الريبوزوم</span> وينفصل خيط الـ <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNm</span>. ينفصل حمض <span style="color: #2dd4bf; font-weight: bold;">الميثيونين (<span class="latin-tech">Met</span>)</span> الأول عن بداية السلسلة، ثم تنطوي السلسلة الببتيدية لتتخذ <span style="color: #4ade80; font-weight: bold;"> بنيتها الفراغية</span> وتصبح بروتيناً وظيفياً.
             </p>
+        </div>
 
         </div>
         
@@ -1724,7 +1806,7 @@ body.light-theme .top-navbar {
     <section>
         <h2><span class="num-badge">13</span> دور جهاز غولجي في نضج وتوجيه البروتين (معلومة اضافية)</h2>
         
-        <div class="mechanism-box">
+        <div class="step-card">
             <p style="line-height: 1.8; color: var(--text-main); margin: 0;">
                 تنتقل <span style="color: #2dd4bf; font-weight: bold;">البروتينات غير الناضجة</span> المُصنّعة في <span style="color: #38bdf8; font-weight: bold;">الشبكة الهيولية المحببة</span> عبر <span style="color: #a78bfa; font-weight: bold;">حويصلات انتقالية</span> إلى <span style="color: #fb923c; font-weight: bold;">جهاز غولجي</span>. تطرأ عليها داخل أكياسه <span style="color: #facc15; font-weight: bold;">تعديلات كيميائية</span> (مثل <span style="color: #a78bfa; font-weight: bold;">الغلوزة - إضافة السكريات</span>) لاكتساب <span style="color: #4ade80; font-weight: bold;">البنية الفراغية الناضجة والوظيفية</span>. تُفرز البروتينات الناضجة بعدها داخل <span style="color: #38bdf8; font-weight: bold;">حويصلات إفرازية</span> لتوجّه نحو <span style="color: #38bdf8; font-weight: bold;">الغشاء الهيولي</span> قصد طرحها بـ <span style="color: #facc15; font-weight: bold;">الإطراح الخلوي</span>، أو تُوجّه إلى عضيات خلوية أخرى لاستعمالها.
             </p>
@@ -1766,7 +1848,7 @@ body.light-theme .top-navbar {
         <section>
         <h2><span class="num-badge">16</span> تفكيك الـ ARNm وإعادة استعمال النكليوتيدات (معلومة اضافية)</h2>
         
-        <div class="mechanism-box">
+        <div class="step-card">
             <p style="line-height: 1.8; color: var(--text-main); margin: 0;">
                 بعد انتهاء عملية الترجمة، يُفرّق <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNm</span> ويتفكك في <span style="color: #38bdf8; font-weight: bold;">الهيولى</span> بتدخل <span style="color: #fb923c; font-weight: bold;">إنزيمات نوعية (Ribonucleases)</span> إلى <span style="color: #2dd4bf; font-weight: bold;">نكليوتيدات ريبية حرة</span>. تُعاد إعادة استعمال هذه النكليوتيدات الحرة ونقلها إلى <span style="color: #38bdf8; font-weight: bold;">النواة</span> لاستغلالها في <span style="color: #4ade80; font-weight: bold;">عمليات استنساخ جديدة</span> عند حاجة الخلية لبروتينات أخرى. يسمح عمر الـ <span style="color: #a78bfa; font-weight: bold;" class="latin-tech">ARNm</span> المحدود بـ <span style="color: #facc15; font-weight: bold;">المراقبة الدقيقة لمعدل التعبير المورثي</span> وتوقيف تركيب البروتين فور عدم الحاجة إليه.
             </p>
@@ -1798,11 +1880,15 @@ body.light-theme .top-navbar {
 
 
 
+var THEME_ICONS = {
+    moon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+    sun:  '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" fill="none"/></svg>'
+};
 function updateThemeUI(isLight) {
     var icon = document.getElementById('theme-icon');
     var text = document.getElementById('theme-text');
     
-    if (icon) icon.textContent = isLight ? '☀️' : '🌙';
+    if (icon) { icon.className = isLight ? 'is-sun' : 'is-moon'; icon.innerHTML = isLight ? THEME_ICONS.sun : THEME_ICONS.moon; }
     if (text) text.textContent = isLight ? 'الوضع النهاري' : 'الوضع الليلي';
 }
 
@@ -1840,5 +1926,82 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script src="script.js"></script>
 
+<script>
+/* دوائر صغيرة متحركة في الخلفية — بألوان الصفحة، وتتوقف عند إخفاء التبويب أو لمن يفضّل تقليل الحركة */
+(function () {
+    var canvas = document.getElementById('cellCanvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d'), parts = [], N = 35, MAXD = 130, raf = 0;
+    var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function size() { canvas.width = innerWidth; canvas.height = innerHeight; }
+    function Particle() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.r = Math.random() * 3.5 + 1.5;
+        this.vx = (Math.random() - 0.5) * 0.6;
+        this.vy = (Math.random() - 0.5) * 0.6;
+        this.o = Math.random() * 0.5 + 0.3;
+    }
+    function init() { parts = []; for (var i = 0; i < N; i++) parts.push(new Particle()); }
+
+    function frame() {
+        var light = document.body.classList.contains('light-theme');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (var i = 0; i < parts.length; i++) {
+            var p = parts[i];
+            if (!calm) {
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx = -p.vx;
+                if (p.y < 0 || p.y > canvas.height) p.vy = -p.vy;
+            }
+            ctx.fillStyle = light ? 'rgba(2, 132, 199,' + (p.o * 1.2) + ')' : 'rgba(248, 250, 252,' + p.o + ')';
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill();
+        }
+        for (var a = 0; a < parts.length; a++) {
+            for (var b = a + 1; b < parts.length; b++) {
+                var dx = parts[a].x - parts[b].x, dy = parts[a].y - parts[b].y, d = Math.sqrt(dx * dx + dy * dy);
+                if (d < MAXD) {
+                    var k = 1 - d / MAXD;
+                    ctx.strokeStyle = light ? 'rgba(2, 132, 199,' + (k * 0.3) + ')' : 'rgba(255, 255, 255,' + (k * 0.08) + ')';
+                    ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(parts[a].x, parts[a].y); ctx.lineTo(parts[b].x, parts[b].y); ctx.stroke();
+                }
+            }
+        }
+        if (!calm) raf = requestAnimationFrame(frame);
+    }
+    size(); init(); frame();
+    addEventListener('resize', function () { size(); init(); if (calm) frame(); });
+})();
+</script>
+<button type="button" class="back-top" id="backTop" aria-label="العودة إلى أعلى الصفحة">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+</button>
+<script>
+(function () {
+    var b = document.getElementById('backTop'), on = false, scrolled = false, navSeen = false;
+    var phone = window.matchMedia ? matchMedia('(max-width: 600px)') : { matches: false };
+    function render() {
+        // على الهاتف فقط: يختبئ الزر عند الاقتراب من أزرار التنقل السفلية كي لا يغطي عليها
+        var v = scrolled && !(phone.matches && navSeen);
+        if (v !== on) { on = v; b.classList.toggle('show', v); }
+    }
+    function check() {
+        var s = (window.pageYOffset || document.documentElement.scrollTop) > 400;
+        if (s !== scrolled) { scrolled = s; render(); }
+    }
+    addEventListener('scroll', check, { passive: true });
+    var nav = document.querySelector('.bottom-nav');
+    if (nav && 'IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) { navSeen = en[0].isIntersecting; render(); }, { rootMargin: '0px 0px 180px 0px' }).observe(nav);
+    }
+    if (phone.addEventListener) phone.addEventListener('change', render);
+    check();
+    b.addEventListener('click', function () {
+        var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: 0, behavior: calm ? 'auto' : 'smooth' });
+    });
+})();
+</script>
 </body>
 </html>
