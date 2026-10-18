@@ -5,6 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>الوحدة 8: التكتونية العامة</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <meta name="description" content="ملخص الوحدة 8 علوم الطبيعة والحياة (علوم الأرض) بكالوريا: التكتونية العامة، البنية الداخلية للأرض، تباعد الصفائح وتقاربها، أنواع الحدود، تكتونية الجزائر، الطاقة الداخلية، مع شروحات مبسطة.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="bio-bac-dz">
+    <meta property="og:locale" content="ar_DZ">
+    <meta property="og:title" content="الوحدة 8: التكتونية العامة">
+    <meta property="og:description" content="ملخص الوحدة 8 علوم الطبيعة والحياة (علوم الأرض) بكالوريا: التكتونية العامة، البنية الداخلية للأرض، تباعد الصفائح وتقاربها، أنواع الحدود، تكتونية الجزائر، الطاقة الداخلية، مع شروحات مبسطة.">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="الوحدة 8: التكتونية العامة">
+    <meta name="twitter:description" content="ملخص الوحدة 8 علوم الطبيعة والحياة (علوم الأرض) بكالوريا: التكتونية العامة، البنية الداخلية للأرض، تباعد الصفائح وتقاربها، أنواع الحدود، تكتونية الجزائر، الطاقة الداخلية، مع شروحات مبسطة.">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"LearningResource","name":"الوحدة 8: التكتونية العامة","description":"ملخص الوحدة 8 علوم الطبيعة والحياة (علوم الأرض) بكالوريا: التكتونية العامة، البنية الداخلية للأرض، تباعد الصفائح وتقاربها، أنواع الحدود، تكتونية الجزائر، الطاقة الداخلية، مع شروحات مبسطة.","inLanguage":"ar","learningResourceType":"ملخص درس","educationalLevel":"الثالثة ثانوي — بكالوريا (علوم تجريبية)","teaches":["البنية الداخلية للأرض","تباعد الصفائح","تقارب الصفائح","تكتونية الجزائر","الطاقة الداخلية للأرض"],"isPartOf":{"@type":"WebSite","name":"bio-bac-dz"}}
+    </script>
 
 <style>
 
@@ -129,7 +145,7 @@ body {
 .particle:nth-child(3) {
     width: 140px;
     height: 140px;
-    background: var(--accent-blue);
+    background: var(--ui-tint);
     top: 40%;
     left: 70%;
     animation-duration: 16s;
@@ -240,28 +256,7 @@ body {
     white-space: nowrap;
 }
 
-.top-navbar .theme-toggle-btn {
-    margin: 0 !important;
-    white-space: nowrap;
 
-    background: transparent;
-    border: 1px solid var(--card-border);
-
-    color: var(--text-color);
-
-    padding: 8px 16px;
-    border-radius: 12px;
-
-    cursor: pointer;
-    font-weight: 600;
-
-    transition: all 0.3s ease;
-}
-
-.top-navbar .theme-toggle-btn:hover {
-    border-color: var(--accent-red);
-    transform: translateY(-2px);
-}
 
 /* =========================================================
    الحاوية الرئيسية
@@ -907,7 +902,7 @@ body.light-theme .particle:nth-child(2) {
 }
 
 body.light-theme .particle:nth-child(3) {
-    background: #0284c7 !important;
+    background: var(--ui-accent) !important;
 }
 
 body.light-theme .particle:nth-child(4) {
@@ -1172,6 +1167,308 @@ body.light-theme .nav-btn {
     }
 }
 
+    /* زر الوضع الليلي/النهاري — نفس تصميم الصفحة الرئيسية */
+    .top-navbar .theme-toggle-btn {
+        margin: 0 !important;
+        white-space: nowrap;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border, rgba(148, 163, 184, 0.3));
+        color: var(--text-color, var(--text-main));
+        padding: 8px 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.85rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    }
+    body.light-theme .top-navbar .theme-toggle-btn { border-color: rgba(15, 23, 42, 0.12); }
+    .top-navbar .theme-toggle-btn:hover { transform: scale(1.05); }
+    .top-navbar .theme-toggle-btn:active { transform: scale(0.97); }
+    #theme-icon { display: inline-flex; align-items: center; line-height: 1; }
+    #theme-icon svg { width: 0.95rem; height: 0.95rem; display: block; }
+    #theme-icon.is-moon { color: #818cf8; }
+    #theme-icon.is-sun  { color: #f59e0b; }
+
+    /* أرقام العناوين: بيضاء في الوضع النهاري */
+    body.light-theme .num-badge, body.light-theme .chapter-num { color: #ffffff !important; text-shadow: 0 1px 2px rgba(15, 23, 42, 0.3); }
+
+    /* شعار الموقع: ظاهر في أعلى الصفحة بلا أرضية رمادية ولا إطار */
+    .top-brand-logo { flex-shrink: 0; }
+    .top-brand-logo .top-logo-img {
+        width: 40px;
+        height: 40px;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        object-fit: contain;
+        display: block;
+    }
+
+    /* زر الصعود إلى أعلى الصفحة — أسفل يسار الشاشة (بلون الدرس) */
+    .back-top {
+        position: fixed;
+        left: calc(16px + env(safe-area-inset-left, 0px));
+        bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+        z-index: 90;
+        width: 48px;
+        height: 48px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        box-shadow: 0 6px 18px rgba(239, 68, 68, 0.45);
+        cursor: pointer;
+        opacity: 0;
+        transform: translateY(14px) scale(0.9);
+        pointer-events: none;
+        transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .back-top.show { opacity: 1; transform: none; pointer-events: auto; }
+    .back-top svg { width: 22px; height: 22px; display: block; }
+    @media (hover: hover) { .back-top.show:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(239, 68, 68, 0.55); } }
+    .back-top:active { transform: scale(0.94); }
+    .back-top:focus-visible { outline: 3px solid #fca5a5; outline-offset: 3px; }
+    @media (prefers-reduced-motion: reduce) { .back-top { transition: opacity 0.2s ease; } }
+    /* ألوان الواجهة الخاصة بهذا الدرس (الإطارات، العناوين، الأزرار، الأرقام) */
+    :root {
+        --ui-accent: #ef4444;
+        --ui-accent-rgb: 239, 68, 68;
+        --ui-accent-2: #dc2626;
+        --ui-tint: #fca5a5;
+    }
+    body.light-theme {
+        --ui-accent: #dc2626;
+        --ui-accent-rgb: 220, 38, 38;
+        --ui-accent-2: #b91c1c;
+        --ui-tint: #dc2626;
+    }
+    /* NAVBAR-UNIFIED: شريط علوي موحّد في كل الدروس (نفس الأبعاد والتخطيط) + تدرّج لونين خاص بكل درس */
+    :root {
+        --g1: #ef4444;
+        --g2: #ec4899;
+        --g1-rgb: 239, 68, 68;
+        --badge-text: #0f172a;
+    }
+    body.light-theme {
+        --g1: #dc2626;
+        --g2: #db2777;
+        --g1-rgb: 239, 68, 68;
+        --badge-text: #ffffff;
+    }
+
+    header.top-navbar {
+        width: 100% !important;
+        max-width: 950px !important;
+        min-height: 0 !important;
+        margin: 0 auto 20px !important;
+        padding: 10px 20px !important;
+        box-sizing: border-box !important;
+        position: relative !important;
+        z-index: 10;
+        background: var(--card-bg) !important;
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1)) !important;
+        border-radius: 20px !important;
+        box-shadow: none !important;
+        transform: none !important;
+        direction: rtl;
+    }
+    body.light-theme header.top-navbar {
+        border-color: var(--card-border, rgba(0, 0, 0, 0.08)) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+    }
+    header.top-navbar .top-nav-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 12px !important;
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+        direction: rtl;
+    }
+    header.top-navbar .top-brand-logo {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        flex-shrink: 0;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: 1rem !important;
+        text-decoration: none !important;
+        cursor: pointer;
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+    }
+    header.top-navbar .top-brand-logo:hover {
+        transform: scale(1.08) !important;
+        filter: drop-shadow(0 0 10px rgba(var(--g1-rgb), 0.5)) !important;
+    }
+    header.top-navbar .top-brand-logo .top-logo-img {
+        display: block !important;
+        width: 40px !important;
+        height: 40px !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        filter: none !important;
+        object-fit: contain !important;
+        transform: none !important;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    header.top-navbar .top-brand-logo:hover .top-logo-img { transform: rotate(10deg) !important; }
+    header.top-navbar .top-brand-name {
+        display: inline-block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: 1.8rem !important;
+        font-weight: 800 !important;
+        line-height: 1.3 !important;
+        letter-spacing: 0 !important;
+        text-shadow: none !important;
+        filter: none !important;
+        white-space: nowrap !important;
+        background: linear-gradient(135deg, var(--g1), var(--g2)) !important;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+    }
+    header.top-navbar .theme-toggle-btn {
+        margin: 0 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        width: auto !important;
+        padding: 8px 16px !important;
+        border-radius: 20px !important;
+        font-size: 0.85rem !important;
+        font-weight: 700 !important;
+        line-height: 1.5 !important;
+        gap: 8px !important;
+        white-space: nowrap !important;
+    }
+    header.top-navbar .theme-toggle-btn #theme-icon svg { width: 15px !important; height: 15px !important; }
+    header.top-navbar .theme-toggle-btn #theme-text { font-size: inherit !important; font-weight: inherit !important; letter-spacing: 0 !important; font-family: inherit !important; }
+    @media (max-width: 600px) {
+        header.top-navbar { padding: 8px 15px !important; border-radius: 12px !important; margin-bottom: 15px !important; }
+        header.top-navbar .top-brand-logo { gap: 8px !important; }
+        header.top-navbar .top-brand-logo .top-logo-img { width: 32px !important; height: 32px !important; }
+        header.top-navbar .top-brand-name { font-size: 1.3rem !important; }
+        header.top-navbar .theme-toggle-btn { padding: 6px 10px !important; font-size: 0.85rem !important; }
+    }
+
+    /* العنوان الرئيسي وبطاقة أرقام العناوين: تدرّج لونين مناسبين للدرس */
+    h1 {
+        background: linear-gradient(135deg, var(--g1), var(--g2)) !important;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+    }
+    .num-badge, .chapter-num {
+        background: linear-gradient(135deg, var(--g1), var(--g2)) !important;
+        color: var(--badge-text) !important;
+        box-shadow: 0 2px 10px rgba(var(--g1-rgb), 0.4) !important;
+    }
+    /* TIPS-CARD: قالب النصائح الموحّد (بديل ملاحظات الأسفل) — نفس التصميم في كل الدروس */
+    .tips-card {
+        position: relative;
+        margin: 28px 0 14px;
+        padding: 22px 22px 14px;
+        border-radius: 18px;
+        border: 1px solid rgba(var(--g1-rgb), 0.35);
+        background: linear-gradient(160deg, rgba(var(--g1-rgb), 0.09), rgba(var(--g1-rgb), 0.015) 60%);
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+    .tips-card::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--g1), var(--g2));
+    }
+    .tips-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .tips-ico {
+        flex: 0 0 auto;
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        background: linear-gradient(135deg, var(--g1), var(--g2));
+        box-shadow: 0 4px 14px rgba(var(--g1-rgb), 0.4);
+    }
+    .tips-title { margin: 0; padding: 0; font-size: 1.2rem; font-weight: 800; line-height: 1.4; color: var(--g1); background: none !important; border: 0 !important; }
+    .tips-sub { margin: 2px 0 0; font-size: 0.85rem; opacity: 0.75; font-weight: 400; }
+    .tips-list { list-style: none; margin: 0; padding: 0; counter-reset: tip; }
+    .tips-list li {
+        counter-increment: tip;
+        position: relative;
+        padding: 12px 52px 12px 4px;
+        border-top: 1px dashed rgba(var(--g1-rgb), 0.28);
+        line-height: 1.85;
+    }
+    .tips-list li::before {
+        content: counter(tip);
+        position: absolute;
+        right: 4px;
+        top: 14px;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        color: var(--badge-text);
+        background: linear-gradient(135deg, var(--g1), var(--g2));
+    }
+    .tips-list .tip-h { display: block; font-weight: 800; color: var(--g1); margin-bottom: 2px; }
+    .tips-list .tip-t { display: block; }
+    .tips-list .tip-m {
+        display: block;
+        margin-top: 6px;
+        padding: 6px 12px;
+        font-size: 0.88rem;
+        border-radius: 8px;
+        color: #f87171;
+        background: rgba(248, 113, 113, 0.1);
+        border: 1px solid rgba(248, 113, 113, 0.28);
+    }
+    body.light-theme .tips-list .tip-m { color: #b91c1c; background: rgba(220, 38, 38, 0.07); border-color: rgba(220, 38, 38, 0.25); }
+    @media (max-width: 600px) {
+        .tips-card { padding: 18px 14px 10px; }
+        .tips-list li { padding: 12px 46px 12px 2px; }
+        .tips-list li::before { width: 30px; height: 30px; }
+        .tips-title { font-size: 1.05rem; }
+    }
 </style>
 </head>
 
@@ -1191,7 +1488,7 @@ body.light-theme .nav-btn {
                 src="favicon.png"
                 alt="شعار"
                 class="top-logo-img"
-                onerror="this.onerror=null; this.src='favicon.ico';"
+                width="40" height="40" decoding="async" fetchpriority="high" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='favicon.ico';}else{this.style.display='none';}"
             >
 
             <span class="top-brand-name">
@@ -1200,11 +1497,8 @@ body.light-theme .nav-btn {
 
         </a>
 
-        <button
-            class="theme-toggle-btn"
-            onclick="toggleTheme()"
-        >
-            <span id="theme-icon">🌙</span>
+        <button type="button" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="تبديل الوضع الليلي والنهاري">
+                    <span id="theme-icon" class="is-moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span>
             <span id="theme-text">الوضع الليلي</span>
         </button>
 
@@ -2334,6 +2628,24 @@ body.light-theme .nav-btn {
 </section>
 
 
+
+
+<section class="tips-card" aria-label="نصائح للتفوق في البكالوريا">
+    <div class="tips-head">
+        <div class="tips-ico" aria-hidden="true">💡</div>
+        <div>
+            <h3 class="tips-title">نصائح للتفوق في البكالوريا</h3>
+            <p class="tips-sub">خلاصة عملية لهذه الوحدة قبل الامتحان</p>
+        </div>
+    </div>
+    <ol class="tips-list">
+        <li><span class="tip-h">ميّز بين القشرة والغلاف الصخري</span><span class="tip-t">الغلاف الصخري يضم القشرة والجزء العلوي الصلب من الوشاح، ويتحرك فوق الغلاف الموري اللدن.</span><span class="tip-m">⚠️ خطأ شائع: اعتبار القشرة هي الغلاف الصخري.</span></li>
+        <li><span class="tip-h">احفظ الحدود الثلاثة بأمثلتها</span><span class="tip-t">متباعدة: ظهرة محيطية وتوسع قاع المحيط. متقاربة: غوص وخندق ومنطقة بنيوف أو تصادم قاري وسلاسل جبلية. انزلاقية: فوالق محوّلة وزلازل سطحية.</span></li>
+        <li><span class="tip-h">اقرأ الموجات الزلزالية بذكاء</span><span class="tip-t">الموجات P أسرع وتنتشر في الصلب والسائل، والموجات S أبطأ ولا تنتشر في السوائل، وهذا دليل النواة الخارجية السائلة، وتغير السرعة يدل على انقطاعات مثل موهو وغوتنبرغ.</span></li>
+        <li><span class="tip-h">اذكر الدليل مع التفسير</span><span class="tip-t">لا تكتفِ بالنتيجة: دعّم زحزحة القارات بالتطابق الجغرافي والأحفوري والصخري، ودعّم توسع القاع بالعمر الصخري والشذوذات المغناطيسية وتوزع الزلازل والبراكين.</span></li>
+    </ol>
+</section>
+
 <div class="ad-space">
     <span>[ مساحة إعلانية سفلية ]</span>
 </div>
@@ -2413,7 +2725,18 @@ body.light-theme .nav-btn {
    الوضع الليلي / النهاري
 ========================================================= */
 
-function toggleTheme() {
+const THEME_ICONS = {
+        moon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+        sun:  '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" fill="none"/></svg>'
+    };
+    function paintThemeIcon(isLight) {
+        const el = document.getElementById('theme-icon');
+        if (!el) return;
+        el.className = isLight ? 'is-sun' : 'is-moon';
+        el.innerHTML = isLight ? THEME_ICONS.sun : THEME_ICONS.moon;
+    }
+
+    function toggleTheme() {
 
     const bodyElement =
         document.body;
@@ -2439,8 +2762,7 @@ function toggleTheme() {
 
     if (isLightTheme) {
 
-        if (themeIcon)
-            themeIcon.textContent = "☀️";
+        paintThemeIcon(true);
 
         if (themeText)
             themeText.textContent =
@@ -2453,8 +2775,7 @@ function toggleTheme() {
 
     } else {
 
-        if (themeIcon)
-            themeIcon.textContent = "🌙";
+        paintThemeIcon(false);
 
         if (themeText)
             themeText.textContent =
@@ -3051,9 +3372,7 @@ document.addEventListener(
                 "light-theme"
             );
 
-            if (themeIcon)
-                themeIcon.textContent =
-                    "☀️";
+            paintThemeIcon(true);
 
             if (themeText)
                 themeText.textContent =
@@ -3065,9 +3384,7 @@ document.addEventListener(
                 "light-theme"
             );
 
-            if (themeIcon)
-                themeIcon.textContent =
-                    "🌙";
+            paintThemeIcon(false);
 
             if (themeText)
                 themeText.textContent =
@@ -3360,5 +3677,34 @@ document.addEventListener(
 
 </script>
 
+<button type="button" class="back-top" id="backTop" aria-label="العودة إلى أعلى الصفحة">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+</button>
+<script>
+(function () {
+    var b = document.getElementById('backTop'), on = false, scrolled = false, navSeen = false;
+    var phone = window.matchMedia ? matchMedia('(max-width: 600px)') : { matches: false };
+    function render() {
+        // على الهاتف فقط: يختبئ الزر عند الاقتراب من أزرار التنقل السفلية كي لا يغطي عليها
+        var v = scrolled && !(phone.matches && navSeen);
+        if (v !== on) { on = v; b.classList.toggle('show', v); }
+    }
+    function check() {
+        var s = (window.pageYOffset || document.documentElement.scrollTop) > 400;
+        if (s !== scrolled) { scrolled = s; render(); }
+    }
+    addEventListener('scroll', check, { passive: true });
+    var nav = document.querySelector('.bottom-nav');
+    if (nav && 'IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) { navSeen = en[0].isIntersecting; render(); }, { rootMargin: '0px 0px 180px 0px' }).observe(nav);
+    }
+    if (phone.addEventListener) phone.addEventListener('change', render);
+    check();
+    b.addEventListener('click', function () {
+        var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: 0, behavior: calm ? 'auto' : 'smooth' });
+    });
+})();
+</script>
 </body>
 </html>
