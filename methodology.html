@@ -2,992 +2,1011 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>منهجية الإجابة الشاملة - البكالوريا</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <meta name="description" content="منهجية الإجابة الشاملة للبكالوريا في علوم الطبيعة والحياة: كتابة النص العلمي، وتحليل المنحنيات والجداول والهجرة الكهربائية والرسومات التخطيطية وبرنامج الأناجان، مع اختبارات قصيرة بعد كل منهجية.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#0d1222">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="bio-bac-dz">
+    <meta property="og:locale" content="ar_DZ">
+    <meta property="og:title" content="منهجية الإجابة الشاملة - البكالوريا">
+    <meta property="og:description" content="منهجية الإجابة الشاملة للبكالوريا في علوم الطبيعة والحياة: كتابة النص العلمي، وتحليل المنحنيات والجداول والهجرة الكهربائية والرسومات التخطيطية وبرنامج الأناجان، مع اختبارات قصيرة بعد كل منهجية.">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="منهجية الإجابة الشاملة - البكالوريا">
+    <meta name="twitter:description" content="منهجية الإجابة الشاملة للبكالوريا في علوم الطبيعة والحياة: كتابة النص العلمي، وتحليل المنحنيات والجداول والهجرة الكهربائية والرسومات التخطيطية وبرنامج الأناجان، مع اختبارات قصيرة بعد كل منهجية.">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"LearningResource","name":"منهجية الإجابة الشاملة - البكالوريا","description":"منهجية الإجابة الشاملة للبكالوريا في علوم الطبيعة والحياة: كتابة النص العلمي، وتحليل المنحنيات والجداول والهجرة الكهربائية والرسومات التخطيطية وبرنامج الأناجان، مع اختبارات قصيرة بعد كل منهجية.","inLanguage":"ar","learningResourceType":"منهجية وتدريب","educationalLevel":"الثالثة ثانوي — بكالوريا (علوم تجريبية)","teaches":["هيكلة النص العلمي","تحليل المنحنيات البيانية","تحليل الجداول","الهجرة الكهربائية","برنامج الأناجان"],"isPartOf":{"@type":"WebSite","name":"bio-bac-dz"}}
+    </script>
     <style>
-        :root {
-            --primary: #38bdf8;
-            --secondary: #818cf8;
-            --accent: #c084fc;
-            --good: #10b981;
-            --bad: #f87171;
-            --primary-glow: rgba(56, 189, 248, 0.4);
-            --bg-dark: #020617;
-            --glass: rgba(15, 23, 42, 0.85);
-            --card-border: rgba(56, 189, 248, 0.3);
-            --text-main: #f8fafc;
-            --text-secondary: #94a3b8;
-        }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+        --paper: #0d1222; --sheet: #141a2e; --ink: #e9edf9; --muted: #9aa5c4; --line: rgba(255, 255, 255, 0.07);
+        --margin: #38bdf8; --pen: #7dd3fc; --hi: #38bdf8; --hi-bg: rgba(56, 189, 248, 0.28); --ok: #34d399; --bad: #f87171; --ink-accent: #38bdf8;
+        --note-bg: rgba(56, 189, 248, 0.08); --bad-bg: rgba(248, 113, 113, 0.1);
+        --card-bg: rgba(20, 26, 46, 0.92); --card-border: rgba(255, 255, 255, 0.1); --text-color: #e9edf9; --text-main: #e9edf9;
+        --primary: var(--ink-accent);
+    }
+    body.light-theme {
+        --paper: #f4efe3; --sheet: #fffdf7; --ink: #1d1b33; --muted: #5d5a78; --line: rgba(29, 27, 51, 0.09);
+        --margin: #0284c7; --pen: #0369a1; --hi: #0284c7; --hi-bg: rgba(56, 189, 248, 0.35); --ok: #047857; --bad: #dc2626; --ink-accent: #0284c7;
+        --note-bg: rgba(2, 132, 199, 0.06); --bad-bg: rgba(220, 38, 38, 0.07);
+        --card-bg: rgba(255, 253, 247, 0.95); --card-border: rgba(29, 27, 51, 0.12); --text-color: #1d1b33; --text-main: #1d1b33;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: auto; }
+    body {
+        margin: 0; padding: 10px 0 100px; direction: rtl; line-height: 1.9;
+        font-family: "Tajawal", system-ui, "Segoe UI", Tahoma, Arial, sans-serif;
+        color: var(--ink); background-color: var(--paper);
+        background-image: radial-gradient(var(--line) 1px, transparent 1.5px); background-size: 22px 22px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .page { max-width: 950px; margin: 0 auto; padding: 0; }
+    @media (max-width: 639px) { .hero, .layout { margin-left: 12px; margin-right: 12px; } }
 
-        body {
-            background-color: var(--bg-dark);
-            background-image:
-                radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.15) 0%, transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(129, 140, 248, 0.12) 0%, transparent 45%),
-                radial-gradient(circle at 50% 50%, rgba(192, 132, 252, 0.08) 0%, transparent 60%);
-            background-attachment: fixed;
-            color: var(--text-main);
-            font-family: system-ui, -apple-system, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            overflow-x: hidden;
-        }
+    /* الغلاف */
+    .hero {
+        position: relative; display: flex; align-items: center; justify-content: space-between; gap: 18px; margin: 0 0 22px;
+        padding: 26px 30px 26px 24px; border-radius: 22px; background: var(--sheet);
+        border: 1px solid var(--card-border); border-right: 6px double var(--margin);
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25); overflow: hidden;
+    }
+    .hero::after { content: ""; position: absolute; inset: auto 0 0 0; height: 5px; background: repeating-linear-gradient(90deg, var(--hi) 0 14px, transparent 14px 22px); opacity: 0.8; }
+    .kicker { display: inline-block; margin-bottom: 6px; padding: 1px 12px; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.5px; color: var(--pen); border: 1.5px solid var(--pen); border-radius: 999px; transform: rotate(-2deg); }
+    h1 { margin: 0; font-size: clamp(1.6rem, 5vw, 2.5rem); line-height: 1.5; font-weight: 900; }
+    h1 mark { color: inherit; background: linear-gradient(transparent 58%, var(--hi-bg) 58%); padding: 0 4px; }
+    .ring { position: relative; flex: 0 0 auto; width: 92px; height: 92px; }
+    .ring svg { width: 100%; height: 100%; transform: rotate(90deg) scaleX(-1); }
+    .ring circle { fill: none; stroke-width: 7; }
+    .r-bg { stroke: var(--line); }
+    .r-fg { stroke: var(--hi); stroke-linecap: round; stroke-dasharray: 213.63; stroke-dashoffset: 213.63; transition: stroke-dashoffset 0.6s ease; }
+    .ring-t { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 2px; font-weight: 900; direction: ltr; }
+    .ring-t b { font-size: 1.5rem; } .ring-t span { color: var(--muted); font-size: 0.9rem; }
 
-        .gradient-text {
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: bold;
-        }
+    /* التخطيط: فهرس + أوراق */
+    .layout { display: grid; grid-template-columns: 224px 1fr; gap: 22px; align-items: start; }
+    .layout > * { min-width: 0; }
+    .toc { position: sticky; top: 14px; padding: 14px; border-radius: 18px; background: var(--card-bg); border: 1px solid var(--card-border); }
+    .toc-title { margin: 0 4px 8px; font-size: 0.85rem; font-weight: 800; color: var(--muted); }
+    .toc ol { list-style: none; margin: 0; padding: 0; }
+    .toc a { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 12px; color: var(--ink); text-decoration: none; font-size: 0.9rem; font-weight: 700; line-height: 1.5; transition: background 0.2s; }
+    .toc a:hover { background: var(--line); }
+    .toc a.active { background: var(--hi-bg); }
+    .t-txt { flex: 1; }
+    .ck { flex: 0 0 auto; width: 20px; height: 20px; border-radius: 50%; border: 2px dashed var(--muted); display: inline-flex; align-items: center; justify-content: center; font-style: normal; font-size: 0.7rem; color: #fff; }
+    .ck.ok { border: 0; background: var(--ok); } .ck.ok::before { content: "✓"; }
+    .ck.bad { border: 0; background: var(--bad); } .ck.bad::before { content: "✗"; }
+    @media (max-width: 819px) {
+        .layout { grid-template-columns: 1fr; gap: 14px; }
+        .toc { position: sticky; top: 6px; z-index: 30; padding: 6px; border-radius: 16px; box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+        .toc-title { display: none; }
+        .toc ol { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+        .toc ol::-webkit-scrollbar { display: none; }
+        .toc li { flex: 0 0 auto; } .toc a { padding: 7px 11px; white-space: nowrap; font-size: 0.82rem; }
+        .hero { padding: 20px 18px; } .ring { width: 74px; height: 74px; } .ring-t b { font-size: 1.2rem; }
+    }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: rgba(2, 6, 23, 0.8); }
-        ::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.4); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+    /* ورقة المنهجية */
+    .method {
+        position: relative; margin: 0 0 26px; padding: 22px 26px 22px 22px; border-radius: 20px; background: var(--sheet);
+        border: 1px solid var(--card-border); border-right: 5px double var(--margin); scroll-margin-top: 14px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    .m-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+    .m-no {
+        flex: 0 0 auto; width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; border-radius: 50% 50% 50% 8px;
+        font-size: 1.3rem; font-weight: 900; color: #0f172a; background: var(--hi); transform: rotate(-6deg); box-shadow: 3px 3px 0 var(--pen);
+    }
+    body.light-theme .m-no { color: #fff; box-shadow: 3px 3px 0 var(--ink); }
+    .method h2 { margin: 0; font-size: clamp(1.2rem, 3.6vw, 1.6rem); line-height: 1.6; font-weight: 900; }
+    /* ترويسة الشريحة: عنوان كبير بنمط العروض + جملة فرعية */
+    .s-head { position: relative; margin: -22px -26px 22px -22px; padding: 34px 28px 26px 150px; overflow: hidden; border-radius: 20px 20px 0 0; background: linear-gradient(120deg, var(--hi-bg) 0%, transparent 78%); border-bottom: 4px solid var(--hi); }
+    .s-ico { position: absolute; left: 26px; top: 50%; transform: translateY(-50%) rotate(-8deg); font-size: 5rem; line-height: 1; filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.35)); }
+    .s-no { margin-bottom: 4px; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.4px; color: var(--hi); }
+    .s-head h2 { margin: 0; font-size: clamp(1.9rem, 6vw, 2.8rem); line-height: 1.35; font-weight: 900; }
+    .s-head h2::after { content: ""; display: block; width: 72px; height: 5px; margin: 12px 0 14px; border-radius: 5px; background: var(--hi); }
+    .s-lead { margin: 0; max-width: 34em; font-size: 1.15rem; font-weight: 500; line-height: 1.95; color: var(--muted); }
+    .guide h3 { display: inline; margin: 0; font-size: 1.05rem; font-weight: 800; line-height: 2; background: linear-gradient(transparent 60%, var(--hi-bg) 60%); padding: 0 4px; }
+    .guide-body { margin-top: 8px; }
+    .guide-body p { margin: 8px 0; }
+    .gradient-text { background: linear-gradient(transparent 58%, var(--hi-bg) 58%); font-weight: 800; padding: 0 2px; color: inherit; }
+    .method-list { list-style: none; margin: 10px 0 0; padding: 0; }
+    .method-list > li { position: relative; margin: 0 0 4px; padding: 9px 30px 9px 0; border-bottom: 1px dashed var(--line); }
+    .method-list > li:last-child { border-bottom: 0; }
+    .method-list > li::before { content: ""; position: absolute; right: 6px; top: 20px; width: 10px; height: 10px; border-radius: 50%; background: var(--hi); box-shadow: 0 0 0 3px var(--hi-bg); }
+    .method-list .method-list { margin-top: 6px; margin-right: 4px; }
+    .method-list .method-list > li::before { width: 7px; height: 7px; border-radius: 2px; background: var(--pen); box-shadow: none; transform: rotate(45deg); top: 21px; }
 
-        .presentation-wrapper { width: 100%; max-width: 1000px; }
+    /* ملاحظة المصحح */
+    .examiner { position: relative; margin: 26px 0 18px; padding: 18px 20px 14px; border-radius: 8px 16px 16px 16px; background: var(--note-bg); border: 1.5px dashed var(--pen); transform: rotate(-0.35deg); }
+    .examiner::before { content: "✎"; position: absolute; top: -15px; right: 18px; padding: 0 8px; font-size: 1.2rem; color: var(--pen); background: var(--sheet); }
+    .examiner h4 { margin: 0 0 6px; font-size: 1.02rem; color: var(--pen); }
+    .examiner p { margin: 6px 0; }
 
-        .top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            background: var(--glass);
-            padding: 12px 25px;
-            border-radius: 16px;
-            border: 1px solid var(--card-border);
-            backdrop-filter: blur(15px);
-        }
+    /* الصور المثبّتة */
+    .pin { position: relative; margin: 28px 0; padding: 18px 14px 12px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3); }
+    .tape { position: absolute; top: -13px; left: 50%; width: 88px; height: 24px; transform: translateX(-50%) rotate(-3deg); background: var(--hi-bg); border: 1px solid rgba(0, 0, 0, 0.06); }
+    .pin img { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; object-fit: contain; cursor: zoom-in; border-radius: 4px; }
+    .pin figcaption { margin-top: 10px; text-align: center; font-weight: 800; font-size: 0.95rem; }
+    .pin .hint { display: block; margin-top: 2px; font-size: 0.78rem; font-weight: 400; color: var(--muted); }
+    .lightbox { position: fixed; inset: 0; z-index: 10000; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; background: rgba(4, 8, 18, 0.93); cursor: zoom-out; }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 96vw; max-height: 82vh; width: auto; height: auto; object-fit: contain; border-radius: 8px; }
+    .lightbox .lb-cap { color: #e9edf9; font-weight: 800; text-align: center; max-width: 92vw; }
+    .lightbox .lb-x { position: absolute; top: 14px; left: 14px; width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, 0.4); background: rgba(255, 255, 255, 0.1); color: #fff; font-size: 1.2rem; cursor: pointer; }
 
-        .back-btn {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.3s;
-        }
-        .back-btn:hover { color: #fff; text-shadow: 0 0 10px var(--primary); }
+    /* نقطة التفتيش والورشة */
+    .checkpoint, .lab { position: relative; margin: 30px 0 6px; padding: 24px 18px 16px; border-radius: 16px; }
+    .checkpoint { border: 2px solid var(--ink-accent); }
+    .lab { border: 2px dashed var(--hi); }
+    .tag { position: absolute; top: -15px; right: 18px; padding: 1px 16px; border-radius: 999px; font-size: 0.88rem; font-weight: 800; color: #fff; background: var(--ink-accent); }
+    .lab .tag { color: #0f172a; background: var(--hi); }
+    body.light-theme .lab .tag { color: #fff; }
+    .quiz-question { margin: 0 0 12px; font-weight: 800; }
+    @counter-style ar-letters { system: fixed; symbols: "أ" "ب" "ج" "د"; suffix: ""; }
+    .quiz-options { display: grid; gap: 8px; counter-reset: opt; }
+    .quiz-option {
+        counter-increment: opt; display: flex; align-items: center; gap: 12px; width: 100%; text-align: right; font: inherit; line-height: 1.7; cursor: pointer;
+        padding: 10px 12px; border-radius: 12px; color: var(--ink); background: transparent; border: 1.5px solid var(--card-border); transition: transform 0.15s, border-color 0.2s, background 0.2s;
+    }
+    .quiz-option::before { content: counter(opt, ar-letters); flex: 0 0 auto; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: 900; color: var(--ink-accent); border: 1.5px solid var(--ink-accent); }
+    .quiz-option:hover:not(:disabled) { transform: translateX(-3px); border-color: var(--ink-accent); background: var(--line); }
+    .quiz-option:disabled { cursor: default; }
+    .quiz-option.correct { border-color: var(--ok); background: rgba(52, 211, 153, 0.13); }
+    .quiz-option.correct::before { content: "✓"; color: #fff; background: var(--ok); border-color: var(--ok); }
+    .quiz-option.wrong { border-color: var(--bad); background: var(--bad-bg); }
+    .quiz-option.wrong::before { content: "✗"; color: #fff; background: var(--bad); border-color: var(--bad); }
+    .quiz-feedback { display: none; margin-top: 12px; padding: 10px 14px; border-radius: 10px; line-height: 1.8; color: var(--bad); border: 1.5px dashed var(--bad); background: var(--bad-bg); }
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback.good { color: var(--ok); border-color: var(--ok); background: rgba(52, 211, 153, 0.1); }
+    .builder-sentence { line-height: 2.6; }
+    select.blank { font: inherit; font-weight: 800; color: var(--ink); background: transparent; padding: 2px 6px; max-width: 100%; border: 0; border-bottom: 2px dashed var(--hi); border-radius: 4px 4px 0 0; }
+    select.blank option { color: #111; }
+    select.blank.correct-fill { border-bottom-color: var(--ok); background: rgba(52, 211, 153, 0.13); }
+    select.blank.wrong-fill { border-bottom-color: var(--bad); background: var(--bad-bg); }
+    .btn { font: inherit; font-weight: 800; cursor: pointer; margin-top: 10px; padding: 8px 20px; border-radius: 999px; color: #0f172a; background: var(--hi); border: 0; box-shadow: 3px 3px 0 var(--pen); transition: transform 0.15s; }
+    body.light-theme .btn { color: #fff; box-shadow: 3px 3px 0 var(--ink); }
+    .btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--pen); }
+    .builder-result { margin-top: 10px; font-weight: 800; }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 4px; }
+    .chip { padding: 3px 14px; font-size: 0.88rem; font-weight: 800; color: var(--ink-accent); border: 1.5px solid var(--ink-accent); border-radius: 4px 14px 14px 14px; }
+    .term { position: relative; cursor: help; font-weight: 800; border-bottom: 2px dotted var(--pen); }
+    .term .tip { display: none; position: absolute; z-index: 40; bottom: calc(100% + 8px); right: 0; width: min(270px, 72vw); padding: 10px 12px; border-radius: 10px; font-size: 0.85rem; font-weight: 400; line-height: 1.7; text-align: right; color: var(--ink); background: var(--sheet); border: 1.5px solid var(--pen); box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35); }
+    .term.open .tip { display: block; }
 
-        .progress-info { color: var(--text-secondary); font-size: 0.9rem; font-weight: 600; }
+    /* الختم النهائي */
+    .verdict { display: flex; align-items: center; gap: 22px; margin: 6px 0 0; padding: 22px; border-radius: 20px; background: var(--sheet); border: 1px solid var(--card-border); border-right: 5px double var(--margin); }
+    .stamp { flex: 0 0 auto; min-width: 150px; padding: 10px 18px; text-align: center; font-size: 1.5rem; font-weight: 900; line-height: 1.4; color: var(--muted); border: 4px double var(--muted); border-radius: 12px; transform: rotate(-7deg); transition: color 0.3s, border-color 0.3s; }
+    .stamp.good { color: var(--ok); border-color: var(--ok); } .stamp.mid { color: var(--hi); border-color: var(--hi); } .stamp.low { color: var(--bad); border-color: var(--bad); }
+    .stamp small { display: block; font-size: 0.9rem; font-weight: 800; }
+    .verdict p { margin: 0 0 4px; font-weight: 800; }
+    @media (max-width: 560px) { .verdict { flex-direction: column; text-align: center; } .method { padding: 18px 16px 18px 14px; } }
 
-        /* نقاط التنقل السريع */
-        .dots-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-        .dot {
-            width: 34px;
-            height: 34px;
-            border-radius: 10px;
-            border: 1px solid var(--card-border);
-            background: rgba(15, 23, 42, 0.6);
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: 0.25s;
-            position: relative;
-        }
-        .dot:hover { border-color: var(--primary); color: #fff; }
-        .dot.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #041018;
-            border-color: transparent;
-            box-shadow: 0 0 14px var(--primary-glow);
-            transform: translateY(-2px);
-        }
-        .dot.done::after {
-            content: "";
-            position: absolute;
-            bottom: -5px;
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: var(--good);
-        }
 
-        .legendary-card {
-            background: var(--glass);
-            border: 1px solid var(--card-border);
-            border-radius: 28px;
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(56, 189, 248, 0.15);
-            overflow: hidden;
-            position: relative;
-        }
+    /* وضع العرض التقديمي */
+    .stage { overflow-x: clip; }
+    @supports not (overflow-x: clip) { .stage { overflow-x: hidden; } }
+    .slide { display: none; }
+    .slide.active { display: block; animation: slide-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .stage.dir-prev .slide.active { animation-name: slide-in-prev; }
+    @keyframes slide-in { from { opacity: 0; transform: translateX(-46px) scale(0.985); } to { opacity: 1; transform: none; } }
+    @keyframes slide-in-prev { from { opacity: 0; transform: translateX(46px) scale(0.985); } to { opacity: 1; transform: none; } }
+    .method { margin-bottom: 18px; }
+    .cover .hero { margin: 0 0 18px; min-height: 190px; }
+    .agenda { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
+    .ag { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 14px 16px; text-decoration: none; color: var(--ink); background: var(--sheet); border: 1px solid var(--card-border); border-right: 4px double var(--margin); border-radius: 16px; transition: transform 0.2s, border-color 0.2s; }
+    .ag:hover { transform: translateY(-3px) rotate(-0.5deg); border-color: var(--hi); }
+    .ag-n { position: absolute; top: 10px; left: 12px; font-size: 1.6rem; font-weight: 900; color: var(--hi-bg); }
+    .ag-i { font-size: 1.5rem; } .ag-t { font-weight: 800; font-size: 0.95rem; line-height: 1.5; }
+    .cover-actions { text-align: center; }
+    .cover-actions .btn { font-size: 1.05rem; padding: 11px 32px; }
+    .verdict.slide.active { display: flex; }
+    @media (max-width: 640px) { .agenda { grid-template-columns: repeat(2, 1fr); } }
 
-        .slide-header {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(15, 23, 42, 0.6));
-            padding: 25px 35px;
-            border-bottom: 1px solid var(--card-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-        }
+    /* شريط التحكم السفلي */
+    .deck-bar {
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 80; display: flex; align-items: center; gap: 10px;
+        width: min(100%, 950px); max-width: 100%; margin: 0 auto; overflow: visible;
+        padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+        background: var(--card-bg); border: 1px solid var(--card-border); border-bottom: 0; border-radius: 18px 18px 0 0;
+        -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.28);
+    }
+    .d-prog { position: absolute; top: -1px; left: 18px; right: 18px; height: 3px; border-radius: 3px; background: transparent; overflow: hidden; }
+    .d-prog i { display: block; height: 100%; width: 0; margin-inline-start: 0; background: var(--hi); transition: width 0.15s linear; float: right; }
+    .d-btn { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 46px; min-height: 46px; font: inherit; font-weight: 800; cursor: pointer; padding: 0 16px; border-radius: 999px; color: var(--ink); background: transparent; border: 1.5px solid var(--card-border); transition: transform 0.15s, background 0.2s; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+    .d-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+    .d-btn:hover:not(:disabled) { background: var(--line); }
+    .d-btn:active:not(:disabled) { transform: scale(0.95); }
+    .d-btn:disabled { opacity: 0.3; cursor: default; }
+    .d-btn.primary { color: #0f172a; background: var(--hi); border-color: var(--hi); box-shadow: 3px 3px 0 var(--pen); }
+    body.light-theme .d-btn.primary { color: #fff; box-shadow: 3px 3px 0 var(--ink); }
+    .d-btn.icon { padding: 0; font-size: 1.05rem; }
+    .d-mid { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 7px; padding: 4px 6px; font: inherit; color: var(--ink); text-align: inherit; background: transparent; border: 0; border-radius: 12px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .d-mid:hover { background: var(--line); }
+    .d-info { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 0.88rem; font-weight: 800; }
+    #slideTitle { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .d-count { color: var(--muted); direction: ltr; flex: 0 0 auto; }
+    .d-dots { display: flex; gap: 6px; justify-content: center; }
+    .d-dot { flex: 1; max-width: 46px; height: 6px; padding: 0; border: 0; border-radius: 999px; background: var(--line); transition: background 0.25s; }
+    .d-dot.seen { background: var(--hi-bg); }
+    .d-dot.cur { background: var(--hi); }
+    @media (max-width: 640px) {
+        .d-btn .lbl { display: none; } .d-btn { padding: 0; width: 50px; } .d-btn.icon { display: none; }
+        .deck-bar { gap: 8px; padding-inline: 10px; }
+        .toc { display: none; }
+        .layout { margin-top: 4px; }
+        .method { padding: 16px 14px 16px 12px; }
+        .s-head { margin: -16px -12px 18px -14px; padding: 26px 16px 20px 16px; } .s-ico { position: static; transform: none; display: block; margin-bottom: 6px; font-size: 3rem; } .s-head h2 { font-size: 1.7rem; } .s-lead { font-size: 1rem; }
+        .quiz-option { min-height: 50px; padding: 10px 12px; }
+        .cover .hero { min-height: 0; padding: 18px 16px; }
+        .cover-actions .btn { width: 100%; }
+    }
+    .term::after { content: ""; position: absolute; inset: -10px -4px; }
+    @media (max-width: 640px) {
+        select.blank { min-height: 42px; padding: 6px 10px; font-size: 1rem; }
+        .btn, .builder-check { min-height: 46px; }
+    }
+    @media (min-width: 641px) { .swipe-hint { display: none; } }
+    .swipe-hint { margin: 10px 0 0; font-size: 0.82rem; color: var(--muted); }
+    @media (hover: hover) and (pointer: fine) { .swipe-hint { display: none; } }
+    @media (prefers-reduced-motion: reduce) { .slide.active { animation: none; } }
 
-        .slide-header h2 {
-            color: var(--primary);
-            font-size: 1.6rem;
-            text-shadow: 0 0 12px var(--primary-glow);
-        }
+    /* فهرس الشرائح المنبثق */
+    .sheet { position: fixed; inset: 0; z-index: 9000; display: none; align-items: flex-end; justify-content: center; background: rgba(4, 8, 18, 0.6); }
+    .sheet.open { display: flex; }
+    .sheet-card { width: min(100%, 560px); max-height: 78vh; overflow-y: auto; padding: 14px 14px calc(16px + env(safe-area-inset-bottom, 0px)); border-radius: 22px 22px 0 0; background: var(--sheet); border: 1px solid var(--card-border); border-bottom: 0; animation: sheet-up 0.28s ease both; }
+    @keyframes sheet-up { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+    .sheet-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; padding: 0 4px; }
+    .sheet-x { width: 38px; height: 38px; border-radius: 50%; font: inherit; cursor: pointer; color: var(--ink); background: transparent; border: 1.5px solid var(--card-border); }
+    #sheetList { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+    #sheetList button { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 52px; padding: 8px 12px; font: inherit; font-weight: 700; text-align: right; cursor: pointer; color: var(--ink); background: transparent; border: 1.5px solid var(--card-border); border-radius: 14px; }
+    #sheetList button.cur { background: var(--hi-bg); border-color: var(--hi); }
+    #sheetList .n { flex: 0 0 auto; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.85rem; background: var(--line); }
+    #sheetList .t { flex: 1; }
 
-        .header-icon {
-            font-size: 1.7rem;
-            filter: drop-shadow(0 0 8px var(--primary-glow));
-        }
+    .cover .ad-space, .verdict .ad-space, .verdict .bottom-links { width: 100%; }
+    .ad-inline { margin: 28px 0 26px; }
+    .verdict.slide.active { flex-wrap: wrap; }
+    .ad-space { margin: 18px 0; padding: 14px; text-align: center; font-size: 0.85rem; color: var(--muted); border: 1.5px dashed var(--line); border-radius: 12px; }
+    .bottom-links { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
+    .bottom-links a { padding: 9px 20px; border-radius: 999px; font-weight: 800; text-decoration: none; color: var(--ink); border: 1.5px solid var(--card-border); background: var(--card-bg); }
+    .bottom-links a:hover { border-color: var(--hi); }
+    .confetti-piece { position: fixed; top: -12px; z-index: 9999; border-radius: 2px; pointer-events: none; animation: m-fall linear forwards; }
+    @keyframes m-fall { to { transform: translateY(105vh) rotate(540deg); opacity: 0.9; } }
 
-        .progress-bar-container {
-            width: 100%;
-            height: 6px;
-            background: rgba(2, 6, 23, 0.8);
-            position: relative;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-            width: 16.66%;
-            transition: width 0.5s ease;
-            box-shadow: 0 0 10px var(--primary);
-        }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .r-fg { transition: none; } }
 
-        .slide-content-area {
-            padding: 35px;
-            max-height: 560px;
-            overflow-y: auto;
-        }
+    /* زر الوضع الليلي/النهاري — نفس تصميم الصفحة الرئيسية */
+    .top-navbar .theme-toggle-btn {
+        margin: 0 !important;
+        white-space: nowrap;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        color: var(--text-color);
+        padding: 8px 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.85rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    }
 
-        .slide { display: none; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .slide.active { display: block; }
+    .top-navbar .theme-toggle-btn:hover { transform: scale(1.05); }
+    .top-navbar .theme-toggle-btn:active { transform: scale(0.97); }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    #theme-icon { display: inline-flex; align-items: center; line-height: 1; }
+    #theme-icon svg { width: 0.95rem; height: 0.95rem; display: block; }
+    #theme-icon.is-moon { color: #818cf8; }
+    #theme-icon.is-sun  { color: #f59e0b; }
 
-        .method-block {
-            background: rgba(2, 6, 23, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            padding: 22px;
-            margin-bottom: 20px;
-            transition: 0.3s;
-        }
-        .method-block:hover {
-            border-color: rgba(56, 189, 248, 0.4);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-        }
+    /* NAVBAR-UNIFIED: شريط علوي موحّد في كل الدروس (نفس الأبعاد والتخطيط) + تدرّج لونين خاص بكل درس */
+    :root { --g1: #38bdf8; --g2: #818cf8; --g1-rgb: 56, 189, 248; --badge-text: #0f172a; }
+    body.light-theme { --g1: #0284c7; --g2: #4f46e5; --g1-rgb: 56, 189, 248; --badge-text: #ffffff; }
 
-        .method-block h3 { color: #38bdf8; font-size: 1.15rem; margin-bottom: 10px; }
-        .method-block p, .method-block li { color: var(--text-secondary); font-size: 1rem; line-height: 1.8; }
+    header.top-navbar {
+        width: 100% !important;
+        max-width: 950px !important;
+        min-height: 0 !important;
+        margin: 0 auto 20px !important;
+        padding: 10px 20px !important;
+        box-sizing: border-box !important;
+        position: relative !important;
+        z-index: 10;
+        background: var(--card-bg) !important;
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1)) !important;
+        border-radius: 20px !important;
+        box-shadow: none !important;
+        transform: none !important;
+        direction: rtl;
+    }
+    body.light-theme header.top-navbar {
+        border-color: var(--card-border, rgba(0, 0, 0, 0.08)) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+    }
+    header.top-navbar .top-nav-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 12px !important;
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+        direction: rtl;
+    }
+    header.top-navbar .top-brand-logo {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        flex-shrink: 0;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: 1rem !important;
+        text-decoration: none !important;
+        cursor: pointer;
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+    }
+    header.top-navbar .top-brand-logo:hover {
+        transform: scale(1.08) !important;
+        filter: drop-shadow(0 0 10px rgba(var(--g1-rgb), 0.5)) !important;
+    }
+    header.top-navbar .top-brand-logo .top-logo-img {
+        display: block !important;
+        width: 40px !important;
+        height: 40px !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        filter: none !important;
+        object-fit: contain !important;
+        transform: none !important;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    header.top-navbar .top-brand-logo:hover .top-logo-img { transform: rotate(10deg) !important; }
+    header.top-navbar .top-brand-name {
+        display: inline-block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: 1.8rem !important;
+        font-weight: 800 !important;
+        line-height: 1.3 !important;
+        letter-spacing: 0 !important;
+        text-shadow: none !important;
+        filter: none !important;
+        white-space: nowrap !important;
+        background: linear-gradient(135deg, var(--g1), var(--g2)) !important;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+    }
+    header.top-navbar .theme-toggle-btn {
+        margin: 0 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        width: auto !important;
+        padding: 8px 16px !important;
+        border-radius: 20px !important;
+        font-size: 0.85rem !important;
+        font-weight: 700 !important;
+        line-height: 1.5 !important;
+        gap: 8px !important;
+        white-space: nowrap !important;
+    }
+    header.top-navbar .theme-toggle-btn #theme-icon svg { width: 15px !important; height: 15px !important; }
+    header.top-navbar .theme-toggle-btn #theme-text { font-size: inherit !important; font-weight: inherit !important; letter-spacing: 0 !important; font-family: inherit !important; }
+    @media (max-width: 600px) {
+        header.top-navbar { padding: 8px 15px !important; border-radius: 12px !important; margin-bottom: 15px !important; }
+        header.top-navbar .top-brand-logo { gap: 8px !important; }
+        header.top-navbar .top-brand-logo .top-logo-img { width: 32px !important; height: 32px !important; }
+        header.top-navbar .top-brand-name { font-size: 1.3rem !important; }
+        header.top-navbar .theme-toggle-btn { padding: 6px 10px !important; font-size: 0.85rem !important; }
+    }
 
-        .method-list { list-style: none; margin-top: 10px; }
-        .method-list li { position: relative; padding-right: 22px; margin-bottom: 8px; }
-        .method-list li::before {
-            content: "◆";
-            color: var(--primary);
-            position: absolute;
-            right: 0;
-            font-size: 0.8rem;
-            top: 2px;
-        }
 
-        /* كلمات مفتاحية قابلة للنقر */
-        .term {
-            color: #fff;
-            font-weight: 700;
-            border-bottom: 2px dotted var(--primary);
-            cursor: pointer;
-            position: relative;
-            transition: 0.2s;
-        }
-        .term:hover { text-shadow: 0 0 10px var(--primary-glow); }
-        .term .tip {
-            visibility: hidden;
-            opacity: 0;
-            position: absolute;
-            bottom: 130%;
-            right: 0;
-            width: 240px;
-            background: #0b1424;
-            border: 1px solid var(--primary);
-            color: var(--text-main);
-            font-weight: 400;
-            font-size: 0.85rem;
-            line-height: 1.6;
-            padding: 12px 14px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            z-index: 30;
-            transition: 0.2s;
-            pointer-events: none;
-        }
-        .term.open .tip { visibility: visible; opacity: 1; transform: translateY(-4px); }
-
-        .image-slot {
-            border: 2px dashed rgba(56, 189, 248, 0.4);
-            padding: 15px;
-            text-align: center;
-            border-radius: 14px;
-            margin-top: 18px;
-            background: rgba(56, 189, 248, 0.03);
-            transition: 0.3s;
-        }
-        .image-slot:hover { border-color: var(--primary); background: rgba(56, 189, 248, 0.06); }
-        .image-slot img {
-            width: 100%;
-            height: auto;
-            max-width: 100%;
-            border-radius: 10px;
-            display: block;
-            margin: 0 auto;
-            cursor: zoom-in;
-        }
-        .image-slot span { font-size: 0.85rem; color: var(--primary); margin-top: 8px; display: block; font-weight: 500; }
-
-        .exercise-box {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(2, 6, 23, 0.9));
-            border: 2px dashed var(--primary);
-            border-radius: 16px;
-            padding: 22px;
-            margin-top: 25px;
-        }
-        .exercise-box h4 { color: #fff; margin-bottom: 10px; font-size: 1.05rem; }
-
-        /* بطاقة السؤال التفاعلي (اختبر نفسك) */
-        .quiz-box {
-            margin-top: 22px;
-            background: rgba(129, 140, 248, 0.06);
-            border: 1px solid rgba(129, 140, 248, 0.35);
-            border-radius: 16px;
-            padding: 22px;
-        }
-        .quiz-box h4 {
-            color: var(--secondary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-            font-size: 1.05rem;
-        }
-        .quiz-question { color: var(--text-main); margin-bottom: 14px; line-height: 1.7; }
-        .quiz-options { display: flex; flex-direction: column; gap: 10px; }
-        .quiz-option {
-            text-align: right;
-            background: rgba(2, 6, 23, 0.6);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: var(--text-main);
-            padding: 12px 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            transition: 0.2s;
-            font-family: inherit;
-        }
-        .quiz-option:hover:not(:disabled) { border-color: var(--secondary); background: rgba(129,140,248,0.1); }
-        .quiz-option.correct { border-color: var(--good); background: rgba(16, 185, 129, 0.18); color: #6ee7b7; }
-        .quiz-option.wrong { border-color: var(--bad); background: rgba(248, 113, 113, 0.15); color: #fca5a5; }
-        .quiz-option:disabled { cursor: default; }
-        .quiz-feedback {
-            margin-top: 12px;
-            font-size: 0.9rem;
-            line-height: 1.7;
-            color: var(--text-secondary);
-            display: none;
-        }
-        .quiz-feedback.show { display: block; }
-        .quiz-feedback strong { color: #fff; }
-
-        /* بناء الجملة العلمية التفاعلي */
-        .builder-box {
-            margin-top: 22px;
-            background: rgba(192, 132, 252, 0.06);
-            border: 1px solid rgba(192, 132, 252, 0.35);
-            border-radius: 16px;
-            padding: 22px;
-        }
-        .builder-box h4 { color: var(--accent); margin-bottom: 10px; font-size: 1.05rem; }
-        .builder-sentence {
-            line-height: 2.4;
-            font-size: 1rem;
-            color: var(--text-secondary);
-        }
-        select.blank {
-            background: rgba(2,6,23,0.8);
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            border-radius: 8px;
-            padding: 4px 10px;
-            font-family: inherit;
-            font-weight: 700;
-            font-size: 0.95rem;
-            margin: 0 3px;
-            cursor: pointer;
-        }
-        select.blank.correct-fill { border-color: var(--good); color: #6ee7b7; }
-        select.blank.wrong-fill { border-color: var(--bad); color: #fca5a5; }
-        .builder-check {
-            margin-top: 14px;
-            background: transparent;
-            border: 2px solid var(--accent);
-            color: var(--accent);
-            padding: 8px 20px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            font-family: inherit;
-            transition: 0.2s;
-        }
-        .builder-check:hover { background: rgba(192, 132, 252, 0.15); color: #fff; }
-        .builder-result { margin-top: 10px; font-size: 0.9rem; min-height: 1.4em; }
-
-        .slide-footer {
-            padding: 20px 35px;
-            border-top: 1px solid var(--card-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(4, 8, 20, 0.7);
-            gap: 12px;
-        }
-
-        .control-btn {
-            background: rgba(56, 189, 248, 0.05);
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            padding: 11px 28px;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: inherit;
-        }
-        .control-btn:hover:not(:disabled) {
-            background: rgba(56, 189, 248, 0.15);
-            color: #ffffff;
-            border-color: #60a5fa;
-            transform: translateY(-2px);
-            box-shadow: 0 0 20px var(--primary-glow);
-        }
-        .control-btn:disabled {
-            background: transparent;
-            border-color: #1e293b;
-            color: #475569;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        .score-pill {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            background: rgba(2,6,23,0.5);
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 6px 14px;
-            border-radius: 999px;
-            white-space: nowrap;
-        }
-        .score-pill strong { color: var(--good); }
-
-        /* شاشة الاحتفال النهائية */
-        .celebrate-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(2, 6, 23, 0.92);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            padding: 20px;
-        }
-        .celebrate-overlay.show { display: flex; }
-        .celebrate-card {
-            background: var(--glass);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 40px;
-            text-align: center;
-            max-width: 420px;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.8);
-        }
-        .celebrate-card .big-emoji { font-size: 3.2rem; margin-bottom: 10px; }
-        .celebrate-card h3 { color: var(--primary); font-size: 1.4rem; margin-bottom: 10px; }
-        .celebrate-card p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; }
-        .confetti-piece {
-            position: fixed;
-            top: -10px;
-            border-radius: 2px;
-            pointer-events: none;
-            z-index: 99;
-            animation: fall linear forwards;
-        }
-        @keyframes fall {
-            to { transform: translateY(105vh) rotate(540deg); opacity: 0.9; }
-        }
-
-        /* لوحة "الزاد اللغوي" - رقائق قابلة للنقر */
-        .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-        .chip {
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid rgba(56, 189, 248, 0.4);
-            color: var(--primary);
-            padding: 6px 14px;
-            border-radius: 999px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        @media (max-width: 768px) {
-            body { padding: 10px; }
-            .slide-header { padding: 20px; }
-            .slide-header h2 { font-size: 1.15rem; }
-            .slide-content-area { padding: 20px 15px; max-height: 520px; }
-            .slide-footer { padding: 15px 20px; flex-wrap: wrap; }
-            .control-btn { padding: 10px 18px; font-size: 0.9rem; }
-            .dot { width: 30px; height: 30px; font-size: 0.75rem; }
-            .term .tip { width: 190px; right: -30px; }
-        }
-
-        .image-slot .image-title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 0.95rem;
-            color: #fff;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(129, 140, 248, 0.15));
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            padding: 10px 18px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            font-weight: 700;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
-        }
-
-        .hint-btn {
-            background: none;
-            border: 1px solid var(--text-secondary);
-            color: var(--text-secondary);
-            font-size: 0.78rem;
-            padding: 4px 10px;
-            border-radius: 999px;
-            cursor: pointer;
-            font-family: inherit;
-        }
-        .hint-btn:hover { color: var(--primary); border-color: var(--primary); }
     </style>
 </head>
 <body>
+    <div class="page">
+        <header class="top-navbar">
+            <div class="top-nav-container">
+                <a href="index.html" class="top-brand-logo">
+                    <img src="favicon.png" alt="شعار" class="top-logo-img" width="40" height="40" decoding="async" fetchpriority="high" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='favicon.ico';}else{this.style.display='none';}">
+                    <span class="top-brand-name">bio-bac-dz</span>
+                </a>
 
-    <div class="presentation-wrapper">
-
-        <div class="top-nav">
-            <a href="index.html" class="back-btn">⬅ العودة للموسوعة الرئيسية</a>
-            <div class="score-pill">النقاط: <strong id="scoreDisplay">0</strong> / <span id="scoreMax">6</span></div>
-            <div class="progress-info" id="progressIndicator">الشريحة 1 من 6</div>
-        </div>
-
-        <div class="dots-row" id="dotsRow"></div>
-
-        <div class="legendary-card">
-
-            <div class="slide-header">
-                <h2 id="slideTitle">النص العلمي</h2>
-                <span class="header-icon" id="slideIcon">📖</span>
+                <button type="button" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="تبديل الوضع الليلي والنهاري">
+                    <span id="theme-icon" class="is-moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span>
+                    <span id="theme-text">الوضع الليلي</span>
+                </button>
             </div>
+        </header>
 
-            <div class="progress-bar-container">
-                <div class="progress-bar-fill" id="progressBar"></div>
-            </div>
-
-            <div class="slide-content-area" id="scrollArea">
-
-                <!-- الشريحة 1: النص العلمي -->
-                <div class="slide active" id="slide-1">
-                    <div class="method-block">
-                        <h3>هيكلة النص العلمي (مقدمة، عرض، خاتمة)</h3>
-                        <p>النص العلمي ليس مقالاً أدبياً، بل هو إجابة منظمة مدعومة بمصطلحات دقيقة.</p>
-                        <ul class="method-list">
-                            <li><strong class="gradient-text">المقدمة:</strong> الإشارة للموضوع بذكر عنوان الدرس أو الجزء المتعلق بالسياق أو الوثيقة مع إعادة صياغة السؤال.</li>
-                            <li><strong class="gradient-text">العرض:</strong>
-                                <ul class="method-list" style="margin-top: 8px;">
-                                    <li><strong class="gradient-text">1. التمهيد:</strong> ذكر سطر تمهيدي مثل أهمية الظاهرة أو العناصر الضرورية لحدوثها.</li>
-                                    <li><strong class="gradient-text">2. الظاهرة المدروسة:</strong> ذكر العنصر المستهدف من الدرس (عنوان ذلك الجزء والعناوين الفرعية إن وجدت)، مع شرح ما تعلمته وذكر الكلمات المفتاحية اللازمة في أماكنها المثالية للتنظيم.</li>
-                                    <li><strong class="gradient-text">3. تحليل المشكل:</strong> إضافة عنوان للمشكلة المطروحة في السياق، الوثيقة، أو السؤال، مع ذكر نفس الخطوات السابقة إلى غاية مكان تأثير العنصر المؤثر على الظاهرة المعنية مع شرح تفصيلي ودقيق وذكر الكلمات المفتاحية.</li>
-                                </ul>
-                            </li>
-                            <li><strong class="gradient-text">الخاتمة:</strong> استنتاج عام يحل الإشكالية أو إجابة مباشرة عن التساؤل المطروح.</li>
-                        </ul>
-                    </div>
-                    <div class="exercise-box">
-                        <h4>🎯 ملاحظة هامة :</h4>
-                        <p><strong>المنهجية :</strong> تعتبر هذه الطريقة في الاغلب فعالة لكسب نقاط في التمرين الاول<br>
-                        <em>التطبيق:</em> اتبع الهيكلة أعلاه (مقدمة، عرض، والخاتمة) بالاعماد على الاسلوب المقال .</p>
-                    </div>
-
-                    <div class="quiz-box" data-quiz="1">
-                        <h4>🧠 اختبر نفسك</h4>
-                        <p class="quiz-question">ما هو الترتيب الصحيح لعناصر "العرض" داخل النص العلمي؟</p>
-                        <div class="quiz-options">
-                            <button class="quiz-option" data-correct="false">الظاهرة المدروسة ← تحليل المشكل ← التمهيد</button>
-                            <button class="quiz-option" data-correct="true">التمهيد ← الظاهرة المدروسة ← تحليل المشكل</button>
-                            <button class="quiz-option" data-correct="false">تحليل المشكل ← التمهيد ← الظاهرة المدروسة</button>
+        <div class="layout">
+            <aside class="toc" aria-label="فهرس الشرائح">
+                <div class="toc-title">فهرس الشرائح</div>
+                <ol><li><a href="#m1" data-s="m1"><span class="t-ico">📖</span><span class="t-txt">النص العلمي</span><i class="ck" aria-hidden="true"></i></a></li><li><a href="#m2" data-s="m2"><span class="t-ico">📈</span><span class="t-txt">المنحنيات والأعمدة</span><i class="ck" aria-hidden="true"></i></a></li><li><a href="#m3" data-s="m3"><span class="t-ico">📊</span><span class="t-txt">الجداول</span><i class="ck" aria-hidden="true"></i></a></li><li><a href="#m4" data-s="m4"><span class="t-ico">🧬</span><span class="t-txt">الهجرة الكهربائية</span><i class="ck" aria-hidden="true"></i></a></li><li><a href="#m5" data-s="m5"><span class="t-ico">🧩</span><span class="t-txt">الرسومات التخطيطية</span><i class="ck" aria-hidden="true"></i></a></li><li><a href="#m6" data-s="m6"><span class="t-ico">🧫</span><span class="t-txt">برنامج الأناجان</span><i class="ck" aria-hidden="true"></i></a></li></ol>
+            </aside>
+            <main class="stage" id="stage">
+                <section class="slide cover active" id="cover" data-title="الغلاف">
+                    <div class="hero">
+                        <div>
+                            <span class="kicker">دليل الإجابة</span>
+                            <h1>منهجية الإجابة الشاملة <mark>البكالوريا</mark></h1>
                         </div>
-                        <div class="quiz-feedback"></div>
+                        <div class="ring" aria-label="نقاط الأسئلة السريعة">
+                            <svg viewBox="0 0 80 80" aria-hidden="true"><circle class="r-bg" cx="40" cy="40" r="34"/><circle class="r-fg" id="ringFg" cx="40" cy="40" r="34"/></svg>
+                            <div class="ring-t"><b id="scoreN">0</b><span>/ 6</span></div>
+                        </div>
                     </div>
-                </div>
+                    <div class="agenda"><a class="ag" href="#m1" data-go="1"><span class="ag-n">1</span><span class="ag-i">📖</span><span class="ag-t">النص العلمي</span></a><a class="ag" href="#m2" data-go="2"><span class="ag-n">2</span><span class="ag-i">📈</span><span class="ag-t">المنحنيات والأعمدة</span></a><a class="ag" href="#m3" data-go="3"><span class="ag-n">3</span><span class="ag-i">📊</span><span class="ag-t">الجداول</span></a><a class="ag" href="#m4" data-go="4"><span class="ag-n">4</span><span class="ag-i">🧬</span><span class="ag-t">الهجرة الكهربائية</span></a><a class="ag" href="#m5" data-go="5"><span class="ag-n">5</span><span class="ag-i">🧩</span><span class="ag-t">الرسومات التخطيطية</span></a><a class="ag" href="#m6" data-go="6"><span class="ag-n">6</span><span class="ag-i">🧫</span><span class="ag-t">برنامج الأناجان</span></a></div>
+                    <div class="cover-actions">
+                        <button type="button" class="btn" id="startBtn">▶ ابدأ العرض</button>
+                        <p class="swipe-hint">اسحب يميناً أو يساراً للتنقل بين الشرائح</p>
+                    </div>
+                    <div class="ad-space">[ مساحة إعلانية ]</div>
+                </section>
 
-                <!-- الشريحة 2: المنحنيات البيانية -->
-                <div class="slide" id="slide-2">
-                    <div class="method-block">
-                        <h3>منهجية تحليل وتفسير واستنتاج المنحنيات البيانية و الاعمدة البيانية</h3>
-                        <p>الفرق بين المطالب الثلاثة هو سر العلامة الكاملة، ويمكننا فهمها بمنهجية المتغيرات (X و Y):</p>
-                        <ul class="method-list">
-                            <li><strong class="gradient-text">1. التحليل (قراءة المتغيرات X و Y):</strong>
+    <article class="method slide" id="m1" data-title="النص العلمي">
+<header class="s-head">
+            <span class="s-ico" aria-hidden="true">📖</span>
+            <div class="s-no">المنهجية 1</div>
+            <h2>النص العلمي</h2>
+            <p class="s-lead">النص العلمي ليس مقالاً أدبياً، بل هو إجابة منظمة مدعومة بمصطلحات دقيقة.</p>
+        </header>
+<section class="guide">
+<h3>هيكلة النص العلمي (مقدمة، عرض، خاتمة)</h3>
+<div class="guide-body">
+<ul class="method-list">
+<li><strong class="gradient-text">المقدمة:</strong> الإشارة للموضوع بذكر عنوان الدرس أو الجزء المتعلق بالسياق أو الوثيقة مع إعادة صياغة السؤال.</li>
+<li><strong class="gradient-text">العرض:</strong>
+<ul class="method-list" style="margin-top: 8px;">
+<li><strong class="gradient-text">1. التمهيد:</strong> ذكر سطر تمهيدي مثل أهمية الظاهرة أو العناصر الضرورية لحدوثها.</li>
+<li><strong class="gradient-text">2. الظاهرة المدروسة:</strong> ذكر العنصر المستهدف من الدرس (عنوان ذلك الجزء والعناوين الفرعية إن وجدت)، مع شرح ما تعلمته وذكر الكلمات المفتاحية اللازمة في أماكنها المثالية للتنظيم.</li>
+<li><strong class="gradient-text">3. تحليل المشكل:</strong> إضافة عنوان للمشكلة المطروحة في السياق، الوثيقة، أو السؤال، مع ذكر نفس الخطوات السابقة إلى غاية مكان تأثير العنصر المؤثر على الظاهرة المعنية مع شرح تفصيلي ودقيق وذكر الكلمات المفتاحية.</li>
+</ul>
+</li>
+<li><strong class="gradient-text">الخاتمة:</strong> استنتاج عام يحل الإشكالية أو إجابة مباشرة عن التساؤل المطروح.</li>
+</ul>
+</div>
+</section>
+<aside class="examiner">
+<h4>🎯 ملاحظة هامة :</h4>
+<p><strong>المنهجية :</strong> تعتبر هذه الطريقة في الاغلب فعالة لكسب نقاط في التمرين الاول<br/>
+<em>التطبيق:</em> اتبع الهيكلة أعلاه (مقدمة، عرض، والخاتمة) بالاعماد على الاسلوب المقال .</p>
+</aside>
+<div class="checkpoint" data-quiz="1">
+<div class="tag">🧠 اختبر نفسك</div>
+<p class="quiz-question">ما هو الترتيب الصحيح لعناصر "العرض" داخل النص العلمي؟</p>
+<div class="quiz-options">
+<button class="quiz-option" data-correct="false">الظاهرة المدروسة ← تحليل المشكل ← التمهيد</button>
+<button class="quiz-option" data-correct="true">التمهيد ← الظاهرة المدروسة ← تحليل المشكل</button>
+<button class="quiz-option" data-correct="false">تحليل المشكل ← التمهيد ← الظاهرة المدروسة</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="ad-space ad-inline" data-ad="m1">[ مساحة إعلانية ]</div>
+    </article>
+
+    <article class="method slide" id="m2" data-title="المنحنيات والأعمدة">
+<header class="s-head">
+            <span class="s-ico" aria-hidden="true">📈</span>
+            <div class="s-no">المنهجية 2</div>
+            <h2>المنحنيات البيانية و الاعمدة البيانية</h2>
+            <p class="s-lead">الفرق بين المطالب الثلاثة هو سر العلامة الكاملة، ويمكننا فهمها بمنهجية المتغيرات (X و Y):</p>
+        </header>
+<section class="guide">
+<h3>منهجية تحليل وتفسير واستنتاج المنحنيات البيانية و الاعمدة البيانية</h3>
+<div class="guide-body">
+<ul class="method-list">
+<li><strong class="gradient-text">1. التحليل (قراءة المتغيرات X و Y):</strong>
                                 وصف دقيق لتغيرات المتغير التابع (<strong class="gradient-text">Y</strong> مثل: السرعة، النشاط، الكمية) بدلالة تغيرات المتغير المستقل (<strong class="gradient-text">X</strong> مثل: الزمن، التركيز، درجة الحرارة) مع ذكر قيمتين و زمنين على الاقل.
-                                <br><span style="color: var(--primary); font-size: 0.9rem;">💡 الصيغة: " بزيادة المتغير X، نلاحظ تزايد/تناقص/ثبات/انعدام في المتغير Y ..."</span>
-                            </li>
-                            <li><strong class="gradient-text">2. التفسير (استخدام دلالات السبب والنتيجة):</strong>
+                                <br/><span style="color: var(--primary); font-size: 0.9rem;">💡 الصيغة: " بزيادة المتغير X، نلاحظ تزايد/تناقص/ثبات/انعدام في المتغير Y ..."</span>
+</li>
+<li><strong class="gradient-text">2. التفسير (استخدام دلالات السبب والنتيجة):</strong>
                                 التعليل العلمي لسبب تغير <strong class="gradient-text">Y</strong> بدلالة <strong class="gradient-text">X</strong> باستخدام عبارات الربط السببية الصريحة (مثل: <span class="term">راجع إلى<span class="tip">عبارة ربط سببية تفتح جملة التفسير العلمي وتربط النتيجة بسببها المباشر.</span></span>، بسبب، نظراً لـ، بفعل) وربطها بالآلية الحيوية.
-                                 <br><span style="color: var(--primary); font-size: 0.9rem;">💡 الصيغة الدقيقة: "هذا التغير في <strong class="gradient-text">Y</strong> (بدلالة <strong class="gradient-text">X</strong>) <strong class="gradient-text">راجع إلى / بسبب</strong> [تأثير X أو الآلية الحيوية كزيادة تشكل المعقدات...] <strong class="gradient-text">مما يؤدي إلى...</strong>"</span>
-                            </li>
-                            <li><strong class="gradient-text">3. الاستنتاج (الخلاصة العلاقتية بين X و Y):</strong>
+                                 <br/><span style="color: var(--primary); font-size: 0.9rem;">💡 الصيغة الدقيقة: "هذا التغير في <strong class="gradient-text">Y</strong> (بدلالة <strong class="gradient-text">X</strong>) <strong class="gradient-text">راجع إلى / بسبب</strong> [تأثير X أو الآلية الحيوية كزيادة تشكل المعقدات...] <strong class="gradient-text">مما يؤدي إلى...</strong>"</span>
+</li>
+<li><strong class="gradient-text">3. الاستنتاج (الخلاصة العلاقتية بين X و Y):</strong>
                                 استخلاص العلاقة العامة أو القاعدة المستفادة من التجربة.
-                                <br><span style="color: var(--primary); font-size: 0.9rem;">💡 الصيغة: "نستنتج أن المتغير X يعتبر عاملاً أساسياً في تحفيز أو تثبيط المتغير Y..."</span>
-                            </li>
-                        </ul>
-                        <div class="image-slot">
-                            <span class="image-title"> نموذج تطبيق منهجية (X و Y) على المنحنيات</span>
-                            <img src="image10/0.1.png" alt="مثال منحنى بياني" onclick="this.classList.toggle('zoomed')">
-                        </div>
-                    </div>
-                    <div class="exercise-box">
-                        <h4>🎯 ملاحظات هامة لضمان العلامة الكاملة في الاستنتاج:</h4>
-                        <p>
-                            1. <strong class="gradient-text">تجنب العموميات:</strong> لا تكتفِ أبداً بقول عبارات فضفاضة مثل "يؤثر التركيز على السرعة" أو استخدام كلمة يؤثر فقط، بل يجب تحديد نوع التأثير بدقة مثل <span class="term">تحفيز<span class="tip">زيادة أو تسريع النشاط أو الظاهرة المدروسة نتيجة عامل معين.</span></span> أو <span class="term">تثبيط<span class="tip">إبطاء أو تقليل النشاط أو الظاهرة المدروسة نتيجة عامل معين.</span></span>.<br>
-                            2. <strong class="gradient-text">التفصيل والدقة:</strong> حدد بوضوح <strong class="gradient-text">متى</strong> يؤثر X على Y، كأن توضح أن X يؤثر ويظهر أثره في التراكيز الأكبر من تلك القيمة المحددة لحظة التغير على Y.<br>
+                                <br/><span style="color: var(--primary); font-size: 0.9rem;">💡 الصيغة: "نستنتج أن المتغير X يعتبر عاملاً أساسياً في تحفيز أو تثبيط المتغير Y..."</span>
+</li>
+</ul>
+</div>
+</section>
+<figure class="pin"><span class="tape"></span><img alt="مثال منحنى بياني" src="image10/0.1.png"/><figcaption>نموذج تطبيق منهجية (X و Y) على المنحنيات<span class="hint">اضغط على الصورة لعرضها كاملة</span></figcaption></figure>
+<aside class="examiner">
+<h4>🎯 ملاحظات هامة لضمان العلامة الكاملة في الاستنتاج:</h4>
+<p>
+                            1. <strong class="gradient-text">تجنب العموميات:</strong> لا تكتفِ أبداً بقول عبارات فضفاضة مثل "يؤثر التركيز على السرعة" أو استخدام كلمة يؤثر فقط، بل يجب تحديد نوع التأثير بدقة مثل <span class="term">تحفيز<span class="tip">زيادة أو تسريع النشاط أو الظاهرة المدروسة نتيجة عامل معين.</span></span> أو <span class="term">تثبيط<span class="tip">إبطاء أو تقليل النشاط أو الظاهرة المدروسة نتيجة عامل معين.</span></span>.<br/>
+                            2. <strong class="gradient-text">التفصيل والدقة:</strong> حدد بوضوح <strong class="gradient-text">متى</strong> يؤثر X على Y، كأن توضح أن X يؤثر ويظهر أثره في التراكيز الأكبر من تلك القيمة المحددة لحظة التغير على Y.<br/>
                             3. <strong class="gradient-text">تقسيم المنحنى إلى مجالات:</strong> ضرورة تقسيم المنحنى أثناء الملاحظة والاستنتاج إلى مجالات دقيقة (مثل **قبل وبعد** لحظة التغير أو نقطة الانعطاف) في حالة وجود تغيرات في المنحنى عند لحظة معينة.
                         </p>
-                    </div>
-
-                    <div class="builder-box">
-                        <h4>✍️ ركّب الجملة العلمية</h4>
-                        <p class="builder-sentence">
+</aside>
+<div class="lab">
+<div class="tag">✍️ ركّب الجملة العلمية</div>
+<p class="builder-sentence">
                             "هذا التغير في Y
                             <select class="blank" data-correct="راجع إلى">
-                                <option value="">اختر...</option>
-                                <option>راجع إلى</option>
-                                <option>ربما</option>
-                                <option>وأيضاً</option>
-                            </select>
+<option value="">اختر...</option>
+<option>راجع إلى</option>
+<option>ربما</option>
+<option>وأيضاً</option>
+</select>
                             [الآلية الحيوية] مما يؤدي إلى
                             <select class="blank" data-correct="تحفيز">
-                                <option value="">اختر...</option>
-                                <option>تحفيز</option>
-                                <option>تأثير</option>
-                                <option>تغيير</option>
-                            </select>
+<option value="">اختر...</option>
+<option>تحفيز</option>
+<option>تأثير</option>
+<option>تغيير</option>
+</select>
                             النشاط."
                         </p>
-                        <button class="builder-check">تحقّق ✅</button>
-                        <div class="builder-result"></div>
-                    </div>
+<button class="builder-check">تحقّق ✅</button>
+<div class="builder-result"></div>
+</div>
+<div class="checkpoint" data-quiz="2">
+<div class="tag">🧠 اختبر نفسك</div>
+<p class="quiz-question">أي عبارة يجب اعتمادها في خطوة "التفسير" لربط X بـ Y؟</p>
+<div class="quiz-options">
+<button class="quiz-option" data-correct="false">"من الممكن أن..."</button>
+<button class="quiz-option" data-correct="true">"راجع إلى / بسبب..."</button>
+<button class="quiz-option" data-correct="false">"في رأيي أن..."</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="ad-space ad-inline" data-ad="m2">[ مساحة إعلانية ]</div>
+    </article>
 
-                    <div class="quiz-box" data-quiz="2">
-                        <h4>🧠 اختبر نفسك</h4>
-                        <p class="quiz-question">أي عبارة يجب اعتمادها في خطوة "التفسير" لربط X بـ Y؟</p>
-                        <div class="quiz-options">
-                            <button class="quiz-option" data-correct="false">"من الممكن أن..."</button>
-                            <button class="quiz-option" data-correct="true">"راجع إلى / بسبب..."</button>
-                            <button class="quiz-option" data-correct="false">"في رأيي أن..."</button>
-                        </div>
-                        <div class="quiz-feedback"></div>
-                    </div>
-                </div>
-
-                <!-- الشريحة 3: الجداول -->
-                <div class="slide" id="slide-3">
-                    <div class="method-block">
-                        <h3>منهجية التعامل مع الجداول</h3>
-                        <p>الجداول هي أداة للمقارنة؛ لا تصف الجدول، بل قارن بين النتائج:</p>
-                        <ul class="method-list">
-                            <li><strong class="gradient-text">1. المقارنة (ماذا نرى؟):</strong>
+    <article class="method slide" id="m3" data-title="الجداول">
+<header class="s-head">
+            <span class="s-ico" aria-hidden="true">📊</span>
+            <div class="s-no">المنهجية 3</div>
+            <h2>الجداول</h2>
+            <p class="s-lead">الجداول هي أداة للمقارنة؛ لا تصف الجدول، بل قارن بين النتائج:</p>
+        </header>
+<section class="guide">
+<h3>منهجية التعامل مع الجداول</h3>
+<div class="guide-body">
+<ul class="method-list">
+<li><strong class="gradient-text">1. المقارنة (ماذا نرى؟):</strong>
                                 لا تذكر الأرقام فقط، بل قارن بين شروط التجربة.
-                                <br><span style="color: var(--primary); font-size: 0.9rem;">💡 الصيغة البسيطة: "عند المقارنة بين الشرط (أ) والشرط (ب)، نلاحظ أن قيمة Y في (أ) أكبر/أصغر منها في (ب)..."</span>
-                            </li>
-                            <li><strong class="gradient-text">2. الاستنتاج (ماذا نستفيد؟):</strong>
+                                <br/><span style="color: var(--primary); font-size: 0.9rem;">💡 الصيغة البسيطة: "عند المقارنة بين الشرط (أ) والشرط (ب)، نلاحظ أن قيمة Y في (أ) أكبر/أصغر منها في (ب)..."</span>
+</li>
+<li><strong class="gradient-text">2. الاستنتاج (ماذا نستفيد؟):</strong>
                                 هنا نحدد "المفعول" العلمي، ونبتعد عن كلمة "يؤثر" العامة.
-                                <br><span style="color: var(--primary); font-size: 0.9rem;">💡 الصيغة البسيطة: "نستنتج أن المادة المضافة تسببت في <strong class="gradient-text">تثبيط / تحفيز</strong> النشاط (Y) مقارنة بالشاهد."</span>
-                            </li>
-                        </ul>
-                        <div class="image-slot">
-                            <span class="image-title"> تحليل الجداول بالمقارنة</span>
-                            <img src="image10/0.2.png" alt="مثال جدول" onclick="this.classList.toggle('zoomed')">
-                        </div>
-                    </div>
-                    <div class="exercise-box">
-                        <h4>🎯 ملاحظة هامة:</h4>
-                        <p>في الجداول، تجنب تماماً استخدام كلمة "يؤثر" وحدها؛ بل يجب ربط الاستنتاج بنتيجة المقارنة المباشرة مع تحديد طبيعة التأثير بدقة مثل <strong class="gradient-text">تحفيز أو تثبيط</strong>، مع ضرورة ربطه بـ <strong class="gradient-text">الظاهرة الواضحة أو الخفية</strong> (المدروسة) في بعض الحالات لتكون الإجابة كاملة.</p>
-                    </div>
+                                <br/><span style="color: var(--primary); font-size: 0.9rem;">💡 الصيغة البسيطة: "نستنتج أن المادة المضافة تسببت في <strong class="gradient-text">تثبيط / تحفيز</strong> النشاط (Y) مقارنة بالشاهد."</span>
+</li>
+</ul>
+</div>
+</section>
+<figure class="pin"><span class="tape"></span><img alt="مثال جدول" src="image10/0.2.png"/><figcaption>تحليل الجداول بالمقارنة<span class="hint">اضغط على الصورة لعرضها كاملة</span></figcaption></figure>
+<aside class="examiner">
+<h4>🎯 ملاحظة هامة:</h4>
+<p>في الجداول، تجنب تماماً استخدام كلمة "يؤثر" وحدها؛ بل يجب ربط الاستنتاج بنتيجة المقارنة المباشرة مع تحديد طبيعة التأثير بدقة مثل <strong class="gradient-text">تحفيز أو تثبيط</strong>، مع ضرورة ربطه بـ <strong class="gradient-text">الظاهرة الواضحة أو الخفية</strong> (المدروسة) في بعض الحالات لتكون الإجابة كاملة.</p>
+</aside>
+<div class="checkpoint" data-quiz="3">
+<div class="tag">🧠 اختبر نفسك</div>
+<p class="quiz-question">ما الخطأ الشائع الذي يجب تجنّبه عند تحليل جدول؟</p>
+<div class="quiz-options">
+<button class="quiz-option" data-correct="false">تحديد المقارنة بين الشروط بدقة</button>
+<button class="quiz-option" data-correct="true">الاكتفاء بكلمة "يؤثر" دون تحديد نوع التأثير</button>
+<button class="quiz-option" data-correct="false">ربط النتيجة بالشاهد</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="ad-space ad-inline" data-ad="m3">[ مساحة إعلانية ]</div>
+    </article>
 
-                    <div class="quiz-box" data-quiz="3">
-                        <h4>🧠 اختبر نفسك</h4>
-                        <p class="quiz-question">ما الخطأ الشائع الذي يجب تجنّبه عند تحليل جدول؟</p>
-                        <div class="quiz-options">
-                            <button class="quiz-option" data-correct="false">تحديد المقارنة بين الشروط بدقة</button>
-                            <button class="quiz-option" data-correct="true">الاكتفاء بكلمة "يؤثر" دون تحديد نوع التأثير</button>
-                            <button class="quiz-option" data-correct="false">ربط النتيجة بالشاهد</button>
-                        </div>
-                        <div class="quiz-feedback"></div>
-                    </div>
-                </div>
-
-                <!-- الشريحة 4: الهجرة الكهربائية -->
-                <div class="slide" id="slide-4">
-                    <div class="method-block">
-                        <h3>تقنية الهجرة الكهربائية والوزن الجزيئي</h3>
-                        <p>تقنيات فصل الجزيئات الحيوية (الأحماض الأمينية، الببتيدات، أو البروتينات) بناءً على الشحنة أو الحجم.</p>
-                        <ul class="method-list">
-                            <li><strong class="gradient-text">1. الهجرة الكهربائية (حسب الشحنة و PHi):</strong>
+    <article class="method slide" id="m4" data-title="الهجرة الكهربائية">
+<header class="s-head">
+            <span class="s-ico" aria-hidden="true">🧬</span>
+            <div class="s-no">المنهجية 4</div>
+            <h2>تقنية الهجرة الكهربائية و الوزن الجزيئي</h2>
+            <p class="s-lead">تقنيات فصل الجزيئات الحيوية (الأحماض الأمينية، الببتيدات، أو البروتينات) بناءً على الشحنة أو الحجم.</p>
+        </header>
+<section class="guide">
+<h3>تقنية الهجرة الكهربائية والوزن الجزيئي</h3>
+<div class="guide-body">
+<ul class="method-list">
+<li><strong class="gradient-text">1. الهجرة الكهربائية (حسب الشحنة و PHi):</strong>
                                 تتحدد هجرة الجزيء حسب شحنته الكهربائية مقارنة بـ pH الوسط. الجزيء الموجب يتجه نحو القطب السالب والعكس صحيح، بينما الجزيء الذي يكون عنده (<span class="term">pH = PHi<span class="tip">النقطة التي تتساوى فيها الشحنات الموجبة والسالبة على الجزيء فتصبح شحنته الكلية معدومة، فلا يتحرك تحت تأثير المجال الكهربائي.</span></span>) تنعدم شحنته ولا يتحرك.
                             </li>
-                            <li><strong class="gradient-text">2. الهجرة حسب الوزن الجزيئي:</strong>
+<li><strong class="gradient-text">2. الهجرة حسب الوزن الجزيئي:</strong>
                                 تقنية تعتمد على الفصل بناءً على الحجم أو الوزن الجزيئي؛ حيث أن الجزيئات ذات <strong class="gradient-text">الوزن الجزيئي الأصغر أو الحجم الأقل</strong> تكون هجرتها أسرع وأعمق في الوسط مقارنة بالجزيئات الأكبر حجماً.
                             </li>
-                        </ul>
-                        <div class="image-slot">
-                            <span class="image-title"> مبدأ الهجرة الكهربائية وفصل البروتينات </span>
-                            <img src="image10/0.3.png" alt="مثال تقنية الهجرة الكهربائية والوزن الجزيئي" onclick="this.classList.toggle('zoomed')">
-                        </div>
-                    </div>
-                    <div class="exercise-box">
-                        <h4>🎯 الاستنتاج العلمي والأسباب المحتملة:</h4>
-                        <p>
-                            - <strong class="gradient-text">استنتاج اختلاف الشحنة / PHi:</strong> اختلاف مسافة أو اتجاه هجرة الجزيئات يعود إلى تغير في بنيتها، وغالباً ما يكون سببه <span class="term">طفرة استبدال<span class="tip">استبدال نيكليوتيدة بأخرى، ما قد يغيّر حمضاً أمينياً واحداً وبالتالي يغيّر الشحنة الكلية للبروتين.</span></span> أدت لتغيير حمض أميني وبالتالي تغيير الشحنة الإجمالية.<br>
+</ul>
+</div>
+</section>
+<figure class="pin"><span class="tape"></span><img alt="مثال تقنية الهجرة الكهربائية والوزن الجزيئي" src="image10/0.3.png"/><figcaption>مبدأ الهجرة الكهربائية وفصل البروتينات<span class="hint">اضغط على الصورة لعرضها كاملة</span></figcaption></figure>
+<aside class="examiner">
+<h4>🎯 الاستنتاج العلمي والأسباب المحتملة:</h4>
+<p>
+                            - <strong class="gradient-text">استنتاج اختلاف الشحنة / PHi:</strong> اختلاف مسافة أو اتجاه هجرة الجزيئات يعود إلى تغير في بنيتها، وغالباً ما يكون سببه <span class="term">طفرة استبدال<span class="tip">استبدال نيكليوتيدة بأخرى، ما قد يغيّر حمضاً أمينياً واحداً وبالتالي يغيّر الشحنة الكلية للبروتين.</span></span> أدت لتغيير حمض أميني وبالتالي تغيير الشحنة الإجمالية.<br/>
                             - <strong class="gradient-text">استنتاج اختلاف الوزن الجزيئي:</strong> اختلاف مسافة الهجرة حسب الحجم يعود لتفاوت الكتلة الجزيئية، وقد يكون سببه <span class="term">طفرة حذف أو إضافة<span class="tip">فقدان أو زيادة نيكليوتيدة أو أكثر، ما يغيّر عدد الأحماض الأمينية وطول السلسلة الببتيدية.</span></span> أثّرت على عدد الأحماض الأمينية وطول السلسلة الببتيدية.
                         </p>
-                    </div>
+</aside>
+<div class="checkpoint" data-quiz="4">
+<div class="tag">🧠 اختبر نفسك</div>
+<p class="quiz-question">أي جزيء يهاجر أسرع وأعمق أثناء الهجرة حسب الوزن الجزيئي؟</p>
+<div class="quiz-options">
+<button class="quiz-option" data-correct="true">الجزيء ذو الوزن الجزيئي الأصغر</button>
+<button class="quiz-option" data-correct="false">الجزيء ذو الوزن الجزيئي الأكبر</button>
+<button class="quiz-option" data-correct="false">لا علاقة للوزن بسرعة الهجرة</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="ad-space ad-inline" data-ad="m4">[ مساحة إعلانية ]</div>
+    </article>
 
-                    <div class="quiz-box" data-quiz="4">
-                        <h4>🧠 اختبر نفسك</h4>
-                        <p class="quiz-question">أي جزيء يهاجر أسرع وأعمق أثناء الهجرة حسب الوزن الجزيئي؟</p>
-                        <div class="quiz-options">
-                            <button class="quiz-option" data-correct="true">الجزيء ذو الوزن الجزيئي الأصغر</button>
-                            <button class="quiz-option" data-correct="false">الجزيء ذو الوزن الجزيئي الأكبر</button>
-                            <button class="quiz-option" data-correct="false">لا علاقة للوزن بسرعة الهجرة</button>
-                        </div>
-                        <div class="quiz-feedback"></div>
-                    </div>
-                </div>
+    <article class="method slide" id="m5" data-title="الرسومات التخطيطية">
+<header class="s-head">
+            <span class="s-ico" aria-hidden="true">🧩</span>
+            <div class="s-no">المنهجية 5</div>
+            <h2>الرسومات التخطيطية</h2>
+            <p class="s-lead">كيفية قراءة وفهم البنيات الخلوية أو الجزيئية واستخلاص المعنى العلمي منها ببساطة.</p>
+        </header>
+<section class="guide">
+<h3>الرسوم التخطيطية</h3>
+<div class="guide-body">
+<ul class="method-list">
+<li><strong class="gradient-text">التعرف على المكونات:</strong> تحديد الأشكال والعناصر الظاهرة في الرسم وربط كل عنصر بوظيفته الأساسية.</li>
+<li><strong class="gradient-text">قراءة الرسم:</strong> تقتصر كيفية القراءة على ذكر <strong class="gradient-text">مراحل الظاهرة الحيوية</strong> الموجودة في الصورة بترتيبها الصحيح.</li>
+</ul>
+</div>
+</section>
+<figure class="pin"><span class="tape"></span><img alt="مثال رسم تخطيطي" src="image10/0.4.png"/><figcaption>قراءة الرسوم التخطيطية<span class="hint">اضغط على الصورة لعرضها كاملة</span></figcaption></figure>
+<aside class="examiner">
+<h4>🎯 ملاحظة هامة للاستنتاج:</h4>
+<p>في الرسوم التخطيطية، يجب أن يقتصر الاستنتاج على <strong class="gradient-text">الربط بين أهم جزيئة</strong> (مثل الإنزيم، المستقبل، أو الجسم المضاد) وبين <strong class="gradient-text">الظاهرة</strong> المدروسة بدقة.</p>
+</aside>
+<div class="checkpoint" data-quiz="5">
+<div class="tag">🧠 اختبر نفسك</div>
+<p class="quiz-question">عند قراءة رسم تخطيطي، ما الذي يجب ذكره بترتيبه الصحيح؟</p>
+<div class="quiz-options">
+<button class="quiz-option" data-correct="false">ألوان الرسم فقط</button>
+<button class="quiz-option" data-correct="true">مراحل الظاهرة الحيوية الموجودة في الصورة</button>
+<button class="quiz-option" data-correct="false">حجم كل شكل بالمليمتر</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="ad-space ad-inline" data-ad="m5">[ مساحة إعلانية ]</div>
+    </article>
 
-                <!-- الشريحة 5: الرسوم التخطيطية -->
-                <div class="slide" id="slide-5">
-                    <div class="method-block">
-                        <h3>الرسوم التخطيطية</h3>
-                        <p>كيفية قراءة وفهم البنيات الخلوية أو الجزيئية واستخلاص المعنى العلمي منها ببساطة.</p>
-                        <ul class="method-list">
-                            <li><strong class="gradient-text">التعرف على المكونات:</strong> تحديد الأشكال والعناصر الظاهرة في الرسم وربط كل عنصر بوظيفته الأساسية.</li>
-                            <li><strong class="gradient-text">قراءة الرسم:</strong> تقتصر كيفية القراءة على ذكر <strong class="gradient-text">مراحل الظاهرة الحيوية</strong> الموجودة في الصورة بترتيبها الصحيح.</li>
-                        </ul>
-                        <div class="image-slot">
-                            <span class="image-title"> قراءة الرسوم التخطيطية </span>
-                            <img src="image10/0.4.png" alt="مثال رسم تخطيطي" onclick="this.classList.toggle('zoomed')">
-                        </div>
-                    </div>
-                    <div class="exercise-box">
-                        <h4>🎯 ملاحظة هامة للاستنتاج:</h4>
-                        <p>في الرسوم التخطيطية، يجب أن يقتصر الاستنتاج على <strong class="gradient-text">الربط بين أهم جزيئة</strong> (مثل الإنزيم، المستقبل، أو الجسم المضاد) وبين <strong class="gradient-text">الظاهرة</strong> المدروسة بدقة.</p>
-                    </div>
-
-                    <div class="quiz-box" data-quiz="5">
-                        <h4>🧠 اختبر نفسك</h4>
-                        <p class="quiz-question">عند قراءة رسم تخطيطي، ما الذي يجب ذكره بترتيبه الصحيح؟</p>
-                        <div class="quiz-options">
-                            <button class="quiz-option" data-correct="false">ألوان الرسم فقط</button>
-                            <button class="quiz-option" data-correct="true">مراحل الظاهرة الحيوية الموجودة في الصورة</button>
-                            <button class="quiz-option" data-correct="false">حجم كل شكل بالمليمتر</button>
-                        </div>
-                        <div class="quiz-feedback"></div>
-                    </div>
-                </div>
-
-                <!-- الشريحة 6: برنامج الأناجان -->
-                <div class="slide" id="slide-6">
-                    <div class="method-block">
-                        <h3>برنامج الأناجان (Anagen)</h3>
-                        <p>منهجية استغلال نتائج البرنامج لتتبع التغيرات الوراثية بدقة مطلقة.</p>
-                        <ul class="method-list">
-                            <li><strong class="gradient-text">1. إعادة الرسم والتتبع (المقارنة):</strong>
+    <article class="method slide" id="m6" data-title="برنامج الأناجان">
+<header class="s-head">
+            <span class="s-ico" aria-hidden="true">🧫</span>
+            <div class="s-no">المنهجية 6</div>
+            <h2>برنامج الأناجان</h2>
+            <p class="s-lead">منهجية استغلال نتائج البرنامج لتتبع التغيرات الوراثية بدقة مطلقة.</p>
+        </header>
+<section class="guide">
+<h3>برنامج الأناجان (Anagen)</h3>
+<div class="guide-body">
+<ul class="method-list">
+<li><strong class="gradient-text">1. إعادة الرسم والتتبع (المقارنة):</strong>
                                 رسم وكتابة السلاسل الخاصة بالحالة <strong class="gradient-text">السليمة (العادية)</strong> مقابل الحالة <strong class="gradient-text">المصابة (المطفرة)</strong> لكل من: سلسلة الـ ADN (المستنسخة أو غير المستنسخة)، ثم سلسلة الـ ARNm المقابلة لها، وصولاً إلى السلسلة الببتيدية الناتجة.
                             </li>
-                            <li><strong class="gradient-text">2. الشرح التفصيلي بالأرقام:</strong>
+<li><strong class="gradient-text">2. الشرح التفصيلي بالأرقام:</strong>
                                 توضيح <strong class="gradient-text">رقم النكليوتيدة</strong> المتغيرة وتحديد موقعها بدقة ضمن الثلاثية أو <strong class="gradient-text">الرامزة</strong> الخاصة بسلسلة الـ ADN (المستنسخة أو غير المستنسخة)، ثم توضيح كيف تسبب هذا التغيير في التأثير على الرامزة المقابلة في سلسلة الـ ARNm، وصولاً إلى تحديد <strong class="gradient-text">رقم الحمض الأميني</strong> المعني بالتغيير وموقعه في السلسلة الببتيدية الناتجة.
                             </li>
-                        </ul>
+</ul>
+</div>
+</section>
+<aside class="examiner">
+<h4>🎯 ملاحظة هامة للاستنتاج:</h4>
+<p>إذا وُجدت طفرة، يكون الاستنتاج: حدوث <strong class="gradient-text">طفرة</strong> في سلسلة الـ ADN أدت إلى تغير في سلسلة الـ ARNm، مما نتج عنه تغير في <strong class="gradient-text">عدد ونوع وترتيب الأحماض الأمينية</strong> في السلسلة الببتيدية، وهو ما يؤدي إلى تشكل <strong class="gradient-text">بنية فراغية مخربة</strong> ومنه <strong class="gradient-text">فقدان الوظيفة</strong>.</p>
+</aside>
+<div class="chip-row">
+<span class="chip">طفرة استبدال</span>
+<span class="chip">طفرة حذف</span>
+<span class="chip">طفرة إضافة</span>
+<span class="chip">بنية فراغية مخربة</span>
+<span class="chip">فقدان الوظيفة</span>
+</div>
+<div class="checkpoint" data-quiz="6">
+<div class="tag">🧠 اختبر نفسك</div>
+<p class="quiz-question">ماذا يترتب في النهاية عن تغيّر عدد ونوع وترتيب الأحماض الأمينية في السلسلة الببتيدية؟</p>
+<div class="quiz-options">
+<button class="quiz-option" data-correct="false">تحسّن أداء البروتين دائماً</button>
+<button class="quiz-option" data-correct="true">بنية فراغية مخربة وفقدان الوظيفة</button>
+<button class="quiz-option" data-correct="false">لا يتأثر شكل البروتين إطلاقاً</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="ad-space ad-inline" data-ad="m6">[ مساحة إعلانية ]</div>
+    </article>
+
+                <section class="slide verdict" id="verdict" data-title="النتيجة">
+                    <div class="stamp" id="stamp">بانتظارك</div>
+                    <div>
+                        <p id="finalScoreText">نتيجتك في الأسئلة السريعة: 0 من 6</p>
+                        <button type="button" class="btn" id="resetBtn">🔄 إعادة الأسئلة</button>
                     </div>
-                    <div class="exercise-box">
-                        <h4>🎯 ملاحظة هامة للاستنتاج:</h4>
-                        <p>إذا وُجدت طفرة، يكون الاستنتاج: حدوث <strong class="gradient-text">طفرة</strong> في سلسلة الـ ADN أدت إلى تغير في سلسلة الـ ARNm، مما نتج عنه تغير في <strong class="gradient-text">عدد ونوع وترتيب الأحماض الأمينية</strong> في السلسلة الببتيدية، وهو ما يؤدي إلى تشكل <strong class="gradient-text">بنية فراغية مخربة</strong> ومنه <strong class="gradient-text">فقدان الوظيفة</strong>.</p>
+                    <div class="bottom-links">
+                        <a href="index.html">🏠 القائمة الرئيسية</a>
+                        <a href="lesson1.html">الوحدات ➔</a>
                     </div>
+                    <div class="ad-space" data-ad="end">[ مساحة إعلانية ]</div>
+                </section>
 
-                    <div class="chip-row">
-                        <span class="chip">طفرة استبدال</span>
-                        <span class="chip">طفرة حذف</span>
-                        <span class="chip">طفرة إضافة</span>
-                        <span class="chip">بنية فراغية مخربة</span>
-                        <span class="chip">فقدان الوظيفة</span>
-                    </div>
-
-                    <div class="quiz-box" data-quiz="6">
-                        <h4>🧠 اختبر نفسك</h4>
-                        <p class="quiz-question">ماذا يترتب في النهاية عن تغيّر عدد ونوع وترتيب الأحماض الأمينية في السلسلة الببتيدية؟</p>
-                        <div class="quiz-options">
-                            <button class="quiz-option" data-correct="false">تحسّن أداء البروتين دائماً</button>
-                            <button class="quiz-option" data-correct="true">بنية فراغية مخربة وفقدان الوظيفة</button>
-                            <button class="quiz-option" data-correct="false">لا يتأثر شكل البروتين إطلاقاً</button>
-                        </div>
-                        <div class="quiz-feedback"></div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="slide-footer">
-                <button class="control-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>⬅ السابق</button>
-                <button class="control-btn" id="nextBtn" onclick="handleNextButton()">التالي ➔</button>
-            </div>
-
+            </main>
         </div>
     </div>
 
-    <div class="celebrate-overlay" id="celebrateOverlay">
-        <div class="celebrate-card">
-            <div class="big-emoji">🎓</div>
-            <h3>أحسنت! أنهيت المنهجية كاملة</h3>
-            <p id="finalScoreText">نتيجتك في الأسئلة السريعة: 0 من 6</p>
-            <button class="control-btn" onclick="goHome()">🏠 العودة للصفحة الرئيسية</button>
+    <div class="lightbox" id="lightbox" aria-hidden="true"><button type="button" class="lb-x" id="lbClose" aria-label="إغلاق">✕</button><img id="lbImg" alt=""><div class="lb-cap" id="lbCap"></div></div>
+
+    <div class="sheet" id="sheet" aria-hidden="true">
+        <div class="sheet-card" role="dialog" aria-label="فهرس الشرائح">
+            <div class="sheet-head"><strong>فهرس الشرائح</strong><button type="button" class="sheet-x" id="sheetClose" aria-label="إغلاق">✕</button></div>
+            <ol id="sheetList"></ol>
         </div>
     </div>
 
-    <script>
-        const slides = document.querySelectorAll('.slide');
-        const titles = [
-            "النص العلمي",
-            "المنحنيات البيانية و الاعمدة البيانية",
-            "الجداول",
-            "تقنية الهجرة الكهربائية و الوزن الجزيئي",
-            "الرسومات التخطيطية",
-            "برنامج الأناجان"
-        ];
-        const icons = ["📖", "📈", "📊", "🧬", "🧩", "🧫"];
+    <div class="deck-bar" id="deckBar" role="toolbar" aria-label="التحكم في العرض">
+        <div class="d-prog" aria-hidden="true"><i id="readProg"></i></div>
+        <button type="button" class="d-btn" id="prevBtn" aria-label="الشريحة السابقة"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg><span class="lbl">السابق</span></button>
+        <button type="button" class="d-mid" id="midBtn" aria-label="فهرس الشرائح">
+            <span class="d-info"><span id="slideTitle">الغلاف</span><span class="d-count"><b id="slideNo">1</b> / <span id="slideTotal">8</span></span></span>
+            <span class="d-dots" id="dots"></span>
+        </button>
+        <button type="button" class="d-btn primary" id="nextBtn" aria-label="الشريحة التالية"><span class="lbl">التالي</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button type="button" class="d-btn icon" id="fsBtn" aria-label="ملء الشاشة" title="ملء الشاشة">⛶</button>
+    </div>
 
-        let currentSlide = 0;
-        let score = 0;
-        const answered = new Set();
-        const visited = new Set([0]);
 
-        // بناء نقاط التنقل
-        const dotsRow = document.getElementById('dotsRow');
-        slides.forEach((_, i) => {
-            const d = document.createElement('div');
-            d.className = 'dot' + (i === 0 ? ' active' : '');
-            d.textContent = i + 1;
-            d.title = titles[i];
-            d.addEventListener('click', () => goToSlide(i));
-            dotsRow.appendChild(d);
-        });
+<script>
+    const THEME_ICONS = {
+        moon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+        sun:  '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" fill="none"/></svg>'
+    };
+    function paintThemeIcon(isLight) {
+        const el = document.getElementById('theme-icon');
+        if (!el) return;
+        el.className = isLight ? 'is-sun' : 'is-moon';
+        el.innerHTML = isLight ? THEME_ICONS.sun : THEME_ICONS.moon;
+    }
 
-        function refreshDots() {
-            document.querySelectorAll('.dot').forEach((d, i) => {
-                d.classList.toggle('active', i === currentSlide);
-                d.classList.toggle('done', visited.has(i) && i !== currentSlide);
-            });
+    function toggleTheme() {
+        const bodyElement = document.body;
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+
+        // تبديل الكلاس على جسم الصفحة
+        bodyElement.classList.toggle('light-theme');
+        const isLightTheme = bodyElement.classList.contains('light-theme');
+
+        // تحديث النصوص والأيقونات والمحفوظات
+        if (isLightTheme) {
+            paintThemeIcon(true);
+            if (themeText) themeText.textContent = 'الوضع النهاري';
+            localStorage.setItem('theme', 'light');
+        } else {
+            paintThemeIcon(false);
+            if (themeText) themeText.textContent = 'الوضع الليلي';
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+
+    /* ==========================================
+       2. عند تحميل الصفحة (تطبيق الثيم والكانفاس)
+       ========================================== */
+    document.addEventListener('DOMContentLoaded', () => {
+        const bodyElement = document.body;
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+
+        // استرجاع الثيم المحفوظ عند فتح الصفحة
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme === 'light') {
+            bodyElement.classList.add('light-theme');
+            paintThemeIcon(true);
+            if (themeText) themeText.textContent = 'الوضع النهاري';
+        } else {
+            bodyElement.classList.remove('light-theme');
+            paintThemeIcon(false);
+            if (themeText) themeText.textContent = 'الوضع الليلي';
         }
 
-        function updatePresentation() {
-            slides.forEach((slide, index) => slide.classList.toggle('active', index === currentSlide));
-            document.getElementById('slideTitle').innerText = titles[currentSlide];
-            document.getElementById('slideIcon').innerText = icons[currentSlide];
-            document.getElementById('progressIndicator').innerText = `الشريحة ${currentSlide + 1} من ${slides.length}`;
+    });
 
-            const progressPercentage = ((currentSlide + 1) / slides.length) * 100;
-            document.getElementById('progressBar').style.width = progressPercentage + "%";
+(function () {
+    var quizzes = document.querySelectorAll('.checkpoint'), total = quizzes.length, score = 0, answered = {};
+    var $ = function (id) { return document.getElementById(id); };
+    var CIRC = 213.63;
 
-            document.getElementById('prevBtn').disabled = currentSlide === 0;
+    function render(celebrate) {
+        var done = Object.keys(answered).length;
+        $('scoreN').textContent = score;
+        $('ringFg').style.strokeDashoffset = CIRC - (total ? CIRC * done / total : 0);
+        $('finalScoreText').textContent = 'نتيجتك في الأسئلة السريعة: ' + score + ' من ' + total;
+        var st = $('stamp');
+        if (done < total) { st.className = 'stamp'; st.innerHTML = 'بانتظارك<small>' + done + ' من ' + total + '</small>'; }
+        else if (score === total) { st.className = 'stamp good'; st.innerHTML = 'ممتاز<small>' + score + ' / ' + total + '</small>'; if (celebrate) confetti(); }
+        else if (score >= total / 2) { st.className = 'stamp mid'; st.innerHTML = 'جيد<small>' + score + ' / ' + total + '</small>'; }
+        else { st.className = 'stamp low'; st.innerHTML = 'راجع<small>' + score + ' / ' + total + '</small>'; }
+    }
 
-            const nextBtn = document.getElementById('nextBtn');
-            if (currentSlide === slides.length - 1) {
-                nextBtn.innerHTML = "🏁 إنهاء المراجعة";
-                nextBtn.style.borderColor = "#10b981";
-                nextBtn.style.color = "#10b981";
-            } else {
-                nextBtn.innerHTML = "التالي ➔";
-                nextBtn.style.borderColor = "var(--primary)";
-                nextBtn.style.color = "var(--primary)";
-            }
-            refreshDots();
-        }
-
-        function handleNextButton() {
-            if (currentSlide === slides.length - 1) {
-                celebrate();
-            } else {
-                currentSlide++;
-                visited.add(currentSlide);
-                updatePresentation();
-                document.getElementById('scrollArea').scrollTop = 0;
-            }
-        }
-
-        function changeSlide(direction) {
-            currentSlide += direction;
-            if (currentSlide < 0) currentSlide = 0;
-            if (currentSlide >= slides.length) currentSlide = slides.length - 1;
-            visited.add(currentSlide);
-            updatePresentation();
-            document.getElementById('scrollArea').scrollTop = 0;
-        }
-
-        function goToSlide(i) {
-            currentSlide = i;
-            visited.add(i);
-            updatePresentation();
-            document.getElementById('scrollArea').scrollTop = 0;
-        }
-
-        function goHome() {
-            window.location.href = "index.html";
-        }
-
-        // دعم لوحة المفاتيح (الواجهة RTL: السهم يسار = التالي، يمين = السابق)
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') changeSlide(1);
-            if (e.key === 'ArrowRight') changeSlide(-1);
-        });
-
-        // دعم السحب باللمس
-        let touchStartX = null;
-        document.querySelector('.legendary-card').addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-        document.querySelector('.legendary-card').addEventListener('touchend', (e) => {
-            if (touchStartX === null) return;
-            const dx = e.changedTouches[0].screenX - touchStartX;
-            if (Math.abs(dx) > 60) changeSlide(dx > 0 ? -1 : 1);
-            touchStartX = null;
-        }, { passive: true });
-
-        // مصطلحات قابلة للنقر (Tooltip)
-        document.querySelectorAll('.term').forEach(term => {
-            term.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const wasOpen = term.classList.contains('open');
-                document.querySelectorAll('.term.open').forEach(t => t.classList.remove('open'));
-                if (!wasOpen) term.classList.add('open');
-            });
-        });
-        document.addEventListener('click', () => {
-            document.querySelectorAll('.term.open').forEach(t => t.classList.remove('open'));
-        });
-
-        // منطق الأسئلة السريعة (اختبر نفسك)
-        document.querySelectorAll('.quiz-box').forEach(box => {
-            const quizId = box.dataset.quiz;
-            const feedback = box.querySelector('.quiz-feedback');
-            const options = box.querySelectorAll('.quiz-option');
-            options.forEach(opt => {
-                opt.addEventListener('click', () => {
-                    if (answered.has(quizId)) return;
-                    answered.add(quizId);
-                    const isCorrect = opt.dataset.correct === 'true';
-                    options.forEach(o => {
-                        o.disabled = true;
-                        if (o.dataset.correct === 'true') o.classList.add('correct');
-                        else if (o === opt) o.classList.add('wrong');
-                    });
-                    feedback.classList.add('show');
-                    if (isCorrect) {
-                        score++;
-                        feedback.innerHTML = "<strong>إجابة صحيحة! 🎉</strong> أحسنت، هذه هي الصيغة التي يعتمدها المصححون.";
-                    } else {
-                        feedback.innerHTML = "<strong>ليست الإجابة الأدق.</strong> الإجابة الصحيحة محددة باللون الأخضر أعلاه — لاحظها جيداً قبل الانتقال.";
-                    }
-                    document.getElementById('scoreDisplay').innerText = score;
+    quizzes.forEach(function (box) {
+        var id = box.dataset.quiz, fb = box.querySelector('.quiz-feedback'), opts = box.querySelectorAll('.quiz-option');
+        opts.forEach(function (opt) {
+            opt.addEventListener('click', function () {
+                if (answered[id]) return;
+                var ok = opt.dataset.correct === 'true';
+                answered[id] = ok ? 'ok' : 'bad';
+                opts.forEach(function (o) {
+                    o.disabled = true;
+                    if (o.dataset.correct === 'true') o.classList.add('correct');
+                    else if (o === opt) o.classList.add('wrong');
                 });
+                fb.classList.add('show'); fb.classList.toggle('good', ok);
+                if (ok) { score++; fb.innerHTML = '<strong>إجابة صحيحة! 🎉</strong> أحسنت، هذه هي الصيغة التي يعتمدها المصححون.'; }
+                else { fb.innerHTML = '<strong>ليست الإجابة الأدق.</strong> الإجابة الصحيحة محددة باللون الأخضر أعلاه — لاحظها جيداً قبل المتابعة.'; }
+                var ck = document.querySelector('.toc a[href="#m' + id + '"] .ck'); if (ck) ck.className = 'ck ' + answered[id];
+                render(true);
             });
         });
+    });
 
-        // منطق "ركّب الجملة العلمية"
-        document.querySelectorAll('.builder-box').forEach(box => {
-            const btn = box.querySelector('.builder-check');
-            const result = box.querySelector('.builder-result');
-            const blanks = box.querySelectorAll('select.blank');
-            btn.addEventListener('click', () => {
-                let allCorrect = true;
-                blanks.forEach(sel => {
-                    sel.classList.remove('correct-fill', 'wrong-fill');
-                    if (!sel.value) { allCorrect = false; return; }
-                    if (sel.value === sel.dataset.correct) {
-                        sel.classList.add('correct-fill');
-                    } else {
-                        sel.classList.add('wrong-fill');
-                        allCorrect = false;
-                    }
-                });
-                result.style.color = allCorrect ? '#6ee7b7' : '#fca5a5';
-                result.innerText = allCorrect
-                    ? "ممتاز! هذه هي الصيغة العلمية الدقيقة المطلوبة في التصحيح. ✅"
-                    : "تحقق من الفراغات المحددة بالأحمر، واختر العبارة العلمية الأدق. 🔍";
-            });
+    $('resetBtn').addEventListener('click', function () {
+        score = 0; answered = {};
+        quizzes.forEach(function (box) {
+            box.querySelectorAll('.quiz-option').forEach(function (o) { o.disabled = false; o.classList.remove('correct', 'wrong'); });
+            var fb = box.querySelector('.quiz-feedback'); fb.classList.remove('show', 'good');
         });
+        document.querySelectorAll('.ck').forEach(function (c) { c.className = 'ck'; });
+        render(false);
+        go(1);
+    });
 
-        // شاشة الاحتفال + قصاصات ورقية
-        function celebrate() {
-            document.getElementById('scoreMax').innerText = slides.length;
-            document.getElementById('finalScoreText').innerText = `نتيجتك في الأسئلة السريعة: ${score} من ${slides.length}`;
-            document.getElementById('celebrateOverlay').classList.add('show');
-            spawnConfetti();
+    document.querySelectorAll('.lab').forEach(function (box) {
+        var btn = box.querySelector('.builder-check'), result = box.querySelector('.builder-result'), blanks = box.querySelectorAll('select.blank');
+        if (!btn) return;
+        btn.addEventListener('click', function () {
+            var all = true;
+            blanks.forEach(function (sel) {
+                sel.classList.remove('correct-fill', 'wrong-fill');
+                if (!sel.value) { all = false; return; }
+                if (sel.value === sel.dataset.correct) sel.classList.add('correct-fill'); else { sel.classList.add('wrong-fill'); all = false; }
+            });
+            result.style.color = all ? 'var(--ok)' : 'var(--bad)';
+            result.textContent = all ? 'ممتاز! هذه هي الصيغة العلمية الدقيقة المطلوبة في التصحيح. ✅' : 'تحقق من الفراغات المحددة بالأحمر، واختر العبارة العلمية الأدق. 🔍';
+        });
+    });
+
+    document.querySelectorAll('.term').forEach(function (t) {
+        t.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var was = t.classList.contains('open');
+            document.querySelectorAll('.term.open').forEach(function (x) { x.classList.remove('open'); });
+            if (!was) t.classList.add('open');
+        });
+    });
+    document.addEventListener('click', function () { document.querySelectorAll('.term.open').forEach(function (x) { x.classList.remove('open'); }); });
+    var lb = $('lightbox'), lbImg = $('lbImg'), lbCap = $('lbCap');
+    function closeLb() { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); lbImg.removeAttribute('src'); }
+    document.querySelectorAll('.pin img').forEach(function (img) {
+        img.addEventListener('click', function () {
+            lbImg.src = img.currentSrc || img.src; lbImg.alt = img.alt || '';
+            var fc = img.parentNode.querySelector('figcaption'); lbCap.textContent = fc ? fc.firstChild.textContent : (img.alt || '');
+            lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false');
+        });
+    });
+    lb.addEventListener('click', closeLb);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lb.classList.contains('open')) { e.stopPropagation(); closeLb(); } }, true);
+
+    // ===== محرك العرض =====
+    var slides = Array.prototype.slice.call(document.querySelectorAll('.slide')), cur = 0, stage = $('stage');
+    var tocLinks = document.querySelectorAll('.toc a'), dotsBox = $('dots'), sheet = $('sheet'), sheetList = $('sheetList');
+    $('slideTotal').textContent = slides.length;
+    slides.forEach(function (sl, i) {
+        var d = document.createElement('button'); d.type = 'button'; d.tabIndex = -1; d.className = 'd-dot'; d.setAttribute('aria-label', 'الشريحة ' + (i + 1) + ': ' + (sl.dataset.title || ''));
+        dotsBox.appendChild(d);
+    });
+    function go(n, quiet) {
+        n = Math.max(0, Math.min(slides.length - 1, n));
+        if (!go.started) go.started = true; else if (n === cur) return;
+        stage.classList.toggle('dir-prev', n < cur);
+        slides[cur].classList.remove('active'); cur = n; slides[cur].classList.add('active');
+        document.querySelectorAll('.term.open').forEach(function (x) { x.classList.remove('open'); });
+        $('slideNo').textContent = cur + 1; $('slideTitle').textContent = slides[cur].dataset.title || '';
+        $('prevBtn').disabled = cur === 0; $('nextBtn').disabled = cur === slides.length - 1;
+        Array.prototype.forEach.call(dotsBox.children, function (d, i) { d.classList.toggle('cur', i === cur); d.classList.toggle('seen', i < cur); });
+        tocLinks.forEach(function (l) { l.classList.toggle('active', l.dataset.s === slides[cur].id); });
+        var act = document.querySelector('.toc a.active'), ol = act && act.closest('ol');
+        if (ol && ol.scrollWidth > ol.clientWidth) ol.scrollTo({ left: act.parentNode.offsetLeft - ol.clientWidth / 2 + act.clientWidth / 2, behavior: 'smooth' });
+        if (!quiet) { var tp = stage.getBoundingClientRect().top + window.pageYOffset - 64; if (window.pageYOffset > tp) window.scrollTo(0, Math.max(0, tp)); }
+        readProg(); activateAds();
+        if (!quiet && history.replaceState) history.replaceState(null, '', cur === 0 ? location.pathname + location.search : '#' + slides[cur].id);
+    }
+    function activateAds() {
+        slides[cur].querySelectorAll('.ad-space[data-ad]:not(.ad-ready)').forEach(function (ad) {
+            ad.classList.add('ad-ready');
+            // ضع هنا استدعاء تحميل الإعلان الخاص بشبكتك لهذا المكان عند ظهور الشريحة (الإعلانات داخل الشرائح المخفية لا تُحمَّل).
+        });
+    }
+    function buildSheet() {
+        sheetList.innerHTML = '';
+        slides.forEach(function (sl, i) {
+            var li = document.createElement('li'), b = document.createElement('button'); b.type = 'button';
+            var st = ''; if (/^m[0-9]$/.test(sl.id)) { var ck = document.querySelector('.toc a[data-s="' + sl.id + '"] .ck'); st = ck ? (ck.classList.contains('ok') ? ' ✅' : (ck.classList.contains('bad') ? ' ❌' : '')) : ''; }
+            b.innerHTML = '<span class="n">' + (i + 1) + '</span><span class="t">' + (sl.dataset.title || '') + st + '</span>';
+            if (i === cur) b.className = 'cur';
+            b.addEventListener('click', function () { closeSheet(); go(i); });
+            li.appendChild(b); sheetList.appendChild(li);
+        });
+    }
+    function openSheet() { buildSheet(); sheet.classList.add('open'); sheet.setAttribute('aria-hidden', 'false'); }
+    function closeSheet() { sheet.classList.remove('open'); sheet.setAttribute('aria-hidden', 'true'); }
+    $('midBtn').addEventListener('click', openSheet);
+    $('sheetClose').addEventListener('click', closeSheet);
+    sheet.addEventListener('click', function (e) { if (e.target === sheet) closeSheet(); });
+    var rp = $('readProg'), ticking = false;
+    function readProg() { var max = document.documentElement.scrollHeight - innerHeight; rp.style.width = (max > 20 ? Math.min(100, window.pageYOffset / max * 100) : 0) + '%'; ticking = false; }
+    addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(readProg); } }, { passive: true });
+    $('nextBtn').addEventListener('click', function () { go(cur + 1); });
+    $('prevBtn').addEventListener('click', function () { go(cur - 1); });
+    $('startBtn').addEventListener('click', function () { go(1); });
+    document.querySelectorAll('[data-go]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); go(+a.dataset.go); }); });
+    tocLinks.forEach(function (l) { l.addEventListener('click', function (e) { e.preventDefault(); var i = slides.findIndex(function (sl) { return sl.id === l.dataset.s; }); if (i > -1) go(i); }); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && sheet.classList.contains('open')) { closeSheet(); return; }
+        if (document.getElementById('lightbox').classList.contains('open') || sheet.classList.contains('open')) return;
+        var t = e.target && e.target.tagName; if (t === 'SELECT' || t === 'INPUT' || t === 'TEXTAREA' || e.ctrlKey || e.metaKey || e.altKey) return;
+        if (e.key === 'ArrowLeft' || e.key === 'PageDown') { e.preventDefault(); go(cur + 1); }
+        else if (e.key === 'ArrowRight' || e.key === 'PageUp') { e.preventDefault(); go(cur - 1); }
+        else if (e.key === 'Home') { e.preventDefault(); go(0); }
+        else if (e.key === 'End') { e.preventDefault(); go(slides.length - 1); }
+    });
+    var sx = 0, sy = 0, st = 0;
+    stage.addEventListener('touchstart', function (e) { var t = e.changedTouches[0]; sx = t.clientX; sy = t.clientY; st = Date.now(); }, { passive: true });
+    stage.addEventListener('touchend', function (e) {
+        var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+        if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.6 && Date.now() - st < 700) go(dx < 0 ? cur + 1 : cur - 1);
+    }, { passive: true });
+    var fs = $('fsBtn');
+    if (!document.documentElement.requestFullscreen) fs.style.display = 'none';
+    fs.addEventListener('click', function () { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); });
+    var h = location.hash.replace('#', ''), start = slides.findIndex(function (sl) { return sl.id === h; });
+    go(start > -1 ? start : 0, true);
+
+    function confetti() {
+        var colors = ['#38bdf8', '#818cf8', '#7dd3fc', '#34d399', '#f8fafc'];
+        for (var i = 0; i < 60; i++) {
+            var p = document.createElement('div'); p.className = 'confetti-piece';
+            var size = 6 + Math.random() * 6;
+            p.style.cssText = 'width:' + size + 'px;height:' + size * 0.4 + 'px;background:' + colors[Math.floor(Math.random() * colors.length)] + ';left:' + Math.random() * 100 + 'vw;animation-duration:' + (2.5 + Math.random() * 2) + 's';
+            document.body.appendChild(p); setTimeout((function (el) { return function () { el.remove(); }; })(p), 5000);
         }
+    }
+    render(false);
 
-        function spawnConfetti() {
-            const colors = ['#38bdf8', '#818cf8', '#c084fc', '#10b981', '#f8fafc'];
-            for (let i = 0; i < 60; i++) {
-                const piece = document.createElement('div');
-                piece.className = 'confetti-piece';
-                const size = 6 + Math.random() * 6;
-                piece.style.width = size + 'px';
-                piece.style.height = (size * 0.4) + 'px';
-                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-                piece.style.left = Math.random() * 100 + 'vw';
-                piece.style.animationDuration = (2.5 + Math.random() * 2) + 's';
-                document.body.appendChild(piece);
-                setTimeout(() => piece.remove(), 5000);
-            }
-        }
-
-        updatePresentation();
-    </script>
+})();
+</script>
 
 </body>
 </html>
