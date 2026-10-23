@@ -178,14 +178,53 @@
     .term .tip { display: none; position: absolute; z-index: 40; bottom: calc(100% + 8px); right: 0; width: min(270px, 72vw); padding: 10px 12px; border-radius: 10px; font-size: 0.85rem; font-weight: 400; line-height: 1.7; text-align: right; color: var(--ink); background: var(--sheet); border: 1.5px solid var(--pen); box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35); }
     .term.open .tip { display: block; }
 
-    /* الختم النهائي */
-    .verdict { display: flex; align-items: center; gap: 22px; margin: 6px 0 0; padding: 22px; border-radius: 20px; background: var(--sheet); border: 1px solid var(--card-border); border-right: 5px double var(--margin); }
-    .stamp { flex: 0 0 auto; min-width: 150px; padding: 10px 18px; text-align: center; font-size: 1.5rem; font-weight: 900; line-height: 1.4; color: var(--muted); border: 4px double var(--muted); border-radius: 12px; transform: rotate(-7deg); transition: color 0.3s, border-color 0.3s; }
+    /* شريحة النتيجة: ورقة تصحيح */
+    .verdict.slide { padding: 22px 22px 20px 20px; border-radius: 20px; background: var(--sheet); border: 1px solid var(--card-border); border-right: 5px double var(--margin); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); }
+    .v-hero { position: relative; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 24px; padding: 26px 24px; border-radius: 18px; overflow: hidden; background: linear-gradient(130deg, var(--hi-bg), transparent 75%); border: 1px solid var(--card-border); }
+    .v-ring { position: relative; width: 136px; height: 136px; }
+    .v-ring svg { width: 100%; height: 100%; transform: rotate(90deg) scaleX(-1); }
+    .v-ring circle { fill: none; stroke-width: 7; }
+    .vr-bg { stroke: var(--line); }
+    .vr-fg { stroke: var(--hi); stroke-linecap: round; stroke-dasharray: 213.63; stroke-dashoffset: 213.63; transition: stroke-dashoffset 0.8s ease; }
+    .vr-t { position: absolute; inset: 0; display: flex; align-items: baseline; justify-content: center; gap: 3px; padding-top: 38px; direction: ltr; font-weight: 900; }
+    .vr-t b { font-size: 2.6rem; line-height: 1; } .vr-t span { font-size: 1rem; color: var(--muted); }
+    .stamp { position: absolute; top: 14px; left: 16px; padding: 4px 16px; text-align: center; font-size: 1.15rem; font-weight: 900; line-height: 1.4; color: var(--muted); border: 3px double var(--muted); border-radius: 10px; transform: rotate(-9deg); transition: color 0.3s, border-color 0.3s; }
     .stamp.good { color: var(--ok); border-color: var(--ok); } .stamp.mid { color: var(--hi); border-color: var(--hi); } .stamp.low { color: var(--bad); border-color: var(--bad); }
-    .stamp small { display: block; font-size: 0.9rem; font-weight: 800; }
-    .verdict p { margin: 0 0 4px; font-weight: 800; }
-    @media (max-width: 560px) { .verdict { flex-direction: column; text-align: center; } .method { padding: 18px 16px 18px 14px; } }
-
+    .stamp small { display: block; font-size: 0.8rem; font-weight: 800; }
+    .v-title { margin: 0 0 4px; font-size: clamp(1.5rem, 4.6vw, 2.1rem); font-weight: 900; line-height: 1.4; }
+    .v-text p { margin: 3px 0; }
+    #finalScoreText { font-weight: 800; }
+    .v-msg { color: var(--muted); line-height: 1.8; }
+    .v-best { font-size: 0.85rem; color: var(--hi); font-weight: 800; }
+    .v-sub { margin: 24px 0 12px; font-size: 1.05rem; font-weight: 800; padding: 0 4px; display: inline-block; background: linear-gradient(transparent 60%, var(--hi-bg) 60%); }
+    .v-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .v-card { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 18px 12px 14px; text-align: center; border-radius: 16px; background: var(--card-bg); border: 1.5px dashed var(--card-border); overflow: hidden; transition: transform 0.2s; }
+    .v-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: var(--card-border); }
+    .v-card:hover { transform: translateY(-3px); }
+    .v-card.ok { border-style: solid; border-color: var(--ok); } .v-card.ok::before { background: var(--ok); }
+    .v-card.bad { border-style: solid; border-color: var(--bad); background: var(--bad-bg); } .v-card.bad::before { background: var(--bad); }
+    .v-ico { width: 54px; height: 54px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1.7rem; line-height: 1; background: var(--line); }
+    .v-card.ok .v-ico { background: rgba(52, 211, 153, 0.16); } .v-card.bad .v-ico { background: rgba(248, 113, 113, 0.16); }
+    .v-name { font-weight: 800; font-size: 0.95rem; line-height: 1.5; min-height: 2.9em; display: flex; align-items: center; }
+    .v-chip { padding: 2px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 800; color: var(--muted); border: 1.5px solid var(--card-border); white-space: nowrap; }
+    .v-card.ok .v-chip { color: var(--ok); border-color: var(--ok); } .v-card.bad .v-chip { color: var(--bad); border-color: var(--bad); }
+    .v-go { width: 100%; min-height: 42px; margin-top: 2px; font: inherit; font-size: 0.9rem; font-weight: 800; cursor: pointer; border-radius: 999px; color: var(--ink); background: transparent; border: 1.5px solid var(--ink-accent); }
+    .v-go:hover { background: var(--hi-bg); }
+    .v-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 6px; }
+    .btn.big { flex: 1 1 100%; min-height: 52px; font-size: 1.05rem; }
+    .btn.ghost {flex: 1 1 0;color: var(--text-color) !important;background: transparent;border: 1.5px solid var(--card-border);box-shadow: none;}
+    .btn.ghost:active { transform: scale(0.97); }
+    .btn:disabled { opacity: 0.4; cursor: default; box-shadow: none; }
+    .v-home { display: block; margin: 14px 0 0; text-align: center; font-weight: 800; color: var(--muted); text-decoration: none; padding: 10px; }
+    .v-home:hover { color: var(--hi); }
+    @media (max-width: 640px) {
+        .v-hero { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 14px; padding: 22px 16px 20px; }
+        .v-ring { width: 124px; height: 124px; } .vr-t { padding-top: 34px; } .vr-t b { font-size: 2.3rem; }
+        .stamp { position: static; transform: rotate(-4deg); }
+        .v-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .v-card { padding: 16px 8px 12px; } .v-name { font-size: 0.88rem; }
+        .verdict.slide { padding: 16px 12px 14px 10px; }
+    }
 
     /* وضع العرض التقديمي */
     .stage { overflow-x: clip; }
@@ -204,7 +243,6 @@
     .ag-i { font-size: 1.5rem; } .ag-t { font-weight: 800; font-size: 0.95rem; line-height: 1.5; }
     .cover-actions { text-align: center; }
     .cover-actions .btn { font-size: 1.05rem; padding: 11px 32px; }
-    .verdict.slide.active { display: flex; }
     @media (max-width: 640px) { .agenda { grid-template-columns: repeat(2, 1fr); } }
 
     /* شريط التحكم السفلي */
@@ -268,9 +306,8 @@
     #sheetList .n { flex: 0 0 auto; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.85rem; background: var(--line); }
     #sheetList .t { flex: 1; }
 
-    .cover .ad-space, .verdict .ad-space, .verdict .bottom-links { width: 100%; }
+    .cover .ad-space, .verdict .ad-space { width: 100%; }
     .ad-inline { margin: 28px 0 26px; }
-    .verdict.slide.active { flex-wrap: wrap; }
     .ad-space { margin: 18px 0; padding: 14px; text-align: center; font-size: 0.85rem; color: var(--muted); border: 1.5px dashed var(--line); border-radius: 12px; }
     .bottom-links { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
     .bottom-links a { padding: 9px 20px; border-radius: 999px; font-weight: 800; text-decoration: none; color: var(--ink); border: 1.5px solid var(--card-border); background: var(--card-bg); }
@@ -741,18 +778,29 @@
     </article>
 
                 <section class="slide verdict" id="verdict" data-title="النتيجة">
-                    <div class="stamp" id="stamp">بانتظارك</div>
-                    <div>
-                        <p id="finalScoreText">نتيجتك في الأسئلة السريعة: 0 من 6</p>
-                        <button type="button" class="btn" id="resetBtn">🔄 إعادة الأسئلة</button>
+                    <div class="v-hero">
+                        <div class="stamp" id="stamp">بانتظارك</div>
+                        <div class="v-ring" aria-hidden="true">
+                            <svg viewBox="0 0 80 80"><circle class="vr-bg" cx="40" cy="40" r="34"/><circle class="vr-fg" id="vRingFg" cx="40" cy="40" r="34"/></svg>
+                            <div class="vr-t"><b id="vScore">0</b><span>/ 6</span></div>
+                        </div>
+                        <div class="v-text">
+                            <h2 class="v-title">ورقة التصحيح</h2>
+                            <p id="finalScoreText">نتيجتك في الأسئلة السريعة: 0 من 6</p>
+                            <p class="v-msg" id="resultMsg">أجب عن الأسئلة السريعة لتظهر نتيجتك الكاملة.</p>
+                            <p class="v-best" id="vBest"></p>
+                        </div>
                     </div>
-                    <div class="bottom-links">
-                        <a href="index.html">🏠 القائمة الرئيسية</a>
-                        <a href="lesson1.html">الوحدات ➔</a>
+                    <h3 class="v-sub">تقرير المنهجيات</h3>
+                    <div class="v-grid" id="vReport"></div>
+                    <div class="v-actions">
+                        <button type="button" class="btn big" id="retryBtn">🎯 أعد الخاطئة فقط</button>
+                        <button type="button" class="btn ghost" id="resetBtn">🔄 إعادة الكل</button>
+                        <button type="button" class="btn ghost" id="copyBtn">📋 انسخ نتيجتي</button>
                     </div>
+                    <a class="v-home" href="index.html">🏠 العودة إلى القائمة الرئيسية</a>
                     <div class="ad-space" data-ad="end">[ مساحة إعلانية ]</div>
                 </section>
-
             </main>
         </div>
     </div>
@@ -839,16 +887,36 @@
     var $ = function (id) { return document.getElementById(id); };
     var CIRC = 213.63;
 
+    var BEST_KEY = 'methodBest', SHORT = ["النص العلمي", "المنحنيات والأعمدة", "الجداول", "الهجرة الكهربائية", "الرسومات التخطيطية", "برنامج الأناجان"], ICONS = ["📖", "📈", "📊", "🧬", "🧩", "🧫"];
+    function bestGet() { try { return +localStorage.getItem(BEST_KEY) || 0; } catch (e) { return 0; } }
+    function bestSet(v) { try { localStorage.setItem(BEST_KEY, v); } catch (e) {} }
+
+    function renderReport() {
+        var box = $('vReport'); box.innerHTML = '';
+        for (var i = 1; i <= total; i++) {
+            var st = answered[i], c = document.createElement('div'); c.className = 'v-card' + (st === 'ok' ? ' ok' : (st === 'bad' ? ' bad' : ''));
+            c.innerHTML = '<span class="v-ico">' + ICONS[i - 1] + '</span><span class="v-name">' + SHORT[i - 1] + '</span><span class="v-chip">' + (st === 'ok' ? '✓ صحيحة' : (st === 'bad' ? '✗ خاطئة' : 'لم تُجب')) + '</span>';
+            var b = document.createElement('button'); b.type = 'button'; b.className = 'v-go'; b.textContent = st === 'ok' ? 'عرض' : (st === 'bad' ? 'راجع' : 'أجب');
+            (function (n) { b.addEventListener('click', function () { go(n); }); })(i);
+            c.appendChild(b); box.appendChild(c);
+        }
+    }
+
     function render(celebrate) {
-        var done = Object.keys(answered).length;
-        $('scoreN').textContent = score;
+        var done = Object.keys(answered).length, wrong = Object.keys(answered).filter(function (k) { return answered[k] === 'bad'; }).length;
+        $('scoreN').textContent = score; $('vScore').textContent = score;
+        $('vRingFg').style.strokeDashoffset = CIRC - (total ? CIRC * score / total : 0);
         $('ringFg').style.strokeDashoffset = CIRC - (total ? CIRC * done / total : 0);
         $('finalScoreText').textContent = 'نتيجتك في الأسئلة السريعة: ' + score + ' من ' + total;
-        var st = $('stamp');
-        if (done < total) { st.className = 'stamp'; st.innerHTML = 'بانتظارك<small>' + done + ' من ' + total + '</small>'; }
-        else if (score === total) { st.className = 'stamp good'; st.innerHTML = 'ممتاز<small>' + score + ' / ' + total + '</small>'; if (celebrate) confetti(); }
-        else if (score >= total / 2) { st.className = 'stamp mid'; st.innerHTML = 'جيد<small>' + score + ' / ' + total + '</small>'; }
-        else { st.className = 'stamp low'; st.innerHTML = 'راجع<small>' + score + ' / ' + total + '</small>'; }
+        var st = $('stamp'), msg = $('resultMsg');
+        if (done < total) { st.className = 'stamp'; st.innerHTML = 'بانتظارك<small>' + done + ' من ' + total + '</small>'; msg.textContent = 'أجب عن الأسئلة السريعة لتظهر نتيجتك الكاملة.'; }
+        else if (score === total) { st.className = 'stamp good'; st.innerHTML = 'ممتاز<small>' + score + ' / ' + total + '</small>'; msg.textContent = 'أتقنت المنهجيات الست.'; if (celebrate) confetti(); }
+        else if (score >= total / 2) { st.className = 'stamp mid'; st.innerHTML = 'جيد<small>' + score + ' / ' + total + '</small>'; msg.textContent = 'قريب من الإتقان — راجع المنهجيات المعلَّمة بالأحمر.'; }
+        else { st.className = 'stamp low'; st.innerHTML = 'راجع<small>' + score + ' / ' + total + '</small>'; msg.textContent = 'ابدأ بمراجعة المنهجيات المعلَّمة بالأحمر ثم أعد الخاطئة فقط.'; }
+        if (done === total && score > bestGet()) bestSet(score);
+        var best = bestGet(); $('vBest').textContent = best ? 'أفضل نتيجة لك: ' + best + ' / ' + total : '';
+        $('retryBtn').disabled = wrong === 0;
+        renderReport();
     }
 
     quizzes.forEach(function (box) {
@@ -881,6 +949,26 @@
         document.querySelectorAll('.ck').forEach(function (c) { c.className = 'ck'; });
         render(false);
         go(1);
+    });
+
+    function resetQuiz(box) {
+        box.querySelectorAll('.quiz-option').forEach(function (o) { o.disabled = false; o.classList.remove('correct', 'wrong'); });
+        box.querySelector('.quiz-feedback').classList.remove('show', 'good');
+    }
+    $('retryBtn').addEventListener('click', function () {
+        var first = 0;
+        quizzes.forEach(function (box) {
+            var id = box.dataset.quiz;
+            if (answered[id] === 'bad') { delete answered[id]; resetQuiz(box); var ck = document.querySelector('.toc a[href="#m' + id + '"] .ck'); if (ck) ck.className = 'ck'; if (!first) first = +id; }
+        });
+        render(false);
+        if (first) go(first);
+    });
+    $('copyBtn').addEventListener('click', function () {
+        var btn = this, txt = 'نتيجتي في منهجية الإجابة الشاملة (البكالوريا): ' + score + ' من ' + total + ' — ' + location.href.split('#')[0];
+        var done = function () { var o = btn.textContent; btn.textContent = 'تم النسخ ✓'; setTimeout(function () { btn.textContent = o; }, 1600); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, function () {});
+        else { var t = document.createElement('textarea'); t.value = txt; t.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); done(); } catch (e) {} t.remove(); }
     });
 
     document.querySelectorAll('.lab').forEach(function (box) {
