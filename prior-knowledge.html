@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <title>محطات الاكتشاف: مغامرة داخل الخلية والوراثة</title>
 
@@ -326,6 +326,7 @@ body {
     position: relative;
     min-width: 0;
     overflow: hidden;
+    overflow: clip;
     background: var(--panel);
     border: 2px solid var(--line);
     border-radius: 46px 20px 46px 20px;
@@ -391,12 +392,8 @@ body {
 ========================================================= */
 
 .slide-content-area {
-    min-height: 520px;
-    max-height: calc(100vh - 250px);
-    overflow-y: auto;
-    padding: 32px 36px;
-    scrollbar-gutter: stable;
-    overscroll-behavior: contain;
+    min-height: 420px;
+    padding: 32px 36px 36px;
 }
 
 .slide { display: none; }
@@ -535,6 +532,7 @@ body {
     transform: scale(1.02) rotate(-.4deg);
 }
 
+.image-hint { margin-top: 8px; text-align: center; color: var(--muted); font-size: .75rem; }
 .image-error {
     display: none;
     padding: 30px;
@@ -557,6 +555,9 @@ body {
     padding: 16px 30px;
     background: var(--bg-2);
     border-top: 2px dashed var(--line);
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
 }
 
 .control-btn {
@@ -765,7 +766,7 @@ a:focus-visible {
 
     .slide-header { min-height: 138px; display: block; padding: 24px 18px 20px; }
     .slide-header::before { left: 8px; bottom: -14px; font-size: 7rem; }
-    .slide-header h2 { position: relative; z-index: 2; font-size: 1.2rem; line-height: 1.55; }
+    .slide-header h2 { position: relative; z-index: 2; font-size: 1.35rem; line-height: 1.55; }
     .slide-tag { display: inline-block; margin-top: 12px; font-size: .65rem; }
 
     .slide-content-area { min-height: 0; max-height: none; padding: 18px 12px 25px; overflow: visible; }
@@ -773,18 +774,18 @@ a:focus-visible {
     .slide.active { animation: phoneIn .45s var(--ease-soft) both; }
     @keyframes phoneIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-    .lead-text { margin-bottom: 15px; padding: 18px 17px; font-size: .88rem; line-height: 1.9; }
+    .lead-text { margin-bottom: 15px; padding: 18px 17px; font-size: .98rem; line-height: 1.95; }
 
     .content-block { margin-bottom: 14px; padding: 18px 18px; border-radius: 24px 10px 24px 10px; }
-    .content-block h3 { margin-bottom: 9px; font-size: .98rem; }
-    .content-block p, .content-block li { font-size: .84rem; line-height: 1.9; }
+    .content-block h3 { margin-bottom: 9px; font-size: 1.08rem; }
+    .content-block p, .content-block li { font-size: .95rem; line-height: 1.95; }
 
     .image-slot { margin-top: 17px; padding: 8px; border-radius: 20px; }
     .image-slot img { border-radius: 14px; }
 
     .slide-footer {
         min-height: 112px; grid-template-columns: 1fr 1fr; gap: 8px;
-        padding: 10px 12px 13px;
+        padding: 10px 12px calc(13px + env(safe-area-inset-bottom, 0px));
     }
 
     .slide-footer .control-btn:first-child,
@@ -792,7 +793,9 @@ a:focus-visible {
 
     .slide-dots { grid-column: 1 / -1; grid-row: 1; margin-bottom: 2px; }
 
-    .control-btn { min-width: 0; height: 46px; font-size: .78rem; }
+    .control-btn { min-width: 0; height: 50px; font-size: .85rem; }
+    .slide-dot { width: 11px; height: 11px; }
+    .slide-dot.active { width: 32px; }
 
     .image-lightbox { padding: 8px; }
     .lightbox-image { max-width: 97vw; max-height: 84vh; }
@@ -1087,9 +1090,9 @@ a:focus-visible {
 
 
             <footer class="slide-footer">
-                <button class="control-btn" id="prev-btn" type="button" disabled>← المحطة السابقة</button>
+                <button class="control-btn" id="prev-btn" type="button" disabled>→ المحطة السابقة</button>
                 <div class="slide-dots" id="slide-dots" aria-label="التنقل بين المحطات"></div>
-                <button class="control-btn" id="next-btn" type="button">المحطة التالية →</button>
+                <button class="control-btn" id="next-btn" type="button">المحطة التالية ←</button>
             </footer>
 
         </main>
@@ -1192,7 +1195,7 @@ a:focus-visible {
         prevBtn.disabled = currentIndex === 0;
         nextBtn.textContent = currentIndex === slides.length - 1
             ? "إنهاء المراجعة ✓"
-            : "المحطة التالية →";
+            : "المحطة التالية ←";
 
         dots.forEach((dot, index) => {
             const active = index === currentIndex;
@@ -1209,10 +1212,12 @@ a:focus-visible {
         document.title = `محطات الاكتشاف — ${currentIndex + 1}/${slides.length}`;
 
         if (shouldScroll) {
-            contentArea.scrollTo({
-                top: 0,
-                behavior: reducedMotion.matches ? "auto" : "smooth"
-            });
+            /* الشريحة تظهر كاملة والصفحة هي التي تتمرر: نرجع لبداية الشريحة فقط إن كنا قد نزلنا عنها */
+            const box = document.querySelector(".slide-container");
+            const top = box.getBoundingClientRect().top + window.pageYOffset - 12;
+            if (window.pageYOffset > top) {
+                window.scrollTo({ top: Math.max(0, top), behavior: reducedMotion.matches ? "auto" : "smooth" });
+            }
         }
 
     }
@@ -1248,24 +1253,18 @@ a:focus-visible {
             return;
         }
 
+        /* الأسهم الجانبية للتنقل بين المحطات (اتجاه العربية: ← التالي، → السابق).
+           أسهم الأعلى/الأسفل وHome/End وPageUp/PageDown تبقى لتمرير الصفحة كما هي. */
+        if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+
         switch (event.key) {
-            case "ArrowRight":
-            case "ArrowDown":
+            case "ArrowLeft":
                 event.preventDefault();
                 moveSlide(1);
                 break;
-            case "ArrowLeft":
-            case "ArrowUp":
+            case "ArrowRight":
                 event.preventDefault();
                 moveSlide(-1);
-                break;
-            case "Home":
-                event.preventDefault();
-                goToSlide(0, true);
-                break;
-            case "End":
-                event.preventDefault();
-                goToSlide(slides.length - 1, true);
                 break;
             case "Escape":
                 closeMobileSidebar();
@@ -1314,6 +1313,8 @@ a:focus-visible {
     document.querySelectorAll(".image-slot img").forEach((image) => {
         image.addEventListener("error", () => {
             image.style.display = "none";
+            const hintBox = image.parentElement.querySelector(".image-hint");
+            if (hintBox) hintBox.style.display = "none";
             const errorBox = image.parentElement.querySelector(".image-error");
             if (errorBox) errorBox.style.display = "block";
         });
@@ -1341,6 +1342,15 @@ a:focus-visible {
         if (Math.abs(deltaX) < 60 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
         if (deltaX < 0) moveSlide(1); else moveSlide(-1);
     }, { passive: true });
+
+    document.querySelectorAll(".image-slot").forEach((slot) => {
+        const img = slot.querySelector("img");
+        if (img) img.loading = "lazy";
+        const hint = document.createElement("div");
+        hint.className = "image-hint";
+        hint.textContent = "اضغط على الصورة لعرضها كاملة";
+        slot.appendChild(hint);
+    });
 
     /* تشغيل العرض لأول مرة عند فتح الصفحة، بدون تمرير (scroll) لأننا في الأعلى أصلاً */
     updatePresentation(false);
