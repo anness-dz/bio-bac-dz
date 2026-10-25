@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="shortcut icon" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <title>محطات الاكتشاف: مغامرة داخل الخلية والوراثة</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -301,7 +304,7 @@ body {
 }
 
 .slide-nav-item.active {
-    color: var(--bg);
+    color: var(--on-accent);
     background: var(--dot, var(--pink));
     border-color: var(--dot, var(--pink));
     box-shadow: 0 0 0 6px rgba(255,255,255,.06), 0 0 26px var(--dot, var(--pink));
@@ -378,7 +381,7 @@ body {
     z-index: 2;
     flex-shrink: 0;
     padding: 8px 16px;
-    color: var(--bg);
+    color: var(--on-accent);
     border: 0;
     border-radius: 999px;
     background: var(--yellow);
@@ -654,7 +657,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--bg);
+    color: var(--on-accent);
     background: var(--yellow);
     border: 0;
     border-radius: 50%;
@@ -830,6 +833,175 @@ a:focus-visible {
     }
 }
 
+
+/* ===== الشريط العلوي الموحّد للموقع + الوضع الليلي/النهاري ===== */
+:root {
+    --on-accent: #1a0e33;
+    --card-bg: rgba(43, 20, 84, 0.92); --card-border: rgba(255, 255, 255, 0.12);
+    --text-color: #fdf7ff; --text-main: #fdf7ff;
+}
+body.light-theme {
+    --bg: #f4ecff; --bg-2: #ebe0ff; --panel: #ffffff; --panel-2: #faf6ff;
+    --white: #2a1456; --soft: #4a3a72; --muted: #6f5f99;
+    --pink: #d6277f; --lime: #4d8f00; --cyan: #0b8f84; --yellow: #b87400; --violet: #7a4cf0;
+    --line: rgba(42, 20, 86, 0.14); --on-accent: #ffffff;
+    --card-bg: rgba(255, 255, 255, 0.94); --card-border: rgba(42, 20, 86, 0.14);
+    --text-color: #2a1456; --text-main: #2a1456;
+}
+body.light-theme .progress-track { background: rgba(42, 20, 86, 0.12); }
+body.light-theme .slide-container { box-shadow: 0 25px 60px rgba(42, 20, 86, 0.18); }
+body.light-theme .slide-header::before { color: rgba(42, 20, 86, 0.06); }
+body.light-theme .slide-sidebar { box-shadow: -20px 0 60px rgba(42, 20, 86, 0.16); }
+body.light-theme .slide-header { background: linear-gradient(180deg, rgba(42, 20, 86, 0.04), transparent); }
+body.light-theme .blob-field span { opacity: .1; }
+header.top-navbar, header.top-navbar * { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }   /* نفس خط الشريط في بقية الصفحات */
+.site-head { padding: 10px 0 0; }
+@media (max-width: 700px) { .back-home-badge { display: none; } }
+    /* زر الوضع الليلي/النهاري — نفس تصميم الصفحة الرئيسية */
+    .top-navbar .theme-toggle-btn {
+        margin: 0 !important;
+        white-space: nowrap;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        color: var(--text-color);
+        padding: 8px 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.85rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    }
+
+    .top-navbar .theme-toggle-btn:hover { transform: scale(1.05); }
+    .top-navbar .theme-toggle-btn:active { transform: scale(0.97); }
+
+    #theme-icon { display: inline-flex; align-items: center; line-height: 1; }
+    #theme-icon svg { width: 0.95rem; height: 0.95rem; display: block; }
+    #theme-icon.is-moon { color: #818cf8; }
+    #theme-icon.is-sun  { color: #f59e0b; }
+    /* NAVBAR-UNIFIED: شريط علوي موحّد في كل الدروس (نفس الأبعاد والتخطيط) + تدرّج لونين خاص بكل درس */
+    :root { --g1: #ff4fa3; --g2: #ffcf3f; --g1-rgb: 255, 79, 163; --badge-text: #1a0e33; }
+    body.light-theme { --g1: #d6277f; --g2: #b87400; --g1-rgb: 214, 39, 127; --badge-text: #ffffff; }
+
+    header.top-navbar {
+        width: 100% !important;
+        max-width: 950px !important;
+        min-height: 0 !important;
+        margin: 0 auto 20px !important;
+        padding: 10px 20px !important;
+        box-sizing: border-box !important;
+        position: relative !important;
+        z-index: 10;
+        background: var(--card-bg) !important;
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1)) !important;
+        border-radius: 20px !important;
+        box-shadow: none !important;
+        transform: none !important;
+        direction: rtl;
+    }
+    body.light-theme header.top-navbar {
+        border-color: var(--card-border, rgba(0, 0, 0, 0.08)) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+    }
+    header.top-navbar .top-nav-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 12px !important;
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+        direction: rtl;
+    }
+    header.top-navbar .top-brand-logo {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        flex-shrink: 0;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: 1rem !important;
+        text-decoration: none !important;
+        cursor: pointer;
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+    }
+    header.top-navbar .top-brand-logo:hover {
+        transform: scale(1.08) !important;
+        filter: drop-shadow(0 0 10px rgba(var(--g1-rgb), 0.5)) !important;
+    }
+    header.top-navbar .top-brand-logo .top-logo-img {
+        display: block !important;
+        width: 40px !important;
+        height: 40px !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        filter: none !important;
+        object-fit: contain !important;
+        transform: none !important;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    header.top-navbar .top-brand-logo:hover .top-logo-img { transform: rotate(10deg) !important; }
+    header.top-navbar .top-brand-name {
+        display: inline-block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: 1.8rem !important;
+        font-weight: 800 !important;
+        line-height: 1.3 !important;
+        letter-spacing: 0 !important;
+        text-shadow: none !important;
+        filter: none !important;
+        white-space: nowrap !important;
+        background: linear-gradient(135deg, var(--g1), var(--g2)) !important;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+    }
+    header.top-navbar .theme-toggle-btn {
+        margin: 0 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        width: auto !important;
+        padding: 8px 16px !important;
+        border-radius: 20px !important;
+        font-size: 0.85rem !important;
+        font-weight: 700 !important;
+        line-height: 1.5 !important;
+        gap: 8px !important;
+        white-space: nowrap !important;
+    }
+    header.top-navbar .theme-toggle-btn #theme-icon svg { width: 15px !important; height: 15px !important; }
+    header.top-navbar .theme-toggle-btn #theme-text { font-size: inherit !important; font-weight: inherit !important; letter-spacing: 0 !important; font-family: inherit !important; }
+    @media (max-width: 600px) {
+        header.top-navbar { padding: 8px 15px !important; border-radius: 12px !important; margin-bottom: 15px !important; }
+        header.top-navbar .top-brand-logo { gap: 8px !important; }
+        header.top-navbar .top-brand-logo .top-logo-img { width: 32px !important; height: 32px !important; }
+        header.top-navbar .top-brand-name { font-size: 1.3rem !important; }
+        header.top-navbar .theme-toggle-btn { padding: 6px 10px !important; font-size: 0.85rem !important; }
+    }
+
 </style>
 </head>
 
@@ -840,6 +1012,23 @@ a:focus-visible {
 <div class="blob-field" aria-hidden="true">
     <span></span><span></span><span></span>
 </div>
+
+<div class="site-head">
+<header class="top-navbar">
+            <div class="top-nav-container">
+                <a href="index.html" class="top-brand-logo">
+                    <img src="favicon.png" alt="شعار" class="top-logo-img" width="40" height="40" decoding="async" fetchpriority="high" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='favicon.ico';}else{this.style.display='none';}">
+                    <span class="top-brand-name">bio-bac-dz</span>
+                </a>
+
+                <button type="button" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="تبديل الوضع الليلي والنهاري">
+                    <span id="theme-icon" class="is-moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span>
+                    <span id="theme-text">الوضع الليلي</span>
+                </button>
+            </div>
+        </header>
+</div>
+
 
 <!-- الحاوية الرئيسية لكل العرض -->
 <div class="presentation-wrapper">
@@ -1359,5 +1548,61 @@ a:focus-visible {
 
 </script>
 
+<script>
+    const THEME_ICONS = {
+        moon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+        sun:  '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" fill="none"/></svg>'
+    };
+    function paintThemeIcon(isLight) {
+        const el = document.getElementById('theme-icon');
+        if (!el) return;
+        el.className = isLight ? 'is-sun' : 'is-moon';
+        el.innerHTML = isLight ? THEME_ICONS.sun : THEME_ICONS.moon;
+    }
+
+    function toggleTheme() {
+        const bodyElement = document.body;
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+
+        // تبديل الكلاس على جسم الصفحة
+        bodyElement.classList.toggle('light-theme');
+        const isLightTheme = bodyElement.classList.contains('light-theme');
+
+        // تحديث النصوص والأيقونات والمحفوظات
+        if (isLightTheme) {
+            paintThemeIcon(true);
+            if (themeText) themeText.textContent = 'الوضع النهاري';
+            localStorage.setItem('theme', 'light');
+        } else {
+            paintThemeIcon(false);
+            if (themeText) themeText.textContent = 'الوضع الليلي';
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+
+    /* ==========================================
+       2. عند تحميل الصفحة (تطبيق الثيم والكانفاس)
+       ========================================== */
+    document.addEventListener('DOMContentLoaded', () => {
+        const bodyElement = document.body;
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+
+        // استرجاع الثيم المحفوظ عند فتح الصفحة
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme === 'light') {
+            bodyElement.classList.add('light-theme');
+            paintThemeIcon(true);
+            if (themeText) themeText.textContent = 'الوضع النهاري';
+        } else {
+            bodyElement.classList.remove('light-theme');
+            paintThemeIcon(false);
+            if (themeText) themeText.textContent = 'الوضع الليلي';
+        }
+
+    });
+</script>
 </body>
 </html>
