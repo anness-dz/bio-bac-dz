@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الوحدة 6: آليات تحويل الطاقة الضوئية إلى طاقة كيميائية كامنة (التركيب الضوئي) - Bio-Bac-DZ</title>
+    <meta name="theme-color" content="#0b0f19">
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="shortcut icon" href="favicon.png">
     <link rel="apple-touch-icon" href="favicon.png">
@@ -263,10 +264,7 @@
             border-radius: 16px;
             display: block;
             border: 3px solid #10b981;
-            box-shadow: 0 0 20px #10b981, 
-                        0 0 40px #10b981, 
-                        0 0 70px rgba(16, 185, 129, 0.8),
-                        inset 0 0 20px rgba(16, 185, 129, 0.6);
+            box-shadow: 0 0 14px rgba(16, 185, 129, 0.55), 0 0 30px rgba(16, 185, 129, 0.3), 0 0 50px rgba(16, 185, 129, 0.22), inset 0 0 16px rgba(16, 185, 129, 0.18);
         }
 
         h1 { 
@@ -778,6 +776,56 @@
 
 <link rel="stylesheet" href="style.css">
     
+<script>
+/* الوضع الليلي/النهاري مشترك بين كل صفحات الموقع ويُحفظ في المتصفح حتى تغيّره أنت.
+   يُخزَّن في localStorage + cookie + window.name (لتعمل المتابعة حتى عند فتح الملفات مباشرة) مع ختم زمني، ويؤخذ الأحدث. */
+(function () {
+    var KEY = 'theme', WN = 'bio-theme=';
+    var bc = null; try { bc = new BroadcastChannel('bio-theme'); } catch (e) {}
+    function parse(raw) {
+        if (!raw) return null;
+        var m = String(raw).match(/^(light|dark)(?:@(\d+))?$/);
+        return m ? { v: m[1], t: m[2] ? +m[2] : 0 } : null;
+    }
+    function readLS() { try { return parse(localStorage.getItem(KEY)); } catch (e) { return null; } }
+    function readCookie() { try { var m = document.cookie.match(/(?:^|; )theme=([^;]*)/); return m ? parse(decodeURIComponent(m[1])) : null; } catch (e) { return null; } }
+    function readWN() { var m = (window.name || '').match(/(?:^|;)bio-theme=((?:light|dark)(?:@\d+)?)(?=;|$)/); return m ? parse(m[1]) : null; }
+    var T = {
+        get: function () {
+            var best = null;
+            [readLS(), readCookie(), readWN()].forEach(function (x) { if (x && (!best || x.t > best.t)) best = x; });
+            return best ? best.v : 'dark';              /* أول زيارة: الوضع الليلي */
+        },
+        set: function (v) {
+            var raw = v + '@' + Date.now();
+            try { localStorage.setItem(KEY, raw); } catch (e) {}
+            try { document.cookie = 'theme=' + encodeURIComponent(raw) + ';max-age=31536000;path=/;SameSite=Lax'; } catch (e) {}
+            try { window.name = (window.name || '').replace(/(?:^|;)bio-theme=[^;]*/, '') + (window.name && !/bio-theme=/.test(window.name) ? ';' : '') + WN + raw; } catch (e) {}
+            try { if (bc) bc.postMessage(v); } catch (e) {}
+        },
+        apply: function (v) {
+            if (!document.body) return;
+            var light = v === 'light';
+            if (typeof window.updateThemeUI === 'function') { window.updateThemeUI(light); if (typeof window.updateCountdown === 'function') { try { window.updateCountdown(); } catch (e) {} } return; }
+            document.body.classList.toggle('light-theme', light);
+            if (typeof window.paintThemeIcon === 'function') window.paintThemeIcon(light);
+            var tx = document.getElementById('theme-text'); if (tx) tx.textContent = light ? 'الوضع النهاري' : 'الوضع الليلي';
+        },
+        sync: function () {
+            if (!document.body) return;
+            var v = T.get(), cur = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+            if (v !== cur) T.apply(v);
+        }
+    };
+    window.bioTheme = T;
+    /* تحديث فوري في الصفحات الأخرى المفتوحة، وعند العودة للصفحة بزر الرجوع، وعند الرجوع للتبويب */
+    window.addEventListener('storage', function (e) { if (e.key === KEY || e.key === null) T.sync(); });
+    window.addEventListener('pageshow', function (e) { if (e.persisted) T.sync(); });
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) T.sync(); });
+    window.addEventListener('focus', T.sync);
+    if (bc) bc.onmessage = function () { T.sync(); };
+})();
+</script>
 </head>
 <body>
 
@@ -947,9 +995,9 @@
         <div class="calvin-card">
                 <div class="calvin-title">رسم تخطيطي لبنية النظام الضوئي و تخصصه الوظيفي</div>
                 <img src="image6/0.4.png" alt="رسم تخطيطي لبنية النظام الضوئي و تخصصه الوظيفي" class="adaptive-diag" />
-            </div>
-        <div class="box">
-            <div class="tip-box">
+        </div>
+        
+        <div class="tip-box">
                 <span class="tip-title">ملاحظة توضيحية لرموز المعادلة:</span>
                 <ul>
                     <li><span style="color: var(--accent-orange); font-weight: bold;">P</span>: يمثل الزوج الخاص لليخضور (مثل <span style="color: var(--accent-orange); font-weight: bold;">P680</span> أو <span style="color: var(--accent-orange); font-weight: bold;">P700</span>).</li>
@@ -958,7 +1006,6 @@
                     <li><span style="color: var(--accent-blue); font-weight: bold;">e⁻</span>: الإلكترون المقذوف والغني بالطاقة.</li>
                 </ul>
             </div>
-        </div>
 
             <h2><span class="num-badge">6</span> التحلل الضوئي للماء وانطلاق غاز الأكسجين</h2>
         <h4>أ. إثبات مصدر الأكسجين المنطلق (تجربة روبن):</h4>
@@ -989,13 +1036,14 @@
                     <span style="color: var(--accent-green); font-weight: bold;">غاز الأكسجين (O₂):</span> يطرح كناتج ثانوي لعملية التركيب الضوئي نحو <span style="color: var(--accent-green); font-weight: bold;">الوسط الخارجي</span> (أو الحشوة ثم الخروج عبر الثغور).
                 </li>
             </ul>
-            <div class="tip-box">
+            
+        </div>
+        <div class="tip-box">
                 <span class="tip-title">ملاحظة منهجية للبكالوريا:</span>
                 <ul>
                     <li>الغاية الأساسية من التحلل الضوئي للماء ليست طرح <span style="color: var(--accent-green); font-weight: bold;">O₂</span>، بل توفير <span style="color: var(--accent-orange); font-weight: bold;">الإلكترونات (e⁻)</span> اللازمة لإعادة إرجاع <span style="color: var(--accent-orange); font-weight: bold;">P680⁺</span> المؤكسد ليعود إلى حالته الأصلية لاستقبال فوتونات جديدة.</li>
                 </ul>
             </div>
-        </div>
 
             <h2><span class="num-badge">7</span> سلسلة انتقال الإلكترونات وتدرج كمون الأكسدة والإرجاع</h2>
         <h4>أ. مفهوم كمون الأكسدة والإرجاع وكيفية عمله:</h4>
@@ -1035,7 +1083,14 @@
             <div class="equation">
                 NADP⁺ + 2e⁻ + 2H⁺(من الحشوة) ───&gt; NADPH,H⁺
             </div>
-            <div class="tip-box">
+            
+        <div class="calvin-card">
+                <div class="calvin-title">رسم تخطيطي اسلسلة انتقال الإلكترونات وتدرج كمون الأكسدة والإرجاع</div>
+                <img src="image6/0.6.jpg" alt="رسم تخطيطي اسلسلة انتقال الإلكترونات وتدرج كمون الأكسدة والإرجاع" class="adaptive-diag" />
+        </div>
+
+        </div>
+        <div class="tip-box">
                 <span class="tip-title">ملاحظة توضيحية لربط الأفكار:</span>
                 <ul>
                     <li>مصدر الإلكترونات التي ترجع <span style="color: var(--accent-orange); font-weight: bold;">P680</span> هو أكسدة <span style="color: var(--accent-blue); font-weight: bold;">الماء (H₂O)</span>.</li>
@@ -1043,7 +1098,6 @@
                     <li>المستقبل النهائي للإلكترونات هو <span style="color: var(--accent-blue); font-weight: bold;">+NADP</span>، ويتواجد بجوار الناقل <span style="color: var(--accent-orange); font-weight: bold;">'T2</span> على الوجه الخارجي لغشاء التيلاكويد (جهة الحشوة).</li>
                 </ul>
             </div>
-        </div>
 
             <h2><span class="num-badge">8</span> التوزيع المتباين للبروتونات ونشوء تدرج الـ pH</h2>
         <h4>أ. مصادر تراكم البروتونات داخل تجويف التيلاكويد:</h4>
@@ -1079,13 +1133,14 @@
             <p>
                 يولد هذا التباين الشديد في تركيز البروتونات وفي الشحنات الكهربائية طاقة كامنة تُعرف بـ <span style="color: var(--accent-purple); font-weight: bold;">القوة المحركة البروتونية</span>، حيث تميل البروتونات بشدة للخروج والعودة نحو الحشوة للوصول إلى حالة التوازن.
             </p>
-            <div class="tip-box">
+            
+        </div>
+        <div class="tip-box">
                 <span class="tip-title">ملاحظة توضيحية هامة:</span>
                 <ul>
                     <li>غشاء التيلاكويد غير نفوذ للبروتونات (<span style="color: var(--accent-purple); font-weight: bold;">H⁺</span>)، مما يمنع تسربها التلقائي ويحفظ هذا التدرج لحين استغلاله عبر منفذ محدد.</li>
                 </ul>
             </div>
-        </div>
 
             <h2><span class="num-badge">9</span> الفوسفورة الضوئية ودور الكرية المذنبة</h2>
         <h4>أ. بنية وتخصص الكرية المذنبة (F₀ - F₁):</h4>
@@ -1116,13 +1171,19 @@
             <div class="equation">
                 ADP + Pi + طاقة ───[ ATP Synthase ]───&gt; ATP + H₂O
             </div>
-            <div class="tip-box">
+        </div>    
+        <div class="calvin-card">
+                <div class="calvin-title">رسم تخطيطي لعملية الفسفرة الضوئية</div>
+                <img src="image6/0.7.jpg" alt="رسم تخطيطي لعملية الفسفرة الضوئية" class="adaptive-diag" />
+        </div>
+
+
+        <div class="tip-box">
                 <span class="tip-title">ملاحظة منهجية للبكالوريا:</span>
                 <ul>
                     <li>شرط تركيب الـ <span style="color: var(--accent-green); font-weight: bold;">ATP</span> هو وجود تدرج في تركيز البروتونات (<span style="color: var(--accent-purple); font-weight: bold;">pH التجويف أشد حامضية من pH الحشوة</span>)، سلامة  <span style="color: var(--accent-green); font-weight: bold;">الكرية المذنبة</span>، وتوفر <span style="color: var(--accent-blue); font-weight: bold;">ADP</span> و<span style="color: var(--accent-orange); font-weight: bold;">Pi</span>.</li>
                 </ul>
             </div>
-        </div>
 
             <h2><span class="num-badge">10</span> شروط ونواتج المرحلة الكيميوضوئية والمعادلة الإجمالية</h2>
         <h4>أ. شروط حدوث المرحلة الكيميوضوئية:</h4>
@@ -1219,13 +1280,14 @@
                     <span style="color: var(--accent-purple); font-weight: bold;">انخفاض ونفاد تركيز APG (12 APG):</span> بسبب استمرار <span style="color: var(--accent-blue); font-weight: bold;">تنشيطه وتحويله إلى PGAL</span> بوجود الضوء ونواتجه، مع توقف <span style="color: var(--accent-purple); font-weight: bold;">تشكّل جزيئات جديدة منه</span> لعدم توفر الـ <span style="color: var(--accent-purple); font-weight: bold;">CO₂</span>.
                 </li>
             </ul>
-            <div class="tip-box">
+            
+        </div>
+        <div class="tip-box">
                 <span class="tip-title">استنتاج كلاسيكي للبكالوريا:</span>
                 <ul>
                     <li>تثبت هذه التجارب وجود <span style="color: var(--accent-green); font-weight: bold;">تكامل وظيفي وثيق</span> بين المرحلة الكيميوضوئية والمرحلة الكيميوحيوية؛ حيث تتوقف الثانية فور نفاد نواتج الأولى (<span style="color: var(--accent-green); font-weight: bold;">ATP</span> و<span style="color: var(--accent-blue); font-weight: bold;">NADPH,H⁺</span>)، وتتوقف الأولى عند عدم تجديد مستقبلا الشوارد والالكترونات (<span style="color: var(--accent-purple); font-weight: bold;">+NADP</span> و<span style="color: var(--accent-blue); font-weight: bold;">ADP + Pi</span>).</li>
                 </ul>
             </div>
-        </div>
 
             <h2><span class="num-badge">13</span> المرحلة الكيميوحيوية: تثبيت الكربون (CO₂) ودورة كالفن وتصنيع السكريات</h2>
         <h4>أ. تثبيت CO₂ وتشكيل APG (إنزيم الروبيسكو):</h4>
@@ -1254,13 +1316,14 @@
             <div class="equation">
                 6CO₂ + 18ATP + 12NADPH,H⁺ ───[ Rubisco / الحشوة ]───&gt; C₆H₁₂O₆ + 18ADP + 18Pi + 12NADP⁺ + 6H₂O
             </div>
-            <div class="tip-box">
+            
+        </div>
+        <div class="tip-box">
                 <span class="tip-title">ملاحظة توضيحية لحساب الحصيلة الطاقوية بالأرقام:</span>
                 <ul>
                     <li>لتثبيت <span style="color: var(--accent-purple); font-weight: bold;">6 CO₂</span> وتصنيع <span style="color: var(--accent-green); font-weight: bold;">1 غلوكوز</span> يلزم: <span style="color: var(--accent-green); font-weight: bold;">18 ATP</span> (12 في مرحلة التنشيط + 6 في مرحلة التجديد) و<span style="color: var(--accent-blue); font-weight: bold;">12 NADPH,H⁺</span>.</li>
                 </ul>
             </div>
-        </div>
         <div class="calvin-card">
     <div class="calvin-title">دورة كالفن - حلقة تثبيت CO₂</div>
     <img src="image6/0.3.png" alt="مخطط دورة كالفن" class="adaptive-diag" />
@@ -1279,14 +1342,15 @@
             <p>
                 ينتج عن استهلاك المركبات الطاقوية في الحشوة تحرير النواتج غير المؤكسدة والمتمثلة في <span style="color: var(--accent-purple); font-weight: bold;">12 +NADP</span> و<span style="color: var(--accent-blue); font-weight: bold;">18 ADP + 18 Pi</span>. تُعاد هذه النواقل إلى غشاء التيلاكويد لتستقبل إلكترونات وبروتونات جديدة وتُفسفر مجدداً بوجود الضوء والماء، مما يضمن استمرارية الدورة والتركيب الضوئي.
             </p>
-            <div class="tip-box">
+            
+        </div>
+        <div class="tip-box">
                 <span class="tip-title">مفهوم التبعية المتبادلة للبكالوريا:</span>
                 <ul>
                     <li>تتوقف المرحلة الكيميوحيوية في الظلام بسبب نفاد مخزون <span style="color: var(--accent-green); font-weight: bold;">ATP</span> و<span style="color: var(--accent-blue); font-weight: bold;">NADPH,H⁺</span>.</li>
                     <li>تتوقف المرحلة الكيميوضوئية عند طول مدة غياب <span style="color: var(--accent-purple); font-weight: bold;">CO₂</span> بسبب عدم تجديد المستقبلا الخالية (<span style="color: var(--accent-purple); font-weight: bold;">+NADP</span> و<span style="color: var(--accent-blue); font-weight: bold;">ADP</span>) في الحشوة.</li>
                 </ul>
             </div>
-        </div>
 
     <div class="calvin-card">
         <div class="calvin-title">رسم تخطيطي يوضح التكامل الوظيفي بين المرحلتين الكيموضوئية و الكيموحيوية</div>
@@ -1345,13 +1409,14 @@
             <div class="equation">
                 6 <span style="color: var(--accent-purple); font-weight: bold;">CO₂</span> + 6 <span style="color: var(--accent-blue); font-weight: bold;">H₂O</span> ───[ ضوء / يخضور ]───&gt; <span style="color: var(--accent-green); font-weight: bold;">C₆H₁₂O₆</span> + 6 <span style="color: var(--accent-orange); font-weight: bold;">O₂</span>
             </div>
-            <div class="tip-box">
+            
+        </div>
+        <div class="tip-box">
                 <span class="tip-title">خلاصة تحويل الطاقة:</span>
                 <ul>
                     <li>تتحول الطاقة الضوئية إلى طاقة كيميائية مؤقتة (<span style="color: var(--accent-green); font-weight: bold;">ATP</span> و<span style="color: var(--accent-blue); font-weight: bold;">NADPH,H⁺</span>) في غشاء التيلاكويد، ثم تُحول وتُخزن نهائياً في صورة طاقة كيميائية كامنة في الروابط التكافؤية للجزيئات العضوية (<span style="color: var(--accent-green); font-weight: bold;">الغلوكوز</span>) في الحشوة.</li>
                 </ul>
             </div>
-        </div>
 
     
 
@@ -1420,11 +1485,11 @@
         if (isLightTheme) {
             paintThemeIcon(true);
             if (themeText) themeText.textContent = 'الوضع النهاري';
-            localStorage.setItem('theme', 'light');
+            bioTheme.set('light');
         } else {
             paintThemeIcon(false);
             if (themeText) themeText.textContent = 'الوضع الليلي';
-            localStorage.setItem('theme', 'dark');
+            bioTheme.set('dark');
         }
     }
 
@@ -1437,7 +1502,7 @@
         const themeText = document.getElementById('theme-text');
 
         // استرجاع الثيم المحفوظ عند فتح الصفحة
-        const savedTheme = localStorage.getItem('theme');
+        const savedTheme = bioTheme.get();
 
         if (savedTheme === 'light') {
             bodyElement.classList.add('light-theme');

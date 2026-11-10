@@ -2616,28 +2616,67 @@ body::before { animation: none; }
 /* الفوتر خارج الشاشة لا يُرسم حتى يقترب القارئ منه */
 .site-footer { content-visibility: auto; contain-intrinsic-size: auto 700px; }
 
-/* الظهور التدريجي أسرع وأقصر */
-/* حركة ظهور احترافية ناعمة (مثل المواقع الكبرى): إزاحة صغيرة + تكبير طفيف + منحنى expo-out بلا ارتداد ولا دوران */
-/* ظهور احترافي: انسياب expo-out (يبدأ سريعاً ويهدأ بنعومة) + تلاشي أسرع من الحركة ليبدو العنصر "ينبثق" ثم يستقر */
-.js-reveal .reveal { --e: cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; transform: translate3d(0, 28px, 0);
-    transition: opacity 0.7s cubic-bezier(0.33, 1, 0.68, 1) var(--d, 0ms), transform 1s var(--e) var(--d, 0ms); }
-.js-reveal .reveal[data-rv="pop"], .js-reveal .reveal[data-rv="spin"] { transform: translate3d(0, 14px, 0) scale(0.92); }
-.js-reveal .reveal[data-rv="fade"] { transform: none; transition: opacity 0.8s ease var(--d, 0ms); }
-/* أثناء التمرير السريع: ظهور فوري بلا حركة (لا يراها أحد بتلك السرعة) */
-.js-reveal .reveal[data-rv].rv-fast { transition: none; }
-.js-reveal .reveal[data-rv].in { opacity: 1; transform: none; }
-/* تمرير متوسط: حركة قصيرة بلا تتابع | تمرير سريع: العناصر ظاهرة فوراً بلا أي حركة أو حساب */
-.rv-med .reveal[data-rv] { transition-duration: 0.45s !important; transition-delay: 0ms !important; }
-.rv-skip .reveal[data-rv] { opacity: 1 !important; transform: none !important; transition: none !important; }
-/* أثناء التمرير: لا إعادة رسم للتأثيرات الجانبية للمؤشر */
-.rv-skip .card-btn, .rv-skip .card-btn * { transition: none !important; }
-/* التمويه الخلفي يبقى مفعّلاً دائماً (بلا إطفاء أثناء التمرير) فلا تظهر العضيات حادة خلف العناصر في أي لحظة */
-/* تجهيز طبقات الرسم للعناصر المنتظرة فقط (تزول مع إزالة فئة reveal) */
-.js-reveal .reveal { will-change: transform, opacity; backface-visibility: hidden; }
+/* نظام ظهور انسيابي متكيف مع سرعة التمرير وحجم الشاشة */
+.js-reveal .reveal {
+    --rv-distance: 24px;
+    --rv-duration: 640ms;
+    --rv-opacity-duration: 440ms;
+    --rv-delay: var(--d, 0ms);
+    opacity: 0;
+    transform: translate3d(0, var(--rv-distance), 0);
+    transition:
+        opacity var(--rv-opacity-duration) cubic-bezier(0.33, 1, 0.68, 1) var(--rv-delay),
+        transform var(--rv-duration) cubic-bezier(0.16, 1, 0.3, 1) var(--rv-delay);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+}
+.js-reveal .reveal[data-rv="pop"],
+.js-reveal .reveal[data-rv="spin"] {
+    transform: translate3d(0, var(--rv-distance), 0) scale(0.965);
+}
+.js-reveal .reveal[data-rv="fade"] {
+    transform: none;
+    transition: opacity var(--rv-opacity-duration) ease var(--rv-delay);
+}
+.js-reveal .reveal.in { opacity: 1; transform: none; }
+.js-reveal .reveal.rv-no-motion { transition: none !important; }
 
+/* الشريط العلوي: دخول مرة واحدة عند تحميل الصفحة، ولا يعاد مع التمرير */
+.js-reveal .top-navbar .top-brand-logo,
+.js-reveal .top-navbar .top-nav-links a,
+.js-reveal .top-navbar .theme-toggle-btn {
+    --nav-intro-y: -9px;
+    opacity: 0;
+    animation: topNavLoadIn 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.js-reveal .top-navbar .top-brand-logo { animation-delay: 40ms; }
+.js-reveal .top-navbar .top-nav-links a:nth-child(1) { animation-delay: 90ms; }
+.js-reveal .top-navbar .top-nav-links a:nth-child(2) { animation-delay: 140ms; }
+.js-reveal .top-navbar .top-nav-links a:nth-child(3) { animation-delay: 190ms; }
+.js-reveal .top-navbar .top-nav-links a:nth-child(4) { animation-delay: 240ms; }
+.js-reveal .top-navbar .theme-toggle-btn { animation-delay: 170ms; }
+@keyframes topNavLoadIn {
+    from { opacity: 0; translate: 0 var(--nav-intro-y); }
+    to   { opacity: 1; translate: 0 0; }
+}
+
+/* الشاشات الصغيرة: حركة أقصر وأخف */
+@media (max-width: 760px) {
+    .js-reveal .reveal {
+        --rv-distance: 18px;
+        --rv-duration: 540ms;
+        --rv-opacity-duration: 360ms;
+    }
+    .js-reveal .top-navbar .top-brand-logo,
+    .js-reveal .top-navbar .top-nav-links a,
+    .js-reveal .top-navbar .theme-toggle-btn {
+        --nav-intro-y: -6px;
+        animation-duration: 520ms;
+    }
+}
 
 /* منع وميض عناصر الشاشة الأولى قبل أن تُهيَّأ حركة الظهور (تنتهي هذه القاعدة عند rv-ready) */
-.js-reveal:not(.rv-ready) :is(.top-brand-logo, .top-nav-links a, .theme-toggle-btn, .hero-cta > *, .hero-stats li, .smart-search, .smart-actions .smart-action, .smart-status) { opacity: 0; }
+.js-reveal:not(.rv-ready) :is(.top-brand-logo, .top-nav-links a, .theme-toggle-btn, .hero-header, .hero-cta > *, .hero-stats li, .smart-search, .smart-actions .smart-action, .smart-status) { opacity: 0; }
 
 /* الهاتف وأجهزة اللمس: لا تمويه خلفي (ثقيل أثناء التمرير) مع خلفيات أكثر كثافة */
 @media (max-width: 900px), (hover: none) {
@@ -2814,10 +2853,76 @@ body.light-theme .sh-toast { color: #15803d; }
 @media (prefers-reduced-motion: reduce) {
     .sh-sheet, .sh-backdrop, .sh-btn, .sh-btn::after, .sh-btn-ico { transition: none; }
 }
+
+/* إزالة المربع خلف الشعار فقط، مع إبقاء حجم الصورة وحركة الشعار كما هما */
+.top-logo-img {
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
 </style>
 
     <link rel="stylesheet" href="style.css">
     <meta name="google-site-verification" content="yWTn70MukZMsqqzmelv7CxgCHDi87GIOYffl56O2YW4" />
+
+    <!-- وحدة حفظ ومزامنة الوضع الليلي/النهاري المشتركة مع صفحات الدروس -->
+    <script>
+/* الوضع الليلي/النهاري مشترك بين كل صفحات الموقع ويُحفظ في المتصفح حتى تغيّره أنت.
+   يُخزَّن في localStorage + cookie + window.name مع ختم زمني، ويؤخذ الأحدث. */
+(function () {
+    var KEY = 'theme', WN = 'bio-theme=';
+    var bc = null; try { bc = new BroadcastChannel('bio-theme'); } catch (e) {}
+    function parse(raw) {
+        if (!raw) return null;
+        var m = String(raw).match(/^(light|dark)(?:@(\d+))?$/);
+        return m ? { v: m[1], t: m[2] ? +m[2] : 0 } : null;
+    }
+    function readLS() { try { return parse(localStorage.getItem(KEY)); } catch (e) { return null; } }
+    function readCookie() { try { var m = document.cookie.match(/(?:^|; )theme=([^;]*)/); return m ? parse(decodeURIComponent(m[1])) : null; } catch (e) { return null; } }
+    function readWN() { var m = (window.name || '').match(/(?:^|;)bio-theme=((?:light|dark)(?:@\d+)?)(?=;|$)/); return m ? parse(m[1]) : null; }
+    var T = {
+        get: function () {
+            var best = null;
+            [readLS(), readCookie(), readWN()].forEach(function (x) { if (x && (!best || x.t > best.t)) best = x; });
+            return best ? best.v : 'dark';
+        },
+        set: function (v) {
+            if (v !== 'light' && v !== 'dark') return;
+            var raw = v + '@' + Date.now();
+            try { localStorage.setItem(KEY, raw); } catch (e) {}
+            try { document.cookie = 'theme=' + encodeURIComponent(raw) + ';max-age=31536000;path=/;SameSite=Lax'; } catch (e) {}
+            try { window.name = (window.name || '').replace(/(?:^|;)bio-theme=[^;]*/, '') + (window.name && !/bio-theme=/.test(window.name) ? ';' : '') + WN + raw; } catch (e) {}
+            try { if (bc) bc.postMessage(v); } catch (e) {}
+        },
+        apply: function (v) {
+            if (!document.body) return;
+            var light = v === 'light';
+            if (typeof window.updateThemeUI === 'function') {
+                window.updateThemeUI(light);
+                if (typeof window.updateCountdown === 'function') { try { window.updateCountdown(); } catch (e) {} }
+                return;
+            }
+            document.body.classList.toggle('light-theme', light);
+            var tx = document.getElementById('theme-text');
+            if (tx) tx.textContent = light ? 'الوضع النهاري' : 'الوضع الليلي';
+        },
+        sync: function () {
+            if (!document.body) return;
+            var v = T.get(), cur = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+            if (v !== cur) T.apply(v);
+        }
+    };
+    window.bioTheme = T;
+    /* مزامنة التبويبات والعودة من سجل المتصفح أو إخفاء الصفحة */
+    window.addEventListener('storage', function (e) { if (e.key === KEY || e.key === null) T.sync(); });
+    window.addEventListener('pageshow', function (e) { if (e.persisted) T.sync(); });
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) T.sync(); });
+    window.addEventListener('focus', T.sync);
+    if (bc) bc.onmessage = function () { T.sync(); };
+})();
+</script>
 </head>
 <body>
     <script>
@@ -2836,9 +2941,9 @@ body.light-theme .sh-toast { color: #15803d; }
                 try { document.cookie = k + '=' + encodeURIComponent(v) + ';max-age=31536000;path=/;SameSite=Lax'; } catch (e) {}
             }
         };
-        // تطبيق الوضع المحفوظ (أو إعداد الجهاز عند أول زيارة) قبل ظهور الصفحة
-        var savedTheme = bioStore.get('theme');
-        if (savedTheme ? savedTheme === 'light' : matchMedia('(prefers-color-scheme: light)').matches) document.body.classList.add('light-theme');
+        // تطبيق الاختيار المشترك قبل ظهور محتوى الصفحة؛ القيمة قد تكون light@timestamp أو dark@timestamp
+        var savedTheme = window.bioTheme ? bioTheme.get() : 'dark';
+        document.body.classList.toggle('light-theme', savedTheme === 'light');
         if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) document.documentElement.classList.add('js-reveal');
         setTimeout(function () { document.documentElement.classList.add('rv-ready'); }, 2500);
     </script>
@@ -4503,22 +4608,18 @@ function updateThemeUI(isLight) {
 function toggleTheme() {
     const newStatus = !document.body.classList.contains('light-theme');
 
-    // حفظ الخيار في المتصفح
-    bioStore.set('theme', newStatus ? 'light' : 'dark');
+    // حفظ الخيار بالصيغة المشتركة نفسها التي تستخدمها صفحات الدروس
+    bioTheme.set(newStatus ? 'light' : 'dark');
 
     // تطبيق التغيير فوراً
     updateThemeUI(newStatus);
     updateCountdown();
 }
 
-// 3. تطبيق الوضع المحفوظ فور فتح الصفحة
+// 3. تطبيق الوضع المحفوظ من نظام الثيم المشترك المستخدم في جميع صفحات الدروس
 (function initTheme() {
-    const system = matchMedia('(prefers-color-scheme: light)');
-    const saved = bioStore.get('theme');
-    updateThemeUI(saved ? saved === 'light' : system.matches);       // اختيار الطالب، وإلا إعداد الجهاز
-    // إن لم يختر الطالب بنفسه، يتبع الصفحة تغيّر إعداد الجهاز مباشرة
-    const follow = e => { if (!bioStore.get('theme')) { updateThemeUI(e.matches); updateCountdown(); } };
-    if (system.addEventListener) system.addEventListener('change', follow); else if (system.addListener) system.addListener(follow);
+    updateThemeUI(bioTheme.get() === 'light');
+    updateCountdown();
 })();
     </script>
 
@@ -4575,21 +4676,20 @@ function toggleTheme() {
         });
     });
 
-    // ---- ظهور الأزرار والأيقونات والأقسام تدريجياً أثناء النزول إليها ----
-    // كل سطر: [المحدد، نوع الحركة، فاصل التتابع بالمللي ثانية]
-    // up: ارتفاع خفيف | pop: تكبير من الصغر | spin: تكبير مع دوران | fade: ظهور فقط
+    // ---- ظهور المكونات تدريجياً أثناء النزول إليها ----
+    // الحركة هنا مستقلة عن وظائف البحث والعداد والمشاركة وبقية تفاعلات الصفحة.
     if (document.documentElement.classList.contains('js-reveal')) {
         const items = [];
         try {
             const REVEAL = [
-                ['.top-brand-logo', 'pop', 0],
-                ['.top-nav-links a', 'up', 60],
-                ['.theme-toggle-btn', 'pop', 0],
+                // الشعار وروابط الشريط العلوي تتحرك مرة واحدة عبر CSS عند تحميل الصفحة.
+                ['.hero-header', 'up', 0],
                 ['.hero-cta > *', 'pop', 90],
                 ['.hero-stats li', 'up', 80],
                 ['.smart-search', 'up', 0],
                 ['.smart-actions .smart-action', 'pop', 90],
                 ['.smart-status', 'fade', 0],
+                // نحافظ على الحركة المنفصلة للأيقونات كما في النسخة الأصلية.
                 ['.section-head .section-icon', 'spin', 0],
                 ['.section-head > div', 'up', 0],
                 ['.countdown-header', 'up', 0],
@@ -4603,104 +4703,156 @@ function toggleTheme() {
                 ['.contact-links-container .action-btn', 'pop', 110],
                 ['.mini-btn', 'pop', 0],
                 ['.legal-item', 'up', 90],
+                // أيقونات المعلومات القانونية تحتفظ بدخولها المستقل.
                 ['.legal-icon', 'spin', 0],
                 ['.copyright-text', 'fade', 0]
             ];
-            const pending = new Set();                      // العناصر التي لم تظهر بعد
+
+            const pending = new Set();
             const mark = (el, kind) => {
                 if (el.classList.contains('reveal')) return;
-                el.classList.add('reveal'); el.dataset.rv = kind; items.push(el); pending.add(el);
+                el.classList.add('reveal');
+                el.dataset.rv = kind;
+                items.push(el);
+                pending.add(el);
             };
-            // الأقسام والبطاقات: ظهور بارتفاع، وتتابع داخل كل صف
-            $$('.buttons-grid').forEach(g => $$('.card-btn', g).forEach((c, i) => c.style.setProperty('--d', (i % 4) * 70 + 'ms')));
-            $$('.section-head, .card-btn, .bio-organic-counter, .legal-box').forEach(el => mark(el, 'up'));
+
+            // نحتفظ بسلوك الشبكة الأصلي وتتابع البطاقات، ونضيف الإعلانات ولوحة البحث.
+            $$('.buttons-grid').forEach(g => $$('.card-btn', g).forEach((c, i) => {
+                c.style.setProperty('--d', (i % 4) * 70 + 'ms');
+            }));
+            $$('.section-head, .card-btn, .bio-organic-counter, .legal-box, .ad-banner').forEach(el => mark(el, 'up'));
+            $$('.smart-dock').forEach(el => mark(el, 'fade'));
+
             REVEAL.forEach(([sel, kind, step]) => $$(sel).forEach((el, i) => {
                 mark(el, kind);
-                if (step) el.style.setProperty('--d', Math.min(i * Math.min(step, 80), 240) + 'ms');   // تتابع متدرج لا يتجاوز 0.24 ثانية
+                if (step) el.style.setProperty('--d', Math.min(i * Math.min(step, 80), 240) + 'ms');
             }));
-            document.documentElement.classList.add('rv-ready');   // انتهى الوسم: تتولى فئات الظهور الإخفاء من الآن
 
-            // ثلاث مستويات حسب سرعة التمرير (بدون أي قراءة للتخطيط أثناء التمرير = خفيف جداً):
-            //   بطيء: حركة كاملة | متوسط: حركة قصيرة بلا تأخير | سريع: ظهور فوري عبر CSS فقط
-            const root = document.documentElement;
-            let mode = 0, lastY = scrollY, lastT = performance.now(), idleTimer = 0, cleanTimer = 0;
+            document.documentElement.classList.add('rv-ready');
+
+            // 0 = بطيء، 1 = متوسط، 2 = سريع. لا نلغي الحركة في أي مستوى.
+            let mode = 0;
+            let lastY = scrollY;
+            let lastT = performance.now();
+            let smoothedSpeed = 0;
+            let idleTimer = 0;
+            let cleanTimer = 0;
+            let settleTimer = 0;
             const cleanQueue = [];
+            const modeDurations = [640, 420, 240];
+            const profiles = {
+                desktop: [
+                    { distance: '24px', duration: '640ms', opacity: '440ms' },
+                    { distance: '15px', duration: '420ms', opacity: '300ms' },
+                    { distance: '8px',  duration: '240ms', opacity: '180ms' }
+                ],
+                compact: [
+                    { distance: '18px', duration: '540ms', opacity: '360ms' },
+                    { distance: '11px', duration: '350ms', opacity: '250ms' },
+                    { distance: '6px',  duration: '210ms', opacity: '155ms' }
+                ]
+            };
+            const compactScreen = matchMedia('(max-width: 760px)');
 
-            // إزالة فئات الحركة من عدة عناصر دفعة واحدة (مؤقت واحد بدل مؤقت لكل عنصر)
             const flushClean = () => {
                 cleanTimer = 0;
                 const now = performance.now();
                 for (let i = cleanQueue.length - 1; i >= 0; i--) {
-                    const [el, t] = cleanQueue[i];
-                    if (now < t) continue;
-                    el.classList.remove('reveal', 'in', 'rv-fast'); el.removeAttribute('data-rv'); el.style.removeProperty('--d');
+                    const [el, at] = cleanQueue[i];
+                    if (now < at) continue;
+                    el.classList.remove('reveal', 'in', 'rv-no-motion');
+                    el.removeAttribute('data-rv');
+                    el.style.removeProperty('--d');
+                    el.style.removeProperty('--rv-distance');
+                    el.style.removeProperty('--rv-duration');
+                    el.style.removeProperty('--rv-opacity-duration');
+                    el.style.removeProperty('--rv-delay');
                     cleanQueue.splice(i, 1);
                 }
                 if (cleanQueue.length) cleanTimer = setTimeout(flushClean, 400);
             };
 
-            const show = (el, fast) => {
+            let io;
+            const show = (el, instant = false) => {
                 if (!pending.has(el)) return;
-                pending.delete(el); io.unobserve(el);
-                if (fast) { el.style.setProperty('--d', '0ms'); el.classList.add('rv-fast'); }
+                pending.delete(el);
+                io.unobserve(el);
+                if (instant) el.classList.add('rv-no-motion');
+                const profile = profiles[compactScreen.matches ? 'compact' : 'desktop'][mode];
+                const delayText = mode === 0 ? (el.style.getPropertyValue('--d') || '0ms') : '0ms';
+                el.style.setProperty('--rv-distance', profile.distance);
+                el.style.setProperty('--rv-duration', profile.duration);
+                el.style.setProperty('--rv-opacity-duration', profile.opacity);
+                el.style.setProperty('--rv-delay', delayText);
                 el.classList.add('in');
-                const d = fast ? 0 : (parseInt(el.style.getPropertyValue('--d'), 10) || 0);
-                cleanQueue.push([el, performance.now() + d + (fast ? 400 : 1500)]);
-                if (!cleanTimer) cleanTimer = setTimeout(flushClean, 450);
+                const delay = parseInt(delayText, 10) || 0;
+                cleanQueue.push([el, performance.now() + (instant ? 100 : modeDurations[mode] + delay + 180)]);
+                if (!cleanTimer) cleanTimer = setTimeout(flushClean, 400);
             };
 
-            const io = new IntersectionObserver(entries => entries.forEach(en => {
-                if (en.isIntersecting) show(en.target, mode === 2);
-            }), { threshold: 0.01, rootMargin: '0px 0px -7% 0px' });
+            const revealMargin = Math.round(innerHeight * 0.12) + 'px 0px ' + Math.round(innerHeight * 0.12) + 'px 0px';
+            io = new IntersectionObserver(entries => entries.forEach(en => {
+                if (en.isIntersecting) show(en.target, false);
+            }), { threshold: 0.01, rootMargin: revealMargin });
             items.forEach(el => io.observe(el));
 
-            // انتهاء التمرير السريع: نثبّت ما أصبح داخل الشاشة قبل إعادة الإخفاء لما هو خارجها
-            const endFast = () => {
-                io.takeRecords().forEach(en => { if (en.isIntersecting) show(en.target, true); });
-                // الذاكرة: كل ما مرّ عليه التمرير (فوق الشاشة أو داخلها) يبقى ظاهراً ولا يُنسى
-                const vh = innerHeight;
-                Array.from(pending).forEach(el => { if (el.getBoundingClientRect().top < vh) show(el, true); });
-                mode = 0;
-                root.classList.remove('rv-skip', 'rv-med');
-            };
-
-            let settleTimer = 0;
+            // إذا قفز المستخدم فوق عنصر بسبب تمرير سريع، نثبّته ظاهراً دون حركة خارج الشاشة.
             const settle = () => {
                 const vh = innerHeight;
                 Array.from(pending).forEach(el => {
                     const r = el.getBoundingClientRect();
-                    if (r.bottom <= 0) show(el, true);              // مرّ فوق الشاشة: يُحفظ ظاهراً فوراً
-                    else if (r.top < vh) show(el, false);           // داخل الشاشة: يظهر بحركته
+                    if (r.bottom <= 0) show(el, true);
+                    else if (r.top < vh && r.bottom > 0) show(el, false);
                 });
             };
+
+            const finishScroll = () => {
+                io.takeRecords().forEach(en => { if (en.isIntersecting) show(en.target, false); });
+                settle();
+                mode = 0;
+                smoothedSpeed = 0;
+                lastY = scrollY;
+                lastT = performance.now();
+            };
+
             addEventListener('scroll', () => {
-                if (pending.size) { clearTimeout(settleTimer); settleTimer = setTimeout(settle, 220); }
-                const now = performance.now(), dt = now - lastT;
-                if (dt < 8) return;                                          // تجاهل الأحداث المتقاربة جداً
-                const y = scrollY, dy = Math.abs(y - lastY);
-                let v = dy / dt;                                             // بكسل لكل مللي ثانية
-                if (dt > 200) v = dy > innerHeight * 0.8 ? 5 : 0;            // قفزة كبيرة بعد سكون (مثل الروابط الداخلية)
-                lastY = y; lastT = now;
-                const m = v >= 4 ? 2 : (v >= 2 ? 1 : 0);
-                if (m > mode) {
-                    mode = m;
-                    root.classList.toggle('rv-skip', m === 2);
-                    root.classList.toggle('rv-med', m === 1);
+                const now = performance.now();
+                const dt = now - lastT;
+                const y = scrollY;
+                const dy = Math.abs(y - lastY);
+
+                if (dt >= 8) {
+                    let speed = dy / Math.max(dt, 8);
+                    // قفزة الرابط الداخلي تُعامل كتمرير سريع، لا كإلغاء للحركة.
+                    if (dt > 180) speed = dy > innerHeight * 0.55 ? 3.2 : 0;
+                    smoothedSpeed = smoothedSpeed * 0.35 + speed * 0.65;
+                    mode = smoothedSpeed >= 2.2 ? 2 : (smoothedSpeed >= 0.7 ? 1 : 0);
                 }
-                if (mode) { clearTimeout(idleTimer); idleTimer = setTimeout(endFast, 90); }
+
+                lastY = y;
+                lastT = now;
+                clearTimeout(settleTimer);
+                settleTimer = setTimeout(settle, 180);
+                clearTimeout(idleTimer);
+                idleTimer = setTimeout(finishScroll, 150);
             }, { passive: true });
 
-            // شبكة أمان: أي عنصر داخل الشاشة لم يظهر بعد 4 ثوانٍ يُظهَر فوراً
+            // شبكة أمان للعناصر المرئية التي لم يلتقطها المراقب بعد.
             setTimeout(() => items.forEach(el => {
                 if (!pending.has(el)) return;
                 const r = el.getBoundingClientRect();
-                if (r.top < innerHeight && r.bottom > 0) show(el, true);
+                if (r.top < innerHeight && r.bottom > 0) show(el, false);
             }), 4000);
         } catch (err) {
-            // عند أي خطأ تبقى العناصر ظاهرة وتُزال فئات الحركة
+            // عند تعذر نظام الحركة، لا نخفي العناصر أو نعطل بقية وظائف الصفحة.
             document.documentElement.classList.remove('js-reveal');
             document.documentElement.classList.add('rv-ready');
-            items.forEach(el => { el.classList.remove('reveal', 'in'); el.removeAttribute('data-rv'); el.style.removeProperty('--d'); });
+            items.forEach(el => {
+                el.classList.remove('reveal', 'in', 'rv-no-motion');
+                el.removeAttribute('data-rv');
+                el.style.removeProperty('--d');
+            });
         }
     }
 
@@ -5253,9 +5405,11 @@ function toggleTheme() {
         try { localStorage.removeItem(k); } catch (e) {}
         try { document.cookie = k + '=;max-age=0;path=/'; } catch (e) {}
       });
+      // إزالة نسخة الثيم الاحتياطية من window.name أيضاً حتى لا تعود بعد المسح.
+      try { window.name = (window.name || '').replace(/(?:^|;)bio-theme=[^;]*/, '').replace(/^;|;$/g, ''); } catch (e) {}
       apply();
-      // بعد المسح يعود الوضع إلى إعداد الجهاز
-      if (typeof updateThemeUI === 'function') updateThemeUI(matchMedia('(prefers-color-scheme: light)').matches);
+      // مثل صفحات الدروس: الوضع الافتراضي عند عدم وجود اختيار محفوظ هو الليلي.
+      if (typeof updateThemeUI === 'function') updateThemeUI(false);
       clearBtn.textContent = 'تم المسح';
       setTimeout(() => { clearBtn.textContent = 'مسح بياناتي المحفوظة'; }, 2000);
     });

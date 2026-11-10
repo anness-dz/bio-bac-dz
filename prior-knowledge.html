@@ -7,7 +7,9 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="shortcut icon" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
-<title>محطات الاكتشاف: مغامرة داخل الخلية والوراثة</title>
+<title>المكتسبات القبلية: الخلية والمعلومة الوراثية</title>
+<meta name="description" content="المكتسبات القبلية: مراجعة الخلية (الحيوانية والنباتية وبدائية النواة) والمعلومة الوراثية (الصبغيات وجزيء ADN والمورثة والأليل) والنمط الوراثي والظاهري والطفرات.">
+    <meta name="theme-color" content="#0b0f19">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1003,6 +1005,56 @@ header.top-navbar, header.top-navbar * { font-family: system-ui, -apple-system, 
     }
 
 </style>
+<script>
+/* الوضع الليلي/النهاري مشترك بين كل صفحات الموقع ويُحفظ في المتصفح حتى تغيّره أنت.
+   يُخزَّن في localStorage + cookie + window.name (لتعمل المتابعة حتى عند فتح الملفات مباشرة) مع ختم زمني، ويؤخذ الأحدث. */
+(function () {
+    var KEY = 'theme', WN = 'bio-theme=';
+    var bc = null; try { bc = new BroadcastChannel('bio-theme'); } catch (e) {}
+    function parse(raw) {
+        if (!raw) return null;
+        var m = String(raw).match(/^(light|dark)(?:@(\d+))?$/);
+        return m ? { v: m[1], t: m[2] ? +m[2] : 0 } : null;
+    }
+    function readLS() { try { return parse(localStorage.getItem(KEY)); } catch (e) { return null; } }
+    function readCookie() { try { var m = document.cookie.match(/(?:^|; )theme=([^;]*)/); return m ? parse(decodeURIComponent(m[1])) : null; } catch (e) { return null; } }
+    function readWN() { var m = (window.name || '').match(/(?:^|;)bio-theme=((?:light|dark)(?:@\d+)?)(?=;|$)/); return m ? parse(m[1]) : null; }
+    var T = {
+        get: function () {
+            var best = null;
+            [readLS(), readCookie(), readWN()].forEach(function (x) { if (x && (!best || x.t > best.t)) best = x; });
+            return best ? best.v : 'dark';              /* أول زيارة: الوضع الليلي */
+        },
+        set: function (v) {
+            var raw = v + '@' + Date.now();
+            try { localStorage.setItem(KEY, raw); } catch (e) {}
+            try { document.cookie = 'theme=' + encodeURIComponent(raw) + ';max-age=31536000;path=/;SameSite=Lax'; } catch (e) {}
+            try { window.name = (window.name || '').replace(/(?:^|;)bio-theme=[^;]*/, '') + (window.name && !/bio-theme=/.test(window.name) ? ';' : '') + WN + raw; } catch (e) {}
+            try { if (bc) bc.postMessage(v); } catch (e) {}
+        },
+        apply: function (v) {
+            if (!document.body) return;
+            var light = v === 'light';
+            if (typeof window.updateThemeUI === 'function') { window.updateThemeUI(light); if (typeof window.updateCountdown === 'function') { try { window.updateCountdown(); } catch (e) {} } return; }
+            document.body.classList.toggle('light-theme', light);
+            if (typeof window.paintThemeIcon === 'function') window.paintThemeIcon(light);
+            var tx = document.getElementById('theme-text'); if (tx) tx.textContent = light ? 'الوضع النهاري' : 'الوضع الليلي';
+        },
+        sync: function () {
+            if (!document.body) return;
+            var v = T.get(), cur = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+            if (v !== cur) T.apply(v);
+        }
+    };
+    window.bioTheme = T;
+    /* تحديث فوري في الصفحات الأخرى المفتوحة، وعند العودة للصفحة بزر الرجوع، وعند الرجوع للتبويب */
+    window.addEventListener('storage', function (e) { if (e.key === KEY || e.key === null) T.sync(); });
+    window.addEventListener('pageshow', function (e) { if (e.persisted) T.sync(); });
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) T.sync(); });
+    window.addEventListener('focus', T.sync);
+    if (bc) bc.onmessage = function () { T.sync(); };
+})();
+</script>
 </head>
 
 
@@ -1042,8 +1094,8 @@ header.top-navbar, header.top-navbar * { font-family: system-ui, -apple-system, 
         </a>
 
         <div class="page-heading">
-            <h1>محطات الاكتشاف</h1>
-            <span>رحلة مرحة داخل الخلية والوراثة</span>
+            <h1>المكتسبات القبلية</h1>
+            <span>الخلية والمعلومة الوراثية</span>
         </div>
 
         <div class="progress-indicator">
@@ -1057,18 +1109,18 @@ header.top-navbar, header.top-navbar * { font-family: system-ui, -apple-system, 
 
 
     <button class="mobile-slide-selector" id="mobile-slide-selector" type="button" aria-expanded="false">
-        <span id="mobile-current-title">المحطة الحالية</span>
+        <span id="mobile-current-title">الجزء الحالي</span>
         <small>الخريطة ☰</small>
     </button>
 
 
     <div class="presentation-layout">
 
-        <!-- الشريط الجانبي / قائمة "خريطة المحطات": يُملأ تلقائياً بالجافاسكربت -->
+        <!-- الشريط الجانبي / قائمة "فهرس الأجزاء": يُملأ تلقائياً بالجافاسكربت -->
         <aside class="slide-sidebar" id="slide-sidebar">
             <div class="sidebar-header">
-                <strong>خريطة المحطات</strong>
-                <span>٤ محطات</span>
+                <strong>فهرس الأجزاء</strong>
+                <span>٤ أجزاء</span>
             </div>
             <div class="slide-list" id="slide-list"></div>
         </aside>
@@ -1078,7 +1130,7 @@ header.top-navbar, header.top-navbar * { font-family: system-ui, -apple-system, 
 
             <header class="slide-header" id="slide-header">
                 <h2 id="slide-title">الخلية الحيوانية، النباتية، وبدائية النواة</h2>
-                <span class="slide-tag" id="slide-badge" aria-live="polite">المحطة 1 من 4</span>
+                <span class="slide-tag" id="slide-badge" aria-live="polite">الجزء 1 من 4</span>
             </header>
 
 
@@ -1279,9 +1331,9 @@ header.top-navbar, header.top-navbar * { font-family: system-ui, -apple-system, 
 
 
             <footer class="slide-footer">
-                <button class="control-btn" id="prev-btn" type="button" disabled>→ المحطة السابقة</button>
-                <div class="slide-dots" id="slide-dots" aria-label="التنقل بين المحطات"></div>
-                <button class="control-btn" id="next-btn" type="button">المحطة التالية ←</button>
+                <button class="control-btn" id="prev-btn" type="button" disabled>→ الجزء السابق</button>
+                <div class="slide-dots" id="slide-dots" aria-label="التنقل بين الأجزاء"></div>
+                <button class="control-btn" id="next-btn" type="button">الجزء التالي ←</button>
             </footer>
 
         </main>
@@ -1332,7 +1384,7 @@ header.top-navbar, header.top-navbar * { font-family: system-ui, -apple-system, 
        ونقطة (dot) لكل شريحة في أسفل الصفحة — حسب عدد الشرائح الموجودة في الـ HTML */
     slides.forEach((slide, index) => {
 
-        const title = slide.dataset.title || `المحطة ${index + 1}`;
+        const title = slide.dataset.title || `الجزء ${index + 1}`;
 
         const item = document.createElement("button");
         item.type = "button";
@@ -1352,7 +1404,7 @@ header.top-navbar, header.top-navbar * { font-family: system-ui, -apple-system, 
         const dot = document.createElement("button");
         dot.type = "button";
         dot.className = "slide-dot";
-        dot.setAttribute("aria-label", `الانتقال إلى المحطة ${index + 1}`);
+        dot.setAttribute("aria-label", `الانتقال إلى الجزء ${index + 1}`);
         dot.addEventListener("click", () => { goToSlide(index, true); });
         slideDots.appendChild(dot);
 
@@ -1370,10 +1422,10 @@ header.top-navbar, header.top-navbar * { font-family: system-ui, -apple-system, 
         });
 
         const currentSlide = slides[currentIndex];
-        const title = currentSlide.dataset.title || `المحطة ${currentIndex + 1}`;
+        const title = currentSlide.dataset.title || `الجزء ${currentIndex + 1}`;
 
         titleElement.textContent = title;
-        badgeElement.textContent = `المحطة ${currentIndex + 1} من ${slides.length}`;
+        badgeElement.textContent = `الجزء ${currentIndex + 1} من ${slides.length}`;
         mobileCurrentTitle.textContent = title;
         slideHeader.dataset.number = String(currentIndex + 1);
 
@@ -1384,7 +1436,7 @@ header.top-navbar, header.top-navbar * { font-family: system-ui, -apple-system, 
         prevBtn.disabled = currentIndex === 0;
         nextBtn.textContent = currentIndex === slides.length - 1
             ? "إنهاء المراجعة ✓"
-            : "المحطة التالية ←";
+            : "الجزء التالي ←";
 
         dots.forEach((dot, index) => {
             const active = index === currentIndex;
@@ -1398,7 +1450,7 @@ header.top-navbar, header.top-navbar * { font-family: system-ui, -apple-system, 
             item.setAttribute("aria-current", active ? "true" : "false");
         });
 
-        document.title = `محطات الاكتشاف — ${currentIndex + 1}/${slides.length}`;
+        document.title = `المكتسبات القبلية — ${currentIndex + 1}/${slides.length}`;
 
         if (shouldScroll) {
             /* الشريحة تظهر كاملة والصفحة هي التي تتمرر: نرجع لبداية الشريحة فقط إن كنا قد نزلنا عنها */
@@ -1442,7 +1494,7 @@ header.top-navbar, header.top-navbar * { font-family: system-ui, -apple-system, 
             return;
         }
 
-        /* الأسهم الجانبية للتنقل بين المحطات (اتجاه العربية: ← التالي، → السابق).
+        /* الأسهم الجانبية للتنقل بين الأجزاء (اتجاه العربية: ← التالي، → السابق).
            أسهم الأعلى/الأسفل وHome/End وPageUp/PageDown تبقى لتمرير الصفحة كما هي. */
         if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
 
@@ -1573,11 +1625,11 @@ header.top-navbar, header.top-navbar * { font-family: system-ui, -apple-system, 
         if (isLightTheme) {
             paintThemeIcon(true);
             if (themeText) themeText.textContent = 'الوضع النهاري';
-            localStorage.setItem('theme', 'light');
+            bioTheme.set('light');
         } else {
             paintThemeIcon(false);
             if (themeText) themeText.textContent = 'الوضع الليلي';
-            localStorage.setItem('theme', 'dark');
+            bioTheme.set('dark');
         }
     }
 
@@ -1590,7 +1642,7 @@ header.top-navbar, header.top-navbar * { font-family: system-ui, -apple-system, 
         const themeText = document.getElementById('theme-text');
 
         // استرجاع الثيم المحفوظ عند فتح الصفحة
-        const savedTheme = localStorage.getItem('theme');
+        const savedTheme = bioTheme.get();
 
         if (savedTheme === 'light') {
             bodyElement.classList.add('light-theme');

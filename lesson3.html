@@ -224,8 +224,8 @@
         border-radius: 18px;
         margin-bottom: 25px;
         border: 2px solid #38bdf8;
-        box-shadow: 0 0 20px rgba(20, 184, 166, 0.6), 
-                    0 10px 30px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 20px rgba(20, 184, 166, 0.42), 
+                    0 10px 30px rgba(0, 0, 0, 0.35);
     }
 
     h1 { 
@@ -1092,6 +1092,56 @@
 
 <link rel="stylesheet" href="style.css">
     
+<script>
+/* الوضع الليلي/النهاري مشترك بين كل صفحات الموقع ويُحفظ في المتصفح حتى تغيّره أنت.
+   يُخزَّن في localStorage + cookie + window.name (لتعمل المتابعة حتى عند فتح الملفات مباشرة) مع ختم زمني، ويؤخذ الأحدث. */
+(function () {
+    var KEY = 'theme', WN = 'bio-theme=';
+    var bc = null; try { bc = new BroadcastChannel('bio-theme'); } catch (e) {}
+    function parse(raw) {
+        if (!raw) return null;
+        var m = String(raw).match(/^(light|dark)(?:@(\d+))?$/);
+        return m ? { v: m[1], t: m[2] ? +m[2] : 0 } : null;
+    }
+    function readLS() { try { return parse(localStorage.getItem(KEY)); } catch (e) { return null; } }
+    function readCookie() { try { var m = document.cookie.match(/(?:^|; )theme=([^;]*)/); return m ? parse(decodeURIComponent(m[1])) : null; } catch (e) { return null; } }
+    function readWN() { var m = (window.name || '').match(/(?:^|;)bio-theme=((?:light|dark)(?:@\d+)?)(?=;|$)/); return m ? parse(m[1]) : null; }
+    var T = {
+        get: function () {
+            var best = null;
+            [readLS(), readCookie(), readWN()].forEach(function (x) { if (x && (!best || x.t > best.t)) best = x; });
+            return best ? best.v : 'dark';              /* أول زيارة: الوضع الليلي */
+        },
+        set: function (v) {
+            var raw = v + '@' + Date.now();
+            try { localStorage.setItem(KEY, raw); } catch (e) {}
+            try { document.cookie = 'theme=' + encodeURIComponent(raw) + ';max-age=31536000;path=/;SameSite=Lax'; } catch (e) {}
+            try { window.name = (window.name || '').replace(/(?:^|;)bio-theme=[^;]*/, '') + (window.name && !/bio-theme=/.test(window.name) ? ';' : '') + WN + raw; } catch (e) {}
+            try { if (bc) bc.postMessage(v); } catch (e) {}
+        },
+        apply: function (v) {
+            if (!document.body) return;
+            var light = v === 'light';
+            if (typeof window.updateThemeUI === 'function') { window.updateThemeUI(light); if (typeof window.updateCountdown === 'function') { try { window.updateCountdown(); } catch (e) {} } return; }
+            document.body.classList.toggle('light-theme', light);
+            if (typeof window.paintThemeIcon === 'function') window.paintThemeIcon(light);
+            var tx = document.getElementById('theme-text'); if (tx) tx.textContent = light ? 'الوضع النهاري' : 'الوضع الليلي';
+        },
+        sync: function () {
+            if (!document.body) return;
+            var v = T.get(), cur = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+            if (v !== cur) T.apply(v);
+        }
+    };
+    window.bioTheme = T;
+    /* تحديث فوري في الصفحات الأخرى المفتوحة، وعند العودة للصفحة بزر الرجوع، وعند الرجوع للتبويب */
+    window.addEventListener('storage', function (e) { if (e.key === KEY || e.key === null) T.sync(); });
+    window.addEventListener('pageshow', function (e) { if (e.persisted) T.sync(); });
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) T.sync(); });
+    window.addEventListener('focus', T.sync);
+    if (bc) bc.onmessage = function () { T.sync(); };
+})();
+</script>
 </head>
 <body>
 
@@ -1483,11 +1533,11 @@
         if (isLightTheme) {
             paintThemeIcon(true);
             if (themeText) themeText.textContent = 'الوضع النهاري';
-            localStorage.setItem('theme', 'light');
+            bioTheme.set('light');
         } else {
             paintThemeIcon(false);
             if (themeText) themeText.textContent = 'الوضع الليلي';
-            localStorage.setItem('theme', 'dark');
+            bioTheme.set('dark');
         }
     }
 
@@ -1500,7 +1550,7 @@
         const themeText = document.getElementById('theme-text');
 
         // استرجاع الثيم المحفوظ عند فتح الصفحة
-        const savedTheme = localStorage.getItem('theme');
+        const savedTheme = bioTheme.get();
 
         if (savedTheme === 'light') {
             bodyElement.classList.add('light-theme');

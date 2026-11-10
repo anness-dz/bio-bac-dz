@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الوحدة 7: آليات تحويل الطاقة الكيميائية الكامنة في الجزيئات العضوية إلى طاقة قابلة للاستعمال (التنفس والتخمر) </title>
+    <meta name="theme-color" content="#0b0f19">
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="shortcut icon" href="favicon.png">
     <link rel="apple-touch-icon" href="favicon.png">
@@ -1496,10 +1497,62 @@ body.light-theme .box {
     .k-pink   { color: #e5368d !important; }
     .k-teal   { color: #0fa3a3 !important; }
     /* KEYWORD-COLORS-END */
+    /* توهج إطار الصورة الرئيسية أخفّ قليلاً */
+    .header-image-container { box-shadow: 0 0 12px rgba(249, 115, 22, 0.2) !important; }
 </style>
 
 <link rel="stylesheet" href="style.css">
     
+<script>
+/* الوضع الليلي/النهاري مشترك بين كل صفحات الموقع ويُحفظ في المتصفح حتى تغيّره أنت.
+   يُخزَّن في localStorage + cookie + window.name (لتعمل المتابعة حتى عند فتح الملفات مباشرة) مع ختم زمني، ويؤخذ الأحدث. */
+(function () {
+    var KEY = 'theme', WN = 'bio-theme=';
+    var bc = null; try { bc = new BroadcastChannel('bio-theme'); } catch (e) {}
+    function parse(raw) {
+        if (!raw) return null;
+        var m = String(raw).match(/^(light|dark)(?:@(\d+))?$/);
+        return m ? { v: m[1], t: m[2] ? +m[2] : 0 } : null;
+    }
+    function readLS() { try { return parse(localStorage.getItem(KEY)); } catch (e) { return null; } }
+    function readCookie() { try { var m = document.cookie.match(/(?:^|; )theme=([^;]*)/); return m ? parse(decodeURIComponent(m[1])) : null; } catch (e) { return null; } }
+    function readWN() { var m = (window.name || '').match(/(?:^|;)bio-theme=((?:light|dark)(?:@\d+)?)(?=;|$)/); return m ? parse(m[1]) : null; }
+    var T = {
+        get: function () {
+            var best = null;
+            [readLS(), readCookie(), readWN()].forEach(function (x) { if (x && (!best || x.t > best.t)) best = x; });
+            return best ? best.v : 'dark';              /* أول زيارة: الوضع الليلي */
+        },
+        set: function (v) {
+            var raw = v + '@' + Date.now();
+            try { localStorage.setItem(KEY, raw); } catch (e) {}
+            try { document.cookie = 'theme=' + encodeURIComponent(raw) + ';max-age=31536000;path=/;SameSite=Lax'; } catch (e) {}
+            try { window.name = (window.name || '').replace(/(?:^|;)bio-theme=[^;]*/, '') + (window.name && !/bio-theme=/.test(window.name) ? ';' : '') + WN + raw; } catch (e) {}
+            try { if (bc) bc.postMessage(v); } catch (e) {}
+        },
+        apply: function (v) {
+            if (!document.body) return;
+            var light = v === 'light';
+            if (typeof window.updateThemeUI === 'function') { window.updateThemeUI(light); if (typeof window.updateCountdown === 'function') { try { window.updateCountdown(); } catch (e) {} } return; }
+            document.body.classList.toggle('light-theme', light);
+            if (typeof window.paintThemeIcon === 'function') window.paintThemeIcon(light);
+            var tx = document.getElementById('theme-text'); if (tx) tx.textContent = light ? 'الوضع النهاري' : 'الوضع الليلي';
+        },
+        sync: function () {
+            if (!document.body) return;
+            var v = T.get(), cur = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+            if (v !== cur) T.apply(v);
+        }
+    };
+    window.bioTheme = T;
+    /* تحديث فوري في الصفحات الأخرى المفتوحة، وعند العودة للصفحة بزر الرجوع، وعند الرجوع للتبويب */
+    window.addEventListener('storage', function (e) { if (e.key === KEY || e.key === null) T.sync(); });
+    window.addEventListener('pageshow', function (e) { if (e.persisted) T.sync(); });
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) T.sync(); });
+    window.addEventListener('focus', T.sync);
+    if (bc) bc.onmessage = function () { T.sync(); };
+})();
+</script>
 </head>
 <body>
 
@@ -1623,6 +1676,11 @@ body.light-theme .box {
         <div class="chemical-eq">C₆H₁₂O₆ + 2NAD⁺ + 2ADP + 2Pi —→ 2C₃H₄O₃ + 2NADH,H⁺ + 2ATP</div>
     </div>
 
+            <div class="calvin-card">
+                <div class="calvin-title">رسم تخطيطي لمرحلة التحلل السكري</div>
+                <img src="image7/0.2.jpg" alt="رسم تخطيطي لمرحلة التحلل السكري" class="adaptive-diag" />
+            </div>
+
     <h2><span class="num-badge">4</span>أكسدة البيروفيك وتشكيل أستيل مرافق الإنزيم (أ)</h2>
     <h4>أ. عبور الغشاء الميتوكندري:</h4>
     <div class="box">
@@ -1663,75 +1721,117 @@ body.light-theme .box {
         <div class="chemical-eq">2Acetyl-CoA + 6NAD⁺ + 2FAD + 2ADP + 2Pi + 6H₂O —→ 4CO₂ + 6NADH,H⁺ + 2FADH₂ + 2ATP + 2CoA-SH</div>
     </div>
 
-    <h2><span class="num-badge">6</span>السلسلة التنفسية: نظام النقل الإلكتروني</h2>
-    <h4>أ. التوضع الغشائي والترتيب الطاقوي:</h4>
-    <div class="box">
-        تتكون
-        <span class="keyword">السلسلة التنفسية</span>
-        من معقدات بروتينية ضخمة ونواقل صغيرة مدمجة في <span class="k-blue">الغشاء الداخلي</span> للميتوكندريا، مرتبة بدقة حسب تزايد كمون <span class="k-violet">الأكسدة والإرجاع</span>، مما يسمح للإلكترونات بالانتقال التلقائي من ناقل لآخر مع فقدان جزء من طاقتها تدريجياً وبشكل محكوم.
-    </div>
-    <h4>ب. استقبال الإلكترونات من النواقل المرجعة:</h4>
-    <div class="box">
-        تستقبل المعقدات البروتينية <span class="k-orange">الإلكترونات</span> و<span class="k-orange">البروتونات</span> من <span class="k-yellow">النواقل</span> <span class="k-yellow">NADH,H+</span> و <span class="k-yellow">FADH2</span>، ليتم إعادة أكسدة هذه <span class="k-yellow">النواقل</span> وتصبح جاهزة للعودة إلى <span class="k-violet">دورة كريبس</span> و<span class="k-violet">التحلل السكري</span>، مما يضمن تدفقاً مستمراً للإلكترونات.
-    </div>
-    <h4>ج. تحويل الطاقة من كيميائية إلى كهربائية:</h4>
-    <div class="box">
-        أثناء تدفق <span class="k-orange">الإلكترونات</span>، تنشأ تيارات كهربائية دقيقة تُستخدم للقيام بعمل ميكانيكي يتمثل في <span class="k-orange">ضخ البروتونات</span>، لتنجح السلسلة في تحويل طاقة الروابط الكيميائية إلى طاقة وضع كهرومغناطيسية.
+            <div class="calvin-card">
+                <div class="calvin-title">رسم تخطيطي دورة كريبس</div>
+                <img src="image7/0.3.png" alt="رسم تخطيطي دورة كريبس" class="adaptive-diag" />
+            </div>
+
+<h2><span class="num-badge">6</span>السلسلة التنفسية والفسفرة التأكسدية: نقل الإلكترونات وتحويل الطاقة وإنتاج ATP</h2>
+
+<h4>أ. التوضع الغشائي ومكونات السلسلة التنفسية:</h4>
+<div class="box">
+    تتوضع <span class="keyword">السلسلة التنفسية</span> على مستوى
+    <span class="k-blue">الغشاء الداخلي للميتوكندريا</span>،
+    وتتكون من نواقل الكترونية :
+
+    <ul>
+        <li><span class="k-orange">المعقد I:</span> يستقبل الإلكترونات من <span class="k-yellow">NADH,H⁺</span> ويساهم في ضخ البروتونات H⁺ نحو الفراغ بين الغشائي.</li>
+        <li><span class="k-orange">المعقد II:</span> يستقبل الإلكترونات من <span class="k-yellow">FADH₂</span> ويمررها إلى السلسلة.</li>
+        <li><span class="k-orange">المعقد III:</span> يساهم في نقل الإلكترونات وضخ البروتونات H⁺ نحو الفراغ بين الغشائي.</li>
+        <li><span class="k-orange">المعقد IV:</span>يساهم في نقل الإلكترونات </li>
+        <li><span class="k-orange">المعقد V:</span> تتم على مستواه عملية إرجاع الأكسجين O₂ وتشكيل الماء H₂O.</li>
+    </ul>
+
+    <span class="k-green">ATP سنتاز:</span>
+    يسمح بعودة البروتونات H⁺ إلى الحشوة، مستغلاً الطاقة الناتجة عن ذلك لتركيب ATP انطلاقاً من ADP وPi.
+</div>
+
+<h4>ب. الأكسدة والإرجاع وانتقال الإلكترونات:</h4>
+<div class="box">
+    تتعرض النواقل المرجعة
+    <span class="k-yellow">NADH,H⁺</span> و
+    <span class="k-yellow">FADH₂</span>
+    للأكسدة، فتفقد الإلكترونات وتتحول إلى
+    <span class="k-yellow">NAD⁺</span> و
+    <span class="k-yellow">FAD</span>،
+    لتصبح جاهزة للمشاركة مجدداً في التفاعلات الارجاع، خاصة دورة كريبس والتحلل السكري.
+
+    تنتقل <span class="k-orange">الإلكترونات</span> عبر مكونات السلسلة التنفسية، وتتحرر الطاقة تدريجياً أثناء انتقالها من ناقل إلى آخر.
+</div>
+
+<h4>ج. ضخ البروتونات ونشوء التدرج البروتوني:</h4>
+<div class="box">
+    تستغل المعقدات البروتينية
+    <span class="k-orange">I وIII وIV</span>
+    الطاقة المتحررة من انتقال الإلكترونات لضخ البروتونات H⁺ من
+    <span class="k-blue">الحشوة (المادة الأساسية)</span> نحو
+    <span class="k-blue">الفراغ بين الغشائي</span>
+    عكس تدرج التركيز.
+
+    يؤدي تراكم <span class="k-orange">البروتونات</span> إلى انخفاض قيمة pH (زيادة الحموضة) في الفراغ بين الغشائي، ونشوء فرق في الشحنة الكهربائية، مكوناً
+    <span class="k-violet">القوة المحركة البروتونية </span>.
+
+    يعمل <span class="k-blue">الغشاء الداخلي</span> كحاجز عازل يمنع عودة البروتونات عشوائياً.
+</div>
+
+<h4>د. دور الأكسجين كمستقبل نهائي للإلكترونات:</h4>
+<div class="box">
+    يمثل <span class="k-orange">الأكسجين O₂</span> المستقبل النهائي للإلكترونات، إذ يتعرض للإرجاع في المعقد IV، حيث يتحد مع الإلكترونات والبروتونات H⁺ من الحشوة لتشكيل الماء، مما يسمح باستمرار تدفق الإلكترونات في السلسلة التنفسية.
+
+    <div class="chemical-eq">
+        <span class="k-orange">1/2 O₂</span> + 2H⁺ + 2e⁻ → <span class="k-blue">H₂O</span>
     </div>
 
-    <h2><span class="num-badge">7</span>آلية ضخ البروتونات ونشوء تدرج الـ pH</h2>
-    <h4>أ. المعقدات الضخية (I, III, IV):</h4>
-    <div class="box">
-        مستغلة الطاقة المتحررة من مرور <span class="k-orange">الإلكترونات</span>، تقوم هذه المعقدات بسحب بروتونات H+ من <span class="k-blue">المادة الأساسية</span> وقذفها نحو <span class="k-blue">الفضاء بين الغشائي</span> عكس <span class="k-orange">تدرج التركيز</span>، تماماً مثل شحن بطارية كيميائية عبر مراكمة الشحنات في جهة واحدة من <span class="k-blue">الغشاء</span>.
+    في غياب الأكسجين تتوقف السلسلة التنفسية، وتتراكم النواقل المرجعة دون أكسدة، مما يمنع تجديد
+    <span class="k-yellow">NAD⁺</span> و<span class="k-yellow">FAD</span>
+    الضروريين لاستمرار التفاعلات الارجاع،.
+</div>
+
+<h4>هـ. إرجاع البروتونات وتركيب ATP:</h4>
+<div class="box">
+    تعود البروتونات المتراكمة في
+    <span class="k-blue">الفراغ بين الغشائي</span>
+    نحو الحشوة وفق تدرجها عبر قناة
+    <span class="k-green">ATP سنتاز</span>.
+
+    يستغل هذا الإنزيم طاقة عودة البروتونات لتركيب
+    <span class="k-green">ATP</span>
+    انطلاقاً من
+    <span class="k-green">ADP</span>
+    والفوسفات غير العضوي
+    <span class="k-green">Pi</span>،
+    وتسمى هذه العملية
+    <span class="k-violet">الفسفرة التأكسدية</span>.
+
+    <div class="chemical-eq">
+        <span class="k-green">ADP + Pi → ATP + H₂O</span>
     </div>
-    <h4>ب. التفاوت الكيميائي والكهربائي:</h4>
-    <div class="box">
-        يؤدي تراكم <span class="k-orange">البروتونات</span> إلى انخفاض الـ pH (زيادة الحامضية) ونشوء فرق جهد كهربائي، ليخلق الاثنان معاً
-        <span class="keyword">القوة المحركة البروتونية (PMF)</span>
-        التي تسعى لإعادة <span class="k-orange">البروتونات</span> للداخل.
-    </div>
-    <h4>ج. الغشاء الداخلي كحاجز عازل:</h4>
-    <div class="box">
-        لولا كون <span class="k-blue">الغشاء الداخلي</span> غير نفوذ للبروتونات، لتلاشت هذه القوة. يعمل <span class="k-blue">الغشاء</span> كعازل كهربائي لا يسمح بعودتها إلا عبر ممرات <span class="k-blue">الكريات المذنبة</span> محققاً أعلى كفاءة طاقوية.
+</div>
+
+<h4>و. المردود الطاقوي والحصيلة:</h4>
+<div class="box">
+    وفق الحساب التقليدي للمردود الطاقوي:
+
+    <ul>
+        <li><span class="k-yellow">NADH,H⁺:</span> يسمح بإنتاج 3 جزيئات <span class="k-green">ATP</span>.</li>
+        <li><span class="k-yellow">FADH₂:</span> يسمح بإنتاج جزيئتين <span class="k-green">ATP</span>.</li>
+    </ul>
+
+    <div class="chemical-eq">
+        <span class="k-yellow">10NADH,H⁺ + 2FADH₂</span> + 6O₂ + 34ADP + 34Pi
+        → 10NAD⁺ + 2FAD + 12H₂O + <span class="k-green">34ATP</span>
     </div>
 
-    <h2><span class="num-badge">8</span>دور الأكسجين كمستقبل نهائي للإلكترونات</h2>
-    <h4>أ. استهلاك الإلكترونات والبروتونات:</h4>
-    <div class="box">
-        يقوم المعقد الأخير في السلسلة بنقل <span class="k-orange">الإلكترونات</span> إلى <span class="k-orange">الأكسجين</span> المستهلك، فيرتبط بها مع بروتونات <span class="k-blue">المادة الأساسية</span> لتشكيل الماء
-        <span class="keyword">H2O</span>
-        ، مانعاً انسداد السلسلة ومضمناً استمرار تدفق الطاقة.
-        <div class="chemical-eq">1/2 O₂ + 2H⁺ + 2e⁻ —→ H₂O</div>
-    </div>
-    <h4>ب. الأكسجين كشرط لاستمرار الهدم:</h4>
-    <div class="box">
-        بدون <span class="k-orange">الأكسجين</span> تتراكم <span class="k-orange">الإلكترونات</span> وتتوقف السلسلة، ويتوقف معه تجديد <span class="k-yellow">NAD+</span> الضروري ل<span class="k-violet">دورة كريبس</span> والتحلل، مما يؤدي لموت الخلايا سريعاً عند انعدام <span class="k-orange">الأكسجين</span>.
-    </div>
-    <h4>ج. إنتاج الماء الاستقلابي:</h4>
-    <div class="box">
-        يساهم الماء الناتج في الحفاظ على رطوبة الوسط الداخلي للخلية وتوليد حرارة أساسية للجسم، مما يعكس الأهمية الكيميائية العميقة للتنفس.
-    </div>
+    <span class="k-green">الحصيلة النهائية:</span>
+    تحويل الطاقة الكيميائية للنواقل المرجعة إلى طاقة كيميائية قابلة للاستعمال الخلوي مخزنة في ATP،  استهلاك الأكسجين وإنتاج الماء 
+</div>
 
-    <h2><span class="num-badge">9</span>الفسفرة التأكسدية ودور الكرية المذنبة</h2>
-    <h4>أ. التدفق البروتوني عبر القناة:</h4>
-    <div class="box">
-        تندفع <span class="k-orange">البروتونات</span> المتراكمة للعودة للمادة الأساسية عبر القناة الموجودة في قاعدة <span class="k-blue">الكرية المذنبة</span> (
-        <span class="keyword">ATP-Synthase</span>
-        ), محولة طاقة التدفق إلى طاقة ميكانيكية دوانية عبر محرك نانوي طبيعي.
-    </div>
-    <h4>ب. تركيب الـ ATP من الـ ADP و Pi:</h4>
-    <div class="box">
-        يؤدي دوران رأس الكرية إلى تغيير المواقع النشطة لربط ADP بـ Pi، فيما تعرف ب<span class="k-violet">الفسفرة</span>
-        <span class="keyword">التأكسدية</span>
-        التي تمثل قمة الهرم في إنتاج الطاقة الخلوية.
-    </div>
-    <h4>ج. المردود الطاقوي للنواقل:</h4>
-    <div class="box">
-        أكسدة <span class="k-yellow">NADH,H+</span> توفر طاقة لإنتاج 3 جزيئات <span class="k-green">ATP</span>، بينما <span class="k-yellow">FADH2</span> توفر طاقة لإنتاج جزيئتين فقط، وهو ما يفسر حرص الخلية على تعظيم إنتاج نواقل <span class="k-yellow">NADH,H+</span>.
-        <div class="chemical-eq">10NADH,H⁺ + 2FADH₂ + 6O₂ + 34ADP + 34Pi —→ 10NAD⁺ + 2FAD + 12H₂O + 34ATP</div>
-    </div>
+            <div class="calvin-card">
+                <div class="calvin-title">رسم تخطيطي لالية عمل السلسلة التنفسية</div>
+                <img src="image7/0.4.jpg" alt="رسم تخطيطي لالية عمل السلسلة التنفسية" class="adaptive-diag" />
+            </div>
 
-    <h2><span class="num-badge">10</span>الحصيلة الطاقوية الإجمالية (38 ATP)</h2>
+    <h2><span class="num-badge">7</span>الحصيلة الطاقوية الإجمالية (38 ATP)</h2>
     <h4>أ. حساب النواتج المباشرة والغير مباشرة:</h4>
     <div class="box">
         تنتج أكسدة جزيئة غلوكوز <span class="k-pink">38 ATP</span> إجمالاً: 2 من <span class="k-violet">التحلل السكري</span>، 2 من <span class="k-violet">دورة كريبس</span> بشكل مباشر ، و34 من أكسدة <span class="k-yellow">النواقل</span> في <span class="k-violet">السلسلة التنفسية</span> بشكل غير مباشر ، وهي الكفاءة القصوى لاستخلاص الطاقة.
@@ -1747,7 +1847,7 @@ body.light-theme .box {
         مقارنة ب<span class="k-green">الطاقة الكلية</span> للغلوكوز، بينما يتبدد الباقي كحرارة، وهو معدل يتجاوز كفاءة معظم المحركات البشرية.
     </div>
 
-    <h2><span class="num-badge">11</span>مفهوم التخمر اللبني (هدم جزئي في غياب O2)</h2>
+    <h2><span class="num-badge">8</span>مفهوم التخمر اللبني (هدم جزئي في غياب O2)</h2>
     <h4>أ. تحويل البيروفيك إلى حمض اللبن:</h4>
     <div class="box">
         في غياب <span class="k-orange">الأكسجين</span> وتوقف <span class="k-blue">الميتوكندريا</span>، تلجأ الخلايا لتحويل <span class="k-yellow">البيروفيك</span> في <span class="k-blue">الهيولى</span> إلى
@@ -1764,7 +1864,7 @@ body.light-theme .box {
         يسبب تراكم <span class="k-yellow">حمض اللبن</span> انخفاض الـ pH وألماً عضلياً (<span class="k-teal">التعب</span>)، ليزول بمجرد عودة <span class="k-orange">الأكسجين</span> واستئناف المسار التنفسي الطبيعي.
     </div>
 
-    <h2><span class="num-badge">12</span>التخمر الكحولي وتطبيقاته الحيوية</h2>
+    <h2><span class="num-badge">9</span>التخمر الكحولي وتطبيقاته الحيوية</h2>
     <h4>أ. إنتاج الإيثانول و CO2:</h4>
     <div class="box">
         تقوم خميرة الخبز بتحويل <span class="k-yellow">البيروفيك</span> ب<span class="k-violet">نزع الكربون</span> لتعطي غاز <span class="k-green">CO2</span> وكحولاً إيثيلياً، وتُستغل هذه العملية في الصناعات الغذائية والمخابز.
@@ -1779,7 +1879,7 @@ body.light-theme .box {
         تراكم <span class="k-orange">الكحول</span> بتركيزات عالية يترتب عليه تسمم الخلايا والقضاء عليها، مما يضع حداً طبيعياً لعملية <span class="k-violet">التخمر</span>.
     </div>
 
-    <h2><span class="num-badge">13</span>العلاقة بين النشاط الخلوي وحجم الميتوكندريا</h2>
+    <h2><span class="num-badge">10</span>العلاقة بين النشاط الخلوي وحجم الميتوكندريا</h2>
     <h4>أ. التكيف البنيوي للخلية:</h4>
     <div class="box">
         تكثر <span class="k-blue">الميتوكندريا</span> وتكبر في الخلايا عالية النشاط مثل القلب وعضلات الطيران، مبرزة قدرة الخلية على تكييف ترسانتها الطاقوية حسب الحاجة.
@@ -1793,7 +1893,7 @@ body.light-theme .box {
         تتضاعف <span class="k-blue">الميتوكندريا</span> وتزداد كفاءتها بانتظام التدريب الرياضي، مما يرفع من قدرة التحمل وإنتاج الطاقة بكفاءة أفضل.
     </div>
 
-    <h2><span class="num-badge">14</span>التكامل بين الصانعة والميتوكندريا (دورة الحياة)</h2>
+    <h2><span class="num-badge">11</span>التكامل بين الصانعة والميتوكندريا (دورة الحياة)</h2>
     <h4>أ. الصانعة كمنتج والميتوكندريا كمستهلك:</h4>
     <div class="box">
         <span class="k-blue">الصانعة</span> تبني المادة العضوية بالضوء، و<span class="k-blue">الميتوكندريا</span> تهدمها لتحرير الطاقة، في تكامل استدامي يضمن بقاء النبات وحيويته.
@@ -1807,7 +1907,7 @@ body.light-theme .box {
         بينما تُتدوير المادة، تتدفق الطاقة باتجاه واحد من الشمس للغلوكوز ثم للـ <span class="k-green">ATP</span>، مانعة انهيار النظام الحيوي.
     </div>
 
-    <h2><span class="num-badge">15</span>تأثير المثبطات والسموم (السيانيد وأول أكسيد الكربون)</h2>
+    <h2><span class="num-badge">12</span>تأثير المثبطات والسموم (السيانيد وأول أكسيد الكربون)</h2>
     <h4>أ. تعطيل السلسلة التنفسية:</h4>
     <div class="box">
         يرتبط
@@ -1823,13 +1923,13 @@ body.light-theme .box {
         تستغل الأدوية فروقات <span class="k-blue">الميتوكندريا</span> لشل طاقة الخلايا الضارة والطفيليات دون الإضرار بالمريض.
     </div>
 
-    <h2><span class="num-badge">16</span>تجربة "إفراتون" وعزل وظائف الميتوكندريا</h2>
+    <h2><span class="num-badge">13</span>تجربة "إفراتون" وعزل وظائف الميتوكندريا</h2>
     <h4>أ. استخدام الموجات فوق الصوتية:</h4>
     <div class="box">
         تم تحطيم <span class="k-blue">الميتوكندريا</span> للحصول على أعراف مقلوبة بروزت فيها <span class="k-blue">الكرية المذنبة</span> للخارج، مما أثبت حصريتها في <span class="k-violet">الفسفرة</span> وارتباطها بتركيز <span class="k-orange">البروتونات</span>.
     </div>
 
-    <h2><span class="num-badge">17</span>المسامية والتبادل بين الميتوكندريا والهيولى</h2>
+    <h2><span class="num-badge">14</span>المسامية والتبادل بين الميتوكندريا والهيولى</h2>
     <h4>أ. قنوات البورين في الغشاء الخارجي:</h4>
     <div class="box">
         يحتوي <span class="k-blue">الغشاء الخارجي</span> على قنوات
@@ -1837,19 +1937,19 @@ body.light-theme .box {
         الواسعة لنفاذ الجزيئات الصغيرة والشوارد وحرية دخول وخروج ADP و<span class="k-green">ATP</span>، محافِظاً على عزل <span class="k-blue">الغشاء الداخلي</span>.
     </div>
 
-    <h2><span class="num-badge">18</span>دور الـ DNA الميتوكندري والاستقلالية الوظيفية</h2>
+    <h2><span class="num-badge">15</span>دور الـ DNA الميتوكندري والاستقلالية الوظيفية</h2>
     <h4>أ. الوراثة الميتوكندرية:</h4>
     <div class="box">
         تحتوي على <span class="k-teal">DNA</span> حلقي يشبه البكتيريا يشرف على تصنيع بعض معقدات السلسلة، وتؤدي طفراته لأمراض عضلية ووهن عام لفقدان توليد الطاقة.
     </div>
 
-    <h2><span class="num-badge">19</span>التبادل الحراري والمحافظة على حرارة الجسم</h2>
+    <h2><span class="num-badge">16</span>التبادل الحراري والمحافظة على حرارة الجسم</h2>
     <h4>أ. ضياع الطاقة المفيد:</h4>
     <div class="box">
         تسمح بروتينات "<span class="k-teal">Uncoupling Proteins</span>" في الأنسجة الدهنية البنية بعودة <span class="k-orange">البروتونات</span> بلا مرور عبر الكرية، منتجة حرارة صرفة تحمي الجسم من التجمد.
     </div>
 
-    <h2><span class="num-badge">20</span>المخطط التحصيلي النهائي لتدفق الطاقة</h2>
+    <h2><span class="num-badge">17</span>المخطط التحصيلي النهائي لتدفق الطاقة</h2>
     <h4>أ. رحلة الكربون من الغذاء للهواء:</h4>
     <div class="box">
         يمثل التنفس رحلة ذرة الكربون من السكر المعقد لغاز <span class="k-green">CO2</span> البسيط، مستنزفاً شحناته الطاقوية ومحولاً الكتلة الحيوية لفعل ميكانيكي وحيوي دائم.
@@ -1912,11 +2012,11 @@ body.light-theme .box {
         if (isLightTheme) {
             paintThemeIcon(true);
             if (themeText) themeText.textContent = 'الوضع النهاري';
-            localStorage.setItem('theme', 'light');
+            bioTheme.set('light');
         } else {
             paintThemeIcon(false);
             if (themeText) themeText.textContent = 'الوضع الليلي';
-            localStorage.setItem('theme', 'dark');
+            bioTheme.set('dark');
         }
     }
 
@@ -1929,7 +2029,7 @@ body.light-theme .box {
         const themeText = document.getElementById('theme-text');
 
         // استرجاع الثيم المحفوظ عند فتح الصفحة
-        const savedTheme = localStorage.getItem('theme');
+        const savedTheme = bioTheme.get();
 
         if (savedTheme === 'light') {
             bodyElement.classList.add('light-theme');

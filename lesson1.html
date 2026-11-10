@@ -182,7 +182,7 @@ body.light-theme .particle, body.light .particle {
         border: 2px solid #1e40af !important;
         border-radius: 16px;
         box-sizing: border-box;
-        box-shadow: 0 0 22px rgba(30, 64, 175, 0.6) !important;
+        box-shadow: 0 0 22px rgba(30, 64, 175, 0.42) !important;
         transition: box-shadow 0.3s ease, transform 0.3s ease;
     }
 
@@ -192,7 +192,7 @@ body.light-theme .particle, body.light .particle {
 
     .light-theme .unit-hero-img, body.light .unit-hero-img {
         border-color: #1e40af !important;
-        box-shadow: 0 0 22px rgba(30, 64, 175, 0.6) !important;
+        box-shadow: 0 0 22px rgba(30, 64, 175, 0.42) !important;
     }
 
     h1 { 
@@ -1665,6 +1665,56 @@ body.light-theme .top-navbar {
 
     <link rel="stylesheet" href="style.css">
     <meta name="google-site-verification" content="yWTn70MukZMsqqzmelv7CxgCHDi87GIOYffl56O2YW4" />
+<script>
+/* الوضع الليلي/النهاري مشترك بين كل صفحات الموقع ويُحفظ في المتصفح حتى تغيّره أنت.
+   يُخزَّن في localStorage + cookie + window.name (لتعمل المتابعة حتى عند فتح الملفات مباشرة) مع ختم زمني، ويؤخذ الأحدث. */
+(function () {
+    var KEY = 'theme', WN = 'bio-theme=';
+    var bc = null; try { bc = new BroadcastChannel('bio-theme'); } catch (e) {}
+    function parse(raw) {
+        if (!raw) return null;
+        var m = String(raw).match(/^(light|dark)(?:@(\d+))?$/);
+        return m ? { v: m[1], t: m[2] ? +m[2] : 0 } : null;
+    }
+    function readLS() { try { return parse(localStorage.getItem(KEY)); } catch (e) { return null; } }
+    function readCookie() { try { var m = document.cookie.match(/(?:^|; )theme=([^;]*)/); return m ? parse(decodeURIComponent(m[1])) : null; } catch (e) { return null; } }
+    function readWN() { var m = (window.name || '').match(/(?:^|;)bio-theme=((?:light|dark)(?:@\d+)?)(?=;|$)/); return m ? parse(m[1]) : null; }
+    var T = {
+        get: function () {
+            var best = null;
+            [readLS(), readCookie(), readWN()].forEach(function (x) { if (x && (!best || x.t > best.t)) best = x; });
+            return best ? best.v : 'dark';              /* أول زيارة: الوضع الليلي */
+        },
+        set: function (v) {
+            var raw = v + '@' + Date.now();
+            try { localStorage.setItem(KEY, raw); } catch (e) {}
+            try { document.cookie = 'theme=' + encodeURIComponent(raw) + ';max-age=31536000;path=/;SameSite=Lax'; } catch (e) {}
+            try { window.name = (window.name || '').replace(/(?:^|;)bio-theme=[^;]*/, '') + (window.name && !/bio-theme=/.test(window.name) ? ';' : '') + WN + raw; } catch (e) {}
+            try { if (bc) bc.postMessage(v); } catch (e) {}
+        },
+        apply: function (v) {
+            if (!document.body) return;
+            var light = v === 'light';
+            if (typeof window.updateThemeUI === 'function') { window.updateThemeUI(light); if (typeof window.updateCountdown === 'function') { try { window.updateCountdown(); } catch (e) {} } return; }
+            document.body.classList.toggle('light-theme', light);
+            if (typeof window.paintThemeIcon === 'function') window.paintThemeIcon(light);
+            var tx = document.getElementById('theme-text'); if (tx) tx.textContent = light ? 'الوضع النهاري' : 'الوضع الليلي';
+        },
+        sync: function () {
+            if (!document.body) return;
+            var v = T.get(), cur = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+            if (v !== cur) T.apply(v);
+        }
+    };
+    window.bioTheme = T;
+    /* تحديث فوري في الصفحات الأخرى المفتوحة، وعند العودة للصفحة بزر الرجوع، وعند الرجوع للتبويب */
+    window.addEventListener('storage', function (e) { if (e.key === KEY || e.key === null) T.sync(); });
+    window.addEventListener('pageshow', function (e) { if (e.persisted) T.sync(); });
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) T.sync(); });
+    window.addEventListener('focus', T.sync);
+    if (bc) bc.onmessage = function () { T.sync(); };
+})();
+</script>
 </head>
 <body>
 
@@ -1724,15 +1774,69 @@ body.light-theme .top-navbar {
         </div>
     </section>
 
+
+
     <section>
-        <h2><span class="num-badge">02</span> المقر الخلوي لبناء البروتين والوسيط الناقل</h2>
+        <h2><span class="num-badge">02</span> المقر الخلوي لبناء البروتين</h2>
         <div class="step-card">
-             أثبتت نتائج تقنية <span style="color: #38bdf8; font-weight: bold;">التصوير الإشعاعي الذاتي</span> أن دمج <span style="color: #818cf8; font-weight: bold;">الأحماض الأمينية المشعة</span> يتم في <span style="color: #4ade80; font-weight: bold;">الهيولى</span> وتحديداً على مستوى <span style="color: #fb923c; font-weight: bold;">الشبكة الهيولية المحببة (الفعالة)</span>. ولأن جزيئة الـ <span class="latin-tech">ADN</span> ذات حجم ضخم ومستقرة داخل <span style="color: #facc15; font-weight: bold;">النواة</span>، يتطلب ذلك وجود وسيط ناقل للمعلومة الوراثية هو جزيء <span style="color: #a78bfa; font-weight: bold;">ARN الرسول (<span class="latin-tech">ARNm</span>)</span>، ينفذ عبر <span style="color: #38bdf8; font-weight: bold;">الثقوب النووية</span> نحو الهيولى ليرتبط بـ <span style="color: #4ade80; font-weight: bold;">الريبوزومات</span> حيث تتم ترجمته لبناء البروتين الموافق.
+            <span style="color: #38bdf8; font-weight: bold;">تجربة الأحماض الأمينية المشعة:</span>
+            أثبتت نتائج تقنية
+            <span style="color: #38bdf8; font-weight: bold;">التصوير الإشعاعي الذاتي</span>
+            أن دمج
+            <span style="color: #818cf8; font-weight: bold;">الأحماض الأمينية المشعة</span>
+            يتم في
+            <span style="color: #4ade80; font-weight: bold;">الهيولى</span>
+            وتحديداً على مستوى
+            <span style="color: #fb923c; font-weight: bold;">الشبكة الهيولية المحببة (الفعالة)</span>.
         </div>
+
+        <div class="img-container-box">
+
+            <div class="img-container-title">
+              رسم تخطيطي لتجربة الأحماض الأمينية المشعة
+            </div>
+
+            <!-- كود الصورة متكيف بالكامل -->
+            <img src="images1/0.8.png" alt=""رسم تخطيطي لتجربة الأحماض الأمينية المشعة>
+        </div>
+
     </section>
 
     <section>
-        <h2><span class="num-badge">03</span> التركيب الكيميائي والبنية الفضائية للـ ARN</h2>
+        <h2><span class="num-badge">03</span> الوسيط الناقل للمعلومة الوراثية</h2>
+        <div class="step-card">
+            <span style="color: #38bdf8; font-weight: bold;">تجربة اليوريدين المشع:</span>
+            أظهرت نتائج استعمال
+            <span style="color: #818cf8; font-weight: bold;">اليوريدين المشع</span>
+            أن تركيب الـ <span class="latin-tech">ARN</span>
+            يبدأ في
+            <span style="color: #facc15; font-weight: bold;">النواة</span>
+            ثم ينتقل نحو الهيولى عبر
+            <span style="color: #38bdf8; font-weight: bold;">الثقوب النووية</span>.
+            ولأن جزيئة الـ <span class="latin-tech">ADN</span>
+            ذات حجم ضخم ومستقرة داخل النواة، يتطلب ذلك وجود وسيط ناقل للمعلومة الوراثية هو جزيء
+            <span style="color: #a78bfa; font-weight: bold;">ARN الرسول (<span class="latin-tech">ARNm</span>)</span>،
+            ينفذ إلى الهيولى ليرتبط بـ
+            <span style="color: #4ade80; font-weight: bold;">الريبوزومات</span>
+            حيث تتم ترجمته لبناء البروتين الموافق.
+        </div>
+
+        <div class="img-container-box">
+
+            <div class="img-container-title">
+               رسم تخطيطي لتجربة اليوريدين المشع
+            </div>
+
+            <!-- كود الصورة متكيف بالكامل -->
+            <img src="images1/0.9.jpg" alt="رسم تخطيطي لتجربة اليوريدين المشع">
+        </div>
+
+    </section>
+
+
+
+    <section>
+        <h2><span class="num-badge">04</span> التركيب الكيميائي والبنية الفراغية للـ ARN</h2>
         <div class="step-card">
              يتكون <span style="color: #a78bfa; font-weight: bold;">الحمض النووي الريبي</span> (<span class="latin-tech">ARN</span>) من متعدد <span style="color: #38bdf8; font-weight: bold;">النيكليوتيدات الريبية</span> المرتبطة فيما بينها بـ <span style="color: #818cf8; font-weight: bold;">روابط إستر فوسفاتية</span>. تُظهر <span style="color: #4ade80; font-weight: bold;">الإماهة الكلية</span> لـ <span class="latin-tech">ARN</span> جزيء <span style="color: #fb923c; font-weight: bold;">سكر ريبوز</span> (<span class="latin-tech">C₅H₁₀O₅</span>)، و<span style="color: #facc15; font-weight: bold;">حمض الفوسفوريك</span> (<span class="latin-tech">H₃PO₄</span>)، وواحدة من <span style="color: #2dd4bf; font-weight: bold;">القواعد الآزوتية الأربع</span>: <span style="color: #38bdf8; font-weight: bold;">الأدينين (A)</span>، <span style="color: #818cf8; font-weight: bold;">الغوانين (G)</span>، <span style="color: #4ade80; font-weight: bold;">السيتوزين (C)</span>، وتتميز بحضور قاعدة <span style="color: #fb923c; font-weight: bold;">اليوراسيل (U)</span> بدلاً من التيمين (<span class="latin-tech">T</span>). بينما تُظهر <span style="color: #4ade80; font-weight: bold;">الإماهة الجزئية</span> أربعة أنواع من <span style="color: #38bdf8; font-weight: bold;">النيكليوتيدات الريبية</span> وهي: <span style="color: #38bdf8; font-weight: bold;">الأدينوزين أحادي الفوسفات (AMP)</span>، <span style="color: #818cf8; font-weight: bold;">الغوانوزين أحادي الفوسفات (GMP)</span>، <span style="color: #4ade80; font-weight: bold;">السيتيدين أحادي الفوسفات (CMP)</span>، و<span style="color: #fb923c; font-weight: bold;">اليوريدين أحادي الفوسفات (UMP)</span>. يتميز <span class="latin-tech">ARN</span> بكونه يمتلك <span style="color: #facc15; font-weight: bold;">سلسلة واحدة مفردة</span> غير مستقرة مقارنة بـ <span class="latin-tech">ADN</span> المزدوج، مما يمنحه <span style="color: #2dd4bf; font-weight: bold;">عمرًا قصيرًا في الهيولى</span> لتفكيكه بسرعة عبر أنزيمات <span class="latin-tech">RNase</span> فور الانتهاء من عملية الترجمة.
         </div>
@@ -1750,7 +1854,7 @@ body.light-theme .top-navbar {
 
 
     <section>
-        <h2><span class="num-badge">04</span> عملية الاستنساخ</h2>
+        <h2><span class="num-badge">05</span> عملية الاستنساخ</h2>
         
         <h3>أ- مرحلة الانطلاق (الانكشاف):</h3>
         <div class="step-card">
@@ -1779,14 +1883,14 @@ body.light-theme .top-navbar {
     </section>
 
     <section>
-        <h2><span class="num-badge">05</span> نضج الـ ARNm وعملية القص والربط (معلومة اضافية)</h2>
+        <h2><span class="num-badge">06</span> نضج الـ ARNm وعملية القص والربط (معلومة اضافية)</h2>
         <div class="step-card">
              تتميز مورثات <span style="color: #38bdf8; font-weight: bold;">حقيقيات النوى</span> بكونها <span style="color: #818cf8; font-weight: bold;">مورثات مجزأة</span>، حيث تتكون من <span style="color: #4ade80; font-weight: bold;">قطع دالة </span> تحمل المعلومات اللازمة لتركيب البروتين، تفصل بينها <span style="color: #fb923c; font-weight: bold;">قطع غير دالة </span> لا تشفر لأي أحماض أمينية. ينتج عن عملية الاستنساخ أولاً <span style="color: #facc15; font-weight: bold;">ARNm أولي (مسبق)</span> يخضع لـ <span style="color: #2dd4bf; font-weight: bold;">آلية النضج (القص والربط)</span> داخل النواة، حيث يتم <span style="color: #a78bfa; font-weight: bold;">حذف القطع غير الدالة</span> و<span style="color: #38bdf8; font-weight: bold;">ربط القطع الدالة</span> ببعضها البعض، ليشكل جزيء <span style="color: #facc15; font-weight: bold;">ARNm ناضج</span> يتكون فقط من قطع مشفرة، ليغادر النواة عبر <span style="color: #fb923c; font-weight: bold;">الثقوب النووية</span> نحو <span style="color: #2dd4bf; font-weight: bold;">الهيولى</span> لبدء عملية الترجمة.
         </div>
     </section>
 
 <section>
-        <h2><span class="num-badge">06</span> الشفرة الوراثية وتجربة نيرنبرغ التاريخية</h2>
+        <h2><span class="num-badge">07</span> الشفرة الوراثية وتجربة نيرنبرغ التاريخية</h2>
         
         <div class="step-card">
              تُعتبر الشفرة الوراثية المترجم بين اللغة النووية و اللغة البروتينية اي <span style="color: #facc15; font-weight: bold;">4 قواعد آزوتية</span> في الـ <span class="latin-tech">ARNm</span> و<span style="color: #2dd4bf; font-weight: bold;">20 حمضاً أمينياً</span> يُدخل في تركيب البروتين. ولتحديد عدد القواعد المسؤولة عن تشفير كل حمض أميني، اعتُمدت الحسابات الرياضية والاحتمالية التالية:
@@ -1847,7 +1951,7 @@ body.light-theme .top-navbar {
 
 
 <section>
-        <h2><span class="num-badge">07</span> البنية الفراغية والوظيفية للـ ARNt</h2>
+        <h2><span class="num-badge">08</span> البنية الفراغية والوظيفية للـ ARNt</h2>
         <div class="step-card">
              يُعتبر <span style="color: #a78bfa; font-weight: bold;">الحمض النووي الريبي الناقل (<span class="latin-tech">ARNt</span>)</span> جزيئاً تخصصياً يتكون من سلسلة واحدة من النيكليوتيدات الريبية الملتفة في ذاتها لوجود نيكلوتيدات تطبق قاعدة التكامل و التقابل فيما بينها  . يأخذ في **البنية ثنائية الأبعاد** شكل <span style="color: #38bdf8; font-weight: bold;">ورقة النفل </span> بفضل تشكل <span style="color: #818cf8; font-weight: bold;">روابط هيدروجينية</span> بين القواعد الآزوتية المتقابلة والمتكاملة في أجزاء منها، بينما يظهر في **البنية ثلاثية الأبعاد** على شكل <span style="color: #2dd4bf; font-weight: bold;">حرف L مقلوب</span>.
              <br><br>
@@ -1874,7 +1978,7 @@ body.light-theme .top-navbar {
 
 
     <section>
-        <h2><span class="num-badge">08</span> بنية ووظيفة الريبوزوم </h2>
+        <h2><span class="num-badge">09</span> بنية ووظيفة الريبوزوم </h2>
         <div class="step-card">
              تُعتبر <span style="color: #38bdf8; font-weight: bold;">الريبوزومات</span> العضيات الخلوية الفعالة المسؤولة عن <span style="color: #4ade80; font-weight: bold;">ترجمة المعلومة الوراثية</span> وتركيب البروتين. تتكون كيميائياً من تجمع بين <span style="color: #818cf8; font-weight: bold;">بروتينات ريبوزومية</span> و<span style="color: #facc15; font-weight: bold;">أحماض نووية ريبوزومية (<span class="latin-tech">ARNr</span>)</span> تختلف أنواعها حسب معامل الترسيب (مثل <span class="latin-tech">18S</span> في تحت الوحدة الصغرى، و <span class="latin-tech">28S, 5.8S, 5S</span> في تحت الوحدة الكبرى عند حقيقيات النوى). وتتألف بنيوياً من تحت وحدتين:
              <br><br>
@@ -1902,7 +2006,7 @@ body.light-theme .top-navbar {
     </section>
 
     <section>
-        <h2><span class="num-badge">09</span> آلية تنشيط الأحماض الأمينية </h2>
+        <h2><span class="num-badge">10</span> آلية تنشيط الأحماض الأمينية </h2>
         
         <!-- عناصر وشروط التنشيط -->
         <div class="step-card">
@@ -1954,7 +2058,7 @@ body.light-theme .top-navbar {
 
 
 <section>
-        <h2><span class="num-badge">10</span> التفصيل الجزيئي لآلية الترجمة (Translation)</h2>
+        <h2><span class="num-badge">11</span> التفصيل الجزيئي لآلية الترجمة (Translation)</h2>
         
         <div style="margin: 25px 0;">
 
@@ -2000,7 +2104,7 @@ body.light-theme .top-navbar {
     </section>
 
     <section>
-        <h2><span class="num-badge">11</span> دور متعدد الريبوزوم (Polysome) في الإنتاجية</h2>
+        <h2><span class="num-badge">12</span> دور متعدد الريبوزوم (Polysome) في الإنتاجية</h2>
         
         <div class="step-card">
             <p style="line-height: 1.8; color: var(--text-main); margin: 0;">
@@ -2010,7 +2114,7 @@ body.light-theme .top-navbar {
     </section>
 
     <section>
-        <h2><span class="num-badge">12</span> اكتساب البنية الفراغية وانطواء السلسلة</h2>
+        <h2><span class="num-badge">13</span> اكتساب البنية الفراغية وانطواء السلسلة</h2>
         
         <div class="step-card">
             <p style="line-height: 1.8; color: var(--text-main); margin: 0;">
@@ -2020,7 +2124,7 @@ body.light-theme .top-navbar {
     </section>
 
     <section>
-        <h2><span class="num-badge">13</span> دور جهاز غولجي في نضج وتوجيه البروتين (معلومة اضافية)</h2>
+        <h2><span class="num-badge">14</span> دور جهاز غولجي في نضج وتوجيه البروتين (معلومة اضافية)</h2>
         
         <div class="step-card">
             <p style="line-height: 1.8; color: var(--text-main); margin: 0;">
@@ -2030,7 +2134,7 @@ body.light-theme .top-navbar {
     </section>
 
     <section>
-        <h2><span class="num-badge">14</span> العلاقة الجزيئية بين المورثة والنمط الظاهري</h2>
+        <h2><span class="num-badge">15</span> العلاقة الجزيئية بين المورثة والنمط الظاهري</h2>
         
         <div class="step-card">
             <p style="line-height: 1.8; color: var(--text-main); margin: 0;">
@@ -2040,7 +2144,7 @@ body.light-theme .top-navbar {
     </section>
 
     <section>
-        <h2><span class="num-badge">15</span> التأثير الجزيئي للمضادات الحيوية على البكتيريا (معلومة اضافية)</h2>
+        <h2><span class="num-badge">16</span> التأثير الجزيئي للمضادات الحيوية على البكتيريا (معلومة اضافية)</h2>
         
         <div class="step-card">
             <p style="line-height: 1.8; color: var(--text-main); margin: 0 0 10px 0;">
@@ -2062,7 +2166,7 @@ body.light-theme .top-navbar {
     </section>
 
         <section>
-        <h2><span class="num-badge">16</span> تفكيك الـ ARNm وإعادة استعمال النكليوتيدات (معلومة اضافية)</h2>
+        <h2><span class="num-badge">17</span> تفكيك الـ ARNm وإعادة استعمال النكليوتيدات (معلومة اضافية)</h2>
         
         <div class="step-card">
             <p style="line-height: 1.8; color: var(--text-main); margin: 0;">
@@ -2129,7 +2233,7 @@ function toggleTheme() {
     var isLight = document.body.classList.toggle('light-theme');
     
     // حفظ التفضيل في ذاكرة المتصفح
-    localStorage.setItem('bio_theme', isLight ? 'light' : 'dark');
+    bioTheme.set(isLight ? 'light' : 'dark');
     
     // تحديث الواجهة
     updateThemeUI(isLight);
@@ -2137,7 +2241,7 @@ function toggleTheme() {
 
 // 3. قراءة الوضع المحفوظ فور فتح الصفحة
 document.addEventListener('DOMContentLoaded', function() {
-    var savedTheme = localStorage.getItem('bio_theme');
+    var savedTheme = bioTheme.get();
     var isLight = (savedTheme === 'light');
     
     // إذا كان الوضع المحفوظ نهارياً، نطبقه فوراً
